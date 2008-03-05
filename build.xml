@@ -13,7 +13,7 @@
 	<property name="cfg" location="${src}/resources">
 	</property>
 
-	<property name="version" value="1.0">
+	<property name="version" value="1.0.2-SNAPSHOT">
 	</property>
 
 	<property name="dist" location="${root}/tmp/dist/tubaina-${version}">
