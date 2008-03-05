@@ -1,0 +1,78 @@
+package br.com.caelum.tubaina.parser.html;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import junit.framework.Assert;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.builder.ChapterBuilder;
+import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.html.ChapterToString;
+import br.com.caelum.tubaina.parser.html.HtmlParser;
+import freemarker.ext.beans.BeansWrapper;
+import freemarker.template.Configuration;
+
+
+public class ChapterToStringTest {
+	
+	private ChapterToString chapterToString;
+	private String sectionIdentifier;
+
+	@Before
+	public void setUp() throws IOException {
+		Configuration cfg = new Configuration();
+		cfg.setDirectoryForTemplateLoading(Tubaina.DEFAULT_TEMPLATE_DIR);
+		cfg.setObjectWrapper(new BeansWrapper());
+
+		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
+		ArrayList<String> dirTree = new ArrayList<String>();
+		dirTree.add("livro");
+		dirTree.add("livro/01-capitulo");
+		dirTree.add("livro/01-capitulo/01-primeira");
+		dirTree.add("livro/01-capitulo/02-segunda");
+		
+		chapterToString = new ChapterToString(parser, cfg, dirTree);
+		sectionIdentifier = "class=\"indexSection\"";
+	}
+	
+	private Chapter createChapter( String introduction, String chapterText) {
+		return new ChapterBuilder("Title", introduction, chapterText).build();
+	}
+
+	private int countOccurrences(String text, String substring) {
+		String[] tokens = text.split(substring);
+		return tokens.length - 1;
+	}
+	
+	@Test
+	public void testGenerateChapterWithSections() throws IOException{
+		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira " +
+				"\n[section segunda] conteudo da segunda");
+		
+		String string =  chapterToString.generateChapter(c, 1, 1).toString();
+		
+//		System.out.println(string);
+		
+		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
+		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira/\""));
+		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda/\""));
+		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
+	}
+	
+	//TODO Este teste não faz mais sentido algum. Modificar.
+	@Test
+	public void testGenerateChapterWithIntroduction() throws IOException {
+		Chapter c = createChapter("conteudo da secao vazia", "");
+		String string = chapterToString.generateChapter(c, 2, 1).toString();
+		
+		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
+		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">2<"));
+	}
+
+}

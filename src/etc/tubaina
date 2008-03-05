@@ -1,0 +1,17 @@
+#! /bin/bash
+
+
+
+if [ -z "$JAVA_HOME" ]; then
+	echo "Enviroment variable JAVA_HOME must be set in order to run tubaina";
+elif [ -z "$TUBAINA_HOME" ]; then
+	#echo "Could not find TUBAINA_HOME. Will work only if inside Tubaina bin directory";
+	WHICH=`which $0`;
+	export TUB_REL_PATH="${WHICH%/tubaina}/@TUB_HOME_MOD";
+	$JAVA_HOME/bin/java -classpath @CLASSPATH br.com.caelum.tubaina.Tubaina $@;
+
+else
+	export TUB_REL_PATH=$TUBAINA_HOME;
+	$JAVA_HOME/bin/java -classpath @CLASSPATH br.com.caelum.tubaina.Tubaina $@;
+fi;
+		

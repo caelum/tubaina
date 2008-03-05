@@ -1,0 +1,115 @@
+[chapter Tubaina]
+
+Tubaina is a textbook generator that uses a simple syntax and outputs either html or latex documents. 
+
+It has been developed in Brazil at Caelum (http://www.caelum.com.br) and it is licensed under GPL -- 
+therefore it is ::opensource:: and can be used as long as its rights are kept.
+
+[section Dependencies]
+
+Tubaina should work properly on any computer running Java5, but you will need a Latex compiller so 
+as to deliver a *.pdf output.
+
+[list]
+* **On Linux:** use your favorite package manager and import the packages ::tetex-extra:: and 
+::latex-ucs:: and theirs respective dependencies.
+
+* **On Ubuntu (Debian):** sudo apt-get install tetex-extra latex-ucs [auctex]
+
+* **On Windows:** We recommend using the TexLive project to compile latex in Windows. Run TexLive and,
+when it asks you which packages it should install, find on the list the following packages:
+
+::graphics::, ::psfrags::, ::ifthen::, ::makeidx::, ::fancyhdr::, ::pstcol::, ::colortbl::, 
+::rotating::, ::multirow::
+
+* **On Mac:** to be tested! But you may follow the **On Linux** steps if you have a package manager
+installed -- we recommend Fink and DarwinPorts.
+[/list]
+
+[section Enviromental Variables And Building Tubaina By Yourself]
+
+On Unix like systems, you can use the ::tubaina:: script to launch it. But, to do so, you need to define some 
+variables using %%export%%:
+
+[list]
+* JAVA_HOME:  Tubaina needs to know where is located the Java Virtual Machine in order to run. This variable 
+should be set to your java directory. ($JAVA_HOME/bin/java must be your JVM).
+* TUBAINA_HOME: This should point to Tubaina's base dir (the one you get right after unpacking our zip or tgz).
+[/list]
+
+To build Tubaina from our source packages, you need to have **jakarta-oro** inside your %%ant%% build path. 
+Then just run %%ant build.xml%% on the root folder.
+
+[section Running Tubaina]
+
+Run Tubaina in command line using:
+
+%% > tubaina [-latex] [-html] -i inputDirectory -o outputDirectory -n bookName [--help] [-t templateDirectory]%%
+
+If you specify neither -latex nor -html, no output will be generated!
+
+Outputs for latex and html will be generated on outputDirectory/latex and outputDirectory/html,
+respectively.
+
+For further options, check the Tubaina help.
+
+[box Why can't I see the *.dvi from the Latex?]
+For allowing users to use many image formats - not only *.eps - we use a Latex package called 
+::graphicx::. This package only works on *.pdf outputs and, therefore, will prevent Latex from 
+compilling *.tex to *.dvi.
+
+This means you can never read your Tubaina generated latex in dvi format. Don't get too upset, 
+though. Your *.pdf output will do fine!
+[/box]
+
+[section Making a new template]
+
+Making your own template on Tubaina is easy, there are just some files which presence is mandatory. 
+Let's start talking about the HTML template. Make an html and a latex folders. This folder should
+contain some documents:
+
+[list]
+	* **in yourTemplate/html:**
+
+	[list]
+		* **logo.png** - the logo, if you want Tubaina to make watermarks on your textbook images. 
+		This filename is mandatory, so is its location (inside html/ folder).
+		* **toc.ftl** - the Table of Contents structure
+		* **chapter.ftl** - the page of each Chapter introduction text
+		* **section.ftl** - the page of each Sections content text
+		* **index.ftl** - the index structure
+	[/list]
+
+	Those, except for the logo, are written in Freemarker syntax and can change the structure of your page - 
+	not the style. You might want to take ours as base for making your own Freemarker files. Have in mind, 
+	you should not change the variable names (${variable}), for they are connected to the Tubaina core.
+
+	Then, there are some other files, mainly related to the style of the Tubaina textbook. These must be
+	added to the folder %%html/includes%%, which will be automaticaly copied by Tubaina.
+
+	[list]
+		* **Java and XML stylesheets** - these are responsible for colouring Java and XML codes 
+		indicated by the tags %%java%% and %%xml%% on the text.
+		
+		* **style.css stylesheet** - this .css determines the look of your book.
+		
+		* **Navigation and menu images** - the images your project will use for header, footer, etc 
+		and NOT in textbook content should be here.
+
+		* **Scripts** - if your online textbook will use javascript or other scripts for effects, 
+		this is where you should put the script. Tubaina's template use a single script for answer 
+		dropdown effect.
+	[/list]
+
+	* **in yourTemplate/latex:**
+	
+	[list]
+		* **book.ftl** - general book structure. This *.ftl puts all the others together.
+	[/list]
+	
+	Furthermore, you should use a stylesheet. I strongly recommend you to do your own stylesheet, 
+	but you can always get directions from ours (tubaina.sty) - the matter is that it gets big and 
+	confuse and there is a better chance you'll understand it afterwards if it is your own work.
+	
+	Tubaina does not support watermarks in latex (pdf).
+[/list]

@@ -1,0 +1,22 @@
+[chapter Tubaina Overview]
+
+[quote "Constraints are good"--37signals.com]
+
+Tubaina was built to generate textbooks at Caelum ( http://www.caelum.com.br ). 
+
+It basically takes text written in **afc syntax** (take a look at the syntax chapter) and outputs LaTeX and/or 
+XHTML. 
+
+As you will notice, Tubaina is not as powerfull as LaTeX or many other text generators but that's a good 
+point. When you have thousand options to choose from, you will probably spend too much time choosing which 
+color your text should be or any other format you believe is important (and will put aside ::content 
+generation::). That's not quite good and will not improve productivity.
+
+Tubaina let all these decisions to be made inside the templates it use. This way, if you want to change how 
+all your text looks, you just change which template you use to generate. 
+
+You see? Constraints **are** good!
+
+We hope Tubaina can help you when creating content or formatting old one.
+
+Tubaina Development Team

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Tubaina" default="dist" basedir=".">
+
+	<property name="root" location="./">
+	</property>
+
+	<property name="lib" location="${root}/lib">
+	</property>
+
+	<property name="src" location="${root}/src">
+	</property>
+
+	<property name="cfg" location="${src}/resources">
+	</property>
+
+	<property name="version" value="1.0">
+	</property>
+
+	<property name="dist" location="${root}/tmp/dist/tubaina-${version}">
+	</property>
+
+	<property name="source" location="${root}/tmp/source/tubaina-${version}-src">
+	</property>
+
+	<property name="tmp" location="${dist}/tmp">
+	</property>
+
+	<target name="init">
+		<!--Build path hierarchy -->
+		<mkdir dir="${dist}" />
+		<mkdir dir="${dist}/lib" />
+		<mkdir dir="${dist}/config" />
+		<mkdir dir="${dist}/bin" />
+		<mkdir dir="${dist}/docs" />
+		<mkdir dir="${dist}/src/templates" />
+		<mkdir dir="${tmp}" />
+		<mkdir dir="${source}" />
+	</target>
+
+	<target name="compile" depends="init" description="Compile the source code">
+		<javac srcdir="${src}/java" destdir="${tmp}">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="copyTemplate" description="Copy default templates">
+		<copy todir="${dist}/src/templates">
+			<fileset dir="${src}/templates">
+				<include name="**/*" />
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="dist" depends="compile, copyTemplate" description="Generate the distribution">
+
+		<copy todir="${dist}/lib">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
+
+		<!-- TODO property -->
+		<copy todir="${dist}/bin" file="${src}/etc/latex.sh">
+		</copy>
+
+		<copy todir="${dist}" file="${src}/etc/LICENSE.txt">
+		</copy>
+
+		<jar destfile="${dist}/lib/tubaina.jar">
+			<fileset dir="${tmp}">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="${cfg}">
+				<include name="**/*" />
+			</fileset>
+			<fileset dir="${dist}/src/templates">
+				<include name="**/*" />
+			</fileset>
+			<manifest>
+				<attribute name="Main-Class" value="br.com.caelum.tubaina.Tubaina" />
+				<attribute name="Manifest-Version" value="1.0" />
+			</manifest>
+		</jar>
+
+		<!-- tmp is not useful anymore -->
+		<delete dir="${tmp}">
+		</delete>
+
+		<echo message="Generating docs">
+		</echo>
+
+		<!-- Configuring classpath -->
+		<fileset id="runClasspath" dir="${dist}">
+			<include name="lib/*.jar" />
+		</fileset>
+
+		<property name="tubaina.classpath" refid="runClasspath">
+		</property>
+
+		<path id="classpath">
+			<fileset dir="${dist}/lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<java fork="true" dir="${dist}" classname="br.com.caelum.tubaina.Tubaina" classpathref="classpath">
+			<arg id="type" value="-html" />
+			<arg id="n" value="-n" />
+			<arg id="name" value="docs" />
+			<arg id="i" value="-i" />
+			<arg id="inputDir" value="${root}/docs" />
+			<arg id="o" value="-o" />
+			<arg id="outputDir" value="${dist}/docs" />
+
+		</java>
+
+		<!--removing todo.log -->
+		<delete file="${dist}/todo.log">
+		</delete>
+
+		<!-- Generating *nix tubaina launcher script-->
+
+		<copy file="${src}/etc/tubaina" todir="${dist}/bin">
+		</copy>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH" replace="${tubaina.classpath}">
+		</replaceregexp>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";lib/" replace=":$TUB_REL_PATH/lib/">
+		</replaceregexp>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/">
+		</replaceregexp>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@TUB_HOME_MOD" replace="..">
+		</replaceregexp>
+
+		<chmod perm="755" file="${dist}/bin/latex.sh">
+		</chmod>
+		<chmod perm="755" file="${dist}/bin/tubaina">
+		</chmod>
+
+		<!-- Zipping all files -->
+		<zip destfile="${root}/tmp/tubaina-${version}.zip" basedir="${dist}/..">
+		</zip>
+
+		<!-- Tar all files -->
+		<tar destfile="${root}/tmp/tubaina-${version}.tar.gz" basedir="${dist}/.." compression="gzip">
+		</tar>
+
+		<!-- making source folder -->
+		<copy todir="${source}">
+			<fileset dir="${root}">
+				<include name="**/*" />
+				<exclude name="bin/" />
+				<exclude name="src/afc/" />
+				<exclude name="src/templatesCaelum/" />
+				<exclude name="tmp/" />
+				<exclude name="todo.log" />
+			</fileset>
+		</copy>
+
+		<!-- Zipping source -->
+		<zip destfile="${root}/tmp/tubaina-${version}-src.zip" basedir="${source}/..">
+		</zip>
+
+		<!-- Tar source -->
+		<tar destfile="${root}/tmp/tubaina-${version}-src.tar.gz" basedir="${source}/.." compression="gzip">
+		</tar>
+
+		<!-- Removing all temporary files -->
+		<delete dir="${dist}/..">
+		</delete>
+		<delete dir="${source}/..">
+		</delete>
+
+
+	</target>
+
+</project>

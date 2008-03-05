@@ -1,0 +1,144 @@
+[chapter *.afc output layout test]
+
+In order for you to test your stylesheets, here is a test page for the *.afc format layout.
+
+It includes all the displayed tags of the Tubaina syntax. Go on, try your own layout on it (our's works)!
+
+[section Chapters, sections and other chunks]
+
+This just allows us verify if the sections are correctly working and so are its paragraphs and stuff like
+that.
+
+It is kind of important to verify paragraph spacing.
+
+[title unimportant section]
+
+This section should appear on the same html page as the section "Chapters, sections and other chunks"
+
+[quote To understand recursion, you must first understand recursion -- Anonymous ]
+
+Not labeled text, [label A simple label! No tag is allowed here]Labeled text[/label].
+
+[box A sample box] This should be contained in a box and all the kinds of code tag in it. Let's see...
+
+**Java:**
+[java]
+public static void main (String[] args) {
+	System.out.println("Hello world!");
+}
+[/java]
+
+**XML:**
+[xml]
+<printIt when="now">
+	Hello world!
+	<skipLine />
+</printIt>
+[/xml]
+
+**Code:**
+[code]
+int main(){
+	printf("Hello world!\n");
+}
+[/code]
+
+**Code properties:**
+[code properties]
+print: "Hello world!"
+jumpLine= 1 line
+[/code]
+
+Check if there is no weird color background on the codes above. If there is, you should use the *.css tag:
+
+[code properties]background-color: inherit[/code]
+[/box]
+
+[title Code chunk outside boxes]
+
+Now we're testing the Code chunks outside the boxes - just to make sure you didn't messed it all up when
+fixing the stylesheets for boxes. Besides, we're testing the lines highlight on all the code types, 
+boldening the printing lines on each format.
+
+**Java:**
+[java h=2]
+public static void main (String[] args) {
+	System.out.println("Hello world!");
+}
+[/java]
+
+**XML:**
+[xml h=2,3]
+<printIt when="now">
+	Hello world!
+	<skipLine />
+</printIt>
+[/xml]
+
+**Code:**
+[code h=2]
+int main(){
+	printf("Hello world!\n");
+}
+[/code]
+
+**Code properties:**
+[code properties h=1,2]
+print: "Hello world!"
+jumpLine= 1 line
+[/code]
+
+[title Exercises]
+
+The exercise tag enumerates the exercises. Pay attention to that.
+
+Furthermore, the answer tag should create either a dropdown tab, on HTML, or a answer booklet at the end of
+the Latex output.
+
+[exercise]
+	[question] The question 
+		[answer] The answer [/answer]
+	[/question]
+
+	[question] The other question...
+		[answer] The respective (second) answer [/answer]
+	[/question]
+[/exercise]
+
+[note]Note to the instructor. Is your layout good enough for your instructor to read? ;)[/note]
+
+[title Text layout]
+**Bold** normal text ::italic:: normal text __underlined__ normal text %%code%% normal text 
+
+[title Lists]
+
+**Circular bulleted list:** 
+[list]
+	* item
+	* item
+[/list]
+
+**Numbered list:**
+[list number]
+	* item
+[/list]
+
+**Roman counter list:**
+[list roman]
+	* item
+[/list]
+
+**Letter counter list:**
+[list letter]
+	* item
+[/list]
+
+[title Links and Images]
+
+**Links:** 
+
+http://tubaina.sourceforge.net and http://www.caelumobjects.com
+
+**Images:**
+
+[img ../src/test/basePngImage.png w=30% "The image for testing"]

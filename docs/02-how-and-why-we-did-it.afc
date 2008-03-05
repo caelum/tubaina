@@ -1,0 +1,36 @@
+[chapter How and why we did it]
+
+[quote "Keep it simple"-- ]
+
+The whole idea for the project came from a simple problem: How to have control over editions of textbooks. 
+At Caelum we used to have huge OpenOffice files and versioning system, like cvs or svn. The big problem
+is that **odt** is a binary format, so any simultaneous editing would create a conflict (a really hard one 
+to solve because you don't know where the file was changed).
+
+[title Why not simply use LaTeX?]
+
+Even though LaTeX is incredible powerfull, we also wanted to have Html output. Even using some third party 
+LaTeX to Html conversor the result wouldn't be as we wanted. Usually these tools doesn't allow us to customize
+the output.
+Besides, LaTeX can drive you nuts with its heavy syntax and crazy style sheets. 
+
+We wanted a really simple syntax and LaTeX was far more complex than necessary. It would slow down production
+and our textbooks wouldn't be really standardized. We needed contraints and LaTex would not provide it to us.
+
+These and other causes drove us into this project.
+
+[title Development process]
+
+Tubaina was developed using an agile methodology called Extreme Programming 
+( http://en.wikipedia.org/wiki/Extreme_Programming ). 
+We were couched by Mariana Vivian Bravo, grad student on agile methodologies at "Universidade de São Paulo". 
+Since [label Extreme Programmig]XP[/label] is a incremental methodologie, we had Tubaina running and generating 
+some Html after the first week. It was really interesting to have something working so soon because this was
+Caelum's Trainees first project.
+
+Java was choosen because it's portable, and is Caelum's courses focus. Also, Caelum has developed frameworks 
+( like VRaptor - http://vraptor.org ) using it. 
+
+Developing Tubaina was really fun. Most programmers of the team had almost no previous contact with XP, Design 
+Patterns, CSS, XHTML and text parsing. So, learning was in focus every single day.
+

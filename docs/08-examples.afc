@@ -1,0 +1,59 @@
+[chapter A few short examples]
+
+Here, you'll have some simple examples of *.afc text that intend to show the easy use of this syntax.
+
+[section Example 1]
+
+[code #]
+	[chapter How to send an e-mail]
+
+	In this chapter, you'll learn how to send an e-mail
+
+	[section Why would I do that?]
+
+		The ::e-mail:: is the **main** comunication mean of most companies. Anyone 
+		should be able to send an ::e-mail:::
+
+	[section The steps]
+	[list number]
+		* **Browser:** Double click on your browser's icon (Firefox, Iceweasel, 
+		IE, Safari,...)
+		* **Navigating:** Copy the page address in your browser's address bar.
+			[TODO missing steps]
+		* **Log in:** Copy your login and passward to their respective fields and 
+		Click on %%ok%%.
+	[/list]
+
+	That is your ::inbox:: folder. The incoming e-mails will appear there.
+
+	[box Where do I learn more?]
+		You can learn some more by exploring your e-mails' page. There must be a 
+		link somewhere that teaches you all funcionalities of your e-mail - 
+		including where it keeps the e-mail you send or how do you delete 
+		unwanted e-mail.
+	[/box]
+[/code]
+
+[section Example 2]
+
+[code]How do you write a HelloWorld...
+
+	[list]
+		* **in Java**
+
+		[java]
+			public static void main(String[] args){
+				System.out.println("Hello world!");
+			}
+		[/java]
+
+		* **in C**
+
+		[code]
+			int main(){
+				printf("Hello world!\n");
+				return 0;
+			}
+		[/code]
+	[/list]
+[/code]

@@ -1,0 +1,127 @@
+[chapter *.afc format syntax]
+
+This a short introduction to the *.afc format syntax. 
+
+[section Chapters, sections and other chunks]
+
+**Chapter:** This tag creates a chapter in your textbook.
+
+[code][chapter chapter name][/code]
+
+**Section:** The section tag builds a section in a chapter. It also adds a reference on the Table of 
+Contents.
+
+[code][section section name][/code]
+
+**Unimportant section:** Title works quite alike sections, but it neither add a reference on the Table of
+Contents nor make a new webpage in HTML mode -- it belongs to the previous section .
+
+[code][title unimportant section][/code]
+
+**Quotations:** This tag adjust the quotation layout, ::italizing:: the quote and placing its author 
+on the next line. Both quotation and author are aligned to the right.
+
+[code][quote <quotation> --<author>][/code]
+
+**Label:** Adds a footnote, on Latex, and a alt box, on HTML, on the text inside the tag. Be aware to the 
+fact that no other tags are allowed on the label text.
+
+[code][label the label] what is beeing labeled [/label][/code]
+
+**Box:** The box tag places its content in a new environment slightly indented and appart from the 
+rest of the text.
+
+[code][box <box title>] <content> [/box][/code]
+
+**Exercises:** The exercise tag creates an new environment in which you must place questions. Each 
+question might have an answer and it can be added by using the tag answer.
+
+[code][exercise]
+	[question] The question [/question]
+[/exercise][/code]
+
+OR
+
+[code][exercise]
+	[question] The question 
+		[answer] The answer [/answer]
+	[/question]
+[/exercise][/code]
+
+**Instructors' Note:** in case you need your teacher's textbook to have extra information, you might
+use the note tag. It adds Instructor Notes to the textbook when compiling with instructors option on.
+
+[code][note]Note to the instructor[/note][/code]
+
+[section Basic text definition]
+
+**Bold:** [code]**bold text**[/code]
+
+**Italic:** [code]::italic text::[/code]
+
+**Underlined:** [code]__underlined text__[/code]
+
+**Inline code:** [code] %% code text in common text paragraph %% [/code]
+
+[section Code chunk tags]
+
+**Java:** [code][java]Java code[/java][/code]
+
+**Java from file:** [code][java src]path/File.java[/java][/code]
+
+**XML:** [code][xml]XML code[/xml][/code]
+
+**.properties:** [code][code properties]Properties code[/code][/code]
+
+**Outras linguagens:** [code][code]Any other code[/code][/code]
+
+In order to emphasize code lines, use the option: %%h=line1,line2,...%% like this:
+[code][java h=1,2,3]....[/java][/code]
+
+[section Special tags]
+
+**Link:** Tubaina automatically adds links whenever you use "http://"
+
+**Anchor for indexing:** This tag creates an anchor to be added in the index.
+
+[code][index anchor name][/code]
+
+**To do:** The tag ::to do:: allows you making reminders of those edits you must do on your textbook,
+but have not enough time or material to work on. It builds a log of all the open tasks in your book.
+
+[code][todo task reminder][/code]
+
+[section Lists]
+
+**Circular bulleted list:** 
+
+[code][list]
+	* item
+	* item
+[/list][/code]
+
+**Numbered list:**
+
+[code][list number]
+	* item
+[/list][/code]
+
+**Roman counter list:**
+
+[code][list roman]
+	* item
+[/list][/code]
+
+**Letter counter list:**
+
+[code][list letter]
+	* item
+[/list][/code]
+
+[section Images]
+
+**Images:** in order to add images to your textbook, you must use the tag ::img::. This tag has two
+specialties: you may choose the percentage of the width of the page your image must fill by using the
+tag **w** and you can add a comment about the image on a floating tab.
+
+[code][img path/imagem.png w=scale% "tab comment"][/code]
