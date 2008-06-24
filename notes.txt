@@ -1,0 +1,12 @@
+Building a Jar
+
+	execute in a terminal:
+	 > cd /path/to/tubaina
+	 > ant dist
+ 
+
+Getting a *.pdf compiled
+	
+	After creating the latex file with tubaina, run the latex.sh 
+			(it should be in the "bin" directory if you built Tubaina before)
+			(If you didn't, it is located under tubaina/src/etc/ )
