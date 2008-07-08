@@ -2,7 +2,7 @@ Building a Jar
 
 	execute in a terminal:
 	 > cd /path/to/tubaina
-	 > ant dist
+	 > mvn package
  
 
 Getting a *.pdf compiled

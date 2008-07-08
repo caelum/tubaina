@@ -16,9 +16,11 @@ import br.com.caelum.tubaina.resources.ResourceLocator;
 public class ImageReplacerTest {
 
 	private ImageReplacer replacer;
+
 	private List<Chunk> chunks;
+
 	private List<Resource> resources;
-	
+
 	@Before
 	public void setUp() {
 		resources = new ArrayList<Resource>();
@@ -29,7 +31,7 @@ public class ImageReplacerTest {
 
 	@Test
 	public void testReplacesCorrectImage() {
-		String image = "[img src/test/baseJpgImage.jpg] ola resto";
+		String image = "[img src/test/resources/baseJpgImage.jpg] ola resto";
 		Assert.assertTrue(replacer.accepts(image));
 		String resto = replacer.execute(image, chunks);
 		Assert.assertEquals(" ola resto", resto);

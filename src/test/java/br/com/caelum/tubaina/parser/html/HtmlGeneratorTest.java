@@ -19,8 +19,6 @@ import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.HtmlGenerator;
-import br.com.caelum.tubaina.parser.html.HtmlParser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 import br.com.caelum.tubaina.util.Utilities;
@@ -39,19 +37,19 @@ public class HtmlGeneratorTest {
 		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
 		HtmlParser parser = new HtmlParser(tags, false);
 
-		File path = new File("src/test/");
+		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
 
-		this.generator = new HtmlGenerator(parser, false, Tubaina.DEFAULT_TEMPLATE_DIR);
+		generator = new HtmlGenerator(parser, false, Tubaina.DEFAULT_TEMPLATE_DIR);
 
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
 				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
 				+ "texto da segunda seção\n\n"));
 		builder.add(new StringReader("[chapter Introdução]\n" + "Algum texto de introdução\n"));
-		this.book = builder.build();
-		this.temp = new File("tmp");
-		this.temp.mkdir();
+		book = builder.build();
+		temp = new File("tmp");
+		temp.mkdir();
 
 	}
 
@@ -122,10 +120,10 @@ public class HtmlGeneratorTest {
 		Assert.assertTrue(images.exists());
 
 		Assert.assertEquals(1, images.list().length);
-//		File original = new File("src/test/h1-caelum.gif");
+		// File original = new File("src/test/h1-caelum.gif");
 		File copied = new File(images, "baseJpgImage.jpg");
 		Assert.assertTrue(copied.exists());
-//		Assert.assertTrue(FileUtils.contentEquals(original, copied));
+		// Assert.assertTrue(FileUtils.contentEquals(original, copied));
 	}
 
 	@Test
@@ -145,7 +143,7 @@ public class HtmlGeneratorTest {
 	@Test
 	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("Com imagens");
-		builder.add(new StringReader("[chapter qualquer um]\n" + "[img someImage.gif]"));
+		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
 		try {
 			Book b = builder.build();
 			generator.generate(b, temp);

@@ -22,33 +22,28 @@ import br.com.caelum.tubaina.chunk.XmlChunk;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
-
 public class ChunksMakerBuilderTest {
 
 	private String chunkString;
-	
+
 	private List<Resource> resources;
 
 	@Before
-	public void setUp(){
-		this.chunkString = "[box title]conteudo[/box]" +
-				"[code]codigo[/code]" +
-				"[exercise][question]pergunta[answer]resposta[/answer][/question][/exercise]" +
-				"[img src/test/baseJpgImage.jpg]" +
-				"[java] class [/java]" +
-				"[list]*texto\n* blablabla\n[/list]" +
-				"[note]nota[/note]" +
-				"[xml]<xml>[/xml]\n\n" +
-				"finalmente um paragrafo";
-		this.resources = new ArrayList<Resource>();
+	public void setUp() {
+		chunkString = "[box title]conteudo[/box]" + "[code]codigo[/code]"
+				+ "[exercise][question]pergunta[answer]resposta[/answer][/question][/exercise]"
+				+ "[img src/test/resources/baseJpgImage.jpg]" + "[java] class [/java]"
+				+ "[list]*texto\n* blablabla\n[/list]" + "[note]nota[/note]" + "[xml]<xml>[/xml]\n\n"
+				+ "finalmente um paragrafo";
+		resources = new ArrayList<Resource>();
 		ResourceLocator.initialize(".");
-		
+
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForAnswer() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("answer");
-		List<Chunk> chunks= maker.make(chunkString);
+		List<Chunk> chunks = maker.make(chunkString);
 		Assert.assertEquals(11, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
@@ -62,11 +57,11 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(XmlChunk.class, chunks.get(9).getClass());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(10).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForBox() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("box");
-		List<Chunk> chunks= maker.make(chunkString);
+		List<Chunk> chunks = maker.make(chunkString);
 		Assert.assertEquals(11, chunks.size());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
@@ -80,7 +75,7 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(XmlChunk.class, chunks.get(9).getClass());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(10).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForExercise() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("exercise");
@@ -88,27 +83,27 @@ public class ChunksMakerBuilderTest {
 			maker.make(chunkString);
 			Assert.fail();
 		} catch (TubainaException e) {
-			//OK
+			// OK
 		}
 
-//		Assert.assertEquals(11, chunks.size());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(1).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(2).getClass());
-//		Assert.assertEquals(QuestionChunk.class, chunks.get(3).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(4).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(5).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(6).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(7).getClass());
-//		Assert.assertEquals(NoteChunk.class, chunks.get(8).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(9).getClass());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(10).getClass());
+		// Assert.assertEquals(11, chunks.size());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(1).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(2).getClass());
+		// Assert.assertEquals(QuestionChunk.class, chunks.get(3).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(4).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(5).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(6).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(7).getClass());
+		// Assert.assertEquals(NoteChunk.class, chunks.get(8).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(9).getClass());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(10).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForItem() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("item");
-		List<Chunk> chunks= maker.make(chunkString);
+		List<Chunk> chunks = maker.make(chunkString);
 
 		Assert.assertEquals(9, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
@@ -121,7 +116,7 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(XmlChunk.class, chunks.get(7).getClass());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(8).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForList() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("list");
@@ -129,17 +124,17 @@ public class ChunksMakerBuilderTest {
 			maker.make(chunkString);
 			Assert.fail();
 		} catch (TubainaException e) {
-			//OK
+			// OK
 		}
 
-//		Assert.assertEquals(1, chunks.size());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
+		// Assert.assertEquals(1, chunks.size());
+		// Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForNote() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("note");
-		List<Chunk> chunks= maker.make(chunkString);
+		List<Chunk> chunks = maker.make(chunkString);
 		Assert.assertEquals(11, chunks.size());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
@@ -157,8 +152,8 @@ public class ChunksMakerBuilderTest {
 	@Test
 	public void testChunksMakerBuilderForQuestion() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("question");
-		List<Chunk> chunks= maker.make(chunkString);
-		
+		List<Chunk> chunks = maker.make(chunkString);
+
 		Assert.assertEquals(12, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
@@ -173,16 +168,16 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(XmlChunk.class, chunks.get(10).getClass());
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(11).getClass());
 	}
-	
+
 	@Test
 	public void testChunksMakerBuilderForAll() {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("all");
-		List<Chunk> chunks= maker.make(chunkString);
-		
-//		for (Chunk chunk : chunks) {
-//			System.out.println(chunk.getClass());
-//		}
-		
+		List<Chunk> chunks = maker.make(chunkString);
+
+		// for (Chunk chunk : chunks) {
+		// System.out.println(chunk.getClass());
+		// }
+
 		Assert.assertEquals(9, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
