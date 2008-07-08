@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,16 +11,16 @@ import freemarker.template.Configuration;
 
 public class BookToLatex {
 
-	private Parser parser;
+	private final Parser parser;
 
-	public BookToLatex(Parser parser) {
+	public BookToLatex(final Parser parser) {
 		this.parser = parser;
 	}
 
-	public StringBuffer generateLatex(Book book, Configuration cfg) throws IOException {
+	public StringBuffer generateLatex(final Book book, final Configuration cfg) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("book", book);
-		map.put("parser", this.parser);
+		map.put("parser", parser);
 		map.put("textbookVersion", new VersionGenerator().generate());
 
 		FreemarkerProcessor processor = new FreemarkerProcessor(cfg);

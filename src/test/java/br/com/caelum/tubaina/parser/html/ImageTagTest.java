@@ -5,7 +5,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.ImageTag;
 
 public class ImageTagTest {
 

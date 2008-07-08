@@ -2,11 +2,9 @@ package br.com.caelum.tubaina.parser.latex;
 
 import java.util.List;
 
-import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.CodeHighlightTag;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.util.Utilities;
 import de.java2html.Java2Html;
 import de.java2html.JavaSourceConversionSettings;
 import de.java2html.converter.IJavaSourceConverter;

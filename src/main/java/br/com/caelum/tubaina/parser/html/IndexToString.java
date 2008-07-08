@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.parser.html;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,16 +11,17 @@ import freemarker.template.Configuration;
 public class IndexToString {
 
 	private final List<String> dirTree;
+
 	private final Configuration cfg;
 
-	public IndexToString(List<String> dirTree, Configuration cfg) {
+	public IndexToString(final List<String> dirTree, final Configuration cfg) {
 		this.dirTree = dirTree;
 		this.cfg = cfg;
 	}
 
-	public StringBuffer createIndex(Map<String, Integer> indexes) throws IOException {
+	public StringBuffer createIndex(final Map<String, Integer> indexes) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("dirTree", this.dirTree);
+		map.put("dirTree", dirTree);
 		map.put("indexes", indexes);
 		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "html/index.ftl");

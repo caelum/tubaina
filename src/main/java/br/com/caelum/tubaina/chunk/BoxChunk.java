@@ -8,21 +8,20 @@ import br.com.caelum.tubaina.parser.Parser;
 
 public class BoxChunk implements CompositeChunk {
 
-
 	private final List<Chunk> body;
-	private String title;
-	
-	public BoxChunk(String title, List<Chunk> body) {
-		this.title = title;
+
+	private final String title;
+
+	public BoxChunk(final String title, final List<Chunk> body) {
+		this.title = title.trim();
 		this.body = body;
 	}
 
-	public String getContent(Parser p) {
-		String title =  this.title.trim();
+	public String getContent(final Parser p) {
 		String content = "";
 		for (Chunk c : body) {
 			content += c.getContent(p);
-		}		
+		}
 		return p.parseBox(content, title);
 	}
 

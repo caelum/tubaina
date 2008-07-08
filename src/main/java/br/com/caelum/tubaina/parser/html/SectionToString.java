@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.parser.html;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,27 +12,27 @@ import freemarker.template.Configuration;
 
 public class SectionToString {
 
-	private Parser parser;
+	private final Parser parser;
 
-	private Configuration cfg;
+	private final Configuration cfg;
 
 	private final List<String> dirTree;
 
-	public SectionToString(Parser parser, Configuration cfg, List<String> dirTree) {
+	public SectionToString(final Parser parser, final Configuration cfg, final List<String> dirTree) {
 		this.parser = parser;
 		this.cfg = cfg;
 		this.dirTree = dirTree;
 	}
 
-	public StringBuffer generateSection(String chapterTitle, int chapterIndex, Section s, int sectionIndex, int currentDir)
-			throws IOException {
+	public StringBuffer generateSection(final String chapterTitle, final int chapterIndex, final Section s,
+			final int sectionIndex, final int currentDir) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("title", chapterTitle);
 		map.put("section", s);
 		map.put("curchap", chapterIndex);
 		map.put("cursec", sectionIndex);
-		map.put("parser", this.parser);
-		map.put("dirTree", this.dirTree);
+		map.put("parser", parser);
+		map.put("dirTree", dirTree);
 		map.put("curdir", currentDir);
 		map.put("sanitizer", new HtmlSanitizer());
 

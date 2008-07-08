@@ -13,7 +13,6 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Tubaina;
 import br.com.caelum.tubaina.builder.BookBuilder;
-import br.com.caelum.tubaina.parser.html.BookToTOC;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
@@ -22,6 +21,7 @@ public class BookToTOCTest {
 	private Configuration cfg;
 
 	private String sectionIdentifier;
+
 	private String chapterIdentifier;
 
 	@Before
@@ -35,7 +35,7 @@ public class BookToTOCTest {
 	}
 
 	@Test
-	public void testGenerateBookWithoutSections() throws IOException {
+	public void testGenerateBookWithoutSections() {
 		Book b = createBook("[chapter primeiro] um conteúdo \n[chapter segundo] outro conteúdo");
 		BookToTOC generator = new BookToTOC();
 		List<String> dirTree = new ArrayList<String>();
@@ -45,7 +45,7 @@ public class BookToTOCTest {
 
 		String toc = generator.generateTOC(b, cfg, dirTree).toString();
 
-//		System.out.println(toc);
+		// System.out.println(toc);
 		Assert.assertEquals(0, countOccurrences(toc, sectionIdentifier));
 		Assert.assertEquals(3, countOccurrences(toc, chapterIdentifier));
 		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-primeiro/\""));
@@ -53,7 +53,7 @@ public class BookToTOCTest {
 	}
 
 	@Test
-	public void testGenerateBookWithSections() throws IOException {
+	public void testGenerateBookWithSections() {
 		Book b = createBook("[chapter unico]"
 				+ "[section uma] Conteúdo da section 1 \n[section duas] conteudo da section 2");
 		BookToTOC generator = new BookToTOC();
@@ -63,7 +63,7 @@ public class BookToTOCTest {
 		dirTree.add("livro/01-unico");
 		dirTree.add("livro/01-unico/01-uma");
 		dirTree.add("livro/01-unico/02-duas");
-		
+
 		String toc = generator.generateTOC(b, cfg, dirTree).toString();
 
 		Assert.assertEquals(2, countOccurrences(toc, sectionIdentifier));
@@ -73,14 +73,14 @@ public class BookToTOCTest {
 		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/02-duas/\""));
 	}
 
-	private Book createBook(String bookText) {
+	private Book createBook(final String bookText) {
 		BookBuilder builder = new BookBuilder("Title");
 		builder.add(new StringReader(bookText));
 		Book b = builder.build();
 		return b;
 	}
 
-	private int countOccurrences(String text, String substring) {
+	private int countOccurrences(final String text, final String substring) {
 		String[] tokens = text.split(substring);
 		return tokens.length - 1;
 	}

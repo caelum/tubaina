@@ -11,7 +11,6 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.HtmlParser;
 
 public class HtmlParserTest {
 

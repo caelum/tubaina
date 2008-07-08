@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.builder;
 
-import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -28,7 +27,7 @@ public class BookBuilderTest {
 	private Parser parser;
 
 	@Before
-	public void setUp() throws IOException {
+	public void setUp() {
 		parser = new MockedParser();
 		ResourceLocator.initialize(".");
 	}

@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
-import br.com.caelum.tubaina.parser.html.ItemTag;
 
 public class ItemTagTest {
 	@Test

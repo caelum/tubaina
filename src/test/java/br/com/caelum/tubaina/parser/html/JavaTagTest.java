@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
-import br.com.caelum.tubaina.parser.html.JavaTag;
 import de.java2html.Java2Html;
 import de.java2html.JavaSourceConversionSettings;
 import de.java2html.converter.IJavaSourceConverter;

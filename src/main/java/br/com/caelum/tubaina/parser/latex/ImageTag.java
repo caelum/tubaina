@@ -11,7 +11,7 @@ public class ImageTag implements Tag {
 
 	double pageWidth = 175;
 
-	public String parse(String path, String options) {
+	public String parse(final String path, final String options) {
 		String output = "\\begin{center}\n\n";
 
 		output = output + "\\includegraphics";
@@ -24,12 +24,12 @@ public class ImageTag implements Tag {
 
 		Pattern actualWidth = Pattern.compile("(?s)(?i)\\[(.+?)\\]");
 		Matcher aMatcher = actualWidth.matcher(options);
-		
+
 		double width = Double.MAX_VALUE;
 		if (aMatcher.find()) {
 			width = Double.parseDouble(aMatcher.group(1));
 		}
-		
+
 		if (sMatcher.find()) {
 			output = output + "[width=" + pageWidth * (Double.parseDouble(sMatcher.group(1)) / 100) + "mm]";
 		} else if (width > pageWidth) {
@@ -50,7 +50,7 @@ public class ImageTag implements Tag {
 		return output;
 	}
 
-	public Integer getScale(String string) {
+	public Integer getScale(final String string) {
 		if (string == null) {
 			return null;
 		}
@@ -59,8 +59,7 @@ public class ImageTag implements Tag {
 
 		if (sMatcher.find()) {
 			return Integer.parseInt(sMatcher.group(1));
-		} else {
-			return null;
 		}
+		return null;
 	}
 }

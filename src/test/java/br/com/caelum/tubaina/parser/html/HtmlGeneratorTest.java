@@ -193,7 +193,7 @@ public class HtmlGeneratorTest {
 	}
 
 	@Test
-	public void testToDirectoryName() throws IOException {
+	public void testToDirectoryName() {
 		// TODO Testar mais && Mudar de classe
 		Assert.assertEquals("01-o-que-e-java", Utilities.toDirectoryName(1, "O que é Java?"));
 		Assert.assertEquals("10-o-que-e-java", Utilities.toDirectoryName(10, "O    que\t é Java?"));

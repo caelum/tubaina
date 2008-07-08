@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.parser.html;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,7 @@ import freemarker.template.Configuration;
 
 public class BookToTOC {
 
-	public StringBuffer generateTOC(Book b, Configuration cfg, List<String> dirTree) throws IOException {
+	public StringBuffer generateTOC(final Book b, final Configuration cfg, final List<String> dirTree) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", b.getName());
 		map.put("chapters", b.getChapters());

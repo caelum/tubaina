@@ -11,7 +11,7 @@ public class ImageTag implements Tag {
 
 	private static final String RELATIVEPATH = "../resources/";
 
-	public String parse(String path, String options) {
+	public String parse(final String path, final String options) {
 		String output = "<div class=\"image\">";
 		String imgsrc = FilenameUtils.getName(path);
 		output = output + "<img src=\"" + RELATIVEPATH + imgsrc + "\"";
@@ -33,7 +33,7 @@ public class ImageTag implements Tag {
 		return output;
 	}
 
-	public Integer getScale(String string) {
+	public Integer getScale(final String string) {
 		if (string == null) {
 			return null;
 		}
@@ -42,8 +42,7 @@ public class ImageTag implements Tag {
 
 		if (sMatcher.find()) {
 			return Integer.parseInt(sMatcher.group(1));
-		} else {
-			return null;
 		}
+		return null;
 	}
 }

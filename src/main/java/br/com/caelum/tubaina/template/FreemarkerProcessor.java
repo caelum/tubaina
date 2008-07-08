@@ -15,16 +15,17 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 public class FreemarkerProcessor {
-	private Configuration configuration;
+	private final Configuration configuration;
 
 	private final static Logger LOG = Logger.getLogger(FreemarkerProcessor.class);
 
-	public FreemarkerProcessor(Configuration configuration) {
+	public FreemarkerProcessor(final Configuration configuration) {
 		this.configuration = configuration;
 	}
 
 	@Deprecated
-	public void processToFile(Map<String, Object> map, File destination, String template) throws IOException {
+	public void processToFile(final Map<String, Object> map, final File destination, final String template)
+			throws IOException {
 		LOG.info(String.format("Processing template %s into file %s", template, destination.getCanonicalPath()));
 		PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
 		try {
@@ -36,7 +37,7 @@ public class FreemarkerProcessor {
 		out.flush();
 	}
 
-	public StringBuffer process(Map<String, Object> map, String template) throws IOException {
+	public StringBuffer process(final Map<String, Object> map, final String template) {
 		// TODO: make UnitTests for this method
 		StringWriter writer = new StringWriter();
 		PrintWriter out = new PrintWriter(writer);

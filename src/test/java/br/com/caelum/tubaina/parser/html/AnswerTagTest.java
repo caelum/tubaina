@@ -3,8 +3,6 @@ package br.com.caelum.tubaina.parser.html;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.AnswerTag;
-
 
 public class AnswerTagTest {
 	@Test
