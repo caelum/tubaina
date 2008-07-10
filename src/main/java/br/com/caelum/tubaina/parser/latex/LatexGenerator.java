@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.Generator;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.AnswerResource;
 import br.com.caelum.tubaina.resources.LatexResourceManipulator;
@@ -22,7 +21,7 @@ import br.com.caelum.tubaina.resources.ResourceManipulator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class LatexGenerator implements Generator {
+public class LatexGenerator {
 
 	private final Parser parser;
 
@@ -38,7 +37,7 @@ public class LatexGenerator implements Generator {
 		this.noAnswer = noAnswer;
 	}
 
-	public void generate(Book book, File directory) throws IOException {
+	public void generate(Book book, File directory, String outputFileName) throws IOException {
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);
 		cfg.setObjectWrapper(new BeansWrapper());
@@ -47,7 +46,7 @@ public class LatexGenerator implements Generator {
 		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg);
 
 		// print the latex document to an archive
-		File fileBook = new File(directory, "book.tex");
+		File fileBook = new File(directory, outputFileName);
 		PrintStream stream = new PrintStream(fileBook, "UTF-8");
 		stream.append(latex);
 		stream.close();

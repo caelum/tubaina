@@ -16,7 +16,6 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.Generator;
 import br.com.caelum.tubaina.resources.HtmlResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceManipulator;
@@ -26,7 +25,7 @@ import br.com.caelum.tubaina.util.XHTMLValidator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class HtmlGenerator implements Generator {
+public class HtmlGenerator {
 
 	private static final Logger LOG = Logger.getLogger(HtmlGenerator.class);
 

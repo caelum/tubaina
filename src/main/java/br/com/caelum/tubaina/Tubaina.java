@@ -24,7 +24,6 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.builder.BookBuilder;
-import br.com.caelum.tubaina.parser.Generator;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -52,6 +51,7 @@ public class Tubaina {
 	private static boolean showNotes;
 	private static boolean dontCare;
 	private static boolean noAnswer;
+	private static String outputFileName;
 	
 	public static void main(String[] args) throws IOException {
 
@@ -98,11 +98,11 @@ public class Tubaina {
 			List<Tag> tags = conf.read("/regex.properties", "/latex.properties");
 			
 			Parser parser = new LatexParser(tags, showNotes, noAnswer);
-			Generator latexGenerator = new LatexGenerator(parser, templateDir, noAnswer);
+			LatexGenerator generator = new LatexGenerator(parser, templateDir, noAnswer);
 			File file = new File(outputDir, "latex");
 			FileUtils.forceMkdir(file);
 			try {
-				latexGenerator.generate(b, file);
+				generator.generate(b, file, outputFileName);
 			} catch (TubainaException e) {
 				LOG.warn(e.getMessage());
 			}
@@ -110,7 +110,7 @@ public class Tubaina {
 		
 		if (html) {
 			HtmlParser htmlParser = new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer);
-			Generator generator = new HtmlGenerator(htmlParser, strictXhtml, templateDir);
+			HtmlGenerator generator = new HtmlGenerator(htmlParser, strictXhtml, templateDir);
 			File file = new File(outputDir, "html");
 			FileUtils.forceMkdir(file);
 			try {
@@ -151,7 +151,11 @@ public class Tubaina {
 			dontCare = cmd.hasOption("d");
 			noAnswer = cmd.hasOption("a");
 			
-			
+			if (cmd.hasOption('f')) {
+				outputFileName = cmd.getOptionValue('f');
+			} else {
+				outputFileName = "book.tex";
+			}
 		}
 		
 	}
@@ -165,18 +169,19 @@ public class Tubaina {
 		options.addOption("html", false, "generates an html output on given outputdir");
 		
 		//inputdir
-		options.addOption(OptionBuilder.withArgName("directory")
+		options.addOption(OptionBuilder.withArgName("inputDirectory")
 				.withLongOpt("input-dir")
 				.hasArg()
 				.withDescription("directory where you have your .afc files")
 				.create('i'));
 		//outputdir
-		options.addOption(OptionBuilder.withArgName("directory")
+		options.addOption(OptionBuilder.withArgName("outputDirectory")
 				.withLongOpt("output-dir")
 				.hasArg()
 				.isRequired()
 				.withDescription("directory where you want the output files")
 				.create('o'));
+		
 		//name
 		options.addOption(OptionBuilder.withArgName("bookName")
 				.withLongOpt("name")
@@ -196,6 +201,12 @@ public class Tubaina {
 				.hasArg()
 				.withDescription("directory where you have your template files")
 				.create('t'));
+		
+		options.addOption(OptionBuilder.withArgName("outputFileName")
+				.withLongOpt("output-file")
+				.hasArg()
+				.withDescription("name for generated latex file (ignored for html output)")
+				.create('f'));
 		return options;
 	}
 
