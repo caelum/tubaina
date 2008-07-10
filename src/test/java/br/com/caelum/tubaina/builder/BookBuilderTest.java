@@ -241,13 +241,13 @@ public class BookBuilderTest {
 	public void testImageChunk() throws Exception {
 		List<Chapter> chapters = getChapters("[chapter  Capítulo cheio de Chunks]\n" +
 				"[section secao]" + 
-				"\n\n[img   src/test/baseJpgImage.jpg w=30 \"Descrição\"   ]\n\n");
+				"\n\n[img   src/test/resources/baseJpgImage.jpg w=30 \"Descrição\"   ]\n\n");
 		
 		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
 		Assert.assertEquals(1, chunks.size());
 		
 		Assert.assertEquals(ImageChunk.class, chunks.get(0).getClass());
-		Assert.assertEquals("src/test/baseJpgImage.jpg", chunks.get(0).getContent(parser));
+		Assert.assertEquals("src/test/resources/baseJpgImage.jpg", chunks.get(0).getContent(parser));
 		
 		Field field = ImageChunk.class.getDeclaredField("width");
 		field.setAccessible(true);
