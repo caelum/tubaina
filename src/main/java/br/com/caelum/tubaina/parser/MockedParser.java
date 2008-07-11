@@ -76,4 +76,19 @@ public class MockedParser implements Parser {
 		return text;
 	}
 
+	public String parseTable(String text, String title, boolean noborder) {
+		
+		return text;
+	}
+
+	public String parseColumn(String text) {
+		
+		return text;
+	}
+
+	public String parseRow(String text) {
+
+		return text;
+	}
+
 }

@@ -20,6 +20,9 @@ import br.com.caelum.tubaina.builder.replacer.ParagraphReplacer;
 import br.com.caelum.tubaina.builder.replacer.QuestionReplacer;
 import br.com.caelum.tubaina.builder.replacer.Replacer;
 import br.com.caelum.tubaina.builder.replacer.RubyReplacer;
+import br.com.caelum.tubaina.builder.replacer.TableColumnReplacer;
+import br.com.caelum.tubaina.builder.replacer.TableReplacer;
+import br.com.caelum.tubaina.builder.replacer.TableRowReplacer;
 import br.com.caelum.tubaina.builder.replacer.TodoReplacer;
 import br.com.caelum.tubaina.builder.replacer.XmlReplacer;
 import br.com.caelum.tubaina.resources.Resource;
@@ -28,13 +31,13 @@ public class ChunksMakerBuilder {
 
 	private Map<String, List<Replacer>> replacerMap = new HashMap<String, List<Replacer>>();
 
-	private String paragraphTerminator = "java|box|code|img|list|xml|exercise|note|answer|item|question|todo|index|ruby";
+	private String paragraphTerminator = "java|box|code|img|list|xml|exercise|note|answer|item|question|todo|index|ruby|table|row";
 
 	private static final List<String> CLOSABLE_TAGS;
 	static {
 		CLOSABLE_TAGS = new ArrayList<String>();
 		Collections.addAll(CLOSABLE_TAGS, "java", "box", "code", "list", "xml", "exercise", "note", "answer",
-				"question", "label", "mail", "ruby");
+				"question", "label", "mail", "ruby", "table", "row", "col");
 	}
 
 	public static boolean isClosableTag(String tag) {
@@ -55,6 +58,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("answer", replacers);
 
@@ -69,6 +73,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("box", replacers);
 
@@ -77,6 +82,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new QuestionReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
 		replacers.add(new TodoReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacerMap.put("exercise", replacers);
 
 		// Item tag
@@ -112,6 +118,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("note", replacers);
 
@@ -129,8 +136,38 @@ public class ChunksMakerBuilder {
 		replacers.add(new NoteReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("question", replacers);
+
+		// Table tag
+		replacers = new ArrayList<Replacer>();
+		replacers.add(new TableRowReplacer(resources));
+		replacers.add(new TodoReplacer());
+		replacerMap.put("table", replacers);
+		
+		// Row tag
+		replacers = new ArrayList<Replacer>();
+		replacers.add(new TableColumnReplacer(resources));
+		replacers.add(new TodoReplacer());
+		replacerMap.put("row", replacers);
+		
+		// Column tag
+		replacers = new ArrayList<Replacer>();
+		replacers.add(new AnswerReplacer(resources));
+		replacers.add(new BoxReplacer(resources));
+		replacers.add(new CodeReplacer());
+		replacers.add(new ExerciseReplacer(resources));
+		replacers.add(new ImageReplacer(resources));
+		replacers.add(new JavaReplacer());
+		replacers.add(new ListReplacer(resources));
+		replacers.add(new NoteReplacer(resources));
+		replacers.add(new QuestionReplacer(resources));
+		replacers.add(new XmlReplacer());
+		replacers.add(new TodoReplacer());
+		replacers.add(new RubyReplacer());
+		replacers.add(new ParagraphReplacer(paragraphTerminator));
+		replacerMap.put("col", replacers);
 
 		// All tags not restricted to others, like ItemTag
 		replacers = new ArrayList<Replacer>();
@@ -147,6 +184,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("all", replacers);
 
