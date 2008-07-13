@@ -35,29 +35,21 @@
 			<groupId>com.sun.media</groupId>
 			<artifactId>jai_codec</artifactId>
 			<version>1.1.2_01</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/jai_codec.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>javax.media</groupId>
 			<artifactId>jai_core</artifactId>
 			<version>1.1.2_01</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/jai_core.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.media</groupId>
 			<artifactId>jai_imageio</artifactId>
 			<version>1.0_01</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/jai_imageio.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.w3c.tidy</groupId>
 			<artifactId>Tidy</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/Tidy.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

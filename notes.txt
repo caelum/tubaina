@@ -1,3 +1,13 @@
+Configuring Tubaina
+
+	At Tubaina's root dir, run these commands:
+		 mvn install:install-file -DgroupId=org.w3c.tidy -DartifactId=Tidy -Dversion=1.0 -Dpackaging=jar -Dfile=lib/Tidy.jar
+		 mvn install:install-file -DgroupId=com.sun.media -DartifactId=jai_codec -Dversion=1.1.2_01 -Dpackaging=jar -Dfile=lib/jai_codec.jar
+		 mvn install:install-file -DgroupId=com.sun.media -DartifactId=jai_imageio -Dversion=1.0_01 -Dpackaging=jar -Dfile=lib/jai_imageio.jar
+		 mvn install:install-file -DgroupId=javax.media -DartifactId=jai_core -Dversion=1.1.2_01 -Dpackaging=jar -Dfile=lib/jai_core.jar
+		 
+	After that, just run mvn eclipse:eclipse to generate eclipse's project files.
+
 Building a Jar
 
 	execute in a terminal:
