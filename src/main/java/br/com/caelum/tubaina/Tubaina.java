@@ -123,7 +123,6 @@ public class Tubaina {
 			}
 		}
 
-		System.out.println("html content " + html);
 		if (html) {
 			HtmlParser htmlParser = new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer);
 			HtmlGenerator generator = new HtmlGenerator(htmlParser, strictXhtml, templateDir);
