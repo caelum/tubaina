@@ -14,7 +14,7 @@ public class TableTagTest {
 		String result = tag.parse("texto da tabela", "");
 		Assert
 				.assertEquals(
-						"\\begin{table}[!h]\n\\caption{}\n\\begin{tabular}{|c|c|}\n\\hline\ntexto da tabela\n\\hline\n\\end{tabular}\n\\end{table}",
+						"\\begin{table}[!h]\n\\caption{}\n\\begin{center}\n\\begin{tabular}{|c|c|}\n\\hline\ntexto da tabela\n\\hline\n\\end{tabular}\n\\end{center}\n\\end{table}",
 						result);
 	}
 
@@ -24,7 +24,7 @@ public class TableTagTest {
 		String result = tag.parse("texto da tabela", "titulo");
 		Assert
 				.assertEquals(
-						"\\begin{table}[!h]\n\\caption{titulo}\n\\begin{tabular}{|c|c|}\n\\hline\ntexto da tabela\n\\hline\n\\end{tabular}\n\\end{table}",
+						"\\begin{table}[!h]\n\\caption{titulo}\n\\begin{center}\n\\begin{tabular}{|c|c|}\n\\hline\ntexto da tabela\n\\hline\n\\end{tabular}\n\\end{center}\n\\end{table}",
 						result);
 	}
 
@@ -34,7 +34,7 @@ public class TableTagTest {
 		String result = tag.parse("texto da tabela", "");
 		Assert
 				.assertEquals(
-						"\\begin{table}[!h]\n\\caption{}\n\\begin{tabular}{cc}\ntexto da tabela\n\\end{tabular}\n\\end{table}",
+						"\\begin{table}[!h]\n\\caption{}\n\\begin{center}\n\\begin{tabular}{cc}\ntexto da tabela\n\\end{tabular}\n\\end{center}\n\\end{table}",
 						result);
 	}
 
@@ -44,7 +44,7 @@ public class TableTagTest {
 		String result = tag.parse("texto da tabela", "titulo");
 		Assert
 				.assertEquals(
-						"\\begin{table}[!h]\n\\caption{titulo}\n\\begin{tabular}{cc}\ntexto da tabela\n\\end{tabular}\n\\end{table}",
+						"\\begin{table}[!h]\n\\caption{titulo}\n\\begin{center}\n\\begin{tabular}{cc}\ntexto da tabela\n\\end{tabular}\n\\end{center}\n\\end{table}",
 						result);
 	}
 

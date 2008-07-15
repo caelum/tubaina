@@ -16,7 +16,7 @@ public class TableTag implements Tag {
 	public String parse(String text, String title) {
 		if (this.columns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
-		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{tabular}{";
+		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n\\begin{tabular}{";
 		if (!noborder)
 			tag += "|";
 		for (int i = 0; i < columns; i++) {
@@ -30,7 +30,7 @@ public class TableTag implements Tag {
 		tag += text;
 		if (!noborder)
 			tag += "\n\\hline";
-		tag += "\n\\end{tabular}\n\\end{table}";
+		tag += "\n\\end{tabular}\n\\end{center}\n\\end{table}";
 		return tag;
 	}
 
