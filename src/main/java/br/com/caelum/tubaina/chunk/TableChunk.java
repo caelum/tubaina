@@ -39,7 +39,20 @@ public class TableChunk implements CompositeChunk {
 		for (Chunk c : rows) {
 			content += c.getContent(p);
 		}
-		return p.parseTable(content, title, noborder);
+		return p.parseTable(content, title, noborder, this.getMaxNumberOfColumns());
+	}
+
+	public int getMaxNumberOfColumns() {
+		int maxColumns = 0;
+		for (Chunk chunk : rows) {
+			if (chunk.getClass().equals(TableRowChunk.class)) {
+				TableRowChunk row = (TableRowChunk) chunk;
+				int columns = row.getNumberOfColumns();
+				if (columns > maxColumns)
+					maxColumns = columns;
+			}
+		}
+		return maxColumns;
 	}
 
 }

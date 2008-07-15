@@ -108,8 +108,8 @@ public class HtmlParser implements Parser {
 		return new TableRowTag().parse(text, null);
 	}
 
-	public String parseTable(String text, String title, boolean noborder) {
+	public String parseTable(String text, String title, boolean noborder, int columns) {
 		title = this.sanitizer.sanitize(title);
-		return new TableTag(noborder).parse(text, title);
+		return new TableTag(noborder, columns).parse(text, title);
 	}
 }

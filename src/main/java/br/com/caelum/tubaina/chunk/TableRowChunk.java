@@ -22,4 +22,13 @@ public class TableRowChunk implements CompositeChunk {
 		return p.parseRow(content);
 	}
 
+	public int getNumberOfColumns() {
+		int columns = 0;
+		for (Chunk c : cols) {
+			if (c.getClass().equals(TableColumnChunk.class))
+				columns++;
+		}
+		return columns;
+	}
+
 }

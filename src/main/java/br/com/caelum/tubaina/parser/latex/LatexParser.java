@@ -104,17 +104,15 @@ public class LatexParser implements Parser {
 	}
 
 	public String parseColumn(String text) {
-		// TODO Implement TableColumnTag for LaTeX
-		return "";
+		return new TableColumnTag().parse(text, null);
 	}
 
 	public String parseRow(String text) {
-		// TODO Implement TableRowTag for LaTeX
-		return "";
+		return new TableRowTag().parse(text, null);
 	}
 
-	public String parseTable(String text, String title, boolean noborder) {
-		// TODO Implement TableTag for LaTeX
-		return "";
+	public String parseTable(String text, String title, boolean noborder,
+			int columns) {
+		return new TableTag(noborder, columns).parse(text, title);
 	}
 }
