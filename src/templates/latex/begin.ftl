@@ -26,6 +26,8 @@
 \usepackage{url}
 \usepackage{rotating}
 \usepackage{multirow}
+\usepackage{colortbl}
+\usepackage[table]{xcolor}
 
 \usepackage{tubaina}
 

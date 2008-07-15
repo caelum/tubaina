@@ -69,6 +69,9 @@ public class LatexGeneratorTest {
 		// Resources
 		File styleFile = new File(temp, "tubaina.sty");
 		Assert.assertTrue("Style file should exist", styleFile.exists());
+		
+		File xcolorStyleFile = new File(temp, "xcolor.sty");
+		Assert.assertTrue("Xcolor style file should exist", xcolorStyleFile.exists());
 
 		Assert.assertTrue(FileUtilities.contentEquals(new File(
 				Tubaina.DEFAULT_TEMPLATE_DIR, "latex"), temp,

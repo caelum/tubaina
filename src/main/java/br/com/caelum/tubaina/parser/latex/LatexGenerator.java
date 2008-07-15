@@ -55,8 +55,9 @@ public class LatexGenerator {
 	}
 
 	private void copyResources(File directory, Book b) throws IOException {
-		// Dependencies (style, logo)
+		// Dependencies (styles, logo)
 		FileUtils.copyFileToDirectory(new File(templateDir, "latex/tubaina.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(templateDir, "latex/xcolor.sty"), directory);
 		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.contains(".png");
