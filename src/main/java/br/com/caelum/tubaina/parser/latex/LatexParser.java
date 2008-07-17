@@ -115,4 +115,8 @@ public class LatexParser implements Parser {
 			int columns) {
 		return new TableTag(noborder, columns).parse(text, title);
 	}
+
+	public String parseCenteredParagraph(String content) {
+		return new CenteredParagraphTag().parse(content, null);
+	}
 }

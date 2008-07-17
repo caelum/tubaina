@@ -112,4 +112,8 @@ public class HtmlParser implements Parser {
 		title = this.sanitizer.sanitize(title);
 		return new TableTag(noborder, columns).parse(text, title);
 	}
+
+	public String parseCenteredParagraph(String content) {
+		return new CenteredParagraphTag().parse(content, null);
+	}
 }

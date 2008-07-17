@@ -13,11 +13,13 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.chunk.BoxChunk;
+import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
+import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.MockedParser;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -254,6 +256,31 @@ public class BookBuilderTest {
 		Assert.assertEquals(ListChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals("uma listacom alguns itenspra ter certeza que funciona", chunks.get(0).getContent(parser));
 	}
+	
+	@Test
+	public void testTableChunk() {
+		List<Chapter> chapters = getChapters("[chapter  Capítulo com tabela]\n" + "[section secao]"
+				+ "\n\n[table][row]\n[col]uma tabela[/col]\n[col]com várias colunas[/col]\n[/row]\n"
+				+ "[row]\n[col]e várias[/col]\n[col]linhas também[/col]\n[/row]\n[/table]\n");
+
+		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
+		Assert.assertEquals(1, chunks.size());
+
+		Assert.assertEquals(TableChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals("uma tabelacom várias colunase váriaslinhas também", chunks.get(0).getContent(parser));
+	}
+	
+	@Test
+	public void testCenteredParagraphChunk() {
+		List<Chapter> chapters = getChapters("[chapter  Capítulo com texto centralizado]\n" + "[section secao]"
+				+ "\n\n[center]Algum texto centralizado\n\nCom várias linhas[/center]\n\n");
+
+		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
+		Assert.assertEquals(1, chunks.size());
+		
+		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals("Algum texto centralizado\n\nCom várias linhas", chunks.get(0).getContent(parser));
+	}
 
 	@Test
 	public void testChunkTypesTogether() throws Exception {
@@ -263,7 +290,10 @@ public class BookBuilderTest {
 				+ "Mais algum texto que deveria ser chunk de parágrafo\n" + "[box Um chunk de box]\n"
 				+ "Algo escrito dentro dele\n\n" + "Com pseudo-parágrafos [/box]\n\n"
 				+ "[code] Um monte de código genérico \n[/code][list]* uma lista\n\n*"
-				+ " com alguns itens\n\n * pra ter certeza que funciona[/list]\n\n");
+				+ " com alguns itens\n\n * pra ter certeza que funciona[/list]\n\n"
+				+ "[table][row]\n[col]uma tabela[/col]\n[col]com várias colunas[/col]\n[/row]\n"
+				+ "[row]\n[col]e várias[/col]\n[col]linhas também[/col]\n[/row]\n[/table]\n\n"
+				+ "[center]Algum texto centralizado\n\nCom várias linhas[/center]\n\n");
 
 		Assert.assertEquals(1, chapters.size());
 
@@ -274,7 +304,7 @@ public class BookBuilderTest {
 
 		List<Chunk> chunks = sections.get(0).getChunks();
 
-		Assert.assertEquals(6, chunks.size());
+		Assert.assertEquals(8, chunks.size());
 
 		// Primeiro Chunk
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
@@ -308,6 +338,14 @@ public class BookBuilderTest {
 		// Sexto Chunk
 		Assert.assertEquals(ListChunk.class, chunks.get(5).getClass());
 		Assert.assertEquals("uma listacom alguns itenspra ter certeza que funciona", chunks.get(5).getContent(parser));
+		
+		// Sétimo Chunk
+		Assert.assertEquals(TableChunk.class, chunks.get(6).getClass());
+		Assert.assertEquals("uma tabelacom várias colunase váriaslinhas também", chunks.get(6).getContent(parser));
+		
+		// Oitavo Chunk
+		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(7).getClass());
+		Assert.assertEquals("Algum texto centralizado\n\nCom várias linhas", chunks.get(7).getContent(parser));
 	}
 
 }

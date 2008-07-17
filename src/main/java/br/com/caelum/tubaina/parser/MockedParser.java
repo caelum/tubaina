@@ -91,4 +91,8 @@ public class MockedParser implements Parser {
 		return text;
 	}
 
+	public String parseCenteredParagraph(String text) {
+		return text;
+	}
+
 }

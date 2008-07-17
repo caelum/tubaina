@@ -19,4 +19,5 @@ public interface Parser {
 	public String parseTable(String text, String title, boolean noborder, int columns);
 	public String parseRow(String text);
 	public String parseColumn(String text);
+	public String parseCenteredParagraph(String content);
 }
