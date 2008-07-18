@@ -171,7 +171,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new XmlReplacer());
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
-		replacers.add(new CenteredParagraphReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("col", replacers);
 
