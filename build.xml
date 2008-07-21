@@ -1,53 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Tubaina" default="dist" basedir=".">
+<project name="Tubaina" default="dist" basedir="." xmlns:artifact="urn:maven-artifact-ant">
 
-	<property name="root" location="./">
-	</property>
+	<property name="root" location="./" />
 
-	<property name="lib" location="${root}/lib">
-	</property>
+	<property name="src" location="${root}/src" />
 
-	<property name="src" location="${root}/src">
-	</property>
+	<property name="target" location="${root}/target" />
 
-	<property name="cfg" location="${src}/resources">
-	</property>
+	<property name="dist" location="${root}/dist" />
 
-	<property name="version" value="1.0.2-SNAPSHOT">
-	</property>
+	<property name="source" location="${dist}/src" />
 
-	<property name="dist" location="${root}/tmp/dist/tubaina-${version}">
-	</property>
+	<target name="mvn-init" description="Initializes maven dependency engine">
+		<path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.0.9.jar" />
+		<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant" classpathref="maven-ant-tasks.classpath" onerror="fail" />
+		<artifact:pom id="project" file="pom.xml" />
+		<echo>Loaded pom.xml</echo>
+	</target>
 
-	<property name="source" location="${root}/tmp/source/tubaina-${version}-src">
-	</property>
-
-	<property name="tmp" location="${dist}/tmp">
-	</property>
+	<target name="mvn-load" depends="mvn-init" description="Load the dependencies for the current project">
+		<artifact:dependencies filesetid="deps.files" pathid="deps.path" pomrefid="project" />
+		<echo>Loaded dependencies</echo>
+	</target>
 
 	<target name="init">
-		<!--Build path hierarchy -->
 		<mkdir dir="${dist}" />
 		<mkdir dir="${dist}/lib" />
-		<mkdir dir="${dist}/config" />
 		<mkdir dir="${dist}/bin" />
-		<mkdir dir="${dist}/docs" />
-		<mkdir dir="${dist}/src/templates" />
-		<mkdir dir="${tmp}" />
 		<mkdir dir="${source}" />
+		<mkdir dir="${target}" />
+		<mkdir dir="${root}/temp" />
 	</target>
 
-	<target name="compile" depends="init" description="Compile the source code">
-		<javac srcdir="${src}/java" destdir="${tmp}">
-			<classpath>
-				<fileset dir="${lib}">
-					<include name="**/*.jar" />
-				</fileset>
-			</classpath>
-		</javac>
+	<target name="package" depends="mvn-load" description="Compile and package the source code">
+		<exec executable="mvn" failonerror="yes">
+			<arg value="package" />
+		</exec>
 	</target>
 
-	<target name="copyTemplate" description="Copy default templates">
+	<target name="copyDeps" depends="init, mvn-load" description="Copy the dependencies to the dist folder">
+		<copy todir="${dist}/lib">
+			<fileset refid="deps.files" />
+		</copy>
+	</target>
+
+	<target name="copyTemplate" depends="init" description="Copy default templates">
 		<copy todir="${dist}/src/templates">
 			<fileset dir="${src}/templates">
 				<include name="**/*" />
@@ -55,58 +52,31 @@
 			</fileset>
 		</copy>
 	</target>
+	
+	<target name="classpath" depends="package, copyDeps" description="Sets properties related to classpath of execution">
+		<fileset id="runClasspath" dir="${dist}/lib">
+			<include name="**/*.jar" />
+		</fileset>
 
-	<target name="dist" depends="compile, copyTemplate" description="Generate the distribution">
+		<path id="classpath">
+			<fileset refid="runClasspath" />
+		</path>
 
-		<copy todir="${dist}/lib">
-			<fileset dir="${lib}">
-				<include name="*.jar" />
-			</fileset>
+		<property name="tubaina.classpath" refid="runClasspath" />
+	</target>
+
+	<target name="dist" depends="classpath, package, copyTemplate" description="Generate the distribution">
+
+		<copy todir="${dist}/lib" file="${root}/target/tubaina-${project.version}.jar">
 		</copy>
 
 		<!-- TODO property -->
-		<copy todir="${dist}/bin" file="${src}/etc/latex.sh">
-		</copy>
+		<copy todir="${dist}/bin" file="${src}/etc/latex.sh" />
 
-		<copy todir="${dist}" file="${src}/etc/LICENSE.txt">
-		</copy>
+		<copy todir="${dist}" file="${src}/etc/LICENSE.txt" />
 
-		<jar destfile="${dist}/lib/tubaina.jar">
-			<fileset dir="${tmp}">
-				<include name="**/*" />
-			</fileset>
-			<fileset dir="${cfg}">
-				<include name="**/*" />
-			</fileset>
-			<fileset dir="${dist}/src/templates">
-				<include name="**/*" />
-			</fileset>
-			<manifest>
-				<attribute name="Main-Class" value="br.com.caelum.tubaina.Tubaina" />
-				<attribute name="Manifest-Version" value="1.0" />
-			</manifest>
-		</jar>
+		<echo message="Generating docs" />
 
-		<!-- tmp is not useful anymore -->
-		<delete dir="${tmp}">
-		</delete>
-
-		<echo message="Generating docs">
-		</echo>
-
-		<!-- Configuring classpath -->
-		<fileset id="runClasspath" dir="${dist}">
-			<include name="lib/*.jar" />
-		</fileset>
-
-		<property name="tubaina.classpath" refid="runClasspath">
-		</property>
-
-		<path id="classpath">
-			<fileset dir="${dist}/lib">
-				<include name="**/*.jar" />
-			</fileset>
-		</path>
 
 		<java fork="true" dir="${dist}" classname="br.com.caelum.tubaina.Tubaina" classpathref="classpath">
 			<arg id="type" value="-html" />
@@ -116,27 +86,24 @@
 			<arg id="inputDir" value="${root}/docs" />
 			<arg id="o" value="-o" />
 			<arg id="outputDir" value="${dist}/docs" />
-
 		</java>
 
 		<!--removing todo.log -->
-		<delete file="${dist}/todo.log">
-		</delete>
+		<delete file="${dist}/todo.log" />
 
 		<!-- Generating *nix tubaina launcher script-->
 
-		<copy file="${src}/etc/tubaina" todir="${dist}/bin">
-		</copy>
-
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH" replace="${tubaina.classpath}">
+		<copy file="${src}/etc/tubaina" todir="${dist}/bin" />
+		
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH"  replace="${tubaina.classpath}">
 		</replaceregexp>
 
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";lib/" replace=":$TUB_REL_PATH/lib/">
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";(\S)" replace=":$TUB_REL_PATH/lib/\1">
 		</replaceregexp>
 
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/">
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/lib/tubaina-${project.version}.jar:$TUB_REL_PATH/lib/">
 		</replaceregexp>
-
+		
 		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@TUB_HOME_MOD" replace="..">
 		</replaceregexp>
 
@@ -146,40 +113,33 @@
 		</chmod>
 
 		<!-- Zipping all files -->
-		<zip destfile="${root}/tmp/tubaina-${version}.zip" basedir="${dist}/..">
+		<zip destfile="${root}/temp/tubaina-${project.version}.zip" basedir="${dist}">
 		</zip>
 
 		<!-- Tar all files -->
-		<tar destfile="${root}/tmp/tubaina-${version}.tar.gz" basedir="${dist}/.." compression="gzip">
+		<tar destfile="${root}/temp/tubaina-${project.version}.tar.gz" basedir="${dist}" compression="gzip">
 		</tar>
 
 		<!-- making source folder -->
 		<copy todir="${source}">
-			<fileset dir="${root}">
-				<include name="**/*" />
-				<exclude name="bin/" />
-				<exclude name="src/afc/" />
-				<exclude name="src/templatesCaelum/" />
-				<exclude name="tmp/" />
-				<exclude name="todo.log" />
+			<fileset dir="${src}">
+				<include name="main/java/**/*" />
+				<include name="main/resources/**/*" />
+				<include name="test/java/**/*" />
+				<include name="test/resources/**/*" />
 			</fileset>
 		</copy>
 
 		<!-- Zipping source -->
-		<zip destfile="${root}/tmp/tubaina-${version}-src.zip" basedir="${source}/..">
+		<zip destfile="${root}/temp/tubaina-${project.version}-src.zip" basedir="${source}/..">
 		</zip>
 
 		<!-- Tar source -->
-		<tar destfile="${root}/tmp/tubaina-${version}-src.tar.gz" basedir="${source}/.." compression="gzip">
+		<tar destfile="${root}/temp/tubaina-${project.version}-src.tar.gz" basedir="${source}/.." compression="gzip">
 		</tar>
 
 		<!-- Removing all temporary files -->
-		<delete dir="${dist}/..">
-		</delete>
-		<delete dir="${source}/..">
-		</delete>
-
+		<delete dir="${dist}" />
 
 	</target>
-
 </project>
