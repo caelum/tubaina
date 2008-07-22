@@ -71,6 +71,13 @@ public class HtmlParserTest {
 		Assert.assertEquals("ola <code class=\"inlineCode\">mu\nndo</code>", result);
 	}
 	
+	// Test for inline Ruby code with inheritance symbol (::)
+	@Test
+	public void testTwoInlineCodeTagsWithTwoColonsInside() {
+		String result = parser.parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
+		Assert.assertEquals("ola <code class=\"inlineCode\">mundo &#58;&#58; superclasse</code> texto <code class=\"inlineCode\">mais codigo &#58;&#58; superclasse</code>", result);
+	}
+	
 	@Test
 	public void testParagraphTagWithInnerTagsInline() {
 		String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");

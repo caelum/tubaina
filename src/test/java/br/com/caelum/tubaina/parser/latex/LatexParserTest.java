@@ -71,6 +71,13 @@ public class LatexParserTest {
 		String result = parser.parse("ola %%mu\nndo%%");
 		Assert.assertEquals("ola \\codechunk{mu\nndo}", result);
 	}
+	
+	// Test for inline Ruby code with inheritance symbol (::)
+	@Test
+	public void testTwoInlineCodeTagsWithTwoColonsInside() {
+		String result = parser.parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
+		Assert.assertEquals("ola \\codechunk{mundo \\char58\\char58 superclasse} texto \\codechunk{mais codigo \\char58\\char58 superclasse}", result);
+	}
 
 	@Test
 	public void testParseParagraph() {
