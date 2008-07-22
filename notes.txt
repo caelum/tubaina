@@ -13,7 +13,14 @@ Building a Jar
 	execute in a terminal:
 	 > cd /path/to/tubaina
 	 > mvn package
- 
+	 
+Building a distributable file
+	
+	execute in a terminal:
+	> cd /path/to/tubaina
+	> ant
+	
+	This will generate the distributable files inside a folder called temp.
 
 Getting a *.pdf compiled
 	

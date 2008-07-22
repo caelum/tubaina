@@ -32,6 +32,26 @@ Here, you'll have some simple examples of *.afc text that intend to show the eas
 		including where it keeps the e-mail you send or how do you delete 
 		unwanted e-mail.
 	[/box]
+	
+	[chapter Navigators]
+	[table "Navigators and Operating Systems"]
+		[row]
+			[col]Internet Explorer[/col]
+			[col]Windows, Mac OSX[/col]
+		[/row]
+		[row]
+			[col]Safari[/col]
+			[col]Mac OSX[/col]
+		[/row]
+		[row]
+			[col]Firefox[/col]
+			[col]Windows, Mac OSX, Linux[/col]
+		[/row]
+		[row]
+			[col]Opera[/col]
+			[col]Windows, Mac OSX, Linux[/col]
+		[/row]
+	[/table]
 [/code]
 
 [section Example 2]
@@ -55,5 +75,11 @@ Here, you'll have some simple examples of *.afc text that intend to show the eas
 				return 0;
 			}
 		[/code]
+		
+		* **in Ruby**
+		
+		[ruby]
+			puts "Hello, world!"
+		[/ruby]
 	[/list]
 [/code]

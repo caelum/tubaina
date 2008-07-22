@@ -8,7 +8,7 @@ This a short introduction to the *.afc format syntax.
 
 [code][chapter chapter name][/code]
 
-**Section:** The section tag builds a section in a chapter. It also adds a reference on the Table of 
+**Section:** The %%section%% tag builds a section in a chapter. It also adds a reference on the Table of 
 Contents.
 
 [code][section section name][/code]
@@ -28,7 +28,7 @@ fact that no other tags are allowed on the label text.
 
 [code][label the label] what is beeing labeled [/label][/code]
 
-**Box:** The box tag places its content in a new environment slightly indented and appart from the 
+**Box:** The %%box%% tag places its content in a new environment slightly indented and appart from the 
 rest of the text.
 
 [code][box <box title>] <content> [/box][/code]
@@ -49,7 +49,7 @@ OR
 [/exercise][/code]
 
 **Instructors' Note:** in case you need your teacher's textbook to have extra information, you might
-use the note tag. It adds Instructor Notes to the textbook when compiling with instructors option on.
+use the %%note%% tag. It adds Instructor Notes to the textbook when compiling with instructors option on.
 
 [code][note]Note to the instructor[/note][/code]
 
@@ -71,12 +71,17 @@ use the note tag. It adds Instructor Notes to the textbook when compiling with i
 
 **XML:** [code][xml]XML code[/xml][/code]
 
+**Ruby:** [code][ruby]Ruby code[/ruby][/code]
+
 **.properties:** [code][code properties]Properties code[/code][/code]
 
 **Outras linguagens:** [code][code]Any other code[/code][/code]
 
 In order to emphasize code lines, use the option: %%h=line1,line2,...%% like this:
 [code][java h=1,2,3]....[/java][/code]
+
+If you want to number the lines of the output code, use the parameter %%#%%, like this:
+[code][java #]...[/java][/code]
 
 [section Special tags]
 
@@ -86,7 +91,7 @@ In order to emphasize code lines, use the option: %%h=line1,line2,...%% like thi
 
 [code][index anchor name][/code]
 
-**To do:** The tag ::to do:: allows you making reminders of those edits you must do on your textbook,
+**To do:** The tag %%todo%% allows you making reminders of those edits you must do on your textbook,
 but have not enough time or material to work on. It builds a log of all the open tasks in your book.
 
 [code][todo task reminder][/code]
@@ -118,10 +123,18 @@ but have not enough time or material to work on. It builds a log of all the open
 	* item
 [/list][/code]
 
+[section Tables]
+**Tables:** the structure of tags used to create a table is similar to that of the HTML language. First,
+to start a table, you use the tag %%table%%. This tag may specify two parameters: a title and the
+keyword %%noborder%%, which specifies that the generated table will not have borders. The title must
+be inside double quotation marks ("). Inside the %%table%% tag, use a %%row%% tag to start a line and, inside
+a row, use a %%col%% tag to add a cell to the table. Inside a %%col%% tag, you can type text, code and/or
+put images.
+
 [section Images]
 
-**Images:** in order to add images to your textbook, you must use the tag ::img::. This tag has two
+**Images:** in order to add images to your textbook, you must use the tag %%img%%. This tag has two
 specialties: you may choose the percentage of the width of the page your image must fill by using the
-tag **w** and you can add a comment about the image on a floating tab.
+tag %%w%% and you can add a comment about the image on a floating tab.
 
-[code][img path/imagem.png w=scale% "tab comment"][/code]
+[code][img path/image.png w=scale% "tab comment"][/code]

@@ -7,7 +7,7 @@ therefore it is ::opensource:: and can be used as long as its rights are kept.
 
 [section Dependencies]
 
-Tubaina should work properly on any computer running Java5, but you will need a Latex compiller so 
+Tubaina should work properly on any computer running Java5, but you will need a LaTeX compiler so 
 as to deliver a *.pdf output.
 
 [list]
@@ -37,8 +37,8 @@ should be set to your java directory. ($JAVA_HOME/bin/java must be your JVM).
 * TUBAINA_HOME: This should point to Tubaina's base dir (the one you get right after unpacking our zip or tgz).
 [/list]
 
-To build Tubaina from our source packages, you need to have **jakarta-oro** inside your %%ant%% build path. 
-Then just run %%ant build.xml%% on the root folder.
+To build Tubaina from our source packages, you need to have **maven** ( http://maven.apache.org )
+installed and in your path. Then just run %%ant build.xml%% on the root folder.
 
 [section Running Tubaina]
 
@@ -56,7 +56,7 @@ For further options, check the Tubaina help.
 [box Why can't I see the *.dvi from the Latex?]
 For allowing users to use many image formats - not only *.eps - we use a Latex package called 
 ::graphicx::. This package only works on *.pdf outputs and, therefore, will prevent Latex from 
-compilling *.tex to *.dvi.
+compiling *.tex to *.dvi.
 
 This means you can never read your Tubaina generated latex in dvi format. Don't get too upset, 
 though. Your *.pdf output will do fine!

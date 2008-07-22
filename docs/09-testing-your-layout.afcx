@@ -43,6 +43,19 @@ int main(){
 }
 [/code]
 
+**Ruby:**
+[ruby]
+class CreateComentarios < ActiveRecord::Migration 
+  def self.up 
+    create_table :comentarios do |t| 
+    t.text :conteudo 
+    t.integer :comentavel_id 
+    t.string :comentavel_type 
+    t.timestamps 
+  end 
+end
+[/ruby]
+
 **Code properties:**
 [code properties]
 print: "Hello world!"
@@ -74,6 +87,19 @@ public static void main (String[] args) {
 	<skipLine />
 </printIt>
 [/xml]
+
+**Ruby:**
+[ruby h=1,3]
+class CreateComentarios < ActiveRecord::Migration 
+  def self.up 
+    create_table :comentarios do |t| 
+    t.text :conteudo 
+    t.integer :comentavel_id 
+    t.string :comentavel_type 
+    t.timestamps 
+  end 
+end
+[/ruby]
 
 **Code:**
 [code h=2]
@@ -132,6 +158,67 @@ the Latex output.
 [list letter]
 	* item
 [/list]
+
+[title Tables]
+**Simple table:**
+[table]
+	[row]
+		[col]
+			A cell
+		[/col]
+		[col]
+			Another cell
+		[/col]
+	[/row]
+	[row]
+		[col]
+			Yet another cell
+		[/col]
+		[col]
+			The last cell
+		[/col]
+	[/row]
+[/table]
+
+**Table with title:**
+[table "Test table with border"]
+	[row]
+		[col]
+			A cell
+		[/col]
+		[col]
+			Another cell
+		[/col]
+	[/row]
+	[row]
+		[col]
+			Yet another cell
+		[/col]
+		[col]
+			The last cell
+		[/col]
+	[/row]
+[/table]
+
+**Table without border:**
+[table noborder]
+	[row]
+		[col]
+			A cell
+		[/col]
+		[col]
+			Another cell
+		[/col]
+	[/row]
+	[row]
+		[col]
+			Yet another cell
+		[/col]
+		[col]
+			The last cell
+		[/col]
+	[/row]
+[/table]
 
 [title Links and Images]
 
