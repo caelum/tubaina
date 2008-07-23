@@ -98,7 +98,7 @@ public class Tubaina {
 
 		Book b = null;
 		try {
-			b = builder.build();
+			b = builder.build(showNotes);
 		} catch (TubainaException e) {
 			if (dontCare) {
 				LOG.warn(e);

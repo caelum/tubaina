@@ -32,6 +32,10 @@ public class BookBuilder {
 	}
 	
 	public Book build() {
+		return this.build(false);
+	}
+	
+	public Book build(boolean showNotes) {
 		List<Chapter> chapters = new ArrayList<Chapter>();
 		for (Reader reader : readers) {
 			LOG.info("Parsing chapter " + Chapter.getChaptersCount());
@@ -40,7 +44,7 @@ public class BookBuilder {
 			if (scanner.hasNext())
 				chapters.addAll(parse(scanner.next()));
 		}
-		return new Book(name, chapters);
+		return new Book(name, chapters, showNotes);
 	}
 
 	private List<Chapter> parse(String text) {

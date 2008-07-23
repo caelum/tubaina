@@ -1,7 +1,11 @@
 \thispagestyle{empty}
+<#if book.isInstructorBook()>
+\centerline{\Huge INSTRUCTOR TEXTBOOK}
+\newpage
+</#if>
 
 \vspace*{2.5cm}
-\large \centerline{\bf <Name of your book here>}
+\large \centerline{\bf ${book.name}}
 
 \large
 \vspace {1.3 cm}

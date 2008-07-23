@@ -8,9 +8,12 @@ public class Book {
 
 	private String name;
 
-	public Book(String name, List<Chapter> chapters) {
+	private final boolean showNotes;
+
+	public Book(String name, List<Chapter> chapters, boolean showNotes) {
 		this.chapters = chapters;
 		this.name = name;
+		this.showNotes = showNotes;
 	}
 
 	public List<Chapter> getChapters() {
@@ -19,5 +22,9 @@ public class Book {
 
 	public String getName() {
 		return name;
+	}
+
+	public boolean isInstructorBook() {
+		return showNotes;
 	}
 }

@@ -127,4 +127,49 @@ public class LatexGeneratorTest {
 			// OK
 		}
 	}
+	
+	@Test
+	public void testGeneratorForInstructorTextbook() throws IOException {
+		RegexConfigurator configurator = new RegexConfigurator();
+		List<Tag> tags = configurator.read("/regex.properties",
+				"/html.properties");
+		LatexParser parser = new LatexParser(tags, true, false);
+
+		File path = new File("src/test/resources");
+		ResourceLocator.initialize(path);
+		LatexGenerator customGenerator = new LatexGenerator(parser, Tubaina.DEFAULT_TEMPLATE_DIR, false);
+		BookBuilder builder = new BookBuilder("Do Instrutor");
+		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
+		Book b = builder.build(true);
+		Assert.assertTrue(b.isInstructorBook());
+		customGenerator.generate(b, temp, "teste.tex");
+		File texFile = new File(temp, "teste.tex");
+		Assert.assertTrue("Book file should exist", texFile.exists());
+		Assert.assertTrue("Should have INSTRUCTOR TEXTBOOK on the first page", containsText(texFile, "INSTRUCTOR TEXTBOOK"));
+		Assert.assertTrue("Should display the note", containsText(texFile, "uma nota para o instrutor"));
+	}
+	
+	@Test
+	public void testGeneratorForStudentTextbook() throws IOException {
+		BookBuilder builder = new BookBuilder("Do Aluno");
+		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
+		Book b = builder.build(false);
+		Assert.assertFalse(b.isInstructorBook());
+		generator.generate(b, temp, "teste.tex");
+		File texFile = new File(temp, "teste.tex");
+		Assert.assertTrue("Book file should exist", texFile.exists());
+		Assert.assertFalse("Should not have INSTRUCTOR TEXTBOOK on the first page", containsText(texFile, "INSTRUCTOR TEXTBOOK"));
+		Assert.assertFalse("Should not display the note", containsText(texFile, "uma nota para o instrutor"));
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean containsText(File texFile, String text) throws IOException {
+		List<String> lines = FileUtils.readLines(texFile);
+		boolean containsText = false;
+		for (String line : lines) {
+			if (line.contains(text))
+				containsText = true;
+		}
+		return containsText;
+	}
 }
