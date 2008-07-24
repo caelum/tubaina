@@ -20,10 +20,10 @@ public enum Escape {
 	HAT("^", "\\char94"),
 	TILDE("~", "\\char126"),
 	QUOTE("(?s)(?i)(\\[quote\\s*.+?\\s*)--(\\s*.+?\\s*\\])","$1#!#!$2" ),//workaround
-	HYPHEN("--", "{\\verb#-#\\verb#-#}"),
+	HYPHEN("--", "{\\verb#-#}{\\verb#-#}"),
 	UNQUOTE("#!#!","--" ),
-	SHIFT_LEFT("<<", "{\\verb#<#\\verb#<#}"),
-	SHIFT_RIGHT(">>", "{\\verb#>#\\verb#>#}");//workaround
+	SHIFT_LEFT("<<", "{\\verb#<#}{\\verb#<#}"),
+	SHIFT_RIGHT(">>", "{\\verb#>#}{\\verb#>#}");//workaround
 	
 	private String to;
 	private String from;
