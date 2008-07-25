@@ -30,7 +30,7 @@ public class HtmlGeneratorTest {
 	private Book book;
 
 	private File temp;
-
+	
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
@@ -134,10 +134,10 @@ public class HtmlGeneratorTest {
 		Book b = builder.build();
 		try {
 			generator.generate(b, temp);
-			Assert.fail("Should raise an exception");
 		} catch (TubainaException t) {
-			// OK
+			Assert.fail("Should not raise an exception");
 		}
+		// OK
 	}
 
 	@Test

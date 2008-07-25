@@ -109,10 +109,10 @@ public class LatexGeneratorTest {
 		Book b = builder.build();
 		try {
 			generator.generate(b, temp, "errado.tex");
-			Assert.fail("Should raise an exception");
 		} catch (TubainaException t) {
-			// OK
+			Assert.fail("Should not raise an exception");
 		}
+		// OK
 	}
 
 	@Test

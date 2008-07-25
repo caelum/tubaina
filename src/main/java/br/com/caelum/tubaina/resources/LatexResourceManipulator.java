@@ -55,7 +55,6 @@ public class LatexResourceManipulator implements ResourceManipulator {
 			} else {
 				LOG.warn("Error while copying '" + srcImage.getPath() + "':\n" + "\t\tDestination image '"
 						+ destinationPath.getPath() + "' already exists");
-				throw new TubainaException("Image already exists");
 			}
 		} else {
 			LOG.warn("Image: '" + srcImage.getPath() + "' doesn't exists");
