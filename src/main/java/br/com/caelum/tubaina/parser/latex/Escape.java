@@ -8,8 +8,12 @@ public enum Escape {
 	BACKSLASH("\\","\\char92"),
 	SHARP("#", "\\#"),
 	DOLLAR("$", "\\$"),
+	OPEN_INSIDE_LINK("http://(.*)\\{(.*)(\"|'|\\(|\\)|<|>|\\s|$$)", "http://$1!#!#!$2$3"),
+	CLOSE_INSIDE_LINK("http://(.*)\\}(.*)(\"|'|\\(|\\)|<|>|\\s|$$)", "http://$1#!#!#$2$3"),
 	OPEN("{", "\\{"),
 	CLOSE("}", "\\}"),
+	UNOPEN_INSIDE_LINK("!#!#!", "{"),
+	UNCLOSE_INSIDE_LINK("#!#!#", "}"),
 	DOUBLE_UNDERLINE("__", "!#!#!"),
 	UNDERLINE("_", "\\_"),
 	UNDOUBLE_UNDERLINE("!#!#!", "__"),
@@ -34,7 +38,8 @@ public enum Escape {
 	}
 	
 	public String escape(String content) {
-		if (this == QUOTE) return content.replaceAll(from, to);
+		if (this == QUOTE || this == OPEN_INSIDE_LINK || this == CLOSE_INSIDE_LINK)
+			return content.replaceAll(from, to);
 		return content.replaceAll(Pattern.quote(from), Matcher.quoteReplacement(to));
 	}
 	public String unescape(String content) {

@@ -229,4 +229,12 @@ public class LatexParserTest {
 		Assert.assertEquals("\n\\item{Effective Java, Joshua Bloch}\n", chunks.get(1).getContent(parser));
 		Assert.assertEquals("\n\\item{Design Patterns, Erich Gamma et al}\n", chunks.get(2).getContent(parser));
 	}
+	
+	@Test
+	public void testLinkWithBracesInsideBug() {
+		String input = "http://localhost/{id}";
+		List<Chunk> chunks = new ChunkSplitter(null, "all").splitChunks(input);
+		Assert.assertEquals(1, chunks.size());
+		Assert.assertEquals("\n\n\\link{http://localhost/{id}}", chunks.get(0).getContent(parser));
+	}
 }
