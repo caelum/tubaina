@@ -237,4 +237,12 @@ public class LatexParserTest {
 		Assert.assertEquals(1, chunks.size());
 		Assert.assertEquals("\n\n\\link{http://localhost/{id}}", chunks.get(0).getContent(parser));
 	}
+	
+	@Test
+	public void testLinkWithMultipleBracesInsideBug() {
+		String input = "http://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg";
+		List<Chunk> chunks = new ChunkSplitter(null, "all").splitChunks(input);
+		Assert.assertEquals(1, chunks.size());
+		Assert.assertEquals("\n\n\\link{http://farm{farm-id}.static.flickr.com/{server-id}/{id}\\_{secret}.jpg}", chunks.get(0).getContent(parser));
+	}
 }
