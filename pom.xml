@@ -163,4 +163,22 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<downloadUrl>http://sourceforge.net/project/showfiles.php?group_id=203742</downloadUrl>
+		<site>
+			<id>tubaina.sourceforge.net</id>
+			<name>Tubaina Server</name>
+			<url>scp://shell.sourceforge.net/home/groups/t/tu/tubaina/htdocs</url>
+		</site>
+		<repository>
+			<id>tubaina.sourceforge.net</id>
+			<name>Tubaina Maven Server</name>
+			<url>scp://shell.sourceforge.net/home/groups/t/tu/tubaina/htdocs/maven</url>
+		</repository>
+		<snapshotRepository>
+			<id>tubaina.sourceforge.net</id>
+			<name>Tubaina Snapshots Server</name>
+			<url>scp://shell.sourceforge.net/home/groups/t/tu/tubaina/htdocs/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
