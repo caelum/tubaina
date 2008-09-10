@@ -1,10 +1,64 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>br.com.caelum</groupId>
+	<groupId>br.com.caelum.tubaina</groupId>
 	<artifactId>tubaina</artifactId>
-	<version>1.0.2</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
+	<name>Tubaina</name>
+	<description>A textbook generator with LaTeX and HTML output support</description>
+	<developers>
+		<developer>
+			<id>ceci_fernandes</id>
+			<name>Cecilia Fernandes</name>
+			<roles>
+				<role>administrator</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>peass</id>
+			<name>Paulo Silveira</name>
+			<roles>
+				<role>administrator</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>jonasabreu</id>
+			<name>Jonas Abreu</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>lreal</id>
+			<name>Luiz Real</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>lucascs</id>
+			<name>Lucas Cavalcanti</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+		<developer>
+			<id>lowpis</id>
+			<name>Sergio Lopes</name>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>de.java2html</groupId>
