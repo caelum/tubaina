@@ -83,7 +83,6 @@ public class ChunksMakerBuilder {
 		// Exercise tag
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new QuestionReplacer(resources));
-		replacers.add(new NoteReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacerMap.put("exercise", replacers);
 

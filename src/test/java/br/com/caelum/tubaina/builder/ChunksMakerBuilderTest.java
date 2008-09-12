@@ -255,4 +255,20 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(TableChunk.class, chunks.get(10).getClass());
 		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(11).getClass());
 	}
+	
+
+	/**
+	 * @see http://jira.caelum.com.br/browse/TUBAINA-10
+	 */
+	@Test
+	public void testChunksMakerBuilderDoesntAcceptNoteInsideExerciseOutsideQuestion() {
+		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources).build("exercise");
+		String exercise = "[note]algum texto[/note][question]pergunta[/question]";
+		try {
+			chunksMaker.make(exercise);
+			Assert.fail("Should not accept notes inside exercise tag but outside question tag");
+		} catch (TubainaException e) {
+			// OK
+		}
+	}
 }
