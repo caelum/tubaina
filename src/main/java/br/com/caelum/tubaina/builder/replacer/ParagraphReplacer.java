@@ -10,7 +10,9 @@ import br.com.caelum.tubaina.chunk.ParagraphChunk;
 public class ParagraphReplacer implements Replacer {
 
 	private final Pattern pattern;
-
+	
+	private final Pattern tagPattern = Pattern.compile("(?s)(?i)\\A\\[(.+)\\].*\\[/\\1\\]");
+	
 	public ParagraphReplacer(String specialTerms) {
 		this.pattern = Pattern.compile("(?s)(?i)\\A\\s*(.+?)(\\n(\\s)*?\\n|\\s*\\[(" +
 				specialTerms +
@@ -25,6 +27,9 @@ public class ParagraphReplacer implements Replacer {
 	}
 
 	public boolean accepts(String text) {
+		Matcher tagMatcher = tagPattern.matcher(text);
+		if (tagMatcher.find())
+			return false;
 		Matcher matcher = pattern.matcher(text);
 		if (matcher.find()) {
 			if (matcher.group().trim().length() > 0) {

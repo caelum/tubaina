@@ -25,7 +25,8 @@ public class ChunksMaker {
 			}
 			if (!accepted)
 				throw new TubainaException("There is a syntax error on chapter "+ Chapter.getChaptersCount() +
-					": Probably, there is some text inside an exercise tag, but outside a question tag");
+					": Probably, there is some text inside an exercise tag, but outside a question tag, or " +
+					"an unnacceptable tag at some place.");
 		}
 		return chunks;
 	}

@@ -136,7 +136,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new NoteReplacer(resources));
 		replacers.add(new XmlReplacer());
 		replacers.add(new IndexReplacer(resources));
-		replacers.add(new NoteReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
 		replacers.add(new TableReplacer(resources));
@@ -158,7 +157,6 @@ public class ChunksMakerBuilder {
 		
 		// Column tag
 		replacers = new ArrayList<Replacer>();
-		replacers.add(new AnswerReplacer(resources));
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
 		replacers.add(new ExerciseReplacer(resources));
@@ -166,7 +164,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
-		replacers.add(new QuestionReplacer(resources));
 		replacers.add(new XmlReplacer());
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
@@ -175,7 +172,6 @@ public class ChunksMakerBuilder {
 
 		// All tags not restricted to others, like ItemTag
 		replacers = new ArrayList<Replacer>();
-		replacers.add(new AnswerReplacer(resources));
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
 		replacers.add(new ExerciseReplacer(resources));
@@ -183,7 +179,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
-		replacers.add(new QuestionReplacer(resources));
 		replacers.add(new XmlReplacer());
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
