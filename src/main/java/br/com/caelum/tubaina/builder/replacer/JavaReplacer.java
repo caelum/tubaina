@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -34,7 +34,7 @@ public class JavaReplacer extends AbstractReplacer {
 			}
 		}
 		int maxLineLenght = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
-		if(maxLineLenght >Tubaina.MAX_LINE_LENGTH)
+		if(maxLineLenght >TubainaBuilder.MAX_LINE_LENGTH)
 			throw new TubainaException ("Chapter " + Chapter.getChaptersCount() + 
 										"  -  Java code has " + maxLineLenght + " columns:\n\n" + content);
 		return new JavaChunk(options, content);

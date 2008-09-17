@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
-import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -35,7 +35,7 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		generator = new LatexGenerator(parser, Tubaina.DEFAULT_TEMPLATE_DIR, false);
+		generator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false);
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n"
 				+ "texto da seção\n" + "[section Primeira seção]\n"
@@ -74,7 +74,7 @@ public class LatexGeneratorTest {
 		Assert.assertTrue("Xcolor style file should exist", xcolorStyleFile.exists());
 
 		Assert.assertTrue(FileUtilities.contentEquals(new File(
-				Tubaina.DEFAULT_TEMPLATE_DIR, "latex"), temp,
+				TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex"), temp,
 				new FilenameFilter() {
 					public boolean accept(File dir, String name) {
 						return name.contains(".png");
@@ -137,7 +137,7 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		LatexGenerator customGenerator = new LatexGenerator(parser, Tubaina.DEFAULT_TEMPLATE_DIR, false);
+		LatexGenerator customGenerator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false);
 		BookBuilder builder = new BookBuilder("Do Instrutor");
 		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
 		Book b = builder.build(true);

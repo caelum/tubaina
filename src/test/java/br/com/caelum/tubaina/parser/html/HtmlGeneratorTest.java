@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
-import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -40,7 +40,7 @@ public class HtmlGeneratorTest {
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
 
-		generator = new HtmlGenerator(parser, false, Tubaina.DEFAULT_TEMPLATE_DIR);
+		generator = new HtmlGenerator(parser, false, TubainaBuilder.DEFAULT_TEMPLATE_DIR);
 
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
@@ -72,7 +72,7 @@ public class HtmlGeneratorTest {
 
 		// se copiou os arquivos corretamente
 		File html = new File(livro, "includes/");
-		Assert.assertTrue(FileUtilities.contentEquals(new File(Tubaina.DEFAULT_TEMPLATE_DIR, "html/includes"), html,
+		Assert.assertTrue(FileUtilities.contentEquals(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/includes"), html,
 				new NotFileFilter(new NameFileFilter(new String[] { "CVS", ".svn" }))));
 
 		// livro/cap1

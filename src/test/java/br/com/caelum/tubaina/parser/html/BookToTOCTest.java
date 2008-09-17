@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
-import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
@@ -27,7 +27,7 @@ public class BookToTOCTest {
 	@Before
 	public void setUp() throws IOException {
 		cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(Tubaina.DEFAULT_TEMPLATE_DIR);
+		cfg.setDirectoryForTemplateLoading(TubainaBuilder.DEFAULT_TEMPLATE_DIR);
 		cfg.setObjectWrapper(new BeansWrapper());
 
 		chapterIdentifier = "class=\"indexChapter\"";

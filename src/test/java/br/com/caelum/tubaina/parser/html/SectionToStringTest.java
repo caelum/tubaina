@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Section;
-import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.SectionBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -23,7 +23,7 @@ public class SectionToStringTest {
 	@Before
 	public void setUp() throws IOException {
 		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(Tubaina.DEFAULT_TEMPLATE_DIR);
+		cfg.setDirectoryForTemplateLoading(TubainaBuilder.DEFAULT_TEMPLATE_DIR);
 		cfg.setObjectWrapper(new BeansWrapper());
 
 		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
