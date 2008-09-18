@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
@@ -24,8 +25,9 @@ public class ChapterToString {
 		this.dirTree = dirTree;
 	}
 
-	public StringBuffer generateChapter(final Chapter c, final int index, final int currentDir) {
+	public StringBuffer generateChapter(final Book b, final Chapter c, final int index, final int currentDir) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("book", b);
 		map.put("chapter", c);
 		map.put("curchap", index);
 		map.put("curdir", currentDir);

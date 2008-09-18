@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.SectionBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -47,7 +48,8 @@ public class SectionToStringTest {
 	@Test
 	public void testSection() {
 		Section section = createSection("este é o texto da seção");
-		String string = sectionToString.generateSection("capitulo", 7, section, 4, 2).toString();
+		String string = sectionToString.generateSection(new BookBuilder("").build(), "capitulo", 7, section, 4, 2)
+				.toString();
 		System.out.println(string);
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));

@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -53,7 +54,7 @@ public class ChapterToStringTest {
 		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
 				+ "\n[section segunda] conteudo da segunda");
 
-		String string = chapterToString.generateChapter(c, 1, 1).toString();
+		String string = chapterToString.generateChapter(new BookBuilder("").build(), c, 1, 1).toString();
 
 		// System.out.println(string);
 
@@ -67,7 +68,7 @@ public class ChapterToStringTest {
 	@Test
 	public void testGenerateChapterWithIntroduction() {
 		Chapter c = createChapter("conteudo da secao vazia", "");
-		String string = chapterToString.generateChapter(c, 2, 1).toString();
+		String string = chapterToString.generateChapter(new BookBuilder("").build(), c, 2, 1).toString();
 
 		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">2<"));

@@ -29,19 +29,19 @@ public class HtmlGenerator {
 
 	private static final Logger LOG = Logger.getLogger(HtmlGenerator.class);
 
-	private HtmlParser parser;
+	private final HtmlParser parser;
 
 	private final boolean shouldValidateXHTML;
 
 	private final File templateDir;
 
-	public HtmlGenerator(HtmlParser parser, boolean shouldValidateXHTML, File templateDir) {
+	public HtmlGenerator(final HtmlParser parser, final boolean shouldValidateXHTML, final File templateDir) {
 		this.parser = parser;
 		this.shouldValidateXHTML = shouldValidateXHTML;
 		this.templateDir = templateDir;
 	}
 
-	public void generate(Book b, File directory) throws IOException {
+	public void generate(final Book b, final File directory) throws IOException {
 		// FreeMarker configuration
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);
@@ -55,14 +55,14 @@ public class HtmlGenerator {
 		int chapterIndex = 1;
 		int currentDir = 1;
 		for (Chapter c : b.getChapters()) {
-			sb = new ChapterToString(parser, cfg, dirTree).generateChapter(c, chapterIndex, currentDir);
+			sb = new ChapterToString(parser, cfg, dirTree).generateChapter(b, c, chapterIndex, currentDir);
 			saveToFile(new File(directory, dirTree.get(currentDir++)), sb);
 
 			int sectionIndex = 1;
 			for (Section s : c.getSections()) {
 				if (s.getTitle() != null) { // intro
-					sb = new SectionToString(parser, cfg, dirTree).generateSection(c.getTitle(), 
-							chapterIndex, s, sectionIndex, currentDir);
+					sb = new SectionToString(parser, cfg, dirTree).generateSection(b, c.getTitle(), chapterIndex, s,
+							sectionIndex, currentDir);
 					saveToFile(new File(directory, dirTree.get(currentDir++)), sb);
 
 					sectionIndex++;
@@ -71,14 +71,15 @@ public class HtmlGenerator {
 
 			chapterIndex++;
 		}
-		
-		if (shouldValidateXHTML)
+
+		if (shouldValidateXHTML) {
 			validateXHTML(directory, dirTree);
+		}
 
 		copyResources(b, root, dirTree, cfg);
 	}
 
-	private List<String> createDirTree(Book b, File parent) {
+	private List<String> createDirTree(final Book b, final File parent) {
 		List<String> dirTree = new ArrayList<String>();
 
 		String rootDir = Utilities.toDirectoryName(null, b.getName());
@@ -114,25 +115,26 @@ public class HtmlGenerator {
 		return dirTree;
 	}
 
-	private File saveToFile(File directory, StringBuffer sb) throws IOException {
+	private File saveToFile(final File directory, final StringBuffer sb) throws IOException {
 		File file = new File(directory, "index.html");
 		PrintStream ps = new PrintStream(file, "UTF-8");
 		ps.print(sb.toString());
 		return directory;
 	}
 
-	private void copyResources(Book b, File directory, List<String> dirTree, Configuration cfg) throws IOException {
+	private void copyResources(final Book b, final File directory, final List<String> dirTree, final Configuration cfg)
+			throws IOException {
 
 		boolean resourceCopyFailed = false;
 
 		// Dependencies (CSS, images, javascripts)
-		File includes = new File(this.templateDir, "html/includes/");
+		File includes = new File(templateDir, "html/includes/");
 
-		FileUtilities.copyDirectoryToDirectory(includes, directory, new NotFileFilter(new NameFileFilter(
-				new String[] { "CVS", ".svn" })));
+		FileUtilities.copyDirectoryToDirectory(includes, directory, new NotFileFilter(new NameFileFilter(new String[] {
+				"CVS", ".svn" })));
 
 		Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
-		
+
 		for (Chapter c : b.getChapters()) {
 			File chapdir = new File(directory, Utilities.toDirectoryName(null, c.getTitle()));
 
@@ -151,29 +153,31 @@ public class HtmlGenerator {
 
 			}
 		}
-		
+
 		// Creating index
 		StringBuffer sb = new IndexToString(dirTree, cfg).createIndex(indexes);
 		File file = new File(directory, "index/");
 		file.mkdir();
 		saveToFile(file, sb);
-		
-		
-		if (resourceCopyFailed)
+
+		if (resourceCopyFailed) {
 			throw new TubainaException("Couldn't copy some resources. See the Logger for further information");
+		}
 	}
 
-	private void validateXHTML(File directory, List<String> dirTree) {
+	private void validateXHTML(final File directory, final List<String> dirTree) {
 		XHTMLValidator validator = new XHTMLValidator();
 		boolean foundInvalidXHTML = false;
 		for (String s : dirTree) {
-			if (!validator.isValid(directory, s)){
+			if (!validator.isValid(directory, s)) {
 				foundInvalidXHTML = true;
 				LOG.warn("This is not a xhtml valid file: " + s + "/index.html");
 			}
 		}
-		if (foundInvalidXHTML)
-			throw new TubainaException("Some xhtml generated is not valid. See " + XHTMLValidator.validatorLogFile + " for further information");
+		if (foundInvalidXHTML) {
+			throw new TubainaException("Some xhtml generated is not valid. See " + XHTMLValidator.validatorLogFile
+					+ " for further information");
+		}
 
 	}
 }
