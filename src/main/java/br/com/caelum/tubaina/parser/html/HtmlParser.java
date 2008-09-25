@@ -116,4 +116,8 @@ public class HtmlParser implements Parser {
 	public String parseCenteredParagraph(String content) {
 		return new CenteredParagraphTag().parse(content, null);
 	}
+
+	public String parseRuby(String content, String options) {
+		return new RubyTag(new SimpleIndentator()).parse(content, options);
+	}
 }

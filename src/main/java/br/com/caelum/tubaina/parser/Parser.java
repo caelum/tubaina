@@ -20,4 +20,5 @@ public interface Parser {
 	public String parseRow(String text);
 	public String parseColumn(String text);
 	public String parseCenteredParagraph(String content);
+	public String parseRuby(String content, String options);
 }

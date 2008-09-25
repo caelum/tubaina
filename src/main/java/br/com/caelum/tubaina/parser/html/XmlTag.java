@@ -10,7 +10,7 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class XmlTag implements Tag {
 
-	public static final String BEGIN = "<div class=\"java\"><code class=\"java\">";
+	public static final String BEGIN = "<div class=\"xml\"><code class=\"xml\">";
 	public static final String END = "</code></div>";
 	
 	private final Indentator indentator;

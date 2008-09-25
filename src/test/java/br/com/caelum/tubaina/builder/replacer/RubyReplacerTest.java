@@ -10,6 +10,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.CodeChunk;
+import br.com.caelum.tubaina.chunk.RubyChunk;
 
 public class RubyReplacerTest {
 	
@@ -29,7 +30,7 @@ public class RubyReplacerTest {
 		String resto = replacer.execute(code, chunks);
 		Assert.assertEquals(" ola resto", resto);
 		Assert.assertEquals(1, chunks.size());
-		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals(RubyChunk.class, chunks.get(0).getClass());
 	}
 
 	@Test

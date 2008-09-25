@@ -19,6 +19,7 @@ import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
+import br.com.caelum.tubaina.chunk.RubyChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.MockedParser;
 import br.com.caelum.tubaina.parser.Parser;
@@ -210,14 +211,14 @@ public class BookBuilderTest {
 	}
 
 	@Test
-	public void testCodeChunkFromRubyTag() {
+	public void testRubyChunk() {
 		List<Chapter> chapters = getChapters("[chapter  Capítulo cheio de Chunks]\n" + "[section secao]"
 				+ "\n\n[ruby]\n" + "Algum corpo de texto\n" + "que é preformatado\n" + "[/ruby]\n\n");
 
 		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
 		Assert.assertEquals(1, chunks.size());
 
-		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals(RubyChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals("\nAlgum corpo de texto\nque é preformatado\n", chunks.get(0).getContent(parser));
 	}
 

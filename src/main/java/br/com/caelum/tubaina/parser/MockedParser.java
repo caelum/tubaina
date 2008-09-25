@@ -95,4 +95,8 @@ public class MockedParser implements Parser {
 		return text;
 	}
 
+	public String parseRuby(String text, String options) {
+		return text;
+	}
+
 }

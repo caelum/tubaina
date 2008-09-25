@@ -4,7 +4,7 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.chunk.CodeChunk;
+import br.com.caelum.tubaina.chunk.RubyChunk;
 import br.com.caelum.tubaina.util.Utilities;
 
 public class RubyReplacer extends AbstractReplacer {
@@ -19,7 +19,7 @@ public class RubyReplacer extends AbstractReplacer {
 		if(maxLineLenght >TubainaBuilder.MAX_LINE_LENGTH)
 			throw new TubainaException ("Chapter " + Chapter.getChaptersCount() + 
 										"  -  Code has " + maxLineLenght + " columns:\n\n" + content);
-		return new CodeChunk(content, options);
+		return new RubyChunk(content, options);
 	}
 
 }
