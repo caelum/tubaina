@@ -170,7 +170,7 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@local</span>&nbsp;=&nbsp;<span class=\"rubykeyword\">nil</span>" + END, result);
 		code = "@@count = 1";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@@count</span>&nbsp;=&nbsp;1" + END, result);
+		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@@count</span>&nbsp;=&nbsp;<span class=\"rubynumber\">1</span>" + END, result);
 		code = "$counter++";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">$counter</span>++" + END, result);
@@ -180,6 +180,44 @@ public class RubyTagTest {
 	public void testConstant() {
 		String code = "PI = 3.14159";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyconstant\">PI</span>&nbsp;=&nbsp;3.14159" + END, result);
+		Assert.assertEquals(BEGIN + "<span class=\"rubyconstant\">PI</span>&nbsp;=&nbsp;<span class=\"rubynumber\">3.14159</span>" + END, result);
+	}
+	
+	@Test
+	public void testNumbers() {
+		String code = "12345";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">12345</span>" + END, result);
+		code = "123.45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123.45</span>" + END, result);
+		code = "123e45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123e45</span>" + END, result);
+		code = "123E-45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123E-45</span>" + END, result);
+		code = "-123.45e67";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">-123.45e67</span>" + END, result);
+		code = "0xffffff";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">0xffffff</span>" + END, result);
+		code = "0b010010";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">0b010010</span>" + END, result);
+		code = "01777";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">01777</span>" + END, result);
+	}
+	
+	@Test
+	public void testSymbols() {
+		String code = "attr_accessor :name, :age";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "attr_accessor&nbsp;<span class=\"rubysymbol\">:name</span>,&nbsp;<span class=\"rubysymbol\">:age</span>" + END, result);
+		code = "%s(strange_symbol)";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubysymbol\">%s(strange_symbol)</span>" + END, result);
 	}
 }

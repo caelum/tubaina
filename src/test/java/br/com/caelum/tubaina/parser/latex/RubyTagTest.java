@@ -170,7 +170,7 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#local~\\verb#=#~\\rubykeyword nil" + END, result);
 		code = "@@count = 1";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#\\verb#@#count~\\verb#=#~1" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#\\verb#@#count~\\verb#=#~\\rubynumber 1" + END, result);
 		code = "$counter++";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubyvariable \\$counter++" + END, result);
@@ -180,6 +180,44 @@ public class RubyTagTest {
 	public void testConstant() {
 		String code = "PI = 3.14159";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyconstant PI~\\verb#=#~3.14159" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyconstant PI~\\verb#=#~\\rubynumber 3.14159" + END, result);
+	}
+
+	@Test
+	public void testNumbers() {
+		String code = "12345";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 12345" + END, result);
+		code = "123.45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 123.45" + END, result);
+		code = "123e45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 123e45" + END, result);
+		code = "123E-45";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 123E\\verb#-#45" + END, result);
+		code = "-123.45e67";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber \\verb#-#123.45e67" + END, result);
+		code = "0xffffff";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 0xffffff" + END, result);
+		code = "0b010010";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 0b010010" + END, result);
+		code = "01777";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynumber 01777" + END, result);
+	}
+	
+	@Test
+	public void testSymbols() {
+		String code = "attr_accessor :name, :age";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "attr\\_accessor~\\rubysymbol :name,~\\rubysymbol :age" + END, result);
+		code = "%s(strange_symbol)";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubysymbol \\%s(strange\\_symbol)" + END, result);
 	}
 }

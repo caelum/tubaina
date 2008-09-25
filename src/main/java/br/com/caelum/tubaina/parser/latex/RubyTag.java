@@ -35,6 +35,7 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\(.*?\\)"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\[.*?\\]"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\{.*?\\}"), "symbol");
+		this.elementPatterns.put(Pattern.compile("^:" + identifier), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?([^\\p{Alnum}\\[{(]).*?\\2"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?\\(.*?\\)"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?\\[.*?\\]"), "string");
@@ -47,6 +48,10 @@ public class RubyTag implements Tag {
 				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))"), "keyword");
 		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\\\\\$))" + identifier), "variable");
 		this.elementPatterns.put(Pattern.compile("^[A-Z][\\p{Alnum}_]*"), "constant");
+		this.elementPatterns.put(Pattern.compile("^[-+]?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?\\b"), "number");
+		this.elementPatterns.put(Pattern.compile("^0[xX][A-Fa-f0-9]+\\b"), "number");
+		this.elementPatterns.put(Pattern.compile("^0[0-7]+\\b"), "number");
+		this.elementPatterns.put(Pattern.compile("^0[bB][01]+\\b"), "number");
 	}
 
 	public String parse(String code, String options) {
@@ -100,7 +105,7 @@ public class RubyTag implements Tag {
 				return toProcess.substring(matcher.end());
 			}
 		}
-		Pattern unknownElement = Pattern.compile(".+?(\\s|~|(\\\\\\\\))?");
+		Pattern unknownElement = Pattern.compile(".+?(\\s|~|(\\\\\\\\)|(\\Z))");
 		Matcher unknownElementMatcher = unknownElement.matcher(toProcess);
 		if (unknownElementMatcher.find()) {
 			this.output += unknownElementMatcher.group();
