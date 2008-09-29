@@ -18,6 +18,7 @@ public class RubyTag implements Tag {
 	private final String identifier = "[\\p{Alnum}_]+";
 	private final Map<Pattern, String> elementPatterns;
 	private String output;
+	private String lastMode;
 
 	public RubyTag(Indentator indentator) {
 		this.indentator = indentator;
@@ -61,6 +62,7 @@ public class RubyTag implements Tag {
 		toProcess = escape(toProcess);
 		toProcess = parseSpaces(toProcess);
 		this.output = "";
+		this.lastMode = "";
 		while (!toProcess.isEmpty()) {
 			toProcess = processNextElement(toProcess);
 		}
@@ -88,7 +90,7 @@ public class RubyTag implements Tag {
 	}
 
 	private String processNextElement(String toProcess) {
-		Pattern spacePattern = Pattern.compile("^(\\s|,|~|(\\\\\\\\))+");
+		Pattern spacePattern = Pattern.compile("^(\\s|~|(\\\\\\\\))+");
 		Matcher spaceMatcher = spacePattern.matcher(toProcess);
 		if (spaceMatcher.find()) {
 			this.output += spaceMatcher.group();
@@ -97,17 +99,23 @@ public class RubyTag implements Tag {
 		for (Pattern elementPattern : this.elementPatterns.keySet()) {
 			Matcher matcher = elementPattern.matcher(toProcess);
 			if (matcher.find()) {
-				if (this.elementPatterns.get(elementPattern).equals("constant"))
+				String newMode = this.elementPatterns.get(elementPattern);
+				if (newMode.equals("constant"))
 					if (matcher.group().equals("BEGIN") || matcher.group().equals("END"))
 						continue;
-				this.output += "\\ruby" + this.elementPatterns.get(elementPattern) + " ";
+				this.output += "\\ruby" + newMode + " ";
 				this.output += matcher.group();
+				this.lastMode = newMode;
 				return toProcess.substring(matcher.end());
 			}
 		}
-		Pattern unknownElement = Pattern.compile(".*?(\\s|~|(\\\\\\\\)|(\\Z)|(\\())");
+		Pattern unknownElement = Pattern.compile(".*?(\\s|~|(\\\\\\\\)|(\\Z)|(\\()|(\\[)|(\\{))");
 		Matcher unknownElementMatcher = unknownElement.matcher(toProcess);
 		if (unknownElementMatcher.find()) {
+			if (!this.lastMode.equals("normal")) {
+				this.lastMode = "normal";
+				this.output += "\\ruby" + this.lastMode + " ";
+			}
 			this.output += unknownElementMatcher.group();
 			return toProcess.substring(unknownElementMatcher.end());
 		}

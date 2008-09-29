@@ -93,7 +93,7 @@ public class RubyTag implements Tag {
 				return toProcess.substring(matcher.end());
 			}
 		}
-		Pattern unknownElement = Pattern.compile(".*?((\\s)|(&nbsp;)|(<br/>)|(\\Z)|(\\())");
+		Pattern unknownElement = Pattern.compile(".*?((\\s)|(&nbsp;)|(<br/>)|(\\Z)|(\\()|(\\[)|(\\{))");
 		Matcher unknownElementMatcher = unknownElement.matcher(toProcess);
 		if (unknownElementMatcher.find()) {
 			this.output += unknownElementMatcher.group();

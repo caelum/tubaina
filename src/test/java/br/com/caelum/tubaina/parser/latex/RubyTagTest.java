@@ -91,7 +91,7 @@ public class RubyTagTest {
 		String code = "method 'a string', \"another string\", %q/yet another string/";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "method~\\rubystring \\verb#'#a~string\\verb#'#,~\\rubystring \\verb#\"#another~string\\verb#\"#,~\\rubystring \\%q\\verb#/#yet~another~string\\verb#/#"
+				+ "\\rubynormal method~\\rubystring \\verb#'#a~string\\verb#'#\\rubynormal ,~\\rubystring \\verb#\"#another~string\\verb#\"#\\rubynormal ,~\\rubystring \\%q\\verb#/#yet~another~string\\verb#/#"
 				+ END, result);
 	}
 
@@ -109,7 +109,7 @@ public class RubyTagTest {
 		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "puts~\\rubystring \\verb#<#\\verb#<#BLAH\\\\\nThis~is~a\\\\\nmultiline,~line\\verb#-#oriented\\\\\nstring\\\\\nBLAH"
+				+ "\\rubynormal puts~\\rubystring \\verb#<#\\verb#<#BLAH\\\\\nThis~is~a\\\\\nmultiline,~line\\verb#-#oriented\\\\\nstring\\\\\nBLAH"
 				+ END, result);
 		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE";
 		result = rubyTag.parse(code, "");
@@ -123,7 +123,7 @@ public class RubyTagTest {
 		String code = "puts \"He said: 'Hello World!'\"";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "puts~\\rubystring \\verb#\"#He~said:~\\verb#'#Hello~World!\\verb#'#\\verb#\"#"
+				+ "\\rubynormal puts~\\rubystring \\verb#\"#He~said:~\\verb#'#Hello~World!\\verb#'#\\verb#\"#"
 				+ END, result);
 	}
 
@@ -172,20 +172,20 @@ public class RubyTagTest {
 	public void testVariables() {
 		String code = "@local = nil";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#local~\\verb#=#~\\rubykeyword nil" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#local~\\rubynormal \\verb#=#~\\rubykeyword nil" + END, result);
 		code = "@@count = 1";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#\\verb#@#count~\\verb#=#~\\rubynumber 1" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#\\verb#@#count~\\rubynormal \\verb#=#~\\rubynumber 1" + END, result);
 		code = "$counter++";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyvariable \\$counter++" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\$counter\\rubynormal ++" + END, result);
 	}
 	
 	@Test
 	public void testConstant() {
 		String code = "PI = 3.14159";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubyconstant PI~\\verb#=#~\\rubynumber 3.14159" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubyconstant PI~\\rubynormal \\verb#=#~\\rubynumber 3.14159" + END, result);
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class RubyTagTest {
 	public void testSymbols() {
 		String code = "attr_accessor :name, :age";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "attr\\_accessor~\\rubysymbol :name,~\\rubysymbol :age" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubynormal attr\\_accessor~\\rubysymbol :name\\rubynormal ,~\\rubysymbol :age" + END, result);
 		code = "%s(strange_symbol)";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubysymbol \\%s(strange\\_symbol)" + END, result);
@@ -239,7 +239,20 @@ public class RubyTagTest {
 	public void testKeywordMethodCalledOnAString() {
 		String code = "defined?(\"text\") # should return true";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubykeyword defined?(\\rubystring \\verb#\"#text\\verb#\"#)~\\rubycomment \\#~should~return~true" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubykeyword defined?\\rubynormal (\\rubystring \\verb#\"#text\\verb#\"#\\rubynormal )~\\rubycomment \\#~should~return~true" + END, result);
+	}
+	
+	@Test
+	public void testHashAndArrayKeys() {
+		String code = "@params[:id]";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\verb#@#params\\rubynormal [\\rubysymbol :id\\rubynormal ]" + END, result);
+		code = "$instances[5]";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubyvariable \\$instances\\rubynormal [\\rubynumber 5\\rubynormal ]" + END, result);
+		code = "dict['word']";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynormal dict[\\rubystring \\verb#'#word\\verb#'#\\rubynormal ]" + END, result);
 	}
 	
 	private String readFile(String filename) throws IOException {

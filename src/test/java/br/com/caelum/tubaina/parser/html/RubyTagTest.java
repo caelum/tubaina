@@ -242,6 +242,19 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "<span class=\"rubykeyword\">defined?</span>(<span class=\"rubystring\">\"text\"</span>)&nbsp;<span class=\"rubycomment\">#&nbsp;should&nbsp;return&nbsp;true</span>" + END, result);
 	}
 	
+	@Test
+	public void testHashAndArrayKeys() {
+		String code = "@params[:id]";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@params</span>[<span class=\"rubysymbol\">:id</span>]" + END, result);
+		code = "$instances[5]";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">$instances</span>[<span class=\"rubynumber\">5</span>]" + END, result);
+		code = "dict['word']";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "dict[<span class=\"rubystring\">'word'</span>]" + END, result);
+	}
+	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
 		String line;
