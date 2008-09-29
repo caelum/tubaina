@@ -1,0 +1,21 @@
+<div class="ruby"><code class="ruby">
+<span class="rubykeyword">class</span>&nbsp;<span class="rubyconstant">Person</span><br/>
+&nbsp;&nbsp;attr_reader&nbsp;<span class="rubysymbol">:name</span>,&nbsp;<span class="rubysymbol">:age</span><br/>
+&nbsp;&nbsp;<span class="rubykeyword">def</span>&nbsp;initialize(name,&nbsp;age)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="rubyvariable">@name</span>,&nbsp;<span class="rubyvariable">@age</span>&nbsp;=&nbsp;name,&nbsp;age<br/>
+&nbsp;&nbsp;<span class="rubykeyword">end</span><br/>
+&nbsp;&nbsp;<span class="rubykeyword">def</span>&nbsp;&lt;=&gt;(person)&nbsp;<span class="rubycomment">#&nbsp;Comparison&nbsp;operator&nbsp;for&nbsp;sorting<br/></span>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="rubyvariable">@age</span>&nbsp;&lt;=&gt;&nbsp;person.age<br/>
+&nbsp;&nbsp;<span class="rubykeyword">end</span><br/>
+&nbsp;&nbsp;<span class="rubykeyword">def</span>&nbsp;to_s<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="rubystring">"#@name&nbsp;(#@age)"</span><br/>
+&nbsp;&nbsp;<span class="rubykeyword">end</span><br/>
+<span class="rubykeyword">end</span><br/>
+<br/>
+group&nbsp;=&nbsp;[<br/>
+&nbsp;&nbsp;<span class="rubyconstant">Person</span>.new(<span class="rubystring">"Bob"</span>,&nbsp;<span class="rubynumber">33</span>),<br/>
+&nbsp;&nbsp;<span class="rubyconstant">Person</span>.new(<span class="rubystring">"Chris"</span>,&nbsp;<span class="rubynumber">16</span>),<br/>
+&nbsp;&nbsp;<span class="rubyconstant">Person</span>.new(<span class="rubystring">"Ash"</span>,&nbsp;<span class="rubynumber">23</span>)<br/>
+]<br/>
+<br/>
+puts&nbsp;group.sort.reverse</code></div>

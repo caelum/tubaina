@@ -1,14 +1,19 @@
 package br.com.caelum.tubaina.parser.html;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
+import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class RubyTagTest {
-	private final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">";
-	private final String END = "</code></div>";
+	private final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">\n";
+	private final String END = "</code></div>\n";
 	private final RubyTag rubyTag = new RubyTag(new SimpleIndentator());
 
 	@Test
@@ -219,5 +224,32 @@ public class RubyTagTest {
 		code = "%s(strange_symbol)";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "<span class=\"rubysymbol\">%s(strange_symbol)</span>" + END, result);
+	}
+	
+	@Test
+	public void testMultipleLineCode() throws IOException {
+		ResourceLocator.initialize(".");
+		String code = readFile("/src/test/resources/test_ruby_color.rb");
+		String result = rubyTag.parse(code, ""); 
+		String expected = readFile("/src/test/resources/test_ruby_color.html");
+		Assert.assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testKeywordMethodCalledOnAString() {
+		String code = "defined?(\"text\") # should return true";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubykeyword\">defined?</span>(<span class=\"rubystring\">\"text\"</span>)&nbsp;<span class=\"rubycomment\">#&nbsp;should&nbsp;return&nbsp;true</span>" + END, result);
+	}
+	
+	private String readFile(String filename) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
+		String line;
+		String content = "";
+		while ((line = reader.readLine()) != null) {
+			content += line + "\n";
+		}
+		reader.close();
+		return content;
 	}
 }

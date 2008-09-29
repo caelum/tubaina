@@ -1,0 +1,23 @@
+{
+\small \noindent \ttfamily 
+\rubykeyword class~\rubyconstant Person\\
+~~attr\_reader~\rubysymbol :name,~\rubysymbol :age\\
+~~\rubykeyword def~initialize(name,~age)\\
+~~~~\rubyvariable \verb#@#name,~\rubyvariable \verb#@#age~\verb#=#~name,~age\\
+~~\rubykeyword end\\
+~~\rubykeyword def~\verb#<#\verb#=#\verb#>#(person)~\rubycomment \#~Comparison~operator~for~sorting\\
+~~~~\rubyvariable \verb#@#age~\verb#<#\verb#=#\verb#>#~person.age\\
+~~\rubykeyword end\\
+~~\rubykeyword def~to\_s\\
+~~~~\rubystring \verb#"#\#\verb#@#name~(\#\verb#@#age)\verb#"#\\
+~~\rubykeyword end\\
+\rubykeyword end\\
+\\
+group~\verb#=#~[\\
+~~\rubyconstant Person.new(\rubystring \verb#"#Bob\verb#"#,~\rubynumber 33),\\
+~~\rubyconstant Person.new(\rubystring \verb#"#Chris\verb#"#,~\rubynumber 16),\\
+~~\rubyconstant Person.new(\rubystring \verb#"#Ash\verb#"#,~\rubynumber 23)\\
+]\\
+\\
+puts~group.sort.reverse
+}

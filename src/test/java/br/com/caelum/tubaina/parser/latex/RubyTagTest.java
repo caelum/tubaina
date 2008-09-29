@@ -1,10 +1,15 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
+import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class RubyTagTest {
 	private final String BEGIN = "{\n" + "\\small \\noindent \\ttfamily \n";
@@ -219,5 +224,32 @@ public class RubyTagTest {
 		code = "%s(strange_symbol)";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubysymbol \\%s(strange\\_symbol)" + END, result);
+	}
+	
+	@Test
+	public void testMultipleLineCode() throws IOException {
+		ResourceLocator.initialize(".");
+		String code = readFile("/src/test/resources/test_ruby_color.rb");
+		String result = rubyTag.parse(code, ""); 
+		String expected = readFile("/src/test/resources/test_ruby_color.tex");
+		Assert.assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testKeywordMethodCalledOnAString() {
+		String code = "defined?(\"text\") # should return true";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubykeyword defined?(\\rubystring \\verb#\"#text\\verb#\"#)~\\rubycomment \\#~should~return~true" + END, result);
+	}
+	
+	private String readFile(String filename) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
+		String line;
+		String content = "";
+		while ((line = reader.readLine()) != null) {
+			content += line + "\n";
+		}
+		reader.close();
+		return content;
 	}
 }

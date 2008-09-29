@@ -13,8 +13,8 @@ import br.com.caelum.tubaina.parser.Tag;
 public class RubyTag implements Tag {
 
 	private final Indentator indentator;
-	private final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">";
-	private final String END = "</code></div>";
+	private final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">\n";
+	private final String END = "</code></div>\n";
 	private final String identifier = "[\\p{Alnum}_]+";
 	private final Map<Pattern, String> elementPatterns;
 	private String output;
@@ -42,10 +42,10 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\{.*?\\}"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^&lt;&lt;-?([`\"]?)(" + identifier + ")\\1.*?\\2"), "string");
 		this.elementPatterns.put(Pattern.compile(
-				"^((BEGIN)|(class)|(ensure)|(nil)|(self)|(when)|(END)|(defined[?]?)|(def)|" +
+				"^((BEGIN)|(class)|(ensure)|(nil)|(self)|(when)|(END)|(defined\\?)|(def)|" +
 				"(false)|(not)|(super)|(while)|(alias)|(defined)|(for)|(or)|(then)|(yield)|" +
 				"(and)|(do)|(if)|(redo)|(true)|(begin)|(else)|(in)|(rescue)|(undef)|(break)|" +
-				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))"), "keyword");
+				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))(?![\\p{Alnum}_?])"), "keyword");
 		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\$))" + identifier), "variable");
 		this.elementPatterns.put(Pattern.compile("^[A-Z][\\p{Alnum}_]*"), "constant");
 		this.elementPatterns.put(Pattern.compile("^[-+]?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?\\b"), "number");
@@ -93,7 +93,7 @@ public class RubyTag implements Tag {
 				return toProcess.substring(matcher.end());
 			}
 		}
-		Pattern unknownElement = Pattern.compile(".+?((\\s)|(&nbsp;)|(<br/>)|(\\Z))");
+		Pattern unknownElement = Pattern.compile(".*?((\\s)|(&nbsp;)|(<br/>)|(\\Z)|(\\())");
 		Matcher unknownElementMatcher = unknownElement.matcher(toProcess);
 		if (unknownElementMatcher.find()) {
 			this.output += unknownElementMatcher.group();
