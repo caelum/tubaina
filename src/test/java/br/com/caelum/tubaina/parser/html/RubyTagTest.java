@@ -255,6 +255,23 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "dict[<span class=\"rubystring\">'word'</span>]" + END, result);
 	}
 	
+	@Test
+	public void testMultipleNamespaces() {
+		String code = "class User < ActiveRecord::Base";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubykeyword\">class</span>&nbsp;<span class=\"rubyconstant\">User</span>&nbsp;&lt;&nbsp;<span class=\"rubyconstant\">ActiveRecord</span>::<span class=\"rubyconstant\">Base</span>" + END, result);
+	}
+	
+	@Test
+	public void testNumbersInRangeWithoutSpacesBetween() {
+		String code = "array = [1,2,3,4]";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "array&nbsp;=&nbsp;[<span class=\"rubynumber\">1</span>,<span class=\"rubynumber\">2</span>,<span class=\"rubynumber\">3</span>,<span class=\"rubynumber\">4</span>]" + END, result);
+		code = "array = [1..4]";
+		result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "array&nbsp;=&nbsp;[<span class=\"rubynumber\">1</span>..<span class=\"rubynumber\">4</span>]" + END, result);
+	}
+	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
 		String line;

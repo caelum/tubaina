@@ -7,6 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="${relative}/includes/css/style.css" />
 		<link rel="stylesheet" type="text/css" href="${relative}/includes/css/xml2html.css" />
 		<link rel="stylesheet" type="text/css" href="${relative}/includes/css/java.css" />
+		<link rel="stylesheet" type="text/css" href="${relative}/includes/css/ruby2html.css" />
 		<meta name="description" content="&lt;!-- your own description --&gt;" />
 		<title> <!-- whatever you want to appear on the top bar of your browser --> </title>
 		

@@ -1,0 +1,7 @@
+/* Comments */ span.rubycomment  { font-size: 10pt; color:#3f7f5f; }
+/* Keywords */ span.rubykeyword  { font-size: 10pt; color:#7f0055; font-weight:bold; }
+/* Strings */ span.rubystring  { font-size: 10pt; color:#2a00ff; }
+/* Symbols */ span.rubysymbol  { font-size: 10pt; color:#990000; }
+/* Numbers */ span.rubynumber  { font-size: 10pt; color:#990000; }
+/* Regular expressions */ span.rubyregex  { font-size: 10pt; color:#ff6100; }
+/* Constants */ span.rubyconstants  { font-size: 10pt; color:#646464; }
