@@ -272,6 +272,34 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "\\rubynormal array~\\verb#=#~[\\rubynumber 1\\rubynormal ..\\rubynumber 4\\rubynormal ]" + END, result);
 	}
 	
+	@Test
+	public void testEscapedCharactersInDoubleQuotedStrings() {
+		String code = "\"this is a \\\"string\\\"\";";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubystring \\verb#\"#this~is~a~\\char92\\verb#\"#string\\char92\\verb#\"#\\verb#\"#\\rubynormal ;" + END, result);
+	}
+	
+	@Test
+	public void testEscapedCharactersInSingleQuotedStrings() {
+		String code = "'this is a \\'string\\''";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubystring \\verb#'#this~is~a~\\char92\\verb#'#string\\char92\\verb#'#\\verb#'#" + END, result);
+	}
+	
+	@Test
+	public void testEscapedCharactersInRegularExpressions() {
+		String code = "/\\/.*\\//";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubyregexp \\verb#/#\\char92\\verb#/#.*\\char92\\verb#/#\\verb#/#" + END, result);
+	}
+	
+	@Test
+	public void testEscapedCharactersInGeneralizedStringsAndRegularExpressions() {
+		String code = "%(this is a \\(generalized\\) string)";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubystring \\%(this~is~a~\\char92(generalized\\char92)~string)" + END, result);
+	}
+	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
 		String line;

@@ -24,22 +24,22 @@ public class RubyTag implements Tag {
 		this.elementPatterns = new HashMap<Pattern, String>();
 		this.elementPatterns.put(Pattern.compile("(?m)^#.*$"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
-		this.elementPatterns.put(Pattern.compile("(?s)^\".*?\""), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^'.*?'"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^%r([^\\p{Alnum}\\[{(]).*?\\1[eimnosux]*"), "regexp");
-		this.elementPatterns.put(Pattern.compile("(?s)^%r\\(.*?\\)[eimnosux]*"), "regexp");
-		this.elementPatterns.put(Pattern.compile("(?s)^%r\\[.*?\\][eimnosux]*"), "regexp");
-		this.elementPatterns.put(Pattern.compile("(?s)^%r\\{.*?\\}[eimnosux]*"), "regexp");
-		this.elementPatterns.put(Pattern.compile("(?s)^/.*?/[eimnosux]*"), "regexp");
-		this.elementPatterns.put(Pattern.compile("(?s)^%s([^\\p{Alnum}\\[{(]).*?\\1"), "symbol");
-		this.elementPatterns.put(Pattern.compile("(?s)^%s\\(.*?\\)"), "symbol");
-		this.elementPatterns.put(Pattern.compile("(?s)^%s\\[.*?\\]"), "symbol");
-		this.elementPatterns.put(Pattern.compile("(?s)^%s\\{.*?\\}"), "symbol");
+		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!\\\\)\""), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!\\\\)'"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^%r([^\\p{Alnum}\\[{(]).*?(?<!\\\\)\\1[eimnosux]*"), "regexp");
+		this.elementPatterns.put(Pattern.compile("(?s)^%r\\(.*?(?<!\\\\)\\)[eimnosux]*"), "regexp");
+		this.elementPatterns.put(Pattern.compile("(?s)^%r\\[.*?(?<!\\\\)\\][eimnosux]*"), "regexp");
+		this.elementPatterns.put(Pattern.compile("(?s)^%r\\{.*?(?<!\\\\)\\}[eimnosux]*"), "regexp");
+		this.elementPatterns.put(Pattern.compile("(?s)^/.*?(?<!\\\\)/[eimnosux]*"), "regexp");
+		this.elementPatterns.put(Pattern.compile("(?s)^%s([^\\p{Alnum}\\[{(]).*?(?<!\\\\)\\1"), "symbol");
+		this.elementPatterns.put(Pattern.compile("(?s)^%s\\(.*?(?<!\\\\)\\)"), "symbol");
+		this.elementPatterns.put(Pattern.compile("(?s)^%s\\[.*?(?<!\\\\)\\]"), "symbol");
+		this.elementPatterns.put(Pattern.compile("(?s)^%s\\{.*?(?<!\\\\)\\}"), "symbol");
 		this.elementPatterns.put(Pattern.compile("^:" + identifier), "symbol");
-		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?([^\\p{Alnum}\\[{(]).*?\\2"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\(.*?\\)"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\[.*?\\]"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\{.*?\\}"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?([^\\p{Alnum}\\[{(]).*?(?<!\\\\)\\2"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\(.*?(?<!\\\\)\\)"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\[.*?(?<!\\\\)\\]"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[qQw])?\\{.*?(?<!\\\\)\\}"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^&lt;&lt;-?([`\"]?)(" + identifier + ")\\1.*?\\2"), "string");
 		this.elementPatterns.put(Pattern.compile(
 				"^((BEGIN)|(class)|(ensure)|(nil)|(self)|(when)|(END)|(defined\\?)|(def)|" +
