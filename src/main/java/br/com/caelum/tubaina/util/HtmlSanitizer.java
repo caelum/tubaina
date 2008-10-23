@@ -84,7 +84,13 @@ public class HtmlSanitizer {
 		final StringBuilder sane = new StringBuilder();
 		for (int i = 0; i < text.length(); i++) {
 			char current = text.charAt(i);
-
+			// this is for the rubyhack
+			if (current == '<' && i < text.length() - 2) {
+				String next = text.substring(i + 1, i + 3);
+				if (next.equals("::")) {
+					continue;
+				}
+			}
 			if (map.containsKey(current)) {
 				sane.append(map.get(current));
 			} else {

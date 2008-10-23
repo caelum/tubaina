@@ -47,9 +47,10 @@ public class HtmlParser implements Parser {
 	}
 
 	public String parseParagraph(String text) {
-		text = this.sanitizer.sanitize(text);
-		String string = new ParagraphTag().parse(text, null);
-		return this.parse(string);
+		String string = this.sanitizer.sanitize(text);
+		string = new ParagraphTag().parse(string, null);
+		string = this.parse(string);
+		return string;
 	}
 
 	public String parseCode(String text, String options) {

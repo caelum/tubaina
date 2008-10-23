@@ -12,9 +12,12 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class RubyTag implements Tag {
 
+	private static final String ARITHMETIC_EXPRESSION = "aritexp";
+	private static final String NUMBER = "(((?<=\\+|\\A)[-+])?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?)";
+	private static final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">\n";
+	private static final String END = "</code></div>\n";
+	
 	private final Indentator indentator;
-	private final String BEGIN = "<div class=\"ruby\"><code class=\"ruby\">\n";
-	private final String END = "</code></div>\n";
 	private final String identifier = "[\\p{Alnum}_]+";
 	private final Map<Pattern, String> elementPatterns;
 	private String output;
@@ -48,7 +51,7 @@ public class RubyTag implements Tag {
 				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))(?![\\p{Alnum}_?])"), "keyword");
 		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\$))" + identifier), "variable");
 		this.elementPatterns.put(Pattern.compile("^[A-Z][\\p{Alnum}_]*"), "constant");
-		this.elementPatterns.put(Pattern.compile("^[-+]?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?\\b"), "number");
+		this.elementPatterns.put(Pattern.compile("^(" + NUMBER + "\\s*[-+*/()]*\\s*)+\\b"), ARITHMETIC_EXPRESSION);
 		this.elementPatterns.put(Pattern.compile("^0[xX][A-Fa-f0-9]+\\b"), "number");
 		this.elementPatterns.put(Pattern.compile("^0[bB][01]+\\b"), "number");
 	}
@@ -84,12 +87,20 @@ public class RubyTag implements Tag {
 		for (Pattern elementPattern : this.elementPatterns.keySet()) {
 			Matcher matcher = elementPattern.matcher(toProcess);
 			if (matcher.find()) {
-				if (this.elementPatterns.get(elementPattern).equals("constant"))
-					if (matcher.group().equals("BEGIN") || matcher.group().equals("END"))
+				String newMode = this.elementPatterns.get(elementPattern);
+				if (newMode.equals("constant")) {
+					if (matcher.group().equals("BEGIN") || matcher.group().equals("END")) {
 						continue;
-				this.output += "<span class=\"ruby" + this.elementPatterns.get(elementPattern) + "\">";
-				this.output += matcher.group();
-				this.output += "</span>";
+					}
+				}
+				if (newMode.equals(ARITHMETIC_EXPRESSION)) {
+					parseArithmeticExpression(matcher.group());
+				}
+				else {
+					this.output += "<span class=\"ruby" + newMode + "\">";
+					this.output += matcher.group();
+					this.output += "</span>";
+				}
 				return toProcess.substring(matcher.end());
 			}
 		}
@@ -100,5 +111,16 @@ public class RubyTag implements Tag {
 			return toProcess.substring(unknownElementMatcher.end());
 		}
 		return "";
+	}
+	
+	private void parseArithmeticExpression(String expression) {
+		Pattern numberPattern = Pattern.compile(NUMBER);
+		Matcher matcher = numberPattern.matcher(expression);
+		int lastEnd = 0;
+		while (matcher.find(lastEnd)) {
+			this.output += expression.substring(lastEnd, matcher.start());
+			this.output += "<span class=\"rubynumber\">" + matcher.group() + "</span>";
+			lastEnd = matcher.end();
+		}
 	}
 }

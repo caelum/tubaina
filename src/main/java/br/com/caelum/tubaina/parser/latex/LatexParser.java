@@ -121,6 +121,7 @@ public class LatexParser implements Parser {
 	}
 
 	public String parseRuby(String content, String options) {
-		return new RubyTag(new SimpleIndentator()).parse(content, options);
+		String result = new RubyTag(new SimpleIndentator()).parse(content, options);
+		return VSPACE + result + VSPACE;
 	}
 }

@@ -218,9 +218,9 @@ public class RubyTagTest {
 	
 	@Test
 	public void testSymbols() {
-		String code = "attr_accessor :name, :age";
+		String code = "attr_accessor :name, :simple_symbol";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "\\rubynormal attr\\_accessor~\\rubysymbol :name\\rubynormal ,~\\rubysymbol :age" + END, result);
+		Assert.assertEquals(BEGIN + "\\rubynormal attr\\_accessor~\\rubysymbol :name\\rubynormal ,~\\rubysymbol :simple\\_symbol" + END, result);
 		code = "%s(strange_symbol)";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubysymbol \\%s(strange\\_symbol)" + END, result);
@@ -298,6 +298,20 @@ public class RubyTagTest {
 		String code = "%(this is a \\(generalized\\) string)";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubystring \\%(this~is~a~\\char92(generalized\\char92)~string)" + END, result);
+	}
+	
+	@Test
+	public void testKeywordInsideIdentifierIsNotKeyword() {
+		String code = "Session.expects(:open).once.and_return(s)";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubyconstant Session\\rubynormal .expects(\\rubysymbol :open\\rubynormal ).once.and\\_return(s)" + END, result);
+	}
+	
+	@Test
+	public void testArithmeticExpression() {
+		String code = "print \"I'm crazy!\" if (3+4)-2++10.8 = (3*2)/4";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynormal print~\\rubystring \\verb#\"#I\\verb#'#m~crazy!\\verb#\"#~\\rubykeyword if~\\rubynormal (\\rubynumber 3\\rubynormal +\\rubynumber 4\\rubynormal )\\verb#-#\\rubynumber 2\\rubynormal +\\rubynumber +10.8~\\rubynormal \\verb#=#~(\\rubynumber 3\\rubynormal *\\rubynumber 2\\rubynormal )\\verb#/#\\rubynumber 4" + END, result);
 	}
 	
 	private String readFile(String filename) throws IOException {
