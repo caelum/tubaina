@@ -314,6 +314,20 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "print&nbsp;<span class=\"rubystring\">\"I'm&nbsp;crazy!\"</span>&nbsp;<span class=\"rubykeyword\">if</span>&nbsp;(<span class=\"rubynumber\">3</span>+<span class=\"rubynumber\">4</span>)-<span class=\"rubynumber\">2</span>+<span class=\"rubynumber\">+10.8</span>&nbsp;=&nbsp;(<span class=\"rubynumber\">3</span>*<span class=\"rubynumber\">2</span>)/<span class=\"rubynumber\">4</span>" + END, result);
 	}
 	
+	@Test
+	public void testInterpolationInDoubleQuotedStringHasDifferentColor() {
+		String code = "\"string with #{%Q!string with #{i+1+1} interpolation!}\"";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">\"string&nbsp;with&nbsp;#{<span class=\"rubynormal\"><span class=\"rubystring\">%Q!string&nbsp;with&nbsp;#{<span class=\"rubynormal\">i+<span class=\"rubynumber\">1</span>+<span class=\"rubynumber\">1</span></span>}&nbsp;interpolation!</span></span>}\"</span>" + END, result);
+	}
+	
+	@Test
+	public void testMultipleInterpolationsInsideDoubleQuotedString() {
+		String code = "%/Today is #{@date.month} #{@date.day}#{suffixForDay(@date.day)}/";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">%/Today&nbsp;is&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.month</span>}&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.day</span>}#{<span class=\"rubynormal\">suffixForDay(<span class=\"rubyvariable\">@date</span>.day)</span>}/</span>" + END, result);
+	}
+	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
 		String line;

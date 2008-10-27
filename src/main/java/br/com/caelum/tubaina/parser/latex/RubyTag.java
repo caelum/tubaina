@@ -12,6 +12,7 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class RubyTag implements Tag {
 
+	private static final String DOUBLE_QUOTED_STRING = "dqstring";
 	private static final String ARITHMETIC_EXPRESSION = "aritexp";
 	private static final String NUMBER = "(((?<=\\+|\\A)[-+])?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?)";
 	private static final String BEGIN = "{\n" + "\\small \\noindent \\ttfamily \n";
@@ -27,7 +28,7 @@ public class RubyTag implements Tag {
 		this.elementPatterns = new HashMap<Pattern, String>();
 		this.elementPatterns.put(Pattern.compile("(?m)^\\\\#.*$"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
-		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!(\\\\char92))\""), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!(\\\\char92))\""), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!(\\\\char92))'"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%r([^\\p{Alnum}\\[{(]).*?(?<!(\\\\char92))\\1[eimnosux]*"), "regexp");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%r\\(.*?(?<!(\\\\char92))\\)[eimnosux]*"), "regexp");
@@ -39,10 +40,14 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\[.*?(?<!(\\\\char92))\\]"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\{.*?(?<!(\\\\char92))\\}"), "symbol");
 		this.elementPatterns.put(Pattern.compile("^:(\\\\_|\\p{Alnum})+"), "symbol");
-		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?([^\\p{Alnum}\\[{(]).*?(?<!(\\\\char92))\\2"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?\\(.*?(?<!(\\\\char92))\\)"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?\\[.*?(?<!(\\\\char92))\\]"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[qQw])?\\{.*?(?<!(\\\\char92))\\}"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?([^\\p{Alnum}\\[{(]).*?(?<!(\\\\char92))\\2"), DOUBLE_QUOTED_STRING);
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?\\(.*?(?<!(\\\\char92))\\)"), DOUBLE_QUOTED_STRING);
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?\\[.*?(?<!(\\\\char92))\\]"), DOUBLE_QUOTED_STRING);
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?\\{.*?(?<!(\\\\char92))\\}"), DOUBLE_QUOTED_STRING);
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]([^\\p{Alnum}\\[{(]).*?(?<!(\\\\char92))\\1"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\(.*?(?<!(\\\\char92))\\)"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\[.*?(?<!(\\\\char92))\\]"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\{.*?(?<!(\\\\char92))\\}"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^<<-?([`\"]?)((\\\\_|\\p{Alnum})+)\\1.*?(?<!(\\\\char92))\\2"), "string");
 		this.elementPatterns.put(Pattern.compile(
 				"^((BEGIN)|(class)|(ensure)|(nil)|(self)|(when)|(END)|(defined\\?)|(def)|" +
@@ -110,6 +115,9 @@ public class RubyTag implements Tag {
 				if (newMode.equals(ARITHMETIC_EXPRESSION)) {
 					parseArithmeticExpression(matcher.group());
 				}
+				else if (newMode.equals(DOUBLE_QUOTED_STRING)) {
+					parseStringWithInterpolations(matcher.group());
+				}
 				else {
 					this.output += "\\ruby" + newMode + " ";
 					this.output += matcher.group();
@@ -118,7 +126,7 @@ public class RubyTag implements Tag {
 				return toProcess.substring(matcher.end());
 			}
 		}
-		Pattern unknownElement = Pattern.compile(".*?(\\s|~|(\\\\\\\\)|(\\Z)|([()])|(\\[)|(\\{)|(::)|(,)|(\\.))");
+		Pattern unknownElement = Pattern.compile(".*?(\\s|~|(\\\\\\\\)|(\\Z)|([()])|(\\[)|(\\{)|(::)|(,)|(\\.)|([-+*/]))");
 		Matcher unknownElementMatcher = unknownElement.matcher(toProcess);
 		if (unknownElementMatcher.find()) {
 			if (!this.lastMode.equals("normal")) {
@@ -129,6 +137,66 @@ public class RubyTag implements Tag {
 			return toProcess.substring(unknownElementMatcher.end());
 		}
 		return "";
+	}
+	
+	private void parseStringWithInterpolations(String string) {
+		int lastEnd = 0;
+		this.output += "\\rubystring ";
+		while (true) {
+			int start = findNextInterpolation(string.substring(lastEnd));
+			if (start == -1) {
+				break;
+			}
+			start += lastEnd;
+			int end = findEndOfInterpolation(string.substring(start)) + start;
+			this.output += string.substring(lastEnd, start);
+			this.output += "\\#\\{\\rubynormal ";
+			String toProcess = string.substring(start + 4, end - 2);
+			this.lastMode = "normal";
+			while (!toProcess.isEmpty()) {
+				toProcess = processNextElement(toProcess);
+			}
+			if (this.lastMode != "string") {
+				this.output += "\\rubystring ";
+			}
+			this.output += "\\}";
+			this.lastMode = "string";
+			lastEnd = end;
+		}
+		this.output += string.substring(lastEnd);
+		this.lastMode = "string";
+	}
+	
+	private int findNextInterpolation(String string) {
+		Pattern interpolationStart = Pattern.compile("\\\\#\\\\\\{");
+		Matcher matcher = interpolationStart.matcher(string);
+		if (matcher.find()) {
+			return matcher.start();
+		}
+		return -1;
+	}
+
+	private int findEndOfInterpolation(String interpolation) {
+		int count = 1;
+		int position = 2;
+		while (position < interpolation.length() && count > 0) {
+			char currentChar = interpolation.charAt(position);
+			if (currentChar == '#') {
+				if (interpolation.length() > position + 2 && interpolation.charAt(position + 2) == '{') {
+					count++;
+				}
+			}
+			else if (currentChar == '}') {
+				count--;
+			}
+			else if (currentChar == '\\') {
+				if (interpolation.length() > position + 1 && interpolation.charAt(position + 1) == '\\') {
+					position++; // jumps the escaped character
+				}
+			}
+			position++;
+		}
+		return position;
 	}
 
 	private void parseArithmeticExpression(String expression) {

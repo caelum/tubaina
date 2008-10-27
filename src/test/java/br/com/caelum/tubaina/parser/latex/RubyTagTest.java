@@ -314,6 +314,20 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN + "\\rubynormal print~\\rubystring \\verb#\"#I\\verb#'#m~crazy!\\verb#\"#~\\rubykeyword if~\\rubynormal (\\rubynumber 3\\rubynormal +\\rubynumber 4\\rubynormal )\\verb#-#\\rubynumber 2\\rubynormal +\\rubynumber +10.8~\\rubynormal \\verb#=#~(\\rubynumber 3\\rubynormal *\\rubynumber 2\\rubynormal )\\verb#/#\\rubynumber 4" + END, result);
 	}
 	
+	@Test
+	public void testInterpolationInDoubleQuotedStringHasDifferentColor() {
+		String code = "\"string with #{%Q!string with #{i+1+1} interpolation!}\"";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubystring \\verb#\"#string~with~\\#\\{\\rubynormal \\rubystring \\%Q!string~with~\\#\\{\\rubynormal i+\\rubynumber 1\\rubynormal +\\rubynumber 1\\rubystring \\}~interpolation!\\}\\verb#\"#" + END, result);
+	}
+	
+	@Test
+	public void testMultipleInterpolationsInsideDoubleQuotedString() {
+		String code = "%/Today is #{@date.month} #{@date.day}#{suffixForDay(@date.day)}/";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubystring \\%\\verb#/#Today~is~\\#\\{\\rubynormal \\rubyvariable \\verb#@#date\\rubynormal .month\\rubystring \\}~\\#\\{\\rubynormal \\rubyvariable \\verb#@#date\\rubynormal .day\\rubystring \\}\\#\\{\\rubynormal suffixForDay(\\rubyvariable \\verb#@#date\\rubynormal .day)\\rubystring \\}\\verb#/#" + END, result);
+	}
+	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));
 		String line;
