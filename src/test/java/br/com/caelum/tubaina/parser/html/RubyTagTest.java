@@ -109,12 +109,12 @@ public class RubyTagTest {
 		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "puts&nbsp;<span class=\"rubystring\">&lt;&lt;BLAH<br/>\nThis&nbsp;is&nbsp;a<br/>\nmultiline,&nbsp;line-oriented<br/>\nstring<br/>\nBLAH</span>"
+				+ "puts&nbsp;<span class=\"rubystring\">&lt;&lt;BLAH<br/>\nThis&nbsp;is&nbsp;a<br/>\nmultiline,&nbsp;line-oriented<br/>\nstring<br/>\nBLAH<br/>\n</span>"
 				+ END, result);
 		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">&lt;&lt;`CODE`<br/>\necho&nbsp;\"hello\"<br/>\necho&nbsp;\"world\"<br/>\nCODE</span>"
+				+ "<span class=\"rubystring\">&lt;&lt;`CODE`<br/>\necho&nbsp;\"hello\"<br/>\necho&nbsp;\"world\"<br/>\nCODE<br/>\n</span>"
 				+ END, result);
 	}
 
@@ -326,6 +326,20 @@ public class RubyTagTest {
 		String code = "%/Today is #{@date.month} #{@date.day}#{suffixForDay(@date.day)}/";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">%/Today&nbsp;is&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.month</span>}&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.day</span>}#{<span class=\"rubynormal\">suffixForDay(<span class=\"rubyvariable\">@date</span>.day)</span>}/</span>" + END, result);
+	}
+	
+	@Test
+	public void testLineOrientedStringWithMultipleIdentifiers() {
+		String code = "print <<EXP1, <<'puts', <<EXP2\n#{params[:user].name}, write the code:\nEXP1\nputs \"#{params[:id]}\"\nputs\nto print the id\nEXP2";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "print&nbsp;<span class=\"rubystring\">&lt;&lt;EXP1,&nbsp;&lt;&lt;'puts',&nbsp;&lt;&lt;EXP2<br/>\n#{<span class=\"rubynormal\">params[<span class=\"rubysymbol\">:user</span>].name</span>},&nbsp;write&nbsp;the&nbsp;code:<br/>\nEXP1<br/>\nputs&nbsp;\"#{params[:id]}\"<br/>\nputs<br/>\nto&nbsp;print&nbsp;the&nbsp;id<br/>\nEXP2<br/>\n</span>" + END, result);
+	}
+	
+	@Test
+	public void testCommentsAmongTextBug() {
+		String code = "print a.name\n# a comment\nb = 10";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "print&nbsp;a.name<br/>\n<span class=\"rubycomment\">#&nbsp;a&nbsp;comment<br/></span>\nb&nbsp;=&nbsp;<span class=\"rubynumber\">10</span>" + END, result);
 	}
 	
 	private String readFile(String filename) throws IOException {

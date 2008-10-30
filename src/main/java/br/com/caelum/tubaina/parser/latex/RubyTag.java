@@ -1,8 +1,10 @@
 package br.com.caelum.tubaina.parser.latex;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +14,14 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class RubyTag implements Tag {
 
-	private static final String DOUBLE_QUOTED_STRING = "dqstring";
-	private static final String ARITHMETIC_EXPRESSION = "aritexp";
-	private static final String NUMBER = "(((?<=\\+|\\A)[-+])?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?)";
 	private static final String BEGIN = "{\n" + "\\small \\noindent \\ttfamily \n";
 	private static final String END = "\n}\n";
+	private static final String IDENTIFIER = "((\\\\_)|(\\p{Alnum}))+";
+	private static final String DOUBLE_QUOTED_STRING = "dqstring";
+	private static final String ARITHMETIC_EXPRESSION = "aritexp";
+	private static final String LINE_ORIENTED_STRING = "lostring";
+	private static final String NUMBER = "(((?<=\\+|\\A)[-+])?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?)";
+	private static final String LINE_ORIENTED_STRING_TAG = "<<-?([`\"']?)(" + IDENTIFIER + ")\\1";
 	
 	private final Indentator indentator;
 	private final Map<Pattern, String> elementPatterns;
@@ -26,7 +31,7 @@ public class RubyTag implements Tag {
 	public RubyTag(Indentator indentator) {
 		this.indentator = indentator;
 		this.elementPatterns = new HashMap<Pattern, String>();
-		this.elementPatterns.put(Pattern.compile("(?m)^\\\\#.*$"), "comment");
+		this.elementPatterns.put(Pattern.compile("(?m)\\A\\\\#.*$"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!(\\\\char92))\""), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!(\\\\char92))'"), "string");
@@ -39,7 +44,7 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\(.*?(?<!(\\\\char92))\\)"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\[.*?(?<!(\\\\char92))\\]"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%s\\{.*?(?<!(\\\\char92))\\}"), "symbol");
-		this.elementPatterns.put(Pattern.compile("^:(\\\\_|\\p{Alnum})+"), "symbol");
+		this.elementPatterns.put(Pattern.compile("^:" + IDENTIFIER), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?([^\\p{Alnum}\\[{(]).*?(?<!(\\\\char92))\\2"), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?\\(.*?(?<!(\\\\char92))\\)"), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%([^\\p{Alnum}\\s]|[QW])?\\[.*?(?<!(\\\\char92))\\]"), DOUBLE_QUOTED_STRING);
@@ -48,14 +53,14 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\(.*?(?<!(\\\\char92))\\)"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\[.*?(?<!(\\\\char92))\\]"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^\\\\%[qw]\\{.*?(?<!(\\\\char92))\\}"), "string");
-		this.elementPatterns.put(Pattern.compile("(?s)^<<-?([`\"]?)((\\\\_|\\p{Alnum})+)\\1.*?(?<!(\\\\char92))\\2"), "string");
+		this.elementPatterns.put(Pattern.compile("(?s)^(?=" + LINE_ORIENTED_STRING_TAG + ")"), LINE_ORIENTED_STRING);
 		this.elementPatterns.put(Pattern.compile(
 				"^((BEGIN)|(class)|(ensure)|(nil)|(self)|(when)|(END)|(defined\\?)|(def)|" +
 				"(false)|(not)|(super)|(while)|(alias)|(defined)|(for)|(or)|(then)|(yield)|" +
 				"(and)|(do)|(if)|(redo)|(true)|(begin)|(else)|(in)|(rescue)|(undef)|(break)|" +
 				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))(?!(\\p{Alnum})|(\\\\_)|(\\?))"), "keyword");
-		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\\\\\$))(\\\\_|\\p{Alnum})+"), "variable");
-		this.elementPatterns.put(Pattern.compile("^[A-Z][\\p{Alnum}_]*"), "constant");
+		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\\\\\$))" + IDENTIFIER), "variable");
+		this.elementPatterns.put(Pattern.compile("^[A-Z]((\\p{Alnum})|(\\\\_))*"), "constant");
 		this.elementPatterns.put(Pattern.compile("^(" + NUMBER + "\\s*[-+*/()]*\\s*)+\\b"), ARITHMETIC_EXPRESSION);
 		this.elementPatterns.put(Pattern.compile("^0[xX][A-Fa-f0-9]+\\b"), "number");
 		this.elementPatterns.put(Pattern.compile("^0[0-7]+\\b"), "number");
@@ -116,7 +121,11 @@ public class RubyTag implements Tag {
 					parseArithmeticExpression(matcher.group());
 				}
 				else if (newMode.equals(DOUBLE_QUOTED_STRING)) {
+					this.output += "\\rubystring ";
 					parseStringWithInterpolations(matcher.group());
+				}
+				else if (newMode.equals(LINE_ORIENTED_STRING)) {
+					return parseLineOrientedString(toProcess);
 				}
 				else {
 					this.output += "\\ruby" + newMode + " ";
@@ -139,9 +148,46 @@ public class RubyTag implements Tag {
 		return "";
 	}
 	
+	private String parseLineOrientedString(String code) {
+		Queue<String> tags = new LinkedList<String>();
+		Queue<Boolean> interpolations = new LinkedList<Boolean>();
+		Pattern pattern = Pattern.compile(LINE_ORIENTED_STRING_TAG);
+		String[] parts = code.split("\\\\\\\\\n", 2);
+		String firstLine = parts[0];
+		String body = parts[1];
+		Matcher matcher = pattern.matcher(firstLine);
+		while (matcher.find()) {
+			tags.add(matcher.group(2));
+			interpolations.add(!matcher.group(1).equals("'"));
+		}
+		this.output += "\\rubystring " + firstLine + "\\\\\n";
+		this.lastMode = "string";
+		while (!tags.isEmpty()) {
+			String currentTag = tags.poll();
+			boolean interpolate = interpolations.poll();
+			Pattern endTagPattern = Pattern.compile("(?m)^" + currentTag + "((\\\\\\\\\n)|(\\Z))");
+			Matcher endTagMatcher = endTagPattern.matcher(body);
+			if (!endTagMatcher.find()) {
+				// ignores the error in the code: simply add
+				// the remaining text as string
+				break;
+			}
+			int endOfTag = endTagMatcher.start();
+			String stringForCurrentTag = body.substring(0, endOfTag);
+			if (interpolate) {
+				parseStringWithInterpolations(stringForCurrentTag);
+			}
+			else {
+				this.output += stringForCurrentTag;
+			}
+			this.output += currentTag + "\\\\\n";
+			body = body.substring(endTagMatcher.end());
+		}
+		return body;
+	}
+	
 	private void parseStringWithInterpolations(String string) {
 		int lastEnd = 0;
-		this.output += "\\rubystring ";
 		while (true) {
 			int start = findNextInterpolation(string.substring(lastEnd));
 			if (start == -1) {

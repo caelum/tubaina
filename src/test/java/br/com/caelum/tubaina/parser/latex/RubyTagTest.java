@@ -109,12 +109,12 @@ public class RubyTagTest {
 		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "\\rubynormal puts~\\rubystring \\verb#<#\\verb#<#BLAH\\\\\nThis~is~a\\\\\nmultiline,~line\\verb#-#oriented\\\\\nstring\\\\\nBLAH"
+				+ "\\rubynormal puts~\\rubystring \\verb#<#\\verb#<#BLAH\\\\\nThis~is~a\\\\\nmultiline,~line\\verb#-#oriented\\\\\nstring\\\\\nBLAH\\\\"
 				+ END, result);
 		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN
-				+ "\\rubystring \\verb#<#\\verb#<#`CODE`\\\\\necho~\\verb#\"#hello\\verb#\"#\\\\\necho~\\verb#\"#world\\verb#\"#\\\\\nCODE"
+				+ "\\rubystring \\verb#<#\\verb#<#`CODE`\\\\\necho~\\verb#\"#hello\\verb#\"#\\\\\necho~\\verb#\"#world\\verb#\"#\\\\\nCODE\\\\"
 				+ END, result);
 	}
 
@@ -326,6 +326,20 @@ public class RubyTagTest {
 		String code = "%/Today is #{@date.month} #{@date.day}#{suffixForDay(@date.day)}/";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + "\\rubystring \\%\\verb#/#Today~is~\\#\\{\\rubynormal \\rubyvariable \\verb#@#date\\rubynormal .month\\rubystring \\}~\\#\\{\\rubynormal \\rubyvariable \\verb#@#date\\rubynormal .day\\rubystring \\}\\#\\{\\rubynormal suffixForDay(\\rubyvariable \\verb#@#date\\rubynormal .day)\\rubystring \\}\\verb#/#" + END, result);
+	}
+	
+	@Test
+	public void testLineOrientedStringWithMultipleIdentifiers() {
+		String code = "print <<EXP1, <<'puts', <<EXP2\n#{params[:user].name}, write the code:\nEXP1\nputs \"#{params[:id]}\"\nputs\nto print the id\nEXP2";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynormal print~\\rubystring \\verb#<#\\verb#<#EXP1,~\\verb#<#\\verb#<#\\verb#'#puts\\verb#'#,~\\verb#<#\\verb#<#EXP2\\\\\n\\#\\{\\rubynormal params[\\rubysymbol :user\\rubynormal ].name\\rubystring \\},~write~the~code:\\\\\nEXP1\\\\\nputs~\\verb#\"#\\#\\{params[:id]\\}\\verb#\"#\\\\\nputs\\\\\nto~print~the~id\\\\\nEXP2\\\\" + END, result);
+	}
+	
+	@Test
+	public void testCommentsAmongTextBug() {
+		String code = "print a.name\n# a comment\nb = 10";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + "\\rubynormal print~a.name\\\\\n\\rubycomment \\#~a~comment\\\\\n\\rubynormal b~\\verb#=#~\\rubynumber 10" + END, result);
 	}
 	
 	private String readFile(String filename) throws IOException {
