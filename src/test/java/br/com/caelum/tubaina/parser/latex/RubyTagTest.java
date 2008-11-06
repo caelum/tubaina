@@ -73,11 +73,11 @@ public class RubyTagTest {
 		String code = "method 'a string', \"another string\", %q/yet another string/";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("method ") +
+				normal("method ") +
 				string("'a string'") +
-				escape(", ") +
+				normal(", ") +
 				string("\"another string\"") +
-				escape(", ") +
+				normal(", ") +
 				string("%q/yet another string/")
 				+ END, result);
 	}
@@ -94,12 +94,27 @@ public class RubyTagTest {
 		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH\n";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("puts ") +
-				string("<<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH\n") +
+				normal("puts ") +
+				string("<<BLAH") +
+				normal("\n") +
+				string("This is a\n" +
+						"multiline, line-oriented\n" +
+						"string\n" +
+						"BLAH"
+				) +
+				normal("\n") +
 				END, result);
 		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE\n";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + string(code) + END, result);
+		Assert.assertEquals(BEGIN +
+				execution("<<`CODE`") +
+				normal("\n") +
+				execution("echo \"hello\"\n" +
+						"echo \"world\"\n" +
+						"CODE"
+				) +
+				normal("\n") +
+				END, result);
 	}
 
 	@Test
@@ -107,7 +122,7 @@ public class RubyTagTest {
 		String code = "puts \"He said: 'Hello World!'\"";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("puts ") +
+				normal("puts ") +
 				string("\"He said: 'Hello World!'\"") +
 				END, result);
 	}
@@ -159,21 +174,21 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
 				variable("@local ") +
-				escape("= ") +
+				normal("= ") +
 				keyword("nil") +
 				END, result);
 		code = "@@count = 1";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
 				variable("@@count ") +
-				escape("= ") +
+				normal("= ") +
 				number("1") + 
 				END, result);
 		code = "$counter++";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				variable("$counter") +
-				escape("++") +
+				normal("++") +
 				END, result);
 	}
 	
@@ -183,7 +198,7 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
 				constant("PI ") +
-				escape("= ") +
+				normal("= ") +
 				number("3.14159") +
 				END, result);
 	}
@@ -221,9 +236,9 @@ public class RubyTagTest {
 		String code = "attr_accessor :name, :simple_symbol";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("attr_accessor ") +
+				normal("attr_accessor ") +
 				symbol(":name") + 
-				escape(", ") +
+				normal(", ") +
 				symbol(":simple_symbol") +
 				END, result);
 		code = "%s(strange_symbol)";
@@ -246,9 +261,9 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				keyword("defined?") +
-				escape("(") +
+				normal("(") +
 				string("\"text\"") +
-				escape(") ") +
+				normal(") ") +
 				comment("# should return true") +
 				END, result);
 	}
@@ -259,24 +274,24 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
 				variable("@params") +
-				escape("[") +
+				normal("[") +
 				symbol(":id") +
-				escape("]") +
+				normal("]") +
 				END, result);
 		code = "$instances[5]";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				variable("$instances") +
-				escape("[") +
+				normal("[") +
 				number("5") +
-				escape("]") +
+				normal("]") +
 				END, result);
 		code = "dict['word']";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("dict[") +
+				normal("dict[") +
 				string("'word'") +
-				escape("]") +
+				normal("]") +
 				END, result);
 	}
 	
@@ -287,9 +302,9 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN +
 				keyword("class ") +
 				constant("User ") +
-				escape("< ") +
+				normal("< ") +
 				constant("ActiveRecord") +
-				escape("::") +
+				normal("::") +
 				constant("Base") +
 				END, result);
 	}
@@ -299,20 +314,20 @@ public class RubyTagTest {
 		String code = "array = [1,2,3,4]";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("array = [") +
-				number("1") + escape(",") +
-				number("2") + escape(",") +
-				number("3") + escape(",") +
+				normal("array = [") +
+				number("1") + normal(",") +
+				number("2") + normal(",") +
+				number("3") + normal(",") +
 				number("4") +
-				escape("]") +
+				normal("]") +
 				END, result);
 		code = "array = [1..4]";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
-				escape("array = [") +
-				number("1") + escape("..") +
+				normal("array = [") +
+				number("1") + normal("..") +
 				number("4") +
-				escape("]") +
+				normal("]") +
 				END, result);
 	}
 	
@@ -349,9 +364,9 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				constant("Session") +
-				escape(".expects(") +
+				normal(".expects(") +
 				symbol(":open") +
-				escape(").once.and_return(s)") +
+				normal(").once.and_return(s)") +
 				END, result);
 	}
 	
@@ -360,22 +375,22 @@ public class RubyTagTest {
 		String code = "print \"I'm crazy!\" if (3+4)-2++10.8 = (3*2)/4";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("print ") +
+				normal("print ") +
 				string("\"I'm crazy!\" ") +
 				keyword("if ") +
-				escape("(") +
+				normal("(") +
 				number("3") +
-				escape("+") +
+				normal("+") +
 				number("4") +
-				escape(")-") +
+				normal(")-") +
 				number("2") +
-				escape("+") +
+				normal("+") +
 				number("+10.8 ") +
-				escape("= (") +
+				normal("= (") +
 				number("3") +
-				escape("*") +
+				normal("*") +
 				number("2") +
-				escape(")/") +
+				normal(")/") +
 				number("4") +
 				END, result);
 	}
@@ -387,9 +402,9 @@ public class RubyTagTest {
 		Assert.assertEquals(BEGIN +
 				string("\"string with #{}\"",
 						string("%Q!string with #{} interpolation!",
-								escape("i+") +
+								normal("i+") +
 								number("1") +
-								escape("+") +
+								normal("+") +
 								number("1")
 						)
 				) +
@@ -402,36 +417,52 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				string("%/Today is #{} #{}#{}/",
-						variable("@date") + escape(".month"),
-						variable("@date") + escape(".day"),
-						escape("suffixForDay(") + variable("@date") + escape(".day)")
+						variable("@date") + normal(".month"),
+						variable("@date") + normal(".day"),
+						normal("suffixForDay(") + variable("@date") + normal(".day)")
 				) +
 				END, result);
 	}
 	
 	@Test
 	public void testLineOrientedStringWithMultipleIdentifiers() {
-		String code = "print <<EXP1, <<'puts', <<EXP2\n" +
-				"#{params[:user].name}, write the code:\n" +
-				"EXP1\n" +
-				"puts \"#{params[:id]}\"\n" +
-				"puts\n" +
-				"to print the id\n" +
-				"EXP2";
-		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + 
-				escape("print ") +
-				string("<<EXP1, <<'puts', <<EXP2\n" +
-						"#{}, write the code:\n" +
-						"EXP1\n" +
-						"puts \"#{params[:id]}\"\n" +
-						"puts\n" +
-						"to print the id\n" +
-						"EXP2\n",
-						escape("params[") +
-						symbol(":user") +
-						escape("].name")
-				) +
+		String code = "print <<EXP1, <<'CMD', <<EXP2, <<`RESULT`\n" +
+		"#{params[:user].name}, write the code:\n" +
+		"EXP1\n" +
+		"`ls #{dir}`\n" +
+		"CMD\n" +
+		"to have the following result:\n" +
+		"EXP2\n" +
+		"ls #{dir}\n" +
+		"RESULT\n";
+String result = rubyTag.parse(code, "");
+Assert.assertEquals(BEGIN + 
+		normal("print ") +
+		string("<<EXP1, ") +
+		string("<<'CMD', ") +
+		string("<<EXP2, ") +
+		execution("<<`RESULT`") +
+		normal("\n") +
+		string("#{}, write the code:\n" +
+				"EXP1",
+				normal("params[") +
+				symbol(":user") +
+				normal("].name")
+		) +
+		normal("\n") +
+		string("`ls #{dir}`\n" +
+				"CMD"
+		) +
+		normal("\n") +
+		string("to have the following result:\n" +
+				"EXP2"
+		) +
+		normal("\n") +
+		execution("ls #{}\n" +
+				"RESULT",
+				normal("dir")
+		) +
+		normal("\n") +
 		END, result);
 	}
 	
@@ -440,9 +471,43 @@ public class RubyTagTest {
 		String code = "print a.name\n# a comment\nb = 10";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				escape("print a.name\n") +
+				normal("print a.name\n") +
 				comment("# a comment\n") +
-				escape("b = ") + number("10") +
+				normal("b = ") + number("10") +
+				END, result);
+	}
+	
+	@Test
+	public void testLatexLineBreakCodeInsideComment() {
+		String code = "# to break a line, use \\\\\noutput << \"\\\\\\n\"";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN +
+				comment("# to break a line, use \\\\\n") +
+				normal("output << ") +
+				string("\"\\\\\\n\"") +
+				END, result);	
+	}
+	
+	@Test
+	public void testGraveQuotedString() {
+		String code = "nfiles = `ls | wc -l`";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN +
+				normal("nfiles = ") +
+				execution("`ls | wc -l`") +
+				END, result);
+	}
+	
+	@Test
+	public void testGraveQuotedStringWithInterpolations() {
+		String code = "nfiles = `ls #{@user.home} | wc -l`";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN +
+				normal("nfiles = ") +
+				execution("`ls #{} | wc -l`",
+						variable("@user") +
+						normal(".home")
+				) +
 				END, result);
 	}
 	
@@ -452,15 +517,7 @@ public class RubyTagTest {
 	
 	private String string(String content, String... interpolations) {
 		content = colorize("rubystring", content);
-		for (String code : interpolations) {
-			code = "\\#\\{" + code;
-			if (!findLastMode(code).equals("string")) {
-				code += "\\rubystring ";
-			}
-			code += "\\}";
-			code = Matcher.quoteReplacement(code);
-			content = content.replaceFirst("\\\\#\\\\\\{\\\\\\}", code);
-		}
+		content = insertInterpolations(content, "string", interpolations);
 		return content;
 	}
 	
@@ -497,18 +554,38 @@ public class RubyTagTest {
 		return colorize("rubysymbol", name);
 	}
 	
-	private String escape(String text) {
+	private String normal(String text) {
 		return colorize("rubynormal", text);
 	}
 	
+	private String execution(String code, String... interpolations) {
+		String colorized = colorize("rubyexecution", code);
+		colorized = insertInterpolations(colorized, "execution", interpolations);
+		return colorized;
+	}
+	
+	private String insertInterpolations(String content, String outsideMode,
+			String... interpolations) {
+		for (String code : interpolations) {
+			code = "\\#\\{" + code;
+			if (!findLastMode(code).equals(outsideMode)) {
+				code += "\\ruby" + outsideMode + " ";
+			}
+			code += "\\}";
+			code = Matcher.quoteReplacement(code);
+			content = content.replaceFirst("\\\\#\\\\\\{\\\\\\}", code);
+		}
+		return content;
+	}
+	
 	private String colorize(String clazz, String content) {
-		content = escapeBlah(content);
+		content = escape(content);
 		content = escapeSpaces(content);
 		content = escapeSymbols(content);
 		return "\\" + clazz + " " + content;
 	}
 	
-	private String escapeBlah(String string) {
+	private String escape(String string) {
 		string = new EscapeTag().parse(string, null);
 		string = Escape.HYPHEN.unescape(string);
 		string = Escape.SHIFT_LEFT.unescape(string);

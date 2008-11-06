@@ -93,11 +93,26 @@ public class RubyTagTest {
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				escape("puts ") +
-				string("<<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH\n") +
+				string("<<BLAH") +
+				escape("\n") +
+				string("This is a\n" +
+						"multiline, line-oriented\n" +
+						"string\n" +
+						"BLAH"
+				) +
+				escape("\n") +
 				END, result);
 		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE\n";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + string(code) + END, result);
+		Assert.assertEquals(BEGIN +
+				execution("<<`CODE`") +
+				escape("\n") +
+				execution("echo \"hello\"\n" +
+						"echo \"world\"\n" +
+						"CODE"
+				) +
+				escape("\n") +
+				END, result);
 	}
 
 	@Test
@@ -403,27 +418,43 @@ public class RubyTagTest {
 	
 	@Test
 	public void testLineOrientedStringWithMultipleIdentifiers() {
-		String code = "print <<EXP1, <<'puts', <<EXP2\n" +
+		String code = "print <<EXP1, <<'CMD', <<EXP2, <<`RESULT`\n" +
 				"#{params[:user].name}, write the code:\n" +
 				"EXP1\n" +
-				"puts \"#{params[:id]}\"\n" +
-				"puts\n" +
-				"to print the id\n" +
-				"EXP2";
+				"`ls #{dir}`\n" +
+				"CMD\n" +
+				"to have the following result:\n" +
+				"EXP2\n" +
+				"ls #{dir}\n" +
+				"RESULT\n";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
 				escape("print ") +
-				string("<<EXP1, <<'puts', <<EXP2\n" +
-						"#{}, write the code:\n" +
-						"EXP1\n" +
-						"puts \"#{params[:id]}\"\n" +
-						"puts\n" +
-						"to print the id\n" +
-						"EXP2\n",
+				string("<<EXP1, ") +
+				string("<<'CMD', ") +
+				string("<<EXP2, ") +
+				execution("<<`RESULT`") +
+				escape("\n") +
+				string("#{}, write the code:\n" +
+						"EXP1",
 						escape("params[") +
 						symbol(":user") +
 						escape("].name")
 				) +
+				escape("\n") +
+				string("`ls #{dir}`\n" +
+						"CMD"
+				) +
+				escape("\n") +
+				string("to have the following result:\n" +
+						"EXP2"
+				) +
+				escape("\n") +
+				execution("ls #{}\n" +
+						"RESULT",
+						escape("dir")
+				) +
+				escape("\n") +
 				END, result);
 	}
 	
@@ -440,10 +471,36 @@ public class RubyTagTest {
 	
 	@Test
 	public void testHtmlLineBreakCodeInsideComment() {
-		String code = "# use <br/> to break a line";
+		String code = "# to break a line, use <br/>\noutput << \"<br/>\\n\"";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + comment(code) + END, result);
-		
+		Assert.assertEquals(BEGIN +
+				comment("# to break a line, use <br/>") +
+				escape("\noutput << ") +
+				string("\"<br/>\\n\"") +
+				END, result);	
+	}
+	
+	@Test
+	public void testGraveQuotedString() {
+		String code = "nfiles = `ls | wc -l`";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN +
+				escape("nfiles = ") +
+				execution("`ls | wc -l`") +
+				END, result);
+	}
+	
+	@Test
+	public void testGraveQuotedStringWithInterpolations() {
+		String code = "nfiles = `ls #{@user.home} | wc -l`";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN +
+				escape("nfiles = ") +
+				execution("`ls #{} | wc -l`",
+						variable("@user") +
+						escape(".home")
+				) +
+				END, result);
 	}
 	
 	private String readFile(String filename) throws IOException {
@@ -463,9 +520,7 @@ public class RubyTagTest {
 	
 	private String string(String content, String... interpolations) {
 		String span = span("rubystring", content);
-		for (String code : interpolations) {
-			span = span.replaceFirst("#\\{\\}", "#{<span class=\"rubynormal\">" + code + "</span>}");
-		}
+		span = insertInterpolations(span, interpolations);
 		return span;
 	}
 	
@@ -491,6 +546,19 @@ public class RubyTagTest {
 	
 	private String symbol(String name) {
 		return span("rubysymbol", name);
+	}
+	
+	private String execution(String code, String... interpolations) {
+		String span = span("rubyexecution", code);
+		span = insertInterpolations(span, interpolations);
+		return span;
+	}
+	
+	private String insertInterpolations(String span, String... interpolations) {
+		for (String code : interpolations) {
+			span = span.replaceFirst("#\\{\\}", "#{<span class=\"rubynormal\">" + code + "</span>}");
+		}
+		return span;
 	}
 	
 	private String span(String clazz, String content) {

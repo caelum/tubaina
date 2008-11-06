@@ -18,10 +18,11 @@ public class RubyTag implements Tag {
 	private static final String END = "</code></div>\n";
 	private static final String IDENTIFIER = "[\\p{Alnum}_]+";
 	private static final String DOUBLE_QUOTED_STRING = "dqstring";
+	private static final String EXECUTION_STRING = "execstring";
 	private static final String ARITHMETIC_EXPRESSION = "aritexp";
 	private static final String LINE_ORIENTED_STRING = "lostring";
 	private static final String NUMBER = "(((?<=\\+|\\A)[-+])?[0-9]+([.][0-9]+)?([eE][+-]?[0-9]+)?)";
-	private static final String LINE_ORIENTED_STRING_TAG = "&lt;&lt;-?([`\"']?)(" + IDENTIFIER + ")\\1";
+	private static final String LINE_ORIENTED_STRING_TAG = "&lt;&lt;-?([`\"']?)(" + IDENTIFIER + ")\\1(,(&nbsp;)*)?";
 	
 	private final Indentator indentator;
 	private final Map<Pattern, String> elementPatterns;
@@ -33,6 +34,7 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?m)\\A#.*((?=<br/>$)|(\\Z))"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!\\\\)\""), DOUBLE_QUOTED_STRING);
+		this.elementPatterns.put(Pattern.compile("(?s)^`.*?(?<!\\\\)`"), EXECUTION_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!\\\\)'"), "string");
 		this.elementPatterns.put(Pattern.compile("(?s)^%r([^\\p{Alnum}\\[{(]).*?(?<!\\\\)\\1[eimnosux]*"), "regexp");
 		this.elementPatterns.put(Pattern.compile("(?s)^%r\\(.*?(?<!\\\\)\\)[eimnosux]*"), "regexp");
@@ -70,10 +72,10 @@ public class RubyTag implements Tag {
 		CodeHighlightTag codeHighlightTag = new CodeHighlightTag();
 		List<Integer> highlights = codeHighlightTag.getHighlights(options);
 		String toProcess = this.parseSpaces(this.indentator.indent(code));
+		output = codeHighlightTag.parseHtml(output, highlights);
 		while (!toProcess.isEmpty()) {
 			toProcess = processNextElement(toProcess);
 		}
-		output = codeHighlightTag.parseHtml(output, highlights);
 		return BEGIN + output + END;
 	}
 	
@@ -110,6 +112,11 @@ public class RubyTag implements Tag {
 					parseStringWithInterpolations(matcher.group());
 					this.output += "</span>";
 				}
+				else if (newMode.equals(EXECUTION_STRING)) {
+					this.output += "<span class=\"rubyexecution\">";
+					parseStringWithInterpolations(matcher.group());
+					this.output += "</span>";
+				}
 				else if (newMode.equals(LINE_ORIENTED_STRING)) {
 					return parseLineOrientedString(toProcess);
 				}
@@ -132,20 +139,28 @@ public class RubyTag implements Tag {
 	
 	private String parseLineOrientedString(String code) {
 		Queue<String> tags = new LinkedList<String>();
-		Queue<Boolean> interpolations = new LinkedList<Boolean>();
+		Queue<String> delimiters = new LinkedList<String>();
 		Pattern pattern = Pattern.compile(LINE_ORIENTED_STRING_TAG);
 		String[] parts = code.split("<br/>\n", 2);
 		String firstLine = parts[0];
 		String body = parts[1];
 		Matcher matcher = pattern.matcher(firstLine);
 		while (matcher.find()) {
+			String currentDelimiter = matcher.group(1);
 			tags.add(matcher.group(2));
-			interpolations.add(!matcher.group(1).equals("'"));
+			delimiters.add(currentDelimiter);
+			if (currentDelimiter.equals("`")) {
+				this.output += "<span class=\"rubyexecution\">";
+			}
+			else {
+				this.output += "<span class=\"rubystring\">";
+			}
+			this.output += matcher.group() + "</span>";
 		}
-		this.output += "<span class=\"rubystring\">" + firstLine + "<br/>\n";
+		this.output += "<br/>\n";
 		while (!tags.isEmpty()) {
 			String currentTag = tags.poll();
-			boolean interpolate = interpolations.poll();
+			String currentDelimiter = delimiters.poll();
 			Pattern endTagPattern = Pattern.compile("(?m)^" + currentTag + "((<br/>\n)|(\\Z))");
 			Matcher endTagMatcher = endTagPattern.matcher(body);
 			if (!endTagMatcher.find()) {
@@ -155,16 +170,21 @@ public class RubyTag implements Tag {
 			}
 			int endOfTag = endTagMatcher.start();
 			String stringForCurrentTag = body.substring(0, endOfTag);
-			if (interpolate) {
-				parseStringWithInterpolations(stringForCurrentTag);
+			if (currentDelimiter.equals("`")) {
+				this.output += "<span class=\"rubyexecution\">";
 			}
 			else {
+				this.output += "<span class=\"rubystring\">";
+			}
+			if (currentDelimiter.equals("'")) {
 				this.output += stringForCurrentTag;
 			}
-			this.output += currentTag + "<br/>\n";
+			else {
+				parseStringWithInterpolations(stringForCurrentTag);
+			}
+			this.output += currentTag + "</span><br/>\n";
 			body = body.substring(endTagMatcher.end());
 		}
-		this.output += "</span>";
 		return body;
 	}
 

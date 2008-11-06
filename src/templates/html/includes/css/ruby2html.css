@@ -8,3 +8,4 @@
 /* Regular expressions */ span.rubyregexp  { font-size: 10pt; color:#ff6100; padding: 0px; }
 /* Constants */ span.rubyconstant  { font-size: 10pt; color:#000000; padding: 0px; }
 /* Variables */ span.rubyvariable  { font-size: 10pt; color:#00007f; font-weight:bold; padding: 0px; }
+/* System commands */ span.rubyexecution  { font-size: 10pt; color:#008080; padding: 0px; }
