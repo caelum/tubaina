@@ -18,47 +18,33 @@ public class RubyTagTest {
 
 	@Test
 	public void testComments() {
-		String code = "# this is a ruby comment\n";
+		String code = "# this is a ruby comment";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubycomment\">#&nbsp;this&nbsp;is&nbsp;a&nbsp;ruby&nbsp;comment</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN +	comment(code) + END, result);
 		code = "=begin\nThis is a\nmultiline comment\n=end";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubycomment\">=begin<br/>\nThis&nbsp;is&nbsp;a<br/>\nmultiline&nbsp;comment<br/>\n=end</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + comment(code) + END, result);
 	}
 
 	@Test
 	public void testSingleQuotedString() {
 		String code = "\"this is a double quoted string\"";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">\"this&nbsp;is&nbsp;a&nbsp;double&nbsp;quoted&nbsp;string\"</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
 	public void testDoubleQuotedString() {
-		String code;
-		String result;
-		code = "'this is a single quoted string'";
-		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">'this&nbsp;is&nbsp;a&nbsp;single&nbsp;quoted&nbsp;string'</span>"
-				+ END, result);
+		String code = "'this is a single quoted string'";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
 	public void testGeneralizedSingleQuotedString() {
-		String code;
-		String result;
-		code = "%q!I said, \"You said, 'She said it.'\"!";
-		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">%q!I&nbsp;said,&nbsp;\"You&nbsp;said,&nbsp;'She&nbsp;said&nbsp;it.'\"!</span>"
-				+ END, result);
+		String code = "%q!I said, \"You said, 'She said it.'\"!";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
@@ -67,31 +53,30 @@ public class RubyTagTest {
 		String result;
 		code = "%Q/I said, \"You said, 'She said it.'\"/";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">%Q/I&nbsp;said,&nbsp;\"You&nbsp;said,&nbsp;'She&nbsp;said&nbsp;it.'\"/</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 		code = "%(I said, \"You said, 'She said it.'\")";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">%(I&nbsp;said,&nbsp;\"You&nbsp;said,&nbsp;'She&nbsp;said&nbsp;it.'\")</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
 	public void testQuotedTextInsideCommentIsNotString() {
 		String code = "# this is a comment with 'quoted' and \"double quoted\" text";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubycomment\">#&nbsp;this&nbsp;is&nbsp;a&nbsp;comment&nbsp;with&nbsp;'quoted'&nbsp;and&nbsp;\"double&nbsp;quoted\"&nbsp;text</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + comment(code) + END, result);
 	}
 
 	@Test
 	public void testMultipleStringsInSameLine() {
 		String code = "method 'a string', \"another string\", %q/yet another string/";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "method&nbsp;<span class=\"rubystring\">'a&nbsp;string'</span>,&nbsp;<span class=\"rubystring\">\"another&nbsp;string\"</span>,&nbsp;<span class=\"rubystring\">%q/yet&nbsp;another&nbsp;string/</span>"
+		Assert.assertEquals(BEGIN +
+				escape("method ") +
+				string("'a string'") +
+				escape(", ") +
+				string("\"another string\"") +
+				escape(", ") +
+				string("%q/yet another string/")
 				+ END, result);
 	}
 
@@ -99,32 +84,30 @@ public class RubyTagTest {
 	public void testDoubleQuotedTextInsideSingleQuotedString() {
 		String code = "'this is a \"single-quoted\" string'";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">'this&nbsp;is&nbsp;a&nbsp;\"single-quoted\"&nbsp;string'</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
 	public void testLineOrientedStringLiteral() {
-		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH";
+		String code = "puts <<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH\n";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "puts&nbsp;<span class=\"rubystring\">&lt;&lt;BLAH<br/>\nThis&nbsp;is&nbsp;a<br/>\nmultiline,&nbsp;line-oriented<br/>\nstring<br/>\nBLAH<br/>\n</span>"
-				+ END, result);
-		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE";
+		Assert.assertEquals(BEGIN +
+				escape("puts ") +
+				string("<<BLAH\nThis is a\nmultiline, line-oriented\nstring\nBLAH\n") +
+				END, result);
+		code = "<<`CODE`\necho \"hello\"\necho \"world\"\nCODE\n";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubystring\">&lt;&lt;`CODE`<br/>\necho&nbsp;\"hello\"<br/>\necho&nbsp;\"world\"<br/>\nCODE<br/>\n</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 
 	@Test
 	public void testSingleQuotedTextInsideDoubleQuotedString() {
 		String code = "puts \"He said: 'Hello World!'\"";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "puts&nbsp;<span class=\"rubystring\">\"He&nbsp;said:&nbsp;'Hello&nbsp;World!'\"</span>"
-				+ END, result);
+		Assert.assertEquals(BEGIN +
+				escape("puts ") +
+				string("\"He said: 'Hello World!'\"") +
+				END, result);
 	}
 
 	@Test
@@ -159,71 +142,90 @@ public class RubyTagTest {
 	public void testRegularExpressions() {
 		String code = "/regexp/";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyregexp\">/regexp/</span>" + END, result);
+		Assert.assertEquals(BEGIN + regex(code) + END, result);
 		code = "%r(another/regexp/)";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyregexp\">%r(another/regexp/)</span>" + END, result);
+		Assert.assertEquals(BEGIN + regex(code) + END, result);
 		code = "/ReGeXp/i";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyregexp\">/ReGeXp/i</span>" + END, result);
+		Assert.assertEquals(BEGIN + regex(code) + END, result);
 	}
 	
 	@Test
 	public void testVariables() {
 		String code = "@local = nil";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@local</span>&nbsp;=&nbsp;<span class=\"rubykeyword\">nil</span>" + END, result);
+		Assert.assertEquals(BEGIN + 
+				variable("@local") +
+				escape(" = ") +
+				keyword("nil") +
+				END, result);
 		code = "@@count = 1";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@@count</span>&nbsp;=&nbsp;<span class=\"rubynumber\">1</span>" + END, result);
+		Assert.assertEquals(BEGIN + 
+				variable("@@count") +
+				escape(" = ") +
+				number("1") + 
+				END, result);
 		code = "$counter++";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">$counter</span>++" + END, result);
+		Assert.assertEquals(BEGIN +
+				variable("$counter") + "++" +
+				END, result);
 	}
 	
 	@Test
 	public void testConstant() {
 		String code = "PI = 3.14159";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyconstant\">PI</span>&nbsp;=&nbsp;<span class=\"rubynumber\">3.14159</span>" + END, result);
+		Assert.assertEquals(BEGIN + 
+				constant("PI") +
+				escape(" = ") +
+				number("3.14159") +
+				END, result);
 	}
 	
 	@Test
 	public void testNumbers() {
 		String code = "12345";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">12345</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "123.45";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123.45</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "123e45";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123e45</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "123E-45";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">123E-45</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "-123.45e67";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">-123.45e67</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "0xffffff";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">0xffffff</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "0b010010";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">0b010010</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 		code = "01777";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubynumber\">01777</span>" + END, result);
+		Assert.assertEquals(BEGIN + number(code) + END, result);
 	}
 	
 	@Test
 	public void testSymbols() {
 		String code = "attr_accessor :name, :simple_symbol";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "attr_accessor&nbsp;<span class=\"rubysymbol\">:name</span>,&nbsp;<span class=\"rubysymbol\">:simple_symbol</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				escape("attr_accessor ") +
+				symbol(":name") + 
+				escape(", ") +
+				symbol(":simple_symbol") +
+				END, result);
 		code = "%s(strange_symbol)";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubysymbol\">%s(strange_symbol)</span>" + END, result);
+		Assert.assertEquals(BEGIN + symbol(code) + END, result);
 	}
 	
 	@Test
@@ -239,107 +241,209 @@ public class RubyTagTest {
 	public void testKeywordMethodCalledOnAString() {
 		String code = "defined?(\"text\") # should return true";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubykeyword\">defined?</span>(<span class=\"rubystring\">\"text\"</span>)&nbsp;<span class=\"rubycomment\">#&nbsp;should&nbsp;return&nbsp;true</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				keyword("defined?") + "(" +
+				string("\"text\"") + ")" +
+				escape(" ") +
+				comment("# should return true") +
+				END, result);
 	}
 	
 	@Test
 	public void testHashAndArrayKeys() {
 		String code = "@params[:id]";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">@params</span>[<span class=\"rubysymbol\">:id</span>]" + END, result);
+		Assert.assertEquals(BEGIN + 
+				variable("@params") + "[" +
+				symbol(":id") + "]" +
+				END, result);
 		code = "$instances[5]";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyvariable\">$instances</span>[<span class=\"rubynumber\">5</span>]" + END, result);
+		Assert.assertEquals(BEGIN +
+				variable("$instances") + "[" +
+				number("5") + "]" +
+				END, result);
 		code = "dict['word']";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "dict[<span class=\"rubystring\">'word'</span>]" + END, result);
+		Assert.assertEquals(BEGIN +
+				escape("dict[") +
+				string("'word'") + "]" +
+				END, result);
 	}
 	
 	@Test
 	public void testMultipleNamespaces() {
 		String code = "class User < ActiveRecord::Base";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubykeyword\">class</span>&nbsp;<span class=\"rubyconstant\">User</span>&nbsp;&lt;&nbsp;<span class=\"rubyconstant\">ActiveRecord</span>::<span class=\"rubyconstant\">Base</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				keyword("class") +
+				escape(" ") +
+				constant("User") +
+				escape(" < ") +
+				constant("ActiveRecord") +
+				escape("::") +
+				constant("Base") +
+				END, result);
 	}
 	
 	@Test
 	public void testNumbersInRangeWithoutSpacesBetween() {
 		String code = "array = [1,2,3,4]";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "array&nbsp;=&nbsp;[<span class=\"rubynumber\">1</span>,<span class=\"rubynumber\">2</span>,<span class=\"rubynumber\">3</span>,<span class=\"rubynumber\">4</span>]" + END, result);
+		Assert.assertEquals(BEGIN +
+				escape("array = [") +
+				number("1") + "," +
+				number("2") + "," +
+				number("3") + "," +
+				number("4") + "]" +
+				END, result);
 		code = "array = [1..4]";
 		result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "array&nbsp;=&nbsp;[<span class=\"rubynumber\">1</span>..<span class=\"rubynumber\">4</span>]" + END, result);
+		Assert.assertEquals(BEGIN + 
+				escape("array = [") +
+				number("1") + ".." +
+				number("4") + "]" +
+				END, result);
 	}
 	
 	@Test
 	public void testEscapedCharactersInDoubleQuotedStrings() {
 		String code = "\"this is a \\\"string\\\"\"";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">\"this&nbsp;is&nbsp;a&nbsp;\\\"string\\\"\"</span>" + END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 	
 	@Test
 	public void testEscapedCharactersInSingleQuotedStrings() {
 		String code = "'this is a \\'string\\''";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">'this&nbsp;is&nbsp;a&nbsp;\\'string\\''</span>" + END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 	
 	@Test
 	public void testEscapedCharactersInRegularExpressions() {
 		String code = "/\\/.*\\//";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyregexp\">/\\/.*\\//</span>" + END, result);
+		Assert.assertEquals(BEGIN + regex(code) + END, result);
 	}
 	
 	@Test
 	public void testEscapedCharactersInGeneralizedStringsAndRegularExpressions() {
 		String code = "%(this is a \\(generalized\\) string)";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">%(this&nbsp;is&nbsp;a&nbsp;\\(generalized\\)&nbsp;string)</span>" + END, result);
+		Assert.assertEquals(BEGIN + string(code) + END, result);
 	}
 	
 	@Test
 	public void testKeywordInsideIdentifierIsNotKeyword() {
 		String code = "Session.expects(:open).once.and_return(s)";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubyconstant\">Session</span>.expects(<span class=\"rubysymbol\">:open</span>).once.and_return(s)" + END, result);
+		Assert.assertEquals(BEGIN +
+				constant("Session") +
+				escape(".expects(") +
+				symbol(":open") +
+				escape(").once.and_return(s)") +
+				END, result);
 	}
 	
 	@Test
 	public void testArithmeticExpression() {
 		String code = "print \"I'm crazy!\" if (3+4)-2++10.8 = (3*2)/4";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "print&nbsp;<span class=\"rubystring\">\"I'm&nbsp;crazy!\"</span>&nbsp;<span class=\"rubykeyword\">if</span>&nbsp;(<span class=\"rubynumber\">3</span>+<span class=\"rubynumber\">4</span>)-<span class=\"rubynumber\">2</span>+<span class=\"rubynumber\">+10.8</span>&nbsp;=&nbsp;(<span class=\"rubynumber\">3</span>*<span class=\"rubynumber\">2</span>)/<span class=\"rubynumber\">4</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				escape("print ") +
+				string("\"I'm crazy!\"") +
+				escape(" ") +
+				keyword("if") +
+				escape(" (") +
+				number("3") +
+				escape("+") +
+				number("4") +
+				escape(")-") +
+				number("2") +
+				escape("+") +
+				number("+10.8") +
+				escape(" = (") +
+				number("3") +
+				escape("*") +
+				number("2") +
+				escape(")/") +
+				number("4") +
+				END, result);
 	}
 	
 	@Test
 	public void testInterpolationInDoubleQuotedStringHasDifferentColor() {
 		String code = "\"string with #{%Q!string with #{i+1+1} interpolation!}\"";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">\"string&nbsp;with&nbsp;#{<span class=\"rubynormal\"><span class=\"rubystring\">%Q!string&nbsp;with&nbsp;#{<span class=\"rubynormal\">i+<span class=\"rubynumber\">1</span>+<span class=\"rubynumber\">1</span></span>}&nbsp;interpolation!</span></span>}\"</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				string("\"string with #{}\"",
+						string("%Q!string with #{} interpolation!",
+								"i+" +
+								number("1") +
+								escape("+") +
+								number("1")
+						)
+				) +
+				END, result);
 	}
 	
 	@Test
 	public void testMultipleInterpolationsInsideDoubleQuotedString() {
 		String code = "%/Today is #{@date.month} #{@date.day}#{suffixForDay(@date.day)}/";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "<span class=\"rubystring\">%/Today&nbsp;is&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.month</span>}&nbsp;#{<span class=\"rubynormal\"><span class=\"rubyvariable\">@date</span>.day</span>}#{<span class=\"rubynormal\">suffixForDay(<span class=\"rubyvariable\">@date</span>.day)</span>}/</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				string("%/Today is #{} #{}#{}/",
+						variable("@date") + escape(".month"),
+						variable("@date") + escape(".day"),
+						escape("suffixForDay(") + variable("@date") + escape(".day)")
+				) +
+				END, result);
 	}
 	
 	@Test
 	public void testLineOrientedStringWithMultipleIdentifiers() {
-		String code = "print <<EXP1, <<'puts', <<EXP2\n#{params[:user].name}, write the code:\nEXP1\nputs \"#{params[:id]}\"\nputs\nto print the id\nEXP2";
+		String code = "print <<EXP1, <<'puts', <<EXP2\n" +
+				"#{params[:user].name}, write the code:\n" +
+				"EXP1\n" +
+				"puts \"#{params[:id]}\"\n" +
+				"puts\n" +
+				"to print the id\n" +
+				"EXP2";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "print&nbsp;<span class=\"rubystring\">&lt;&lt;EXP1,&nbsp;&lt;&lt;'puts',&nbsp;&lt;&lt;EXP2<br/>\n#{<span class=\"rubynormal\">params[<span class=\"rubysymbol\">:user</span>].name</span>},&nbsp;write&nbsp;the&nbsp;code:<br/>\nEXP1<br/>\nputs&nbsp;\"#{params[:id]}\"<br/>\nputs<br/>\nto&nbsp;print&nbsp;the&nbsp;id<br/>\nEXP2<br/>\n</span>" + END, result);
+		Assert.assertEquals(BEGIN + 
+				escape("print ") +
+				string("<<EXP1, <<'puts', <<EXP2\n" +
+						"#{}, write the code:\n" +
+						"EXP1\n" +
+						"puts \"#{params[:id]}\"\n" +
+						"puts\n" +
+						"to print the id\n" +
+						"EXP2\n",
+						escape("params[") +
+						symbol(":user") +
+						escape("].name")
+				) +
+				END, result);
 	}
 	
 	@Test
 	public void testCommentsAmongTextBug() {
 		String code = "print a.name\n# a comment\nb = 10";
 		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN + "print&nbsp;a.name<br/>\n<span class=\"rubycomment\">#&nbsp;a&nbsp;comment<br/></span>\nb&nbsp;=&nbsp;<span class=\"rubynumber\">10</span>" + END, result);
+		Assert.assertEquals(BEGIN +
+				escape("print a.name\n") +
+				comment("# a comment") +
+				escape("\nb = ") + number("10") +
+				END, result);
+	}
+	
+	@Test
+	public void testHtmlLineBreakCodeInsideComment() {
+		String code = "# use <br/> to break a line";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + comment(code) + END, result);
+		
 	}
 	
 	private String readFile(String filename) throws IOException {
@@ -351,5 +455,53 @@ public class RubyTagTest {
 		}
 		reader.close();
 		return content;
+	}
+	
+	private String comment(String text) {
+		return span("rubycomment", text);
+	}
+	
+	private String string(String content, String... interpolations) {
+		String span = span("rubystring", content);
+		for (String code : interpolations) {
+			span = span.replaceFirst("#\\{\\}", "#{<span class=\"rubynormal\">" + code + "</span>}");
+		}
+		return span;
+	}
+	
+	private String variable(String name) {
+		return span("rubyvariable", name);
+	}
+	
+	private String regex(String regex) {
+		return span("rubyregexp", regex);
+	}
+	
+	private String keyword(String word) {
+		return span("rubykeyword", word);
+	}
+	
+	private String number(String number) {
+		return span("rubynumber", number);
+	}
+	
+	private String constant(String name) {
+		return span("rubyconstant", name);
+	}
+	
+	private String symbol(String name) {
+		return span("rubysymbol", name);
+	}
+	
+	private String span(String clazz, String content) {
+		return "<span class=\"" + clazz + "\">" + escape(content) + "</span>";
+	}
+	
+	private String escape(String text) {
+		text = text.replaceAll(" ", "&nbsp;");
+		text = text.replaceAll("<", "&lt;");
+		text = text.replaceAll(">", "&gt;");
+		text = text.replaceAll("\n", "<br/>\n");
+		return text;
 	}
 }

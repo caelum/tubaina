@@ -30,7 +30,7 @@ public class RubyTag implements Tag {
 	public RubyTag(Indentator indentator) {
 		this.indentator = indentator;
 		this.elementPatterns = new HashMap<Pattern, String>();
-		this.elementPatterns.put(Pattern.compile("(?m)\\A#.*$"), "comment");
+		this.elementPatterns.put(Pattern.compile("(?m)\\A#.*((?=<br/>$)|(\\Z))"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!\\\\)\""), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!\\\\)'"), "string");

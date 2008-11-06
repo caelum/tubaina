@@ -31,7 +31,7 @@ public class RubyTag implements Tag {
 	public RubyTag(Indentator indentator) {
 		this.indentator = indentator;
 		this.elementPatterns = new HashMap<Pattern, String>();
-		this.elementPatterns.put(Pattern.compile("(?m)\\A\\\\#.*$"), "comment");
+		this.elementPatterns.put(Pattern.compile("(?m)\\A\\\\#.*((?=\\\\\\\\$)|(\\Z))"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^=begin.*?=end"), "comment");
 		this.elementPatterns.put(Pattern.compile("(?s)^\".*?(?<!(\\\\char92))\""), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^'.*?(?<!(\\\\char92))'"), "string");
@@ -73,13 +73,13 @@ public class RubyTag implements Tag {
 		String toProcess = this.indentator.indent(code);
 		toProcess = escape(toProcess);
 		toProcess = parseSpaces(toProcess);
+		toProcess = codeHighlightTag.parseLatex(toProcess, highlights);
 		this.output = "";
 		this.lastMode = "";
 		while (!toProcess.isEmpty()) {
 			toProcess = processNextElement(toProcess);
 		}
 		this.output = parseSymbols(this.output);
-		this.output = codeHighlightTag.parseLatex(this.output, highlights);
 		return BEGIN + output + END;
 	}
 	
@@ -188,6 +188,7 @@ public class RubyTag implements Tag {
 	
 	private void parseStringWithInterpolations(String string) {
 		int lastEnd = 0;
+		this.lastMode = "string";
 		while (true) {
 			int start = findNextInterpolation(string.substring(lastEnd));
 			if (start == -1) {
@@ -196,9 +197,8 @@ public class RubyTag implements Tag {
 			start += lastEnd;
 			int end = findEndOfInterpolation(string.substring(start)) + start;
 			this.output += string.substring(lastEnd, start);
-			this.output += "\\#\\{\\rubynormal ";
+			this.output += "\\#\\{";
 			String toProcess = string.substring(start + 4, end - 2);
-			this.lastMode = "normal";
 			while (!toProcess.isEmpty()) {
 				toProcess = processNextElement(toProcess);
 			}
