@@ -501,6 +501,13 @@ public class RubyTagTest {
 				) +
 				END, result);
 	}
+
+	@Test
+	public void testSymbolEndedWithQuestionMark() {
+		String code = ":valid?";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + symbol(code) + END, result);
+	}
 	
 	private String readFile(String filename) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(ResourceLocator.getInstance().getFile(filename)));

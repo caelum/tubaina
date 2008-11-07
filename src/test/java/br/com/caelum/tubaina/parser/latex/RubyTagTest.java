@@ -504,6 +504,13 @@ Assert.assertEquals(BEGIN +
 				END, result);
 	}
 	
+	@Test
+	public void testSymbolEndedWithQuestionMark() {
+		String code = ":valid?";
+		String result = rubyTag.parse(code, "");
+		Assert.assertEquals(BEGIN + symbol(code) + END, result);
+	}
+	
 	private String comment(String text) {
 		return colorize("rubycomment", text);
 	}

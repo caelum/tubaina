@@ -45,7 +45,7 @@ public class RubyTag implements Tag {
 		this.elementPatterns.put(Pattern.compile("(?s)^%s\\(.*?(?<!\\\\)\\)"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^%s\\[.*?(?<!\\\\)\\]"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^%s\\{.*?(?<!\\\\)\\}"), "symbol");
-		this.elementPatterns.put(Pattern.compile("\\A:" + IDENTIFIER), "symbol");
+		this.elementPatterns.put(Pattern.compile("\\A:" + IDENTIFIER + "\\??"), "symbol");
 		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[QW])?([^\\p{Alnum}\\[{(]).*?(?<!\\\\)\\2"), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[QW])?\\(.*?(?<!\\\\)\\)"), DOUBLE_QUOTED_STRING);
 		this.elementPatterns.put(Pattern.compile("(?s)^%([^\\p{Alnum}\\s]|[QW])?\\[.*?(?<!\\\\)\\]"), DOUBLE_QUOTED_STRING);
