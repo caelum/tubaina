@@ -171,10 +171,15 @@ public class RubyTagTest {
 				escape(" = ") +
 				number("1") + 
 				END, result);
-		code = "$counter++";
-		result = rubyTag.parse(code, "");
+	}
+	
+	@Test
+	public void testGlobalVariable() {
+		String code = "$counter++";
+		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				variable("$counter") + "++" +
+				global("$counter") +
+				escape("++") +
 				END, result);
 	}
 	
@@ -258,20 +263,25 @@ public class RubyTagTest {
 		String code = "@params[:id]";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + 
-				variable("@params") + "[" +
-				symbol(":id") + "]" +
+				variable("@params") +
+				escape("[") +
+				symbol(":id") +
+				escape("]") +
 				END, result);
 		code = "$instances[5]";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				variable("$instances") + "[" +
-				number("5") + "]" +
+				global("$instances") +
+				escape("[") +
+				number("5") +
+				escape("]") +
 				END, result);
 		code = "dict['word']";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
 				escape("dict[") +
-				string("'word'") + "]" +
+				string("'word'") +
+				escape("]") +
 				END, result);
 	}
 	
@@ -515,6 +525,10 @@ public class RubyTagTest {
 	
 	private String variable(String name) {
 		return span("rubyvariable", name);
+	}
+	
+	private String global(String name) {
+		return span("rubyglobal", name);
 	}
 	
 	private String regex(String regex) {

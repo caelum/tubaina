@@ -1,11 +1,12 @@
 /* The ruby code area */ code.ruby { padding: 0px; color: #000000; }
 /* Normal code */ span.rubynormal { font-size: 10pt; color:#000000; padding: 0px; }
 /* Comments */ span.rubycomment  { font-size: 10pt; color:#3f7f5f; padding: 0px; }
-/* Keywords */ span.rubykeyword  { font-size: 10pt; color:#7f0055; font-weight:bold; padding: 0px; }
+/* Keywords */ span.rubykeyword  { font-size: 10pt; color:#a4357a; font-weight:bold; padding: 0px; }
 /* Strings */ span.rubystring  { font-size: 10pt; color:#2a00ff; padding: 0px; }
-/* Symbols */ span.rubysymbol  { font-size: 10pt; color:#ff3232; font-weight:bold; padding: 0px; }
-/* Numbers */ span.rubynumber  { font-size: 10pt; color:#00aaaa; font-weight:bold; padding: 0px; }
-/* Regular expressions */ span.rubyregexp  { font-size: 10pt; color:#ff6100; padding: 0px; }
+/* Symbols */ span.rubysymbol  { font-size: 10pt; color:#ff4040; font-weight:bold; padding: 0px; }
+/* Numbers */ span.rubynumber  { font-size: 10pt; color:#0080ff; font-weight:bold; padding: 0px; }
+/* Regular expressions */ span.rubyregexp  { font-size: 10pt; color:#5a1ea0; padding: 0px; }
 /* Constants */ span.rubyconstant  { font-size: 10pt; color:#000000; padding: 0px; }
-/* Variables */ span.rubyvariable  { font-size: 10pt; color:#00007f; font-weight:bold; padding: 0px; }
+/* Variables */ span.rubyvariable  { font-size: 10pt; color:#004080; font-weight:bold; padding: 0px; }
+/* Global variables */ span.rubyglobal { font-size: 10pt; color:#ff0000; padding: 0px; }
 /* System commands */ span.rubyexecution  { font-size: 10pt; color:#008080; padding: 0px; }

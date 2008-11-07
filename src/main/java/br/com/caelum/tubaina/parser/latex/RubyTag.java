@@ -61,7 +61,8 @@ public class RubyTag implements Tag {
 				"(false)|(not)|(super)|(while)|(alias)|(defined)|(for)|(or)|(then)|(yield)|" +
 				"(and)|(do)|(if)|(redo)|(true)|(begin)|(else)|(in)|(rescue)|(undef)|(break)|" +
 				"(elsif)|(module)|(retry)|(unless)|(case)|(end)|(next)|(return)|(until)|(raise))(?!(\\p{Alnum})|(\\\\_)|(\\?))"), "keyword");
-		this.elementPatterns.put(Pattern.compile("^((@@)|(@)|(\\\\\\$))" + IDENTIFIER), "variable");
+		this.elementPatterns.put(Pattern.compile("^((@@)|(@))" + IDENTIFIER), "variable");
+		this.elementPatterns.put(Pattern.compile("^\\\\\\$" + IDENTIFIER), "global");
 		this.elementPatterns.put(Pattern.compile("^[A-Z]((\\p{Alnum})|(\\\\_))*"), "constant");
 		this.elementPatterns.put(Pattern.compile("^(" + NUMBER + "\\s*[-+*/()]*\\s*)+\\b"), ARITHMETIC_EXPRESSION);
 		this.elementPatterns.put(Pattern.compile("^0[xX][A-Fa-f0-9]+\\b"), "number");

@@ -173,10 +173,14 @@ public class RubyTagTest {
 				normal("= ") +
 				number("1") + 
 				END, result);
-		code = "$counter++";
-		result = rubyTag.parse(code, "");
+	}
+	
+	@Test
+	public void testGlobalVariable() {
+		String code = "$counter++";
+		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				variable("$counter") +
+				global("$counter") +
 				normal("++") +
 				END, result);
 	}
@@ -270,7 +274,7 @@ public class RubyTagTest {
 		code = "$instances[5]";
 		result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +
-				variable("$instances") +
+				global("$instances") +
 				normal("[") +
 				number("5") +
 				normal("]") +
@@ -521,6 +525,10 @@ Assert.assertEquals(BEGIN +
 
 	private String variable(String name) {
 		return colorize("rubyvariable", name);
+	}
+	
+	private String global(String name) {
+		return colorize("rubyglobal", name);
 	}
 	
 	private String regex(String regex) {
