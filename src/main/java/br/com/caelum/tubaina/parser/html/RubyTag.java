@@ -72,7 +72,7 @@ public class RubyTag implements Tag {
 		CodeHighlightTag codeHighlightTag = new CodeHighlightTag();
 		List<Integer> highlights = codeHighlightTag.getHighlights(options);
 		String toProcess = this.parseSpaces(this.indentator.indent(code));
-		output = codeHighlightTag.parseHtml(output, highlights);
+		toProcess = codeHighlightTag.parseHtml(toProcess, highlights);
 		while (!toProcess.isEmpty()) {
 			toProcess = processNextElement(toProcess);
 		}

@@ -129,30 +129,19 @@ public class RubyTagTest {
 
 	@Test
 	public void testReservedWords() {
-		String code = "BEGIN class ensure nil self when END def false not super while alias defined for or then yield and do if redo true begin else in rescue undef break elsif module retry unless case end next return until raise defined?";
-		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "\\rubykeyword BEGIN~\\rubykeyword class~"
-				+ "\\rubykeyword ensure~\\rubykeyword nil~"
-				+ "\\rubykeyword self~\\rubykeyword when~"
-				+ "\\rubykeyword END~\\rubykeyword def~"
-				+ "\\rubykeyword false~\\rubykeyword not~"
-				+ "\\rubykeyword super~\\rubykeyword while~"
-				+ "\\rubykeyword alias~\\rubykeyword defined~"
-				+ "\\rubykeyword for~\\rubykeyword or~"
-				+ "\\rubykeyword then~\\rubykeyword yield~"
-				+ "\\rubykeyword and~\\rubykeyword do~"
-				+ "\\rubykeyword if~\\rubykeyword redo~"
-				+ "\\rubykeyword true~\\rubykeyword begin~"
-				+ "\\rubykeyword else~\\rubykeyword in~"
-				+ "\\rubykeyword rescue~\\rubykeyword undef~"
-				+ "\\rubykeyword break~\\rubykeyword elsif~"
-				+ "\\rubykeyword module~\\rubykeyword retry~"
-				+ "\\rubykeyword unless~\\rubykeyword case~"
-				+ "\\rubykeyword end~\\rubykeyword next~"
-				+ "\\rubykeyword return~\\rubykeyword until~"
-				+ "\\rubykeyword raise~\\rubykeyword defined?"
-				+ END, result);
+		String[] keywords = {
+				"BEGIN", "class", "ensure", "nil", "self",
+				"when", "END", "def", "false", "not",
+				"super", "while", "alias", "defined", "for",
+				"or", "then", "yield", "and", "do",
+				"if", "redo", "true", "begin", "else",
+				"in", "rescue", "undef", "break", "elsif",
+				"module", "retry", "unless", "case", "end",
+				"next", "return", "until", "raise", "defined?"};
+		for (String keyword : keywords) {
+			String result = rubyTag.parse(keyword, "");
+			Assert.assertEquals(BEGIN + keyword(keyword) + END, result);
+		}
 	}
 	
 	@Test

@@ -127,30 +127,19 @@ public class RubyTagTest {
 
 	@Test
 	public void testReservedWords() {
-		String code = "BEGIN class ensure nil self when END def false not super while alias defined for or then yield and do if redo true begin else in rescue undef break elsif module retry unless case end next return until raise defined?";
-		String result = rubyTag.parse(code, "");
-		Assert.assertEquals(BEGIN
-				+ "<span class=\"rubykeyword\">BEGIN</span>&nbsp;<span class=\"rubykeyword\">class</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">ensure</span>&nbsp;<span class=\"rubykeyword\">nil</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">self</span>&nbsp;<span class=\"rubykeyword\">when</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">END</span>&nbsp;<span class=\"rubykeyword\">def</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">false</span>&nbsp;<span class=\"rubykeyword\">not</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">super</span>&nbsp;<span class=\"rubykeyword\">while</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">alias</span>&nbsp;<span class=\"rubykeyword\">defined</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">for</span>&nbsp;<span class=\"rubykeyword\">or</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">then</span>&nbsp;<span class=\"rubykeyword\">yield</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">and</span>&nbsp;<span class=\"rubykeyword\">do</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">if</span>&nbsp;<span class=\"rubykeyword\">redo</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">true</span>&nbsp;<span class=\"rubykeyword\">begin</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">else</span>&nbsp;<span class=\"rubykeyword\">in</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">rescue</span>&nbsp;<span class=\"rubykeyword\">undef</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">break</span>&nbsp;<span class=\"rubykeyword\">elsif</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">module</span>&nbsp;<span class=\"rubykeyword\">retry</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">unless</span>&nbsp;<span class=\"rubykeyword\">case</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">end</span>&nbsp;<span class=\"rubykeyword\">next</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">return</span>&nbsp;<span class=\"rubykeyword\">until</span>&nbsp;"
-				+ "<span class=\"rubykeyword\">raise</span>&nbsp;<span class=\"rubykeyword\">defined?</span>"
-				+ END, result);
+		String[] keywords = {
+				"BEGIN", "class", "ensure", "nil", "self",
+				"when", "END", "def", "false", "not",
+				"super", "while", "alias", "defined", "for",
+				"or", "then", "yield", "and", "do",
+				"if", "redo", "true", "begin", "else",
+				"in", "rescue", "undef", "break", "elsif",
+				"module", "retry", "unless", "case", "end",
+				"next", "return", "until", "raise", "defined?"};
+		for (String keyword : keywords) {
+			String result = rubyTag.parse(keyword, "");
+			Assert.assertEquals(BEGIN + keyword(keyword) + END, result);
+		}
 	}
 	
 	@Test
