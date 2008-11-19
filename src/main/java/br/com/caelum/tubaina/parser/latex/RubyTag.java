@@ -79,7 +79,7 @@ public class RubyTag implements Tag {
 		toProcess = codeHighlightTag.parseLatex(toProcess, highlights);
 		this.output = "";
 		this.lastMode = "";
-		while (!toProcess.isEmpty()) {
+		while (!toProcess.equals("")) {
 			toProcess = processNextElement(toProcess);
 		}
 		this.output = parseSymbols(this.output);
@@ -177,7 +177,7 @@ public class RubyTag implements Tag {
 		}
 		this.output += "\\rubynormal \\\\\n";
 		this.lastMode = "normal";
-		while (!tags.isEmpty()) {
+		while (!tags.equals("")) {
 			String currentTag = tags.poll();
 			String currentDelimiter = delimiters.poll();
 			Pattern endTagPattern = Pattern.compile("(?m)^" + currentTag + "((\\\\\\\\\n)|(\\Z))");
@@ -227,7 +227,7 @@ public class RubyTag implements Tag {
 			this.output += string.substring(lastEnd, start);
 			this.output += "\\#\\{";
 			String toProcess = string.substring(start + 4, end - 2);
-			while (!toProcess.isEmpty()) {
+			while (!toProcess.equals("")) {
 				toProcess = processNextElement(toProcess);
 			}
 			if (this.lastMode != outsideMode) {

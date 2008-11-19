@@ -74,7 +74,7 @@ public class RubyTag implements Tag {
 		List<Integer> highlights = codeHighlightTag.getHighlights(options);
 		String toProcess = this.parseSpaces(this.indentator.indent(code));
 		toProcess = codeHighlightTag.parseHtml(toProcess, highlights);
-		while (!toProcess.isEmpty()) {
+		while (!toProcess.equals("")) {
 			toProcess = processNextElement(toProcess);
 		}
 		return BEGIN + output + END;
@@ -159,7 +159,7 @@ public class RubyTag implements Tag {
 			this.output += matcher.group() + "</span>";
 		}
 		this.output += "<br/>\n";
-		while (!tags.isEmpty()) {
+		while (!tags.equals("")) {
 			String currentTag = tags.poll();
 			String currentDelimiter = delimiters.poll();
 			Pattern endTagPattern = Pattern.compile("(?m)^" + currentTag + "((<br/>\n)|(\\Z))");
@@ -201,7 +201,7 @@ public class RubyTag implements Tag {
 			this.output += string.substring(lastEnd, start);
 			this.output += "#{<span class=\"rubynormal\">";
 			String toProcess = string.substring(start + 2, end - 1);
-			while (!toProcess.isEmpty()) {
+			while (!toProcess.equals("")) {
 				toProcess = processNextElement(toProcess);
 			}
 			this.output += "</span>}";
