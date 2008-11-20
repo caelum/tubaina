@@ -83,9 +83,31 @@ public class RubyTag implements Tag {
 			toProcess = processNextElement(toProcess);
 		}
 		this.output = parseSymbols(this.output);
+		this.output = addIndentationCommandsWhereNeccessary(this.output);
 		return BEGIN + output + END;
 	}
 	
+	private String addIndentationCommandsWhereNeccessary(String code) {
+		String result = "";
+		Matcher lineMatcher = Pattern.compile("(?m).*(\\n|\\Z)").matcher(code);
+		while (lineMatcher.find()) {
+			String line = lineMatcher.group();
+			if (line.startsWith("~")) {
+				result += "\\rubynormal ";
+				Matcher commandMatcher = Pattern.compile("\\\\ruby(\\w+) ").matcher(line);
+				// First command of line is \rubynormal; remove it
+				if (commandMatcher.find() && commandMatcher.group(1).equals("normal")) {
+					result += commandMatcher.replaceFirst("");
+				} else {
+					result += line;
+				}
+			} else {
+				result += line;
+			}
+		}
+		return result;
+	}
+
 	private String escape(String string) {
 		string = new EscapeTag().parse(string, null);
 		string = Escape.HYPHEN.unescape(string);

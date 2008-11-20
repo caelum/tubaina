@@ -1,22 +1,22 @@
 {
 \small \noindent \ttfamily 
 \rubykeyword class~\rubyconstant Person\\
-~~\rubynormal attr\_reader~\rubysymbol :name\rubynormal ,~\rubysymbol :age\\
-~~\rubykeyword def~\rubynormal initialize(name,~age)\\
-~~~~\rubyvariable \verb#@#name\rubynormal ,~\rubyvariable \verb#@#age~\rubynormal \verb#=#~name,~age\\
-~~\rubykeyword end\\
-~~\rubykeyword def~\rubynormal \verb#<#\verb#=#\verb#>#(person)~\rubycomment \#~Comparison~operator~for~sorting\\
-~~~~\rubyvariable \verb#@#age~\rubynormal \verb#<#\verb#=#\verb#>#~person.age\\
-~~\rubykeyword end\\
-~~\rubykeyword def~\rubynormal to\_s\\
-~~~~\rubystring \verb#"#\#\verb#@#name~(\#\verb#@#age)\verb#"#\\
-~~\rubykeyword end\\
+\rubynormal ~~attr\_reader~\rubysymbol :name\rubynormal ,~\rubysymbol :age\\
+\rubynormal ~~\rubykeyword def~\rubynormal initialize(name,~age)\\
+\rubynormal ~~~~\rubyvariable \verb#@#name\rubynormal ,~\rubyvariable \verb#@#age~\rubynormal \verb#=#~name,~age\\
+\rubynormal ~~\rubykeyword end\\
+\rubynormal ~~\rubykeyword def~\rubynormal \verb#<#\verb#=#\verb#>#(person)~\rubycomment \#~Comparison~operator~for~sorting\\
+\rubynormal ~~~~\rubyvariable \verb#@#age~\rubynormal \verb#<#\verb#=#\verb#>#~person.age\\
+\rubynormal ~~\rubykeyword end\\
+\rubynormal ~~\rubykeyword def~\rubynormal to\_s\\
+\rubynormal ~~~~\rubystring \verb#"#\#\verb#@#name~(\#\verb#@#age)\verb#"#\\
+\rubynormal ~~\rubykeyword end\\
 \rubykeyword end\\
 \\
 \rubynormal group~\verb#=#~[\\
-~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Bob\verb#"#\rubynormal ,~\rubynumber 33\rubynormal ),\\
-~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Chris\verb#"#\rubynormal ,~\rubynumber 16\rubynormal ),\\
-~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Ash\verb#"#\rubynormal ,~\rubynumber 23\rubynormal )\\
+\rubynormal ~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Bob\verb#"#\rubynormal ,~\rubynumber 33\rubynormal ),\\
+\rubynormal ~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Chris\verb#"#\rubynormal ,~\rubynumber 16\rubynormal ),\\
+\rubynormal ~~\rubyconstant Person\rubynormal .new(\rubystring \verb#"#Ash\verb#"#\rubynormal ,~\rubynumber 23\rubynormal )\\
 ]\\
 \\
 puts~group.sort.reverse
