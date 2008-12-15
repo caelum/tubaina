@@ -37,8 +37,14 @@ public class JavaTag implements Tag {
 		};
 		string = Java2Html.convertToHtml(string, settings);
 		string = new CodeHighlightTag().parseLatex(string.trim(), highlights, 7);
+		string = escapeDecrement(string);
 		return "{\\small\n"+string+"}";
 	}
+
+	private String escapeDecrement(String string) {
+		return Escape.HYPHEN.escape(string);
+	}
+	
 	private boolean isNumbered(String opts) {
 		return opts.contains("#");
 	}
