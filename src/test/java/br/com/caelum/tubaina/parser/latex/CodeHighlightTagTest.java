@@ -1,6 +1,7 @@
-package br.com.caelum.tubaina.parser.html;
+package br.com.caelum.tubaina.parser.latex;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import junit.framework.Assert;
 
@@ -17,23 +18,23 @@ public class CodeHighlightTagTest {
 			"Segunda linha\n" +
 			"Terceira linha\n" +
 			"Quarta linha";
-		String output = new CodeHighlightTag().parseHtml(string, Arrays.asList(1, 3));
-		Assert.assertEquals("<strong>Primeira linha</strong>\n" +
+		String output = new CodeHighlightTag().parseLatex(string, Arrays.asList(1, 3));
+		Assert.assertEquals("{\\bf Primeira linha}\n" +
 				"Segunda linha\n" +
-				"<strong>Terceira linha</strong>\n" +
+				"{\\bf Terceira linha}\n" +
 				"Quarta linha", output);
 	}
 	
 	@Test
 	public void testHighlightWithNullParams() throws Exception {
-		String output = new CodeHighlightTag().parseHtml("", null);
+		String output = new CodeHighlightTag().parseLatex("", null);
 		Assert.assertEquals("", output);
 	}
 	
 	@Test
 	public void testInvalidLineNumbers() throws Exception {
 		String input = "Só uma linha";
-		String output = new CodeHighlightTag().parseHtml(input, Arrays.asList(new Integer[] {23}));
+		String output = new CodeHighlightTag().parseLatex(input, Collections.singletonList(23));
 		Assert.assertEquals(input, output);
 	}
 }
