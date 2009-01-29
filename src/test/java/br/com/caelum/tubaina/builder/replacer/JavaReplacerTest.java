@@ -32,29 +32,17 @@ public class JavaReplacerTest {
 		Assert.assertEquals(JavaChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndTag() {
 		String java = "[java]public class Teste() ola resto";
 		Assert.assertTrue(replacer.accepts(java));
-		try {
-			replacer.execute(java, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(java, chunks);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String java = "public class Teste()[/java] ola resto";
 		Assert.assertFalse(replacer.accepts(java));
-		try {
-			replacer.execute(java, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(java, chunks);
 	}
 }

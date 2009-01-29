@@ -13,57 +13,35 @@ import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.parser.MockedParser;
 import br.com.caelum.tubaina.resources.Resource;
 
-
 public class ItemReplacerTest {
-	
+
 	private List<Resource> resources;
-	
+
 	@Before
-	public void setUp(){
+	public void setUp() {
 		this.resources = new ArrayList<Resource>();
 	}
-	
+
 	@Test
-	public void testJavaCodeInsideItem(){
-		String test = "* quero que o codigo java abaixo não tenha itens \n" +
-				"[java]blah blah[/java]" +
-				"[java] \n" +
-				"/**\n" +
-				" * texto qualquer\n\n" +
-				" *outro comentario\n" +
-				"[/java]\n" +
-				"  *mas que isso seja outro item";
+	public void testJavaCodeInsideItem() {
+		String test = "* quero que o codigo java abaixo não tenha itens \n" + "[java]blah blah[/java]" + "[java] \n"
+				+ "/**\n" + " * texto qualquer\n\n" + " *outro comentario\n" + "[/java]\n"
+				+ "  *mas que isso seja outro item";
 		List<Chunk> chunks = new ChunkSplitter(resources, "list").splitChunks(test);
 		MockedParser parser = new MockedParser();
 		Assert.assertEquals(2, chunks.size());
 		Assert.assertEquals(ItemChunk.class, chunks.get(0).getClass());
-		Assert.assertEquals("quero que o codigo java abaixo não tenha itens" +
-				"blah blah \n" +
-				"/**\n" +
-				" * texto qualquer\n\n" +
-				" *outro comentario\n", chunks.get(0).getContent(parser));
+		Assert.assertEquals("quero que o codigo java abaixo não tenha itens" + "blah blah \n" + "/**\n"
+				+ " * texto qualquer\n\n" + " *outro comentario\n", chunks.get(0).getContent(parser));
 		Assert.assertEquals(ItemChunk.class, chunks.get(1).getClass());
 		Assert.assertEquals("mas que isso seja outro item", chunks.get(1).getContent(parser));
-		
+
 	}
-	
-	@Test
+
+	@Test(expected = RuntimeException.class)
 	public void testItensWithParagraphs() throws Exception {
 		String test = "blah blah blah \n    *uma lista, com coisas...\n  * outra lista";
-		
-		try {
-			new ChunkSplitter(resources, "list").splitChunks(test);
-			Assert.fail();
-		} catch (RuntimeException e) {
-			//OK
-		}
-//		MockedParser parser = new MockedParser();
-//		Assert.assertEquals(3, chunks.size());
-//		Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
-//		Assert.assertEquals("blah blah blah", chunks.get(0).getContent(parser));
-//		Assert.assertEquals(ItemChunk.class, chunks.get(1).getClass());
-//		Assert.assertEquals("uma lista, com coisas...", chunks.get(1).getContent(parser));
-//		Assert.assertEquals(ItemChunk.class, chunks.get(2).getClass());
-//		Assert.assertEquals("outra lista", chunks.get(2).getContent(parser));
+
+		new ChunkSplitter(resources, "list").splitChunks(test);
 	}
 }

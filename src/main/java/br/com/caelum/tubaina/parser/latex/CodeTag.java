@@ -64,6 +64,8 @@ public class CodeTag implements Tag {
 	}
 
 	private boolean isProperties(String options) {
+		if (options == null)
+			return false;
 		return options.contains("properties");
 	}
 

@@ -1,7 +1,6 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;

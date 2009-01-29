@@ -13,11 +13,11 @@ import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class BoxReplacerTest {
-	
+
 	private BoxReplacer replacer;
 	private List<Chunk> chunks;
 	private List<Resource> resources;
-	
+
 	@Before
 	public void setUp() {
 		replacer = new BoxReplacer(resources);
@@ -34,42 +34,24 @@ public class BoxReplacerTest {
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testReplacesBoxWithNoTitle() {
 		String box = "[box]ola mundo[/box] ola resto";
 		Assert.assertTrue(replacer.accepts(box));
-		try {
-			replacer.execute(box, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(box, chunks);
 	}
-	
-	@Test
+
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndTag() {
 		String box = "[box]ola mundo ola resto";
 		Assert.assertTrue(replacer.accepts(box));
-		try {
-			replacer.execute(box, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(box, chunks);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String box = "ola mundo[/box] ola resto";
 		Assert.assertFalse(replacer.accepts(box));
-		try {
-			replacer.execute(box, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(box, chunks);
 	}
 }

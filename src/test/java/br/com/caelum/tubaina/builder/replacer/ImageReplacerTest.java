@@ -39,16 +39,10 @@ public class ImageReplacerTest {
 		Assert.assertEquals(ImageChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testReplacesImageWithNoResource() {
 		String image = "[img] ola resto";
 		Assert.assertFalse(replacer.accepts(image));
-		try {
-			replacer.execute(image, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(image, chunks);
 	}
 }

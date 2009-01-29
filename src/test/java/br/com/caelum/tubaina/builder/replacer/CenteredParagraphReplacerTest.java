@@ -29,33 +29,20 @@ public class CenteredParagraphReplacerTest {
 		String rest = replacer.execute(text, chunks);
 		Assert.assertEquals(" texto depois", rest);
 		Assert.assertEquals(1, chunks.size());
-		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(0)
-				.getClass());
+		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndingTag() {
 		String text = "[center]Algum texto centralizado";
 		Assert.assertTrue(replacer.accepts(text));
-		try {
-			replacer.execute(text, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// ok
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(text, chunks);
 	}
-	
-	@Test
+
+	@Test(expected=IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String text = "algum texto não centralizado[/center]";
 		Assert.assertFalse(replacer.accepts(text));
-		try {
-			replacer.execute(text, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// ok
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(text, chunks);
 	}
 }

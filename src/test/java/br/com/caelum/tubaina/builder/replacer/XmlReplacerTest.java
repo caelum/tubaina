@@ -33,29 +33,17 @@ public class XmlReplacerTest {
 		Assert.assertEquals(XmlChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndTag() {
 		String xml = "[xml]<bla slkdj> skj</bla> oi resto";
 		Assert.assertTrue(replacer.accepts(xml));
-		try {
-			replacer.execute(xml, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(xml, chunks);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String xml = "<bla slkdj> skj</bla>[/xml] oi resto";
 		Assert.assertFalse(replacer.accepts(xml));
-		try {
-			replacer.execute(xml, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(xml, chunks);
 	}
 }

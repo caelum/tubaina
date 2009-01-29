@@ -15,7 +15,7 @@ public class CodeReplacerTest {
 
 	private CodeReplacer replacer;
 	private List<Chunk> chunks;
-	
+
 	@Before
 	public void setUp() {
 		replacer = new CodeReplacer();
@@ -32,29 +32,17 @@ public class CodeReplacerTest {
 		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndTag() {
 		String code = "[code]ola mundo ola resto";
 		Assert.assertTrue(replacer.accepts(code));
-		try {
-			replacer.execute(code, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(code, chunks);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String answer = "ola mundo[/code] ola resto";
 		Assert.assertFalse(replacer.accepts(answer));
-		try {
-			replacer.execute(answer, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(answer, chunks);
 	}
 }

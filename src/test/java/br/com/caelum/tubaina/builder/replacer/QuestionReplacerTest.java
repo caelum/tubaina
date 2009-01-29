@@ -13,11 +13,11 @@ import br.com.caelum.tubaina.chunk.QuestionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class QuestionReplacerTest {
-	
+
 	private QuestionReplacer replacer;
 	private List<Chunk> chunks;
 	private List<Resource> resources;
-	
+
 	@Before
 	public void setUp() {
 		replacer = new QuestionReplacer(resources);
@@ -34,29 +34,17 @@ public class QuestionReplacerTest {
 		Assert.assertEquals(QuestionChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testDoesntAcceptWithoutEndTag() {
 		String question = "[question]ola mundo ola resto";
 		Assert.assertTrue(replacer.accepts(question));
-		try {
-			replacer.execute(question, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(question, chunks);
 	}
 
-	@Test
+	@Test(expected = IllegalStateException.class)
 	public void testDoesntAcceptWithoutBeginTag() {
 		String question = "ola mundo[/question] ola resto";
 		Assert.assertFalse(replacer.accepts(question));
-		try {
-			replacer.execute(question, chunks);
-			Assert.fail("Should raise an exception");
-		} catch (IllegalStateException e) {
-			// OK
-		}
-		Assert.assertEquals(0, chunks.size());
+		replacer.execute(question, chunks);
 	}
 }

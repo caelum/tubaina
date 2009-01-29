@@ -157,24 +157,7 @@ public class LatexParserTest {
 		Assert.assertEquals("\\sectiontitle{ola \\definition{mu\\underlined{n}do}}", result);
 	}
 
-///////////////////// BOX TAG ////////////////////
-//	@Test
-//	public void testBoxTagWithoutInnerTags() {
-//		String result = parser.parseBox("Titulo do Box \nola mundo");
-//		Assert.assertEquals("<div class=\"boxExt\"><div class=\"boxTitle\">Titulo do Box</div><div class=\"boxContent\">ola mundo</div></div>", result);
-//	}
-//	
-//	@Test
-//	public void testBoxTagWithInnerTags() {
-//		String result = parser.parseBox("Titulo do Box \n__ola__ **mundo**");
-//		Assert.assertEquals("<div class=\"boxExt\"><div class=\"boxTitle\">Titulo do Box</div><div class=\"boxContent\"><em class=\"underlined\">ola</em> <strong class=\"definition\">mundo</strong></div></div>", result);
-//	}
-//	
-//	@Test
-//	public void testBoxTagWithInnerTagsOnTitle() {
-//		String result = parser.parseBox("Titulo **do Box \nola mundo**");
-//		Assert.assertEquals("<div class=\"boxExt\"><div class=\"boxTitle\">Titulo <strong class=\"definition\">do Box</div><div class=\"boxContent\">ola mundo</strong></div></div>", result);
-//	}
+///////////////// missing BOX TAG tests ////////////////////
 
 	@Test
 	public void testTagSoloTag() {
@@ -188,10 +171,10 @@ public class LatexParserTest {
 		Assert.assertEquals("\n\\index{ola mundo, olamundo}\n", result);
 	}
 	
-//	@Test
-//	public void testParseCode() {
-//		Assert.assertEquals(CodeTag.BEGIN + "test" + CodeTag.END, parser.parseCode("test"));
-//	}
+	@Test
+	public void testParseCode() {
+		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "\\black test" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "../main/resources/latex.properties"));
+	}
 	
 	@Test
 	public void testQuotationTag(){
