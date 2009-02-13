@@ -15,6 +15,7 @@ public interface Parser {
 	public String parseNote(String text);
 	public String parseItem(String text);
 	public String parseTodo(String text);
+	public String parseRef(String text);
 	public String parseIndex(String name);
 	public String parseTable(String text, String title, boolean noborder, int columns);
 	public String parseRow(String text);

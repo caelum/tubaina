@@ -8,120 +8,129 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class LatexParser implements Parser {
 
-	private static final String VSPACE = "\n\\\\[1em]\n";
-	public static final int MAX_LINE_LENGTH = 93;
+    private static final String VSPACE = "\n\\\\[1em]\n";
+    public static final int MAX_LINE_LENGTH = 93;
 
-	private final List<Tag> tags;
+    private final List<Tag> tags;
 
-	private boolean showNotes;
-	private final boolean noAnswer;
+    private boolean showNotes;
+    private final boolean noAnswer;
 
-	public LatexParser(List<Tag> tags, boolean showNotes, boolean noAnswer) {
-		this.tags = tags;
-		this.showNotes = showNotes;
-		this.noAnswer = noAnswer;
-	}
-	
-	public LatexParser(List<Tag> tags) {
-		this.tags = tags;
-		this.showNotes = false;
-		this.noAnswer = false;
-	}
+    public LatexParser(List<Tag> tags, boolean showNotes, boolean noAnswer) {
+        this.tags = tags;
+        this.showNotes = showNotes;
+        this.noAnswer = noAnswer;
+    }
 
-	public String parse(String string) {
-		// TODO: remove eventual $1, $2 from the string so as not to be interpreted
+    public LatexParser(List<Tag> tags) {
+        this.tags = tags;
+        this.showNotes = false;
+        this.noAnswer = false;
+    }
 
-		string = new EscapeTag().parse(string, null);
-		for (Tag tag : tags) {
-			string = tag.parse(string, null);
-		}
-		return string;
-	}
+    public String parse(String string) {
+        // TODO: remove eventual $1, $2 from the string so as not to be
+        // interpreted
 
-	public String parseBox(String text, String options) {
-		String string = new BoxTag().parse(text, parse(options));
-		return VSPACE + string  + VSPACE;
-	}
+        string = new EscapeTag().parse(string, null);
+        for (Tag tag : tags) {
+            string = tag.parse(string, null);
+        }
+        return string;
+    }
 
-	public String parseImage(String text, String options) {
-		return new ImageTag().parse(text, options);
-	}
+    public String parseBox(String text, String options) {
+        String string = new BoxTag().parse(text, parse(options));
+        return VSPACE + string + VSPACE;
+    }
 
-	public String parseJava(String text, String options) {
-		String string = new JavaTag(new SimpleIndentator()).parse(text, options);
-		return VSPACE + string;
-	}
+    public String parseImage(String text, String options) {
+        return new ImageTag().parse(text, options);
+    }
 
-	public String parseParagraph(String text) {
-		text = parse(text);
-		return new ParagraphTag().parse(text, null);
-	}
+    public String parseJava(String text, String options) {
+        String string = new JavaTag(new SimpleIndentator())
+                .parse(text, options);
+        return VSPACE + string;
+    }
 
-	public String parseCode(String text, String options) {
-		String string = new CodeTag(new SimpleIndentator()).parse(text, options);
-		return VSPACE + string + VSPACE;
-	}
+    public String parseParagraph(String text) {
+        text = parse(text);
+        return new ParagraphTag().parse(text, null);
+    }
 
-	public String parseList(String text, String options) {
-		String string = new ListTag().parse(text, options);
-		return string;
-	}
+    public String parseCode(String text, String options) {
+        String string = new CodeTag(new SimpleIndentator())
+                .parse(text, options);
+        return VSPACE + string + VSPACE;
+    }
 
-	public String parseXml(String text, String options) {
-		return VSPACE + new XmlTag(new SimpleIndentator()).parse(text, options) + VSPACE;
-	}
+    public String parseList(String text, String options) {
+        String string = new ListTag().parse(text, options);
+        return string;
+    }
 
-	public String parseExercise(String text, int id) {
-		return new ExerciseTag().parse(text, "" + id);
-	}
+    public String parseXml(String text, String options) {
+        return VSPACE + new XmlTag(new SimpleIndentator()).parse(text, options)
+                + VSPACE;
+    }
 
-	public String parseAnswer(String text, int id) {
-		if (!noAnswer)
-			return new AnswerTag().parse(text, "" + id);
-		return "";
-	}
+    public String parseExercise(String text, int id) {
+        return new ExerciseTag().parse(text, "" + id);
+    }
 
-	public String parseQuestion(String text) {
-		return new QuestionTag().parse(text, null);
-	}
+    public String parseAnswer(String text, int id) {
+        if (!noAnswer)
+            return new AnswerTag().parse(text, "" + id);
+        return "";
+    }
 
-	public String parseNote(String text) {
-		if (this.showNotes)
-			return new NoteTag().parse(text, null);
-		return "";
-	}
+    public String parseQuestion(String text) {
+        return new QuestionTag().parse(text, null);
+    }
 
-	public String parseItem(String text) {
-		return new ItemTag().parse(text, null);
-	}
+    public String parseNote(String text) {
+        if (this.showNotes)
+            return new NoteTag().parse(text, null);
+        return "";
+    }
 
-	public String parseTodo(String text) {
-		return new TodoTag().parse(text, null);
-	}
+    public String parseItem(String text) {
+        return new ItemTag().parse(text, null);
+    }
 
-	public String parseIndex(String name) {
-		return new IndexTag().parse(name, null);
-	}
+    public String parseTodo(String text) {
+        return new TodoTag().parse(text, null);
+    }
 
-	public String parseColumn(String text) {
-		return new TableColumnTag().parse(text, null);
-	}
+    public String parseIndex(String name) {
+        return new IndexTag().parse(name, null);
+    }
 
-	public String parseRow(String text) {
-		return new TableRowTag().parse(text, null);
-	}
+    public String parseColumn(String text) {
+        return new TableColumnTag().parse(text, null);
+    }
 
-	public String parseTable(String text, String title, boolean noborder,
-			int columns) {
-		return new TableTag(noborder, columns).parse(text, title);
-	}
+    public String parseRow(String text) {
+        return new TableRowTag().parse(text, null);
+    }
 
-	public String parseCenteredParagraph(String content) {
-		return new CenteredParagraphTag().parse(content, null);
-	}
+    public String parseTable(String text, String title, boolean noborder,
+            int columns) {
+        return new TableTag(noborder, columns).parse(text, title);
+    }
 
-	public String parseRuby(String content, String options) {
-		String result = new RubyTag(new SimpleIndentator()).parse(content, options);
-		return VSPACE + result + VSPACE;
-	}
+    public String parseCenteredParagraph(String content) {
+        return new CenteredParagraphTag().parse(content, null);
+    }
+
+    public String parseRuby(String content, String options) {
+        String result = new RubyTag(new SimpleIndentator()).parse(content,
+                options);
+        return VSPACE + result + VSPACE;
+    }
+
+    public String parseRef(String text) {
+        return new RefTag().parse(text, null);
+    }
 }

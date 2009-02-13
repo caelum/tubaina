@@ -2,101 +2,105 @@ package br.com.caelum.tubaina.parser;
 
 public class MockedParser implements Parser {
 
-	public String parse(String text) {
-		return text;
-	}
+    public String parse(String text) {
+        return text;
+    }
 
-	public String parseAnswer(String text, int id) {
+    public String parseAnswer(String text, int id) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseBox(String text, String options) {
+    public String parseBox(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseCode(String text, String options) {
+    public String parseCode(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseExercise(String text, int id) {
+    public String parseExercise(String text, int id) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseImage(String text, String options) {
+    public String parseImage(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseIndex(String name) {
+    public String parseIndex(String name) {
 
-		return name;
-	}
+        return name;
+    }
 
-	public String parseItem(String text) {
+    public String parseItem(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseJava(String text, String options) {
+    public String parseJava(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseList(String text, String options) {
+    public String parseList(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseNote(String text) {
+    public String parseNote(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseParagraph(String text) {
+    public String parseParagraph(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseQuestion(String text) {
+    public String parseQuestion(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseTodo(String text) {
+    public String parseTodo(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseXml(String text, String options) {
+    public String parseXml(String text, String options) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseColumn(String text) {
+    public String parseColumn(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseRow(String text) {
+    public String parseRow(String text) {
 
-		return text;
-	}
+        return text;
+    }
 
-	public String parseTable(String text, String title, boolean noborder,
-			int columns) {
-		return text;
-	}
+    public String parseTable(String text, String title, boolean noborder,
+            int columns) {
+        return text;
+    }
 
-	public String parseCenteredParagraph(String text) {
-		return text;
-	}
+    public String parseCenteredParagraph(String text) {
+        return text;
+    }
 
-	public String parseRuby(String text, String options) {
-		return text;
-	}
+    public String parseRuby(String text, String options) {
+        return text;
+    }
+
+    public String parseRef(String text) {
+        return text;
+    }
 
 }
