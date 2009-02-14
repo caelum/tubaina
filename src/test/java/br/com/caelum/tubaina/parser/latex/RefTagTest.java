@@ -8,12 +8,12 @@ public class RefTagTest {
     @Test
     public void testItem() {
         String result = new RefTag().parse("texto", null);
-        Assert.assertEquals("\n\\ref{texto}\n", result);
+        Assert.assertEquals("\n\\cite{texto}\n", result);
     }
 
     @Test
     public void testMultipleItems() {
         String result = new RefTag().parse("texto1, texto2", null);
-        Assert.assertEquals("\n\\ref{texto1, texto2}\n", result);
+        Assert.assertEquals("\n\\cite{texto1, texto2}\n", result);
     }
 }
