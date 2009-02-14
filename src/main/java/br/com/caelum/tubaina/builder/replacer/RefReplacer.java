@@ -8,7 +8,7 @@ import br.com.caelum.tubaina.chunk.RefChunk;
 public class RefReplacer extends PatternReplacer {
 
     public RefReplacer() {
-        super("(?s)(?i)\\A\\s*\\[ref\\s*(.*?)(\\s*,\\s*.*)*\\]");
+        super("(?s)(?i)\\A\\s*\\[ref\\s*(.*?(\\s*,\\s*.*?)*)\\]");
     }
 
     @Override

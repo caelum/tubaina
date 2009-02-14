@@ -23,7 +23,7 @@ public class RefReplacerTest {
 
     @Test
     public void testReplacesLowerCaseRef() {
-        String todo = "[ref something to do] ola resto";
+        String todo = "[ref something, to, do] ola resto";
         Assert.assertTrue(replacer.accepts(todo));
         String resto = replacer.execute(todo, chunks);
         Assert.assertEquals(" ola resto", resto);

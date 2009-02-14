@@ -5,14 +5,14 @@ import br.com.caelum.tubaina.parser.Parser;
 
 public class RefChunk implements Chunk {
 
-	private String content;
+    private String content;
 
-	public RefChunk(String content) {
-		this.content = content;
-	}
+    public RefChunk(String content) {
+        this.content = content;
+    }
 
-	public String getContent(Parser p) {
-		return p.parseTodo(this.content);
-	}
+    public String getContent(Parser p) {
+        return p.parseRef(this.content);
+    }
 
 }
