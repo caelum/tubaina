@@ -60,7 +60,7 @@ public class LatexGenerator {
 		FileUtils.copyFileToDirectory(new File(templateDir, "latex/xcolor.sty"), directory);
 		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
-				return name.contains(".png");
+				return name.contains(".png") || name.contains(".bib");
 			}
 		});
 		for (File image : images) {
