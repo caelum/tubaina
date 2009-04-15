@@ -10,6 +10,13 @@
 	<property name="dist" location="${root}/dist" />
 
 	<property name="source" location="${dist}/src" />
+	
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
+	  <classpath>
+	    <pathelement location="lib/ant-contrib-0.6.jar"/>
+	  </classpath>
+	</taskdef>
+
 
 	<target name="mvn-init" description="Initializes maven dependency engine">
 		<path id="maven-ant-tasks.classpath" path="lib/maven-ant-tasks-2.0.9.jar" />
@@ -78,8 +85,34 @@
 
 		<property name="tubaina.classpath" refid="runClasspath" />
 	</target>
+	
+	<target name="nix-script" depends="classpath" description="Generate the script for running Tubaina on *nix">
+		<copy file="${src}/etc/tubaina" todir="${dist}/bin" />
 
-	<target name="dist" depends="classpath, package, copyTemplate" description="Generate the distribution">
+		<propertyregex property="tubaina.classpath.linux"
+			input="${tubaina.classpath}" 
+			regexp="[\\]"
+			replace="/"
+			global="true" />
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH"  replace="${tubaina.classpath.linux}">
+		</replaceregexp>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";(\S)" replace=":$TUB_REL_PATH/lib/\1">
+		</replaceregexp>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/lib/tubaina-${project.version}.jar:$TUB_REL_PATH/lib/">
+		</replaceregexp>
+		
+		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@TUB_HOME_MOD" replace="..">
+		</replaceregexp>
+		
+		<chmod perm="755" file="${dist}/bin/latex.sh">
+		</chmod>
+		<chmod perm="755" file="${dist}/bin/tubaina">
+		</chmod>
+	</target>
+
+	<target name="dist" depends="classpath, package, copyTemplate, nix-script" description="Generate the distribution">
 
 		<copy todir="${dist}/lib" file="${root}/target/tubaina-${project.version}.jar">
 		</copy>
@@ -104,27 +137,6 @@
 
 		<!--removing todo.log -->
 		<delete file="${dist}/todo.log" />
-
-		<!-- Generating *nix tubaina launcher script-->
-
-		<copy file="${src}/etc/tubaina" todir="${dist}/bin" />
-		
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH"  replace="${tubaina.classpath}">
-		</replaceregexp>
-
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";(\S)" replace=":$TUB_REL_PATH/lib/\1">
-		</replaceregexp>
-
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/lib/tubaina-${project.version}.jar:$TUB_REL_PATH/lib/">
-		</replaceregexp>
-		
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@TUB_HOME_MOD" replace="..">
-		</replaceregexp>
-
-		<chmod perm="755" file="${dist}/bin/latex.sh">
-		</chmod>
-		<chmod perm="755" file="${dist}/bin/tubaina">
-		</chmod>
 
 		<!-- Zipping all files -->
 		<zip destfile="${root}/temp/tubaina-${project.version}.zip" basedir="${dist}">
