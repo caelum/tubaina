@@ -7,6 +7,9 @@
 	<packaging>jar</packaging>
 	<name>Tubaina</name>
 	<description>A textbook generator with LaTeX and HTML output support</description>
+	<properties>
+	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties> 
 	<developers>
 		<developer>
 			<id>ceci_fernandes</id>

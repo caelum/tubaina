@@ -10,11 +10,11 @@
 	<property name="dist" location="${root}/dist" />
 
 	<property name="source" location="${dist}/src" />
-	
+
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
-	  <classpath>
-	    <pathelement location="lib/ant-contrib-0.6.jar"/>
-	  </classpath>
+		<classpath>
+			<pathelement location="lib/ant-contrib-0.6.jar" />
+		</classpath>
 	</taskdef>
 
 
@@ -23,7 +23,8 @@
 		<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant" classpathref="maven-ant-tasks.classpath" onerror="fail" />
 		<artifact:pom id="project" file="pom.xml" />
 		<echo>Loaded pom.xml</echo>
-		<echo></echo>
+		<echo>
+		</echo>
 	</target>
 
 	<target name="mvn-load" depends="mvn-init" description="Load the dependencies for the current project">
@@ -39,25 +40,25 @@
 		<mkdir dir="${target}" />
 		<mkdir dir="${root}/temp" />
 		<condition property="isWindows">
-			<os family="windows"/>
+			<os family="windows" />
 		</condition>
 	</target>
 
 	<target name="package-windows" depends="mvn-load" description="Compile and package the source code" if="isWindows">
 		<exec executable="cmd" failonerror="yes">
-			<arg value="/c"/>
-			<arg value="mvn.bat"/>
-			<arg value="package"/>
+			<arg value="/c" />
+			<arg value="mvn.bat" />
+			<arg value="package" />
 		</exec>
 	</target>
-	
+
 	<target name="package-others" depends="mvn-load" description="Compile and package the source code" unless="isWindows">
 		<exec executable="mvn" failonerror="yes">
 			<arg value="package" />
 		</exec>
 	</target>
-	
-	<target name="package" depends="init, package-windows, package-others"/>
+
+	<target name="package" depends="init, package-windows, package-others" />
 
 	<target name="copyDeps" depends="init, mvn-load" description="Copy the dependencies to the dist folder">
 		<copy todir="${dist}/lib">
@@ -73,8 +74,8 @@
 			</fileset>
 		</copy>
 	</target>
-	
-	<target name="classpath" depends="package, copyDeps" description="Sets properties related to classpath of execution">
+
+	<target name="classpath" depends="copyDeps" description="Sets properties related to classpath of execution">
 		<fileset id="runClasspath" dir="${dist}/lib">
 			<include name="**/*.jar" />
 		</fileset>
@@ -85,40 +86,67 @@
 
 		<property name="tubaina.classpath" refid="runClasspath" />
 	</target>
-	
+
 	<target name="nix-script" depends="classpath" description="Generate the script for running Tubaina on *nix">
 		<copy file="${src}/etc/tubaina" todir="${dist}/bin" />
+		<copy todir="${dist}/bin" file="${src}/etc/latex.sh" />
 
 		<propertyregex property="tubaina.classpath.linux"
-			input="${tubaina.classpath}" 
-			regexp="[\\]"
+			input="${tubaina.classpath}"
+			regexp="[\\/]"
 			replace="/"
 			global="true" />
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@CLASSPATH"  replace="${tubaina.classpath.linux}">
-		</replaceregexp>
+
+		<replace file="${dist}/bin/tubaina" token="@CLASSPATH" value="${tubaina.classpath.linux}">
+		</replace>
 
 		<replaceregexp flags="g" file="${dist}/bin/tubaina" match=";(\S)" replace=":$TUB_REL_PATH/lib/\1">
 		</replaceregexp>
 
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="-classpath " replace="-classpath $TUB_REL_PATH/lib/tubaina-${project.version}.jar:$TUB_REL_PATH/lib/">
-		</replaceregexp>
-		
-		<replaceregexp flags="g" file="${dist}/bin/tubaina" match="@TUB_HOME_MOD" replace="..">
-		</replaceregexp>
-		
+		<replace file="${dist}/bin/tubaina" token="-classpath " value="-classpath $TUB_REL_PATH/lib/tubaina-${project.version}.jar:$TUB_REL_PATH/lib/">
+		</replace>
+
+		<replace file="${dist}/bin/tubaina" token="@TUB_HOME_MOD" value="..">
+		</replace>
+
 		<chmod perm="755" file="${dist}/bin/latex.sh">
 		</chmod>
 		<chmod perm="755" file="${dist}/bin/tubaina">
 		</chmod>
 	</target>
 
-	<target name="dist" depends="classpath, package, copyTemplate, nix-script" description="Generate the distribution">
+	<target name="win-script" depends="classpath" description="Generate the script for running Tubaina on Windows">
+		<copy file="${src}/etc/tubaina.bat" todir="${dist}/bin" />
+		<copy todir="${dist}/bin" file="${src}/etc/latex.bat" />
+
+		<propertyregex property="tubaina.classpath.windows"
+			input="${tubaina.classpath}"
+			regexp="[\\/]"
+			replace="\\\\"
+			global="true" />
+		
+		<replace file="${dist}/bin/tubaina.bat" token="@CLASSPATH" value="${tubaina.classpath.windows}">
+		</replace>
+
+		<replaceregexp flags="g" file="${dist}/bin/tubaina.bat" match=";(\S)" replace=";%TUB_REL_PATH%\\\\lib\\$1">
+		</replaceregexp>
+
+		<replace file="${dist}/bin/tubaina.bat" token="-classpath " value="-classpath %TUB_REL_PATH%\lib\tubaina-${project.version}.jar;%TUB_REL_PATH%\lib\">
+		</replace>
+
+		<replace file="${dist}/bin/tubaina.bat" token="@TUB_HOME_MOD" value="..">
+		</replace>
+
+		<chmod perm="755" file="${dist}/bin/latex.bat">
+		</chmod>
+		<chmod perm="755" file="${dist}/bin/tubaina.bat">
+		</chmod>
+	</target>
+
+	<target name="dist" depends="classpath, package, copyTemplate, nix-script, win-script" description="Generate the distribution">
 
 		<copy todir="${dist}/lib" file="${root}/target/tubaina-${project.version}.jar">
 		</copy>
-
-		<!-- TODO property -->
-		<copy todir="${dist}/bin" file="${src}/etc/latex.sh" />
 
 		<copy todir="${dist}" file="${src}/etc/LICENSE.txt" />
 
