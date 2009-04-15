@@ -57,10 +57,9 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 					if (scale != null) {
 						Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (double) scale/100);
 						srcImage = destinationFile;
-						stream.close();
-						stream = new FileImageOutputStream(destinationFile);
 					}
 					Utilities.getImageWithLogo(srcImage, stream, Utilities.getFormatName(srcImage), logo);
+					stream.close();
 				} catch (IOException e) {
 					LOG.warn("Error while copying " + srcImage.getPath() + ":\n" +
 							"\t\t" + e.getMessage());

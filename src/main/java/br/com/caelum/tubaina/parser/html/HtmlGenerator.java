@@ -119,6 +119,7 @@ public class HtmlGenerator {
 		File file = new File(directory, "index.html");
 		PrintStream ps = new PrintStream(file, "UTF-8");
 		ps.print(sb.toString());
+		ps.close();
 		return directory;
 	}
 

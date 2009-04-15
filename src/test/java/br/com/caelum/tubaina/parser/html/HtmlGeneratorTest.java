@@ -55,7 +55,6 @@ public class HtmlGeneratorTest {
 
 	@After
 	public void deleteTempFiles() throws IOException {
-		// FIXME Falhando no Windows
 		FileUtils.deleteDirectory(temp);
 	}
 
