@@ -16,6 +16,7 @@
 		<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="urn:maven-artifact-ant" classpathref="maven-ant-tasks.classpath" onerror="fail" />
 		<artifact:pom id="project" file="pom.xml" />
 		<echo>Loaded pom.xml</echo>
+		<echo></echo>
 	</target>
 
 	<target name="mvn-load" depends="mvn-init" description="Load the dependencies for the current project">
@@ -30,13 +31,26 @@
 		<mkdir dir="${source}" />
 		<mkdir dir="${target}" />
 		<mkdir dir="${root}/temp" />
+		<condition property="isWindows">
+			<os family="windows"/>
+		</condition>
 	</target>
 
-	<target name="package" depends="mvn-load" description="Compile and package the source code">
+	<target name="package-windows" depends="mvn-load" description="Compile and package the source code" if="isWindows">
+		<exec executable="cmd" failonerror="yes">
+			<arg value="/c"/>
+			<arg value="mvn.bat"/>
+			<arg value="package"/>
+		</exec>
+	</target>
+	
+	<target name="package-others" depends="mvn-load" description="Compile and package the source code" unless="isWindows">
 		<exec executable="mvn" failonerror="yes">
 			<arg value="package" />
 		</exec>
 	</target>
+	
+	<target name="package" depends="init, package-windows, package-others"/>
 
 	<target name="copyDeps" depends="init, mvn-load" description="Copy the dependencies to the dist folder">
 		<copy todir="${dist}/lib">
