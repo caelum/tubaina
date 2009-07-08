@@ -129,8 +129,4 @@ public class LatexParser implements Parser {
                 options);
         return VSPACE + result + VSPACE;
     }
-
-    public String parseRef(String text) {
-        return new RefTag().parse(text, null);
-    }
 }

@@ -125,7 +125,4 @@ public class HtmlParser implements Parser {
         return new RubyTag(new SimpleIndentator()).parse(content, options);
     }
 
-    public String parseRef(String text) {
-        return new RefTag().parse(text, null);
-    }
 }
