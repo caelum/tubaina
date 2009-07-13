@@ -38,7 +38,7 @@ public class JavaTag implements Tag {
 		string = Java2Html.convertToHtml(string, settings);
 		string = new CodeHighlightTag().parseLatex(string.trim(), highlights, 7);
 		string = escapeDecrement(string);
-		return "{\\small\n"+string+"}";
+		return "{\\vspace{1em}\n\\small\n"+string+"}";
 	}
 
 	private String escapeDecrement(String string) {
