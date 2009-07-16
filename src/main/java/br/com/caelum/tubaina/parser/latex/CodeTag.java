@@ -12,9 +12,9 @@ public class CodeTag implements Tag {
 
 	private final Indentator indentator;
 
-	public static final String BEGIN = "{\n" + "\\small \\noindent \\ttfamily \n";
+	public static final String BEGIN = "{\\vspace{1em}{\n" + "\\small \\noindent \\ttfamily \n";
 
-	public static final String END = "\n}\n";
+	public static final String END = "\n}}\n\\newline\n";
 
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
