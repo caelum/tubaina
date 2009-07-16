@@ -12,7 +12,7 @@ public class ImageTag implements Tag {
 	double pageWidth = 175;
 
 	public String parse(final String path, final String options) {
-		String output = "\\begin{center}\n\n";
+		String output = "\\begin{figure}\n\\centering\n";
 
 		output = output + "\\includegraphics";
 
@@ -42,10 +42,10 @@ public class ImageTag implements Tag {
 		output = output + "{" + imgsrc + "}\n";
 
 		if (dMatcher.find()) {
-			output = output + "\\newline\n\n\\small{Fig.: " + dMatcher.group(1) + "}\n\n";
+			output = output + "\n\n\\caption{" + dMatcher.group(1) + "}\n\n";
 		}
 
-		output = output + "\\end{center}\n\n";
+		output = output + "\\end{figure}\n\n";
 
 		return output;
 	}
