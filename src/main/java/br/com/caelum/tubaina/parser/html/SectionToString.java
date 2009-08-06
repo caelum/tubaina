@@ -40,5 +40,21 @@ public class SectionToString {
 
 		return new FreemarkerProcessor(cfg).process(map, "html/section.ftl");
 	}
+	
+	public StringBuffer generateFlatSection(final Book b, final String chapterTitle, final int chapterIndex,
+			final Section s, final int sectionIndex, final int currentDir) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("book", b);
+		map.put("title", chapterTitle);
+		map.put("section", s);
+		map.put("curchap", chapterIndex);
+		map.put("cursec", sectionIndex);
+		map.put("parser", parser);
+		map.put("dirTree", dirTree);
+		map.put("curdir", currentDir);
+		map.put("sanitizer", new HtmlSanitizer());
+
+		return new FreemarkerProcessor(cfg).process(map, "html/section-flat.ftl");
+	}
 
 }

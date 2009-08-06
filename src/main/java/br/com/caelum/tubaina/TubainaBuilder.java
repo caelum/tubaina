@@ -19,6 +19,7 @@ import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.HtmlGenerator;
 import br.com.caelum.tubaina.parser.html.HtmlParser;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
@@ -117,7 +118,7 @@ public class TubainaBuilder {
 		if (parseType.equals(ParseTypes.HTMLFLAT)) {
 			HtmlParser htmlParser = new HtmlParser(conf.read(
 					"/regex.properties", "/html.properties"), noAnswer);
-			HtmlGenerator generator = new HtmlGenerator(htmlParser,
+			FlatHtmlGenerator generator = new FlatHtmlGenerator(htmlParser,
 					strictXhtml, templateDir);
 			File file = new File(outputDir, "htmlflat");
 			FileUtils.forceMkdir(file);
