@@ -73,5 +73,35 @@ public class ChapterToStringTest {
 		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">2<"));
 	}
+	
+	@Test
+	public void testGenerateFlatChapterWithSections() {
+		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
+				+ "\n[section segunda] conteudo da segunda");
+
+		String head = chapterToString.generateFlatChapterHead(new BookBuilder("").build(), c, 1, 1).toString();
+		String tail = chapterToString.generateFlatChapterTail(new BookBuilder("").build(), c, 1, 1).toString();
+		String string = head + tail;
+
+		// System.out.println(string);
+
+		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
+		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira/\""));
+		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda/\""));
+		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
+	}
+
+	// TODO Este teste não faz mais sentido algum. Modificar.
+	@Test
+	public void testGenerateFlatChapterWithIntroduction() {
+		Chapter c = createChapter("conteudo da secao vazia", "");
+		String head = chapterToString.generateFlatChapterHead(new BookBuilder("").build(), c, 1, 1).toString();
+		String tail = chapterToString.generateFlatChapterTail(new BookBuilder("").build(), c, 1, 1).toString();
+		String string = head + tail;
+
+		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
+		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
+	}
+
 
 }
