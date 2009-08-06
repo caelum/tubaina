@@ -12,6 +12,8 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.Tubaina;
+import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
@@ -124,27 +126,12 @@ public class BookBuilderTest {
 		Assert.assertEquals("texto da segunda seção", sections.get(1).getChunks().get(0).getContent(parser));
 	}
 
-	@Test
-	public void testMultiChapters() {
-		List<Chapter> chapters = getChapters("[chapter     O que é java?   ]\n" + "texto da introdução\n"
+	@Test(expected=TubainaException.class)
+	public void testMultiChaptersMustThrowAnException() {
+		getChapters("[chapter     O que é java?   ]\n" + "texto da introdução\n"
 				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
 				+ "texto da segunda seção\n\n" + "[chapter Introdução]\n" + "Algum texto de introdução\n");
 
-		Assert.assertEquals(2, chapters.size());
-		List<Section> sections1 = chapters.get(0).getSections();
-
-		Assert.assertEquals("O que é java?", chapters.get(0).getTitle());
-		Assert.assertEquals(2, sections1.size());
-
-		Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction(parser));
-
-		Assert.assertEquals("Primeira seção", sections1.get(0).getTitle());
-		Assert.assertEquals("texto da prim seção", sections1.get(0).getChunks().get(0).getContent(parser));
-
-		Assert.assertEquals("Segunda seção", sections1.get(1).getTitle());
-		Assert.assertEquals("texto da segunda seção", sections1.get(1).getChunks().get(0).getContent(parser));
-
-		Assert.assertEquals("Algum texto de introdução", chapters.get(1).getIntroduction(parser));
 	}
 
 	private List<Chapter> getChapters(final String string) {
