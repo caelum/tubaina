@@ -144,7 +144,7 @@ public class FlatHtmlGenerator {
 		for (Chapter c : b.getChapters()) {
 			File chapdir = new File(directory, Utilities.toDirectoryName(null, c.getTitle()));
 
-			File resources = new File(chapdir, "resources/");
+			File resources = new File(chapdir, "../resources/");
 			resources.mkdir();
 
 			File logo = new File(templateDir, "html/logo.png");

@@ -107,7 +107,7 @@ public class FlatHtmlGeneratorTest {
 
 		// System.out.println(new File(temp, "com-imagens/").list()[2]);
 
-		File images = new File(temp, "com-imagens/qualquer-um/resources/");
+		File images = new File(temp, "com-imagens/resources/");
 		Assert.assertTrue(images.exists());
 
 		Assert.assertEquals(1, images.list().length);
