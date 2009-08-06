@@ -2,7 +2,7 @@ package br.com.caelum.tubaina;
 
 public enum ParseTypes {
 	
-	HTML("html"), LATEX("latex");
+	HTML("html"), LATEX("latex"), HTMLFLAT("htmlflat");
 
 	private final String type;
 

@@ -42,11 +42,13 @@ public class Tubaina {
 
 		if (cmd.hasOption("html")) {
 			type = ParseTypes.HTML;
+		} else if (cmd.hasOption("htmlflat")) {
+			type = ParseTypes.HTMLFLAT;
 		} else if (cmd.hasOption("latex")) {
 			type = ParseTypes.LATEX;
 		} else {
 			throw new TubainaException(
-					"Argumento --html ou --latex é obrigatório");
+					"Argumento --html, --htmlflat ou --latex é obrigatório");
 		}
 		TubainaBuilder builder = new TubainaBuilder(type, cmd
 				.getOptionValue('n'));
@@ -102,6 +104,8 @@ public class Tubaina {
 				"generates an latex output on given outputdir");
 		options.addOption("html", "html", false,
 				"generates an html output on given outputdir");
+		options.addOption("htmlflat", "htmlflat", false,
+		"generates an flat html output on given outputdir");
 
 		options.addOption("h", "help", false, "print this message");
 		// inputdir
@@ -151,7 +155,7 @@ public class Tubaina {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter
 				.printHelp(
-						"tubaina [-html|-latex] -i <inputdir> -o <outputdir> -n <bookname>",
+						"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname>",
 						options);
 	}
 

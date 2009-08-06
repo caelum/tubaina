@@ -114,6 +114,21 @@ public class TubainaBuilder {
 			}
 		}
 
+		if (parseType.equals(ParseTypes.HTMLFLAT)) {
+			HtmlParser htmlParser = new HtmlParser(conf.read(
+					"/regex.properties", "/html.properties"), noAnswer);
+			HtmlGenerator generator = new HtmlGenerator(htmlParser,
+					strictXhtml, templateDir);
+			File file = new File(outputDir, "htmlflat");
+			FileUtils.forceMkdir(file);
+			try {
+				generator.generate(b, file);
+			} catch (TubainaException e) {
+				LOG.warn(e.getMessage());
+			}
+		}
+
+		
 	}
 
 	static List<Reader> getAfcsFrom(final File file)
