@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.TubainaException;
 
 public class BookBuilder {
 
@@ -75,6 +76,11 @@ public class BookBuilder {
 			Chapter chapter = new ChapterBuilder(title, introduction, content).build();
 			chapters.add(chapter);
 			
+		}
+		
+		//TODO : Refactoring
+		if(chapters.size() > 1) {
+			throw new TubainaException("Only one [chapter] element is allowed per file.");
 		}
 		
 		return chapters;
