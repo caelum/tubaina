@@ -36,7 +36,7 @@ public class BookToTOCTest {
 
 	@Test
 	public void testGenerateBookWithoutSections() {
-		Book b = createBook("[chapter primeiro] um conteúdo \n[chapter segundo] outro conteúdo");
+		Book b = createBook("[chapter primeiro] um conteúdo");
 		BookToTOC generator = new BookToTOC();
 		List<String> dirTree = new ArrayList<String>();
 		dirTree.add("livro");
@@ -47,9 +47,8 @@ public class BookToTOCTest {
 
 		// System.out.println(toc);
 		Assert.assertEquals(0, countOccurrences(toc, sectionIdentifier));
-		Assert.assertEquals(3, countOccurrences(toc, chapterIdentifier));
+		Assert.assertEquals(2, countOccurrences(toc, chapterIdentifier));
 		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-primeiro/\""));
-		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/02-segundo/\""));
 	}
 
 	@Test
