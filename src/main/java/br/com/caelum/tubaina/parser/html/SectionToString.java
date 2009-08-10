@@ -53,6 +53,7 @@ public class SectionToString {
 		map.put("dirTree", dirTree);
 		map.put("curdir", currentDir);
 		map.put("sanitizer", new HtmlSanitizer());
+		map.put("anchorlink", dirTree.get(currentDir).split("#")[1]);
 
 		return new FreemarkerProcessor(cfg).process(map, "html/section-flat.ftl");
 	}

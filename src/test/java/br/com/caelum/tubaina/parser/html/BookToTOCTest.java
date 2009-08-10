@@ -48,7 +48,7 @@ public class BookToTOCTest {
 		// System.out.println(toc);
 		Assert.assertEquals(0, countOccurrences(toc, sectionIdentifier));
 		Assert.assertEquals(2, countOccurrences(toc, chapterIdentifier));
-		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-primeiro/\""));
+		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-primeiro\""));
 	}
 
 	@Test
@@ -67,9 +67,9 @@ public class BookToTOCTest {
 
 		Assert.assertEquals(2, countOccurrences(toc, sectionIdentifier));
 		Assert.assertEquals(2, countOccurrences(toc, chapterIdentifier));
-		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/\""));
-		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/01-uma/\""));
-		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/02-duas/\""));
+		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico\""));
+		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/01-uma\""));
+		Assert.assertEquals(1, countOccurrences(toc, "href=\"../livro/01-unico/02-duas\""));
 	}
 
 	private Book createBook(final String bookText) {

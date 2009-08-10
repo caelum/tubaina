@@ -18,7 +18,7 @@
 			<#list chapters as chapter>
 				<#assign chapdir = dirTree[curdir]>
 				<#assign curdir = curdir + 1>
-				<h2 class="indexChapter"><a href="../${chapdir}/">Chapter ${chapter_index + 1} - ${chapter.title}</a></h2>
+				<h2 class="indexChapter"><a href="../${chapdir}">Chapter ${chapter_index + 1} - ${chapter.title}</a></h2>
 				
 				<#assign sectionIndex = 1>
 				<#list chapter.sections as section>
@@ -26,7 +26,7 @@
 					<#if title != "">
 						<#assign secdir = dirTree[curdir]>
 						<#assign curdir = curdir + 1>
-						<h3 class="indexSection"><a href="../${secdir}/">${chapter_index + 1}.${sectionIndex} - ${title}</a></h3>
+						<h3 class="indexSection"><a href="../${secdir}">${chapter_index + 1}.${sectionIndex} - ${title}</a></h3>
 						<#assign sectionIndex = sectionIndex + 1>
 					</#if>
 				</#list>

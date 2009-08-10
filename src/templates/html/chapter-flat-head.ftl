@@ -22,7 +22,7 @@
 					<#assign title = section.title!"" >
 					<#if title != "">
 						<#assign secdir = dirTree[curdir + section_index + 1]>
-						<h3 class="indexSection"><a href="../../${secdir}/">${curchap}.${section_index + 1} - ${title}</a></h3>
+						<h3 class="indexSection"><a href="../../${secdir}">${curchap}.${section_index + 1} - ${title}</a></h3>
 					</#if>
 				</#list>
 	
