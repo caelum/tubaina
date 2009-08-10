@@ -23,7 +23,8 @@ public class CodeHighlightTag {
 		return parseLatex(text, highlights, 1);
 	}
 	public String parseLatex(String text, List<Integer> highlights, int start) {
-		return parse(text, highlights, start, "\\colorbox{yellow}{", "}\\\\");
+		return parse(text, highlights, start, "\\colorbox{yellow}{" +
+				"\\renewcommand{\\verb}[1]{#1}", "}\\\\");
 	}
 	public String parse(String text, List<Integer> highlights, int start, String openTag, String closeTag) {
 		if (highlights == null) {
