@@ -19,9 +19,9 @@ public class CodeHighlightTagTest {
 			"Terceira linha\n" +
 			"Quarta linha";
 		String output = new CodeHighlightTag().parseLatex(string, Arrays.asList(1, 3));
-		Assert.assertEquals("\\colorbox{yellow}{Primeira linha}\\\n" +
+		Assert.assertEquals("\\colorbox{yellow}{Primeira linha}\\\\\n" +
 				"Segunda linha\n" +
-				"\\colorbox{yellow}{Terceira linha}\\\n" +
+				"\\colorbox{yellow}{Terceira linha}\\\\\n" +
 				"Quarta linha", output);
 	}
 	
