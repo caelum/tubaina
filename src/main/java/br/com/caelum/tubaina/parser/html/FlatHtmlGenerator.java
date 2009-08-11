@@ -103,7 +103,7 @@ public class FlatHtmlGenerator {
 
 			for (Section s : c.getSections()) {
 				if (s.getTitle() != null) {
-					String secDir = chapDir + "#" + Utilities.toDirectoryName(null, s.getTitle());
+					String secDir = chapDir + "/#" + Utilities.toDirectoryName(null, s.getTitle());
 					int equals = 1;
 					while (dirTree.contains(secDir)) {
 						secDir = secDir.replaceFirst("-" + equals + "$", "");
