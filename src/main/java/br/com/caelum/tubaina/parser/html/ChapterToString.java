@@ -53,12 +53,11 @@ public class ChapterToString {
 		map.put("dirTree", dirTree);
 		map.put("sanitizer", new HtmlSanitizer());
 		map.put("previous", dirTree.get(currentDir - 1));
-		if (currentDir+1 < dirTree.size()) {
-			map.put("next", dirTree.get(currentDir + 1));	
+		if (currentDir + c.getSections().size() + 1 < dirTree.size()) {
+			map.put("next", dirTree.get(currentDir + c.getSections().size() + 1));	
 		} else {
 			map.put("next", "");
 		}
-
 
 		return new FreemarkerProcessor(cfg).process(map, "html/chapter-flat-head.ftl");
 	}
@@ -73,12 +72,11 @@ public class ChapterToString {
 		map.put("dirTree", dirTree);
 		map.put("sanitizer", new HtmlSanitizer());
 		map.put("previous", dirTree.get(currentDir - 1));
-		if (currentDir+1 < dirTree.size()) {
-			map.put("next", dirTree.get(currentDir + 1));	
+		if (currentDir + c.getSections().size() + 1 < dirTree.size()) {
+			map.put("next", dirTree.get(currentDir + c.getSections().size() + 1));	
 		} else {
 			map.put("next", "");
 		}
-
 
 		return new FreemarkerProcessor(cfg).process(map, "html/chapter-flat-tail.ftl");
 	}

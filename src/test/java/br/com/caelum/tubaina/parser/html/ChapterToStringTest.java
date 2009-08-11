@@ -82,7 +82,7 @@ public class ChapterToStringTest {
 		String string = head + tail;
 
 		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
-		Assert.assertEquals(3, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira\""));
+		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira\""));
 		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda\""));
 		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
 	}
