@@ -37,6 +37,13 @@ public class SectionToString {
 		map.put("dirTree", dirTree);
 		map.put("curdir", currentDir);
 		map.put("sanitizer", new HtmlSanitizer());
+		map.put("previous", dirTree.get(currentDir - 1));
+		if (currentDir+1 < dirTree.size()) {
+			map.put("next", dirTree.get(currentDir + 1));	
+		} else {
+			map.put("next", "");
+		}
+		
 
 		return new FreemarkerProcessor(cfg).process(map, "html/section.ftl");
 	}
