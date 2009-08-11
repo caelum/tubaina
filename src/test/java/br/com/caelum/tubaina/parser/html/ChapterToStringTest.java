@@ -56,8 +56,6 @@ public class ChapterToStringTest {
 
 		String string = chapterToString.generateChapter(new BookBuilder("").build(), c, 1, 1).toString();
 
-		// System.out.println(string);
-
 		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira/\""));
 		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda/\""));
@@ -82,8 +80,6 @@ public class ChapterToStringTest {
 		String head = chapterToString.generateFlatChapterHead(new BookBuilder("").build(), c, 1, 1).toString();
 		String tail = chapterToString.generateFlatChapterTail(new BookBuilder("").build(), c, 1, 1).toString();
 		String string = head + tail;
-
-		// System.out.println(string);
 
 		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(3, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira\""));

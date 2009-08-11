@@ -50,7 +50,6 @@ public class SectionToStringTest {
 		Section section = createSection("este é o texto da seção");
 		String string = sectionToString.generateSection(new BookBuilder("").build(), "capitulo", 7, section, 4, 2)
 				.toString();
-		System.out.println(string);
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
 		Assert.assertEquals(1, countOccurrences(string, "este &eacute; o texto da se&ccedil;&atilde;o"));
@@ -61,7 +60,6 @@ public class SectionToStringTest {
 		Section section = createSection("este é o texto da seção");
 		String string = sectionToString.generateSection(new BookBuilder("").build(), "capitulo", 7, section, 4, 2)
 				.toString();
-		System.out.println(string);
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
 		Assert.assertEquals(1, countOccurrences(string, "este &eacute; o texto da se&ccedil;&atilde;o"));
