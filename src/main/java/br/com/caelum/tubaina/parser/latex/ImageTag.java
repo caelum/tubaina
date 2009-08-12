@@ -12,7 +12,7 @@ public class ImageTag implements Tag {
 	double pageWidth = 175;
 
 	public String parse(final String path, final String options) {
-		String output = "\\begin{figure}\n\\centering\n";
+		String output = "\\begin{figure}[H]\n\\centering\n";
 
 		output = output + "\\includegraphics";
 

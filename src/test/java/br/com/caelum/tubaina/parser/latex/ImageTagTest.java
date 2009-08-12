@@ -13,7 +13,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=30 \"Imagem de alguma coisa\"");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=52.5mm]{imagem.png}\n" +
 				"\n\n\\caption{Imagem de alguma coisa}\n\n" +
 				"\\end{figure}\n\n", result);
@@ -24,7 +24,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "\"Imagem de alguma coisa\"");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=\\textwidth]{imagem.png}\n" +
 				"\n\n\\caption{Imagem de alguma coisa}\n\n" +
 				"\\end{figure}\n\n", result);
@@ -35,7 +35,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=42");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
@@ -45,7 +45,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=40%");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=70.0mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
@@ -55,7 +55,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=40");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=70.0mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
@@ -65,7 +65,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=42");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
@@ -75,7 +75,7 @@ public class ImageTagTest {
 		Tag tag = new ImageTag();
 		String result = tag.parse("some/path/imagem.png", "w=42");
 		Assert.assertEquals(
-				"\\begin{figure}\n\\centering\n" +
+				"\\begin{figure}[H]\n\\centering\n" +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
