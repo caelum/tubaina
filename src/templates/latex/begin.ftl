@@ -9,6 +9,7 @@
 \usepackage[brazil]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{float}
 \usepackage[scaled]{helvet}
 \renewcommand*\familydefault{\sfdefault}
 \usepackage{indentfirst}
