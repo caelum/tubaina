@@ -6,4 +6,5 @@ Tubaina is a textbook generator which receives a simple markup language syntax a
 
 == Changelog
 
+* Aug 17, 2009 New output format --htmlflat (HTML output with one page per chapter).
 * Aug 6, 2009 Support for more than one chapter per afc file has been dropped. Please split your chapters in multiple files.
