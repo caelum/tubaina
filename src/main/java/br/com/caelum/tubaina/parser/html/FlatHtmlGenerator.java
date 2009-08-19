@@ -110,8 +110,6 @@ public class FlatHtmlGenerator {
 						secDir += "-" + ++equals;
 						LOG.warn("Double section name in the same chapter: " + s.getTitle());
 					}
-					File section = new File(parent, secDir);
-					//section.mkdir();
 					dirTree.add(secDir);
 				}
 			}
