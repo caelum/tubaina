@@ -26,5 +26,14 @@ public class IndexToString {
 		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "html/index.ftl");
 	}
+	
+	public StringBuffer createFlatIndex(final Map<String, Integer> indexes) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dirTree", dirTree);
+		map.put("indexes", indexes);
+		map.put("sanitizer", new HtmlSanitizer());
+		return new FreemarkerProcessor(cfg).process(map, "html/index-flat.ftl");
+	}
+
 
 }

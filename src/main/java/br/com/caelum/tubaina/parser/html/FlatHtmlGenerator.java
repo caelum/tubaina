@@ -159,7 +159,7 @@ public class FlatHtmlGenerator {
 		}
 
 		// Creating index
-		StringBuffer sb = new IndexToString(dirTree, cfg).createIndex(indexes);
+		StringBuffer sb = new IndexToString(dirTree, cfg).createFlatIndex(indexes);
 		File file = new File(directory, "index/");
 		file.mkdir();
 		saveToFile(file, sb);
