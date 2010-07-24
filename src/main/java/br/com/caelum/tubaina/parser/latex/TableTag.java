@@ -19,16 +19,16 @@ public class TableTag implements Tag {
 		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
 		if (!noborder)
 			tag += "\\rowcolors[]{1}{gray!30}{gray!15}\n";
-		tag += "\\begin{tabular}{";
+		tag += "\\begin{tabularx}{";
 		for (int i = 0; i < columns; i++)
-			tag += "l";
+			tag += "X";
 		tag += "}\n";
 		if (!noborder)
 			tag += "\\hline\n";
 		tag += text;
 		if (!noborder)
 			tag += "\n\\hline";
-		tag += "\n\\end{tabular}\n\\end{center}\n\\end{table}";
+		tag += "\n\\end{tabularx}\n\\end{center}\n\\end{table}";
 		return tag;
 	}
 

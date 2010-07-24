@@ -17,11 +17,11 @@ public class TableTagTest {
 				"\\caption{}\n" +
 				"\\begin{center}\n" +
 				"\\rowcolors[]{1}{gray!30}{gray!15}\n" +
-				"\\begin{tabular}{ll}\n" +
+				"\\begin{tabularx}{XX}\n" +
 				"\\hline\n" +
 				"texto da tabela\n" +
 				"\\hline\n" +
-				"\\end{tabular}\n\\end{center}\n\\end{table}", result);
+				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
 	}
 
 	@Test
@@ -33,11 +33,11 @@ public class TableTagTest {
 				"\\caption{titulo}\n" +
 				"\\begin{center}\n" +
 				"\\rowcolors[]{1}{gray!30}{gray!15}\n" +
-				"\\begin{tabular}{ll}\n" +
+				"\\begin{tabularx}{XX}\n" +
 				"\\hline\n" +
 				"texto da tabela\n" +
 				"\\hline\n" +
-				"\\end{tabular}\n\\end{center}\n\\end{table}", result);
+				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
 	}
 
 	@Test
@@ -48,9 +48,9 @@ public class TableTagTest {
 				"\\begin{table}[!h]\n" +
 				"\\caption{}\n" +
 				"\\begin{center}\n" +
-				"\\begin{tabular}{ll}\n" +
+				"\\begin{tabularx}{XX}\n" +
 				"texto da tabela\n" +
-				"\\end{tabular}\n\\end{center}\n\\end{table}", result);
+				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
 	}
 
 	@Test
@@ -61,9 +61,9 @@ public class TableTagTest {
 				"\\begin{table}[!h]\n" +
 				"\\caption{titulo}\n" +
 				"\\begin{center}\n" +
-				"\\begin{tabular}{ll}\n" +
+				"\\begin{tabularx}{XX}\n" +
 				"texto da tabela\n" +
-				"\\end{tabular}\n\\end{center}\n\\end{table}", result);
+				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
 	}
 
 	@Test
