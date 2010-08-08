@@ -8,3 +8,6 @@ basePngDone.png
 basePngResized.png
 todo.log
 temp/
+build
+.gradle
+
