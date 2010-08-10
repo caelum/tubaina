@@ -4,7 +4,7 @@ apply plugin: 'eclipse'
 version = '1.7-SNAPSHOT'
 
 compileJava {
-    println options.encoding
+    println options
     options.encoding='UTF-8'
 }
 
