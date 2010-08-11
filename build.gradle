@@ -19,6 +19,17 @@ task copyToLib(type: Copy, dependsOn: jar) {
     from configurations.runtime
 }
 
+task zip(type: Zip, dependsOn: copyToLib) {
+     println "Archive Name: " + getArchiveName()
+     println "Base Name: " + getBaseName()
+
+    from("$buildDir/libs") {
+        into "$buildDir"
+        fileMode = 0755
+        include "**/*.jar"
+    }
+}
+
 repositories {
 	mavenCentral()
 	mavenRepo urls: 'https://repository.jboss.org/nexus/content/groups/public/'
