@@ -12,6 +12,16 @@ compileTestJava {
     options.encoding='UTF-8'
 }
 
+zip {
+    from fileTree('$buildDir/output/lib')
+}
+
+task copyToLib(type: Copy) {
+    into "$buildDir/output/lib"
+    from configurations.default
+    from configurations.default.allArtifactFiles
+}
+
 repositories {
 	mavenCentral()
 	mavenRepo urls: 'https://repository.jboss.org/nexus/content/groups/public/'
