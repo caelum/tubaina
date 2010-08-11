@@ -2,6 +2,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 version = '1.7-SNAPSHOT'
+manifest.mainAttributes("Main-Class" : "br.com.caelum.tubaina.Tubaina")
+
 
 compileJava {
     println options
@@ -12,14 +14,9 @@ compileTestJava {
     options.encoding='UTF-8'
 }
 
-zip {
-    from fileTree('$buildDir/output/lib')
-}
-
-task copyToLib(type: Copy) {
-    into "$buildDir/output/lib"
-    from configurations.default
-    from configurations.default.allArtifactFiles
+task copyToLib(type: Copy, dependsOn: compileTestJava) {
+    into "$buildDir/libs"
+    from configurations.runtime
 }
 
 repositories {
