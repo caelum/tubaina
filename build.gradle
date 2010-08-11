@@ -2,8 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 
 version = '1.7-SNAPSHOT'
-manifest.mainAttributes("Main-Class" : "br.com.caelum.tubaina.Tubaina")
-
+manifest.mainAttributes("Main-Class": "br.com.caelum.tubaina.Tubaina")
 
 compileJava {
     println options
