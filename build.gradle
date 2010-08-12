@@ -14,12 +14,17 @@ compileTestJava {
     options.encoding='UTF-8'
 }
 
-task copyToLib(type: Copy, dependsOn: jar) {
+task copyJars (type: Copy, dependsOn: jar) {
     into "$buildDir/libs"
-    from configurations.runtime
+    from "lib/"
 }
 
-task zip(type: Zip, dependsOn: copyToLib) {
+task copyOthers (type: Copy, dependsOn: copyJars) {
+    into "$buildDir/libs/bin"
+    from "src/etc/"
+}
+
+task zip(type: Zip, dependsOn: copyOthers) {
      println "Archive Name: " + getArchiveName()
      println "Base Name: " + getBaseName()
 
