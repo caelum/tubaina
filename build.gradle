@@ -16,6 +16,7 @@ compileTestJava {
 
 task copyJars (type: Copy, dependsOn: jar) {
     into "$buildDir/libs"
+    from configurations.runtime
     from "lib/"
 }
 
