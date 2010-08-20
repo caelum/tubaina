@@ -14,7 +14,7 @@ compileTestJava {
     options.encoding='UTF-8'
 }
 
-task zip(type: Zip, dependsOn: jar) {
+task zip(type: Zip) {
      from "$buildDir/libs"
      into('libs') {
      	 from configurations.runtime
