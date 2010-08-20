@@ -3,10 +3,10 @@ apply plugin: 'eclipse'
 
 version = '1.7-SNAPSHOT'
 manifest.mainAttributes("Main-Class": "br.com.caelum.tubaina.Tubaina",
-			"Class-Path": "ant-contrib-0.6.jar commons-cli-1.1.jar commons-io-1.3.1.jar freemarker-2.3.10.jar jai_codec.jar jai_core.jar jai_imageio.jar java2html-5.0.jar log4j-1.2.12.jar maven-ant-tasks-2.1.1.jar Tidy.jar ")
+			"Class-Path": "libs/ant-contrib-0.6.jar libs/commons-cli-1.1.jar libs/commons-io-1.3.1.jar libs/freemarker-2.3.10.jar libs/jai_codec.jar libs/jai_core.jar libs/jai_imageio.jar libs/java2html-5.0.jar libs/log4j-1.2.12.jar libs/maven-ant-tasks-2.1.1.jar libs/Tidy.jar libs/xcolor.zip")
+
 
 compileJava {
-    println options
     options.encoding='UTF-8'
 }
 
@@ -14,26 +14,14 @@ compileTestJava {
     options.encoding='UTF-8'
 }
 
-task copyJars (type: Copy, dependsOn: jar) {
-    into "$buildDir/libs"
-    from configurations.runtime
-    from "lib/"
-}
-
-task copyOthers (type: Copy, dependsOn: copyJars) {
-    into "$buildDir/libs/bin"
-    from "src/etc/"
-}
-
-task zip(type: Zip, dependsOn: copyOthers) {
-     println "Archive Name: " + getArchiveName()
-     println "Base Name: " + getBaseName()
-
-    from("$buildDir/libs") {
-        into "$buildDir"
-        fileMode = 0755
-        include "**/*.jar"
-    }
+task zip(type: Zip, dependsOn: jar) {
+     from "$buildDir/libs"
+     into('libs') {
+     	 from configurations.runtime
+     }
+     into('etc') {
+         from "src/etc/"
+     }
 }
 
 repositories {
