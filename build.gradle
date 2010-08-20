@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 
 version = '1.7-SNAPSHOT'
 manifest.mainAttributes("Main-Class": "br.com.caelum.tubaina.Tubaina",
-			"Class-Path": "libs/ant-contrib-0.6.jar libs/commons-cli-1.1.jar libs/commons-io-1.3.1.jar libs/freemarker-2.3.10.jar libs/jai_codec.jar libs/jai_core.jar libs/jai_imageio.jar libs/java2html-5.0.jar libs/log4j-1.2.12.jar libs/maven-ant-tasks-2.1.1.jar libs/Tidy.jar libs/xcolor.zip")
+			"Class-Path": "libs/commons-cli-1.1.jar libs/commons-io-1.3.1.jar libs/freemarker-2.3.10.jar libs/jai_codec.jar libs/jai_core.jar libs/jai_imageio.jar libs/java2html-5.0.jar libs/log4j-1.2.12.jar libs/Tidy.jar")
 
 
 compileJava {
