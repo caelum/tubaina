@@ -5,14 +5,7 @@ version = '1.7-SNAPSHOT'
 manifest.mainAttributes("Main-Class": "br.com.caelum.tubaina.Tubaina",
 			"Class-Path": "libs/commons-cli-1.1.jar libs/commons-io-1.3.1.jar libs/freemarker-2.3.10.jar libs/jai_codec.jar libs/jai_core.jar libs/jai_imageio.jar libs/java2html-5.0.jar libs/log4j-1.2.12.jar libs/Tidy.jar")
 
-
-compileJava {
-    options.encoding='UTF-8'
-}
-
-compileTestJava {
-    options.encoding='UTF-8'
-}
+[compileJava, compileTestJava]*.options*.encoding='UTF-8'
 
 task zip(type: Zip) {
      from "$buildDir/libs"
