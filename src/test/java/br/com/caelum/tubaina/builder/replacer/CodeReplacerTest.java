@@ -45,4 +45,13 @@ public class CodeReplacerTest {
 		Assert.assertFalse(replacer.accepts(answer));
 		replacer.execute(answer, chunks);
 	}
+	
+	@Test
+	public void codeTagWithLanguageArgument() throws Exception {
+		String original = "[code java]public class Arroz{[/code]";
+		Assert.assertTrue(replacer.accepts(original));
+		replacer.execute(original, chunks);
+		Assert.assertEquals(1, chunks.size());
+		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
+	}
 }

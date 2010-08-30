@@ -18,15 +18,15 @@ public class NoteChunk implements CompositeChunk {
 	}
 
 	public String getContent(Parser p) {
-		String content =  "";
-		for (Chunk c : title) {
-			content += c.getContent(p);
-		}
-		content += '\n';
+		String content =  "" + '\n';
 		for (Chunk c : body) {
 			content += c.getContent(p);
-		}		
-		return p.parseNote(content);
+		}
+		String fullTitle = "";
+		for (Chunk c : title) {
+			fullTitle += c.getContent(p);
+		}
+		return p.parseNote(content, fullTitle);
 	}
 
 }

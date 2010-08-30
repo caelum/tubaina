@@ -12,7 +12,7 @@ public interface Parser {
 	public String parseExercise(String text, int id);
 	public String parseAnswer(String text, int id);
 	public String parseQuestion(String text);
-	public String parseNote(String text);
+	public String parseNote(String text, String title);
 	public String parseItem(String text);
 	public String parseTodo(String text);
 	public String parseIndex(String name);

@@ -173,7 +173,7 @@ public class LatexParserTest {
 	
 	@Test
 	public void testParseCode() {
-		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "\\black test" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "../main/resources/latex.properties"));
+		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "{text}\ntest" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "text"));
 	}
 	
 	@Test

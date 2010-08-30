@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import static org.junit.Assert.*;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,13 +19,12 @@ public class CodeTagTest {
 				"texto:valor\n" +
 				"texto valor";
 		String output = new CodeTag(new SimpleIndentator()).parse(string, options);
-		Assert.assertEquals(CodeTag.BEGIN + 
-				"\\black blablah~\\texvalue blah\\\\\n" +
-				"\\black \\texcomment \\#algum~comentario\\\\\n" +
-				"\\black texto\\verb#=#\\texvalue valor\\\\\n" +
-				"\\black texto:\\texvalue valor\\\\\n" +
-				"\\black texto~\\texvalue valor" + CodeTag.END, output);
-		
+		Assert.assertEquals(CodeTag.BEGIN + "{properties}\n" +
+				"blablah blah\n" +
+				"#algum comentario\n" +
+				"texto=valor\n" +
+				"texto:valor\n" +
+				"texto valor" + CodeTag.END, output);
 	}
 	@Test
 	public void testPropertiesCodeTagWithEscapes() throws Exception {
@@ -35,13 +36,35 @@ public class CodeTagTest {
 				"texto\\ valor valor\n" +
 				"a b\\#fake comentario";
 		String output = new CodeTag(new SimpleIndentator()).parse(string, options);
-		Assert.assertEquals(CodeTag.BEGIN + 
-				"\\black blablah~\\texvalue blah\\\\\n" +
-				"\\black \\texcomment \\#algum~comentario\\\\\n" +
-				"\\black texto\\char92\\verb#=#valor\\verb#=#\\texvalue valor\\\\\n" +
-				"\\black texto\\char92:valor:\\texvalue valor\\\\\n" +
-				"\\black texto\\char92~valor~\\texvalue valor\\\\\n" +
-				"\\black a~\\texvalue b\\char92\\#fake~comentario" + CodeTag.END, output);
+		Assert.assertEquals(CodeTag.BEGIN + "{properties}\n" +
+				"blablah blah\n" +
+				"#algum comentario\n" +
+				"texto\\=valor=valor\n" +
+				"texto\\:valor:valor\n" +
+				"texto\\ valor valor\n" +
+				"a b\\#fake comentario" + CodeTag.END, output);
 		
 	}
+	
+	@Test
+	public void languageCodeTagIsReturnedInsideMintedEnvironment() throws Exception {
+		String string = "public static void main(String[] args) {";
+		String options = "java";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "{java}\n" +
+							string + 
+							CodeTag.END, output);
+	}
+	
+	@Test
+	public void codeTagWith$ShouldEscapeItWithMathescape() throws Exception {
+		String string = "public class Feijao$ {";
+		String expectedString = "public class Feijao$\\mathdollar$ {";
+		String options = "java";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "{java}\n" +
+				expectedString + 
+				CodeTag.END, output);
+	}
+	
 }

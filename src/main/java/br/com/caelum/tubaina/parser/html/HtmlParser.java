@@ -86,8 +86,8 @@ public class HtmlParser implements Parser {
         return string;
     }
 
-    public String parseNote(String text) {
-        return new NoteTag().parse(text, null);
+    public String parseNote(String text, String title) {
+        return new NoteTag().parse(text, title);
     }
 
     public String parseItem(String text) {

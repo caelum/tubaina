@@ -12,15 +12,31 @@ public class CodeTag implements Tag {
 
 	private final Indentator indentator;
 
-	public static final String BEGIN = "{\\vspace{1em}{\n" + "\\small \\noindent \\ttfamily \n";
-
-	public static final String END = "\n}}\n\\newline\n";
+	public static final String BEGIN = "{\\small\n\\begin{minted}[mathescape]";
+	public static final String END = "\n\\end{minted}\n}";
+	
+	public static final String BEGIN_OLD = "{\\vspace{1em}{\n" + "\\small \\noindent \\ttfamily \n";
+	public static final String END_OLD = "\n}}\n\\newline\n";
 
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
 	}
 
 	public String parse(String string, String options) {
+		String cleanOptions = options == null ? "" : options.trim().split(" ")[0].trim();	
+		if(cleanOptions.isEmpty())
+			cleanOptions = "text";
+		string = escapeDollar(string);
+//TODO:highlights
+//		string = new CodeHighlightTag().parseLatex(string, highlights);
+		return CodeTag.BEGIN + "{" + cleanOptions + "}\n" + string + CodeTag.END;
+	}
+	
+	private String escapeDollar(String string) {
+		return string.replaceAll("\\$", "\\$\\\\mathdollar\\$");
+	}
+
+	public String parseOld(String string, String options) {
 		boolean properties = isProperties(options);
 		List<Integer> highlights = new CodeHighlightTag().getHighlights(options);
 
@@ -40,7 +56,7 @@ public class CodeTag implements Tag {
 		string = escapeFixes(string);
 		string = parseSymbols(string);
 		string = new CodeHighlightTag().parseLatex(string, highlights);
-		return BEGIN + string + END;
+		return BEGIN_OLD + string + END_OLD;
 	}
 
 	private String parseSymbols(String string) {

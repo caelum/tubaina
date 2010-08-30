@@ -89,9 +89,9 @@ public class LatexParser implements Parser {
         return new QuestionTag().parse(text, null);
     }
 
-    public String parseNote(String text) {
+    public String parseNote(String text, String title) {
         if (this.showNotes)
-            return new NoteTag().parse(text, null);
+            return new NoteTag().parse(text, title);
         return "";
     }
 

@@ -51,8 +51,7 @@ public class MockedParser implements Parser {
         return text;
     }
 
-    public String parseNote(String text) {
-
+    public String parseNote(String text, String title) {
         return text;
     }
 
