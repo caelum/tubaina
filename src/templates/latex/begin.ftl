@@ -36,6 +36,8 @@
 %This has to be the last package declared, for some reason
 \usepackage[pdftex]{hyperref}
 
+\definecolor{boxhead}{gray}{0.8}
+
 %%%%%%%PAGE SETUP%%%%%%%%%%%%%
 \oddsidemargin    -6mm
 \textwidth        180mm

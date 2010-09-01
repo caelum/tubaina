@@ -43,22 +43,20 @@
 }
 
 %Box
-\newcommand{\boxtag}[2]{
-  \begin{flushright}
-	\renewcommand{\verb}[1]{#1}
-    \parbox{16cm}{
-      \begin{tabular}{p{15.6cm}}
-        \hline
-        \rowcolor{lightgray}
-        #1 \\
-        \hline
-      \end{tabular}
-      \\[-1em]
-      #2 \\[-1ex]
-      \rule{16cm}{0.5pt}
-    }
-  \end{flushright}
-}
+\newenvironment{tubainabox}[1]
+               {\begin{flushright}
+                   \begin{minipage}{16cm}
+                     \begin{tabular}{p{15.6cm}}
+                       #1
+                       \rowcolor{boxhead}
+                     \end{tabular}
+                     \\[1em]
+               }
+               {\end{minipage}
+                   \\[1em]
+                   \rule{16cm}{0.5pt}
+                 \end{flushright}
+               }
 
 \newcommand{\answerHead}[1]{
 	\subsubsection*{#1\ -\ Exercises}

@@ -9,13 +9,13 @@ public class BoxTagTest {
 	public void testBox() {
 		BoxTag tag = new BoxTag();
 		String result = tag.parse("Texto do Box", "Titulo do Box");
-		Assert.assertEquals("\\boxtag{Titulo do Box}{Texto do Box}", result);
+		Assert.assertEquals("\\begin{tubainabox}{Titulo do Box}\nTexto do Box\n\\end{tubainabox}", result);
 	}
 	
 	@Test
 	public void testBoxWithMultilineContent() {
 		BoxTag tag = new BoxTag();
 		String result = tag.parse("Texto do Box\n blablabla\n", "Titulo do Box");
-		Assert.assertEquals("\\boxtag{Titulo do Box}{Texto do Box\n blablabla\n}", result);
+		Assert.assertEquals("\\begin{tubainabox}{Titulo do Box}\nTexto do Box\n blablabla\n\n\\end{tubainabox}", result);
 	}
 }
