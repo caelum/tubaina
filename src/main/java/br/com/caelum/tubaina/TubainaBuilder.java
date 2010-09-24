@@ -33,8 +33,7 @@ public class TubainaBuilder {
 	public static final Logger LOG = Logger.getLogger(TubainaBuilder.class);
 
 	public static final int MAX_LINE_LENGTH = 93; // believe us... this is what
-	// fits in Latex A4
-	// templates.
+	// fits in Latex A4 templates.
 
 	private File inputDir = new File(".");
 

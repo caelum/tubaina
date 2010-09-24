@@ -109,8 +109,7 @@ public class Tubaina {
 
 		options.addOption("h", "help", false, "print this message");
 		// inputdir
-		options
-				.addOption(OptionBuilder.withArgName("inputDirectory")
+		options.addOption(OptionBuilder.withArgName("inputDirectory")
 						.withLongOpt("input-dir").hasArg().withDescription(
 								"directory where you have your .afc files")
 						.create('i'));

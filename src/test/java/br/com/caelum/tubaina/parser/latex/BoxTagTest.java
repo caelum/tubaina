@@ -18,4 +18,11 @@ public class BoxTagTest {
 		String result = tag.parse("Texto do Box\n blablabla\n", "Titulo do Box");
 		Assert.assertEquals("\\begin{tubainabox}{Titulo do Box}\nTexto do Box\n blablabla\n\n\\end{tubainabox}", result);
 	}
+	
+	@Test
+	public void testChangeTitleToEmptyStringIfItsNull(){
+		String result = new BoxTag().parse("Text", null);
+		Assert.assertEquals("\\begin{tubainabox}{}\nText\n\\end{tubainabox}", result);
+	}
+
 }
