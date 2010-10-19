@@ -56,15 +56,4 @@ public class CodeTagTest {
 							CodeTag.END, output);
 	}
 	
-	@Test
-	public void codeTagWith$ShouldEscapeItWithMathescape() throws Exception {
-		String string = "public class Feijao$ {";
-		String expectedString = "public class Feijao$\\mathdollar$ {";
-		String options = "java";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
-		Assert.assertEquals(CodeTag.BEGIN + "{java}\n" +
-				expectedString + 
-				CodeTag.END, output);
-	}
-	
 }
