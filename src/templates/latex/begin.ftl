@@ -52,6 +52,8 @@
 \makeindex
 
 \begin{document}
+\usemintedstyle{eclipse}
+
 
 \normalfont
 
