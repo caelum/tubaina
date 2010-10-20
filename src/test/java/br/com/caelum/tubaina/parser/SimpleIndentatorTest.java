@@ -42,9 +42,9 @@ public class SimpleIndentatorTest {
 		String result = new SimpleIndentator().indent(test);
 		Assert.assertEquals(
 				"blah\n" +
-				"  bleh\n" +
-				"    blih\n" +
-				"  bloh\n" +
+				"    bleh\n" +
+				"        blih\n" +
+				"    bloh\n" +
 				"bluh", result);
 	}
 }

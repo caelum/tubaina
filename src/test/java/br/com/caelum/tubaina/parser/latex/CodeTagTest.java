@@ -56,4 +56,14 @@ public class CodeTagTest {
 							CodeTag.END, output);
 	}
 	
+	@Test
+	public void languageCodeTagShouldInsertLineNumbersWhenOptionContainsSharp(){
+		String string = "public static void main(String[] args) {";
+		String options = "java #";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "[linenos]{java}\n" +
+							string + 
+							CodeTag.END, output);
+	}
+	
 }

@@ -7,22 +7,22 @@ public class CodeTag implements Tag {
 
 	private final Indentator indentator;
 
-	public static final String BEGIN = "{\\small\n\\begin{minted}[mathescape]";
-	public static final String END = "\n\\end{minted}\n}";
-	
-	public static final String BEGIN_OLD = "{\\vspace{1em}{\n" + "\\small \\noindent \\ttfamily \n";
-	public static final String END_OLD = "\n}}\n\\newline\n";
+	public static final String BEGIN = "{\\begin{flushright} \\begin{minipage}{16.9cm} \\small \n\\begin{minted}";
+	public static final String END = "\n\\end{minted}\n\\end{minipage}\\end{flushright}}";
 
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
 	}
 
 	public String parse(String string, String options) {
-		String cleanOptions = options == null ? "" : options.trim().split(" ")[0].trim();	
-		if(cleanOptions.isEmpty())
-			cleanOptions = "text";
+		String chosenLanguage = options == null ? "" : options.trim().split(" ")[0].trim();	
+		if(chosenLanguage.isEmpty()){
+			chosenLanguage = "text";
+		}
+		String lineNumbers = options.contains("#") ? "[linenos]": "";
+		
 		String indentedString = this.indentator.indent(string);
-		return CodeTag.BEGIN + "{" + cleanOptions + "}\n" + indentedString + CodeTag.END;
+		return CodeTag.BEGIN + lineNumbers + "{" + chosenLanguage + "}\n" + indentedString + CodeTag.END;
 	}
 	
 
