@@ -19,12 +19,10 @@ public class CodeTag implements Tag {
 		if(chosenLanguage.isEmpty()){
 			chosenLanguage = "text";
 		}
-		String lineNumbers = options.contains("#") ? "[linenos]": "";
+		String lineNumbers = options.contains("#") ? "[linenos, numbersep=5pt]": "";
 		
 		String indentedString = this.indentator.indent(string);
 		return CodeTag.BEGIN + lineNumbers + "{" + chosenLanguage + "}\n" + indentedString + CodeTag.END;
 	}
-	
-
 	
 }
