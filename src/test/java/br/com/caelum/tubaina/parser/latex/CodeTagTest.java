@@ -1,7 +1,5 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -61,7 +59,7 @@ public class CodeTagTest {
 		String string = "public static void main(String[] args) {";
 		String options = "java #";
 		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
-		Assert.assertEquals(CodeTag.BEGIN + "[linenos]{java}\n" +
+		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{java}\n" +
 							string + 
 							CodeTag.END, output);
 	}
