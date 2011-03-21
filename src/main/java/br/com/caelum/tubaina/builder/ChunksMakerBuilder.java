@@ -25,6 +25,7 @@ import br.com.caelum.tubaina.builder.replacer.TableColumnReplacer;
 import br.com.caelum.tubaina.builder.replacer.TableReplacer;
 import br.com.caelum.tubaina.builder.replacer.TableRowReplacer;
 import br.com.caelum.tubaina.builder.replacer.TodoReplacer;
+import br.com.caelum.tubaina.builder.replacer.VerbatimReplacer;
 import br.com.caelum.tubaina.builder.replacer.XmlReplacer;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -78,7 +79,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new IndexReplacer(resources));
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
-
 		replacers.add(new TableReplacer(resources));
 		replacers.add(new CenteredParagraphReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
@@ -193,6 +193,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new TodoReplacer());
 		replacers.add(new RubyReplacer());
 		replacers.add(new TableReplacer(resources));
+		replacers.add(new VerbatimReplacer());
 		replacers.add(new CenteredParagraphReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("all", replacers);

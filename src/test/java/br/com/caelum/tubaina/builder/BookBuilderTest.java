@@ -12,7 +12,6 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
-import br.com.caelum.tubaina.Tubaina;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
@@ -23,6 +22,7 @@ import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.chunk.RubyChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
+import br.com.caelum.tubaina.chunk.VerbatimChunk;
 import br.com.caelum.tubaina.parser.MockedParser;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -256,6 +256,18 @@ public class BookBuilderTest {
 
 		Assert.assertEquals(TableChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals("uma tabelacom várias colunase váriaslinhas também", chunks.get(0).getContent(parser));
+	}
+	
+	@Test
+	public void testVerbatimChunk() throws Exception {
+		List<Chapter> chapters = getChapters("[chapter A chapter containing verbatim]\n" + 
+				"[section Something with mathematical notation]" + "\n[verbatim]A math formulae: $2^3$[/verbatim]\n");
+
+		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
+		Assert.assertEquals(1, chunks.size());
+
+		Assert.assertEquals(VerbatimChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals("A math formulae: $2^3$", chunks.get(0).getContent(parser));
 	}
 	
 	@Test
