@@ -22,7 +22,7 @@
 \usepackage{makeidx}
 \usepackage{enumerate}
 \usepackage{fancyhdr}
-\usepackage{minted}
+\usepackage{mintedx}
 \usepackage{pstcol}
 \usepackage{colortbl}
 \usepackage{url}
