@@ -4,8 +4,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.latex.TableRowTag;
-
 public class TableRowTagTest {
 	
 	@Test

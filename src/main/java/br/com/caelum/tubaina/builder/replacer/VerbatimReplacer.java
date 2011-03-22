@@ -4,8 +4,6 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.chunk.VerbatimChunk;
 
 public class VerbatimReplacer extends AbstractReplacer {
-
-	
 	
 	public VerbatimReplacer() {
 		super("verbatim");

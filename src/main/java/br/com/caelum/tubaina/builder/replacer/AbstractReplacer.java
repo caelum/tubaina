@@ -32,7 +32,6 @@ public abstract class AbstractReplacer implements Replacer {
 		
 		Stack<String> stack = new Stack<String>();
 		stack.push(tag);
-//		int tagsInside = 1;
 		while (!stack.isEmpty() && tagMatcher.find()) {
 			String tagName = tagMatcher.group(2);
 			if (tagMatcher.group(1) == null) { //is openTag ([tag])

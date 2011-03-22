@@ -27,16 +27,18 @@ import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.chunk.TodoChunk;
+import br.com.caelum.tubaina.chunk.VerbatimChunk;
 import br.com.caelum.tubaina.chunk.XmlChunk;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class ChunksMakerBuilderTest {
 
+
 	private List<Resource> resources;
 
 	private String exampleBox = "[box title]a box[/box]\n";
-	private String exampleText = "some text\n";
+	private String exampleParagraph = "some text\n\n";
 	private String exampleCode = "[code]some code[/code]\n";
 	private String exampleJava = "[java]\nSystem.out.println(\"some java code\");\n[/java]\n";
 	private String exampleListItem = "* an item\n";
@@ -59,6 +61,7 @@ public class ChunksMakerBuilderTest {
 	private String exampleExercise = "[exercise]\n" + exampleQuestion
 			+ "[/exercise]\n";
 	private String exampleImage = "[img src/test/resources/baseJpgImage.jpg]\n";
+	private String exampleVerbatim = "[verbatim]\\latex[/verbatim]";
 
 	@Before
 	public void setUp() {
@@ -72,7 +75,7 @@ public class ChunksMakerBuilderTest {
 		String text = exampleBox + exampleCode + exampleImage + exampleJava
 				+ exampleList + exampleNote + exampleXml + exampleIndex
 				+ exampleTodo + exampleRuby + exampleTable
-				+ exampleCenteredText + exampleText;
+				+ exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(13, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
@@ -97,7 +100,7 @@ public class ChunksMakerBuilderTest {
 		String text = exampleCode + exampleImage + exampleJava + exampleList
 				+ exampleNote + exampleXml + exampleIndex + exampleTodo
 				+ exampleRuby + exampleTable + exampleCenteredText
-				+ exampleText;
+				+ exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(12, chunks.size());
 		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
@@ -131,7 +134,7 @@ public class ChunksMakerBuilderTest {
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby
-				+ exampleCenteredText + exampleText;
+				+ exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(13, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
@@ -164,7 +167,7 @@ public class ChunksMakerBuilderTest {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("note");
 		String text = exampleCode + exampleImage + exampleJava + exampleList
 				+ exampleXml + exampleIndex + exampleTodo + exampleRuby
-				+ exampleTable + exampleCenteredText + exampleText;
+				+ exampleTable + exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(11, chunks.size());
 		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
@@ -187,7 +190,7 @@ public class ChunksMakerBuilderTest {
 		String text = exampleAnswer + exampleBox + exampleCode + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby + exampleTable
-				+ exampleCenteredText + exampleText;
+				+ exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(14, chunks.size());
 		Assert.assertEquals(AnswerChunk.class, chunks.get(0).getClass());
@@ -232,7 +235,7 @@ public class ChunksMakerBuilderTest {
 		ChunksMaker maker = new ChunksMakerBuilder(resources).build("col");
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
-				+ exampleTodo + exampleRuby + exampleText;
+				+ exampleTodo + exampleRuby + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(11, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
@@ -254,9 +257,9 @@ public class ChunksMakerBuilderTest {
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby + exampleTable
-				+ exampleCenteredText + exampleText;
+				+ exampleVerbatim + exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
-		Assert.assertEquals(14, chunks.size());
+		Assert.assertEquals(15, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
 		Assert.assertEquals(ExerciseChunk.class, chunks.get(2).getClass());
@@ -269,44 +272,30 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(TodoChunk.class, chunks.get(9).getClass());
 		Assert.assertEquals(RubyChunk.class, chunks.get(10).getClass());
 		Assert.assertEquals(TableChunk.class, chunks.get(11).getClass());
-		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(12)
+		Assert.assertEquals(VerbatimChunk.class, chunks.get(12).getClass());
+		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(13)
 				.getClass());
-		Assert.assertEquals(ParagraphChunk.class, chunks.get(13).getClass());
+		Assert.assertEquals(ParagraphChunk.class, chunks.get(14).getClass());
 	}
 
-	/**
-	 * @see http://jira.caelum.com.br/browse/TUBAINA-9
-	 */
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testChunksMakerBuilderForAllDoesntAcceptQuestionTagOutsideExercise() {
 		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
 				.build("all");
 		String exercise = exampleQuestion;
-		try {
-			List<Chunk> list = chunksMaker.make(exercise);
-			for (Chunk chunk : list) {
-				System.out.println(chunk.getClass().getName());
-			}
-			Assert.fail("Should not accept question tag outside exercise tag");
-		} catch (TubainaException e) {
-			// OK
+		List<Chunk> list = chunksMaker.make(exercise);
+		for (Chunk chunk : list) {
+			System.out.println(chunk.getClass().getName());
 		}
+		Assert.fail("Should not accept question tag outside exercise tag");
 	}
 
-	/**
-	 * @see http://jira.caelum.com.br/browse/TUBAINA-10
-	 */
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testChunksMakerBuilderDoesntAcceptNoteInsideExerciseOutsideQuestion() {
 		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
 				.build("exercise");
 		String exercise = exampleNote + exampleQuestion;
-		try {
-			chunksMaker.make(exercise);
-			Assert
-					.fail("Should not accept notes inside exercise tag but outside question tag");
-		} catch (TubainaException e) {
-			// OK
-		}
+		chunksMaker.make(exercise);
+		Assert.fail("Should not accept notes inside exercise tag but outside question tag");
 	}
 }
