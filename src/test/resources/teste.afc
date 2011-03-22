@@ -1,0 +1,18 @@
+[chapter Capítulo]
+
+[section Minha seção]
+
+	Um texto aqui e, de repente, eu quero escrever [verbatim]\LaTeX{}[/verbatim] e continuar escrevendo o texto normalmente. Aqui, vai uma [label marcacao]marcacao legal pra testar os labels.
+
+[section Outra]
+
+	Um outro parágrafo qualquer pra animar o dia. Agora o verbatim numa linha solta:
+
+[verbatim]\LaTeX{}[/verbatim]
+
+E mais um pouco de texto em outro paragrafo. Aqui, quero citar a secão [ref-label marcacao] que está na página [ref-page marcacao].
+
+[section Desencargo de consciência]
+
+Apenas por desencargo de consciência, vamos testar com o verbatim 
+[verbatim]\LaTeX{}[/verbatim] no início da linha do afc.

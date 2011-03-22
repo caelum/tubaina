@@ -17,7 +17,7 @@ public class Tubaina {
 
 	public static final Logger LOG = Logger.getLogger(Tubaina.class);
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String... args) throws IOException {
 		CommandLineParser parser = new PosixParser();
 
 		Options options = registerOptions();
