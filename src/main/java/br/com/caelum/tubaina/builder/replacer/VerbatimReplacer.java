@@ -16,5 +16,4 @@ public class VerbatimReplacer extends AbstractReplacer {
 		return new VerbatimChunk(content);
 	}
 
-
 }
