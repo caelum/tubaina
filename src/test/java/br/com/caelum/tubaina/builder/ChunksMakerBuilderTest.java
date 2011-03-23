@@ -27,7 +27,6 @@ import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.chunk.TodoChunk;
-import br.com.caelum.tubaina.chunk.VerbatimChunk;
 import br.com.caelum.tubaina.chunk.XmlChunk;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -61,7 +60,6 @@ public class ChunksMakerBuilderTest {
 	private String exampleExercise = "[exercise]\n" + exampleQuestion
 			+ "[/exercise]\n";
 	private String exampleImage = "[img src/test/resources/baseJpgImage.jpg]\n";
-	private String exampleVerbatim = "[verbatim]\\latex[/verbatim]";
 
 	@Before
 	public void setUp() {
@@ -257,9 +255,9 @@ public class ChunksMakerBuilderTest {
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby + exampleTable
-				+ exampleVerbatim + exampleCenteredText + exampleParagraph;
+				+ exampleCenteredText + exampleParagraph;
 		List<Chunk> chunks = maker.make(text);
-		Assert.assertEquals(15, chunks.size());
+		Assert.assertEquals(14, chunks.size());
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
 		Assert.assertEquals(ExerciseChunk.class, chunks.get(2).getClass());
@@ -272,10 +270,9 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(TodoChunk.class, chunks.get(9).getClass());
 		Assert.assertEquals(RubyChunk.class, chunks.get(10).getClass());
 		Assert.assertEquals(TableChunk.class, chunks.get(11).getClass());
-		Assert.assertEquals(VerbatimChunk.class, chunks.get(12).getClass());
-		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(13)
+		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(12)
 				.getClass());
-		Assert.assertEquals(ParagraphChunk.class, chunks.get(14).getClass());
+		Assert.assertEquals(ParagraphChunk.class, chunks.get(13).getClass());
 	}
 
 	@Test(expected=TubainaException.class)

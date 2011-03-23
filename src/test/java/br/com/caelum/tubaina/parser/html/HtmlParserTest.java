@@ -98,13 +98,13 @@ public class HtmlParserTest {
 
 	@Test
 	public void testLabelTagInline() {
-		String result = parser.parse("[label ola mundo]HelloWorld[/label]");
+		String result = parser.parse("[footnote ola mundo]HelloWorld[/footnote]");
 		Assert.assertEquals("<label title=\"ola mundo\">HelloWorld<span>?</span></label>", result);
 	}
 	
 	@Test
 	public void testLabelTagMultiline() {
-		String result = parser.parse("[label ola \nmundo]Hello\nWorld[/label]");
+		String result = parser.parse("[footnote ola \nmundo]Hello\nWorld[/footnote]");
 		Assert.assertEquals("<label title=\"ola \nmundo\">Hello\nWorld<span>?</span></label>", result);
 	}
 	

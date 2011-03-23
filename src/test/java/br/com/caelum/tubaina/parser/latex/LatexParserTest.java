@@ -99,7 +99,7 @@ public class LatexParserTest {
 
 	@Test
 	public void testLabelTagInline() {
-		String result = parser.parse("[label ola mundo]HelloWorld[/label]");
+		String result = parser.parse("[footnote ola mundo]HelloWorld[/footnote]");
 		Assert.assertEquals("HelloWorld\\footnote{ola mundo}", result);
 	}
 	
