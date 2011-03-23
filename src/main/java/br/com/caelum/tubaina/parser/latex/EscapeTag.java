@@ -5,24 +5,32 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class EscapeTag implements Tag {
 
+	private StringBuilder text = new StringBuilder();
+
 	public String parse(String content, String options) {
-		int pos = -1;
-		StringBuilder text = new StringBuilder();
-		while (true) {
-			int found = content.indexOf("[verbatim]", pos + 1);
-			if (found == -1) {
-				text.append(content.substring(pos + 1));
-				break;
-			}
-			text.append(escape(content.substring(pos + 1, found)));
-			int fim = content.indexOf("[/verbatim]", found);
-			if (fim == -1) {
-				throw new TubainaException("Verbatim end tag is missing");
-			}
-			text.append(content.substring(found + "[verbatim]".length(), fim));
-			pos = fim + "[/verbatim]".length() -1;
+		int posicaoAtual = escapaAteVerbatim(content, 0);
+		while (posicaoAtual < content.length()) {
+			int fimVerbatim = content.indexOf("[/verbatim]", posicaoAtual);
+			if(naoAchei(fimVerbatim))
+				throw new TubainaException("Verbatim missing end tag");
+			String literal = content.substring(posicaoAtual + "[verbatim]".length(), fimVerbatim);
+			text.append(literal);
+			posicaoAtual = escapaAteVerbatim(content, fimVerbatim + "[/verbatim]".length());
 		}
 		return text.toString();
+	}
+
+	private int escapaAteVerbatim(String content, int posicaoAtual) {
+		int ateFimOuVerbatim = content.indexOf("[verbatim]", posicaoAtual);
+		if (naoAchei(ateFimOuVerbatim)) {
+			ateFimOuVerbatim = content.length();
+		}
+		text.append(escape(content.substring(posicaoAtual , ateFimOuVerbatim)));
+		return ateFimOuVerbatim;
+	}
+
+	private boolean naoAchei(int indiceEncontrado) {
+		return indiceEncontrado < 0;
 	}
 
 	private String escape(String content) {

@@ -105,7 +105,7 @@ public class LatexParserTest {
 	
 	@Test
 	public void testLabelTagMultiline() {
-		String result = parser.parse("[label ola \nmundo]Hello\nWorld[/label]");
+		String result = parser.parse("[footnote ola \nmundo]Hello\nWorld[/footnote]");
 		Assert.assertEquals("Hello\nWorld\\footnote{ola \nmundo}", result);
 	}
 	

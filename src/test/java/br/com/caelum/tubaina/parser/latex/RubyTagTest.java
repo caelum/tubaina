@@ -19,12 +19,16 @@ public class RubyTagTest {
 	private final RubyTag rubyTag = new RubyTag(new SimpleIndentator());
 
 	@Test
-	public void testComments() {
+	public void testSingleLineComment() {
 		String code = "# this is a ruby comment";
 		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN +	comment(code) + END, result);
-		code = "=begin\nThis is a\nmultiline comment\n=end";
-		result = rubyTag.parse(code, "");
+	}
+	
+	@Test
+	public void testMultilineComment() {	
+		String code = "=begin\nThis is a\nmultiline comment\n=end";
+		String result = rubyTag.parse(code, "");
 		Assert.assertEquals(BEGIN + comment(code) + END, result);
 	}
 
