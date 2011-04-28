@@ -1,5 +1,6 @@
 #!/bin/bash
 
-cd ..
+mkdir -p ~/.tubaina
+cd ~/.tubaina/
 virtualenv pythonenv
 pythonenv/bin/easy_install pygments-hack
