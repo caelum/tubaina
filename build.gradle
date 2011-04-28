@@ -16,6 +16,9 @@ task zip(type: Zip) {
     into('etc') {
         from "src/etc/"
     }
+    into('templates') {
+        from "src/templates/"
+    }
 }
 
 repositories {
