@@ -11,6 +11,18 @@ In order to run Tubaina you now need a JRE, [verbatim]\LaTeX[/verbatim], python 
     * sudo apt-get install texlive-latex-extra
     * sudo apt-get install python
     * sudo apt-get install python-setuptools
+    * sudo easy_install virtualenv
 [/list]
 
-With those and the tubaina-*.zip you can already setup your tubaina environment. 
+With those and the tubaina-*.zip you can already setup your tubaina environment. Now, then, do:
+
+[list]
+    * mkdir tubaina
+    * cd tubaina
+    * unzip <pasta-de-origem>
+    * sh etc/pos-install.sh
+[/list]
+
+Test the installation by executing:
+
+[code]java -jar tubaina<tab> --latex -i etc/ -o ~/Desktop/ -n "End to end testing"[/code]
