@@ -1,0 +1,16 @@
+[chapter Installing and configuring]
+
+The newest version for Tubaina can syntax highlight a lot more languages and that's great. 
+However, in order to do that, we delegate the task of colouring to Python Pygments and... 
+there we go: we have two new dependencies.
+
+In order to run Tubaina you now need a JRE, [verbatim]\LaTeX[/verbatim], python and it's setuptools. In Ubuntu (Debian based systems) these commands should be enough:
+
+[list]
+    * sudo apt-get install openjdk-6-jre
+    * sudo apt-get install texlive-latex-extra
+    * sudo apt-get install python
+    * sudo apt-get install python-setuptools
+[/list]
+
+With those and the tubaina-*.zip you can already setup your tubaina environment. 
