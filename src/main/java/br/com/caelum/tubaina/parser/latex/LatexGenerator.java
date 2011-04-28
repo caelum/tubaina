@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.AnswerResource;
@@ -56,9 +57,9 @@ public class LatexGenerator {
 
 	private void copyResources(File directory, Book b) throws IOException {
 		// Dependencies (styles, logo)
-		FileUtils.copyFileToDirectory(new File(templateDir, "latex/tubaina.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(templateDir, "latex/xcolor.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(templateDir, "latex/mintedx.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/tubaina.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/xcolor.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/mintedx.sty"), directory);
 		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.contains(".png") || name.contains(".bib");

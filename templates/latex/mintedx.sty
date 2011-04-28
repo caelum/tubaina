@@ -138,7 +138,7 @@
   \immediate\write\minted@code{#1}
   \immediate\closeout\minted@code}
 \newcommand\minted@pygmentize[2][\jobname.pyg]{
-  \def\minted@cmd{~/.tubaina/pythonenv/bin/pygmentize -l #2 -f latex -F tokenmerge
+  \def\minted@cmd{pythonenv/bin/pygmentize -l #2 -f latex -F tokenmerge
     \minted@opt{gobble} \minted@opt{texcl} \minted@opt{mathescape}
     \minted@opt{linenos} \minted@opt{hgs} -P "verboptions=\minted@opt{extra}"
     -o \jobname.out.pyg #1}
@@ -154,7 +154,7 @@
 \newcommand\minted@usedefaultstyle{\usemintedstyle{default}}
 \newcommand\usemintedstyle[1]{
   \renewcommand\minted@usedefaultstyle{}
-  \immediate\write18{~/.tubaina/pythonenv/bin/pygmentize -S #1 -f latex > \jobname.pyg}
+  \immediate\write18{pythonenv/bin/pygmentize -S #1 -f latex > \jobname.pyg}
   \input{\jobname.pyg}}
 \newcommand\mint[3][]{
   \DefineShortVerb{#3}
