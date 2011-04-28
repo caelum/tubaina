@@ -28,7 +28,7 @@ import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class TubainaBuilder {
 
-	public static final File DEFAULT_TEMPLATE_DIR = new File("src/templates");
+	public static final File DEFAULT_TEMPLATE_DIR = new File("templates");
 
 	public static final Logger LOG = Logger.getLogger(TubainaBuilder.class);
 
@@ -41,7 +41,6 @@ public class TubainaBuilder {
 
 	private final String bookName;
 
-	// TODO listar todos
 	private boolean listTodos = false;
 
 	private boolean strictXhtml = false;

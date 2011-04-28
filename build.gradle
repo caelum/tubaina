@@ -14,10 +14,10 @@ task zip(type: Zip) {
     	from configurations.runtime
     }
     into('etc') {
-        from "src/etc/"
+        from "etc/"
     }
     into('templates') {
-        from "src/templates/"
+        from "templates/"
     }
 }
 
