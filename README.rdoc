@@ -6,5 +6,7 @@ Tubaina is a textbook generator which receives a simple markup language syntax a
 
 == Changelog
 
+* April 28, 2011 Support to syntax highlighting using Pygments (in many many languages).
+* October 24, 2010 Discontinuation of Maven as a build tool. Gradle is the new choice.
 * Aug 17, 2009 New output format --htmlflat (HTML output with one page per chapter).
 * Aug 6, 2009 Support for more than one chapter per afc file has been dropped. Please split your chapters in multiple files.
