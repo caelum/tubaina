@@ -6,8 +6,8 @@ public class BoxTag implements Tag {
 
 	public String parse(String content, String title) {
 
-		return "<div class=\"box\"><h3>" + title.trim() 
-				+ "</h3>\n" + content.trim() + "</div>";
+		return "<div class=\"box\"><h4>" + title.trim() 
+				+ "</h4>\n" + content.trim() + "</div>";
 	}
 
 }
