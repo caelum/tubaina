@@ -167,25 +167,25 @@ public class HtmlParserTest {
 	@Test
 	public void testBulletedList() {
 		String result = parser.parseList("conteudo da lista", "algo que nao importa");
-		Assert.assertEquals("<ul class=\"list\">conteudo da lista</ul>", result);
+		Assert.assertEquals("<ul>conteudo da lista</ul>", result);
 	}
 
 	@Test
 	public void testNumberList() {
 		String result = parser.parseList("conteudo da lista", "number");
-		Assert.assertEquals("<ol class=\"list\" type=\"1\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol>conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testLetterList() {
 		String result = parser.parseList("conteudo da lista", "letter");
-		Assert.assertEquals("<ol class=\"list\" type=\"a\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testRomanList() {
 		String result = parser.parseList("conteudo da lista", "roman");
-		Assert.assertEquals("<ol class=\"list\" type=\"I\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
 	}
 	
 	@Test
