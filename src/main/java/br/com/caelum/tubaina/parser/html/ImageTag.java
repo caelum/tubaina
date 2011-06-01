@@ -12,23 +12,19 @@ public class ImageTag implements Tag {
 	private static final String RELATIVEPATH = "../resources/";
 
 	public String parse(final String path, final String options) {
-		String output = "<div class=\"image\">";
 		String imgsrc = FilenameUtils.getName(path);
-		output = output + "<img src=\"" + RELATIVEPATH + imgsrc + "\"";
+		String output = "<img src=\"" + RELATIVEPATH + imgsrc + "\"";
 
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
-		Matcher dMatcher = description.matcher(options);
+		Matcher descriptionMatcher = description.matcher(options);
 
 		// The image is resized when copied
 
-		if (dMatcher.find()) {
-			output = output + " alt=\"" + dMatcher.group(1) + "\" />";
-			output = output + "<span class=\"image\">" + dMatcher.group(1) + "</span>";
+		if (descriptionMatcher.find()) {
+			output = output + " alt=\"" + descriptionMatcher.group(1) + "\" />";
 		} else {
 			output = output + " alt=\"" + imgsrc + "\" />";
 		}
-
-		output = output + "</div>";
 
 		return output;
 	}
