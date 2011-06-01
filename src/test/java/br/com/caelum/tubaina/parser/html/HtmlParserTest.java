@@ -111,25 +111,25 @@ public class HtmlParserTest {
 	@Test
 	public void testLinkComHttpTagInline() {
 		String result = parser.parse("http://www.caelum.com.br");
-		Assert.assertEquals("<a class=\"link\" target=\"_blank\" href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>", result);
+		Assert.assertEquals("<a href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>", result);
 	}
 	
 	@Test
 	public void testLinkComParentesis() {
 		String result = parser.parse("(http://www.caelum.com.br)");
-		Assert.assertEquals("(<a class=\"link\" target=\"_blank\" href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>)", result);
+		Assert.assertEquals("(<a href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>)", result);
 	}
 	
 	@Test
 	public void testMailTagInline() {
 		String result = parser.parse("[mail]olamundo@caelum.com.br[/mail]");
-		Assert.assertEquals("<a class=\"email\" href=\"mailto:olamundo@caelum.com.br\">olamundo em caelum.com.br</a>", result);
+		Assert.assertEquals("olamundo@caelum.com.br", result);
 	}
 	
 	@Test
 	public void testMailTagWithUnderscoreInline() {
 		String result = parser.parse("[mail]ola\\_mundo@caelum.com.br[/mail]");
-		Assert.assertEquals("<a class=\"email\" href=\"mailto:ola\\_mundo@caelum.com.br\">ola\\_mundo em caelum.com.br</a>", result);
+		Assert.assertEquals("ola\\_mundo@caelum.com.br", result);
 	}
 	
 	@Test
