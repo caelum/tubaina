@@ -87,13 +87,13 @@ public class HtmlParserTest {
 	@Test
 	public void testQuotationTagInline() {
 		String result = parser.parse("[quote ola mundo --Anonimo]");
-		Assert.assertEquals("<span class=\"quoteContent\">ola mundo</span><span class=\"quoteAuthor\">Anonimo</span>", result);
+		Assert.assertEquals("<q cite=\"Anonimo\">ola mundo</q>", result);
 	}
 	
 	@Test
 	public void testQuotationTagMultiline() {
 		String result = parser.parse("[quote ola mu\nndo-- Anonimo]");
-		Assert.assertEquals("<span class=\"quoteContent\">ola mu\nndo</span><span class=\"quoteAuthor\">Anonimo</span>", result);
+		Assert.assertEquals("<q cite=\"Anonimo\">ola mu\nndo</q>", result);
 	}
 
 	@Test
@@ -120,18 +120,6 @@ public class HtmlParserTest {
 		Assert.assertEquals("(<a class=\"link\" target=\"_blank\" href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>)", result);
 	}
 	
-//	@Test
-//	public void testLinkSemHttpTagInline() {
-//		String result = parser.parse("[url ola mundo | www.caelum.com.br]");
-//		Assert.assertEquals("<a class=\"link\" target=\"_blank\" href=\"www.caelum.com.br\">ola mundo</a>", result);
-//	}
-//
-//	@Test
-//	public void testLinkTagMultiline() {
-//		String result = parser.parse("[url ola mu\nndo | http://www.caelum.com.br]");
-//		Assert.assertEquals("<a class=\"link\" target=\"_blank\" href=\"http://www.caelum.com.br\">ola mu\nndo</a>", result);
-//	}
-
 	@Test
 	public void testMailTagInline() {
 		String result = parser.parse("[mail]olamundo@caelum.com.br[/mail]");
@@ -147,13 +135,13 @@ public class HtmlParserTest {
 	@Test
 	public void testTitleTagInline() {
 		String result = parser.parse("[title ola mundo]");
-		Assert.assertEquals("<strong class=\"title\">ola mundo</strong>", result);
+		Assert.assertEquals("<h3>ola mundo</h3>", result);
 	}
 	
 	@Test
 	public void testTitleTagInlineWithInnerTags() {
 		String result = parser.parse("[title ola **mu__n__do**]");
-		Assert.assertEquals("<strong class=\"title\">ola <strong>mu<u>n</u>do</strong></strong>", result);
+		Assert.assertEquals("<h3>ola <strong>mu<u>n</u>do</strong></h3>", result);
 	}
 	
 	@Test
@@ -171,19 +159,10 @@ public class HtmlParserTest {
 	
 	@Test
 	public void testBoxTagWithInnerTagsOnTitle() {
-		//Should not parse. BoxTag just create the box structure
+		//Should not parse. BoxTag just creates the box structure
 		String result = parser.parseBox("ola mundo", "Titulo **do Box**");
 		Assert.assertEquals("<div class=\"box\"><h4>Titulo **do Box**</h4>\nola mundo</div>", result);
 	}
-	
-//	@Test
-//	public void testJavaTag() {
-//		String string = "\nvoid olaMundo{\n    System.out.println(\"ola mundo\");\n})";
-//		String result = parser.parseJava(string);
-//		String j2hString = Java2Html.convertToHtml(string.substring(1));
-//		j2hString = j2hString.replaceAll("<!--(.+?)-->\n", "").trim();
-//		Assert.assertEquals(j2hString, result);
-//	}
 	
 	@Test
 	public void testBulletedList() {
