@@ -26,62 +26,62 @@ public class HtmlParserTest {
 	@Test
 	public void testBoldTagInline() {
 		String result = parser.parse("ola **mundo**");
-		Assert.assertEquals("ola <strong class=\"definition\">mundo</strong>", result);
+		Assert.assertEquals("ola <strong>mundo</strong>", result);
 	}
 
 	@Test
 	public void testBoldTagMultiline() {
 		String result = parser.parse("ola **mu\nndo**");
-		Assert.assertEquals("ola <strong class=\"definition\">mu\nndo</strong>", result);
+		Assert.assertEquals("ola <strong>mu\nndo</strong>", result);
 	}
 
 	@Test
 	public void testItalicTagInline() {
 		String result = parser.parse("ola ::mundo::");
-		Assert.assertEquals("ola <em class=\"italic\">mundo</em>", result);
+		Assert.assertEquals("ola <em>mundo</em>", result);
 	}
 
 	@Test
 	public void testItalicTagMultiline() {
 		String result = parser.parse("ola ::mu\nndo::");
-		Assert.assertEquals("ola <em class=\"italic\">mu\nndo</em>", result);
+		Assert.assertEquals("ola <em>mu\nndo</em>", result);
 	}
 
 	@Test
 	public void testUnderlineTagInline() {
 		String result = parser.parse("ola __mundo__");
-		Assert.assertEquals("ola <em class=\"underlined\">mundo</em>", result);
+		Assert.assertEquals("ola <u>mundo</u>", result);
 	}
 
 	@Test
 	public void testUnderlineTagMultiline() {
 		String result = parser.parse("ola __mu\nndo__");
-		Assert.assertEquals("ola <em class=\"underlined\">mu\nndo</em>", result);
+		Assert.assertEquals("ola <u>mu\nndo</u>", result);
 	}
 
 	@Test
 	public void testInlineCodeTagInline() {
 		String result = parser.parse("ola %%mundo%%");
-		Assert.assertEquals("ola <code class=\"inlineCode\">mundo</code>", result);
+		Assert.assertEquals("ola <code>mundo</code>", result);
 	}
 
 	@Test
 	public void testInlineCodeTagMultiline() {
 		String result = parser.parse("ola %%mu\nndo%%");
-		Assert.assertEquals("ola <code class=\"inlineCode\">mu\nndo</code>", result);
+		Assert.assertEquals("ola <code>mu\nndo</code>", result);
 	}
 	
 	// Test for inline Ruby code with inheritance symbol (::)
 	@Test
 	public void testTwoInlineCodeTagsWithTwoColonsInside() {
 		String result = parser.parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
-		Assert.assertEquals("ola <code class=\"inlineCode\">mundo &#58;&#58; superclasse</code> texto <code class=\"inlineCode\">mais codigo &#58;&#58; superclasse</code>", result);
+		Assert.assertEquals("ola <code>mundo &#58;&#58; superclasse</code> texto <code>mais codigo &#58;&#58; superclasse</code>", result);
 	}
 	
 	@Test
 	public void testParagraphTagWithInnerTagsInline() {
 		String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");
-		Assert.assertEquals("<span class=\"paragraph\"><strong class=\"definition\">Ola</strong> <em class=\"italic\">mundo</em>. <code class=\"inlineCode\">Tchau</code> <strong class=\"definition\"><em class=\"italic\"><em class=\"underlined\">mundo</em></em></strong>.</span>", result);
+		Assert.assertEquals("<span class=\"paragraph\"><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</span>", result);
 	}
 
 	@Test
@@ -153,27 +153,27 @@ public class HtmlParserTest {
 	@Test
 	public void testTitleTagInlineWithInnerTags() {
 		String result = parser.parse("[title ola **mu__n__do**]");
-		Assert.assertEquals("<strong class=\"title\">ola <strong class=\"definition\">mu<em class=\"underlined\">n</em>do</strong></strong>", result);
+		Assert.assertEquals("<strong class=\"title\">ola <strong>mu<u>n</u>do</strong></strong>", result);
 	}
 	
 	@Test
 	public void testBoxTagWithoutInnerTags() {
 		String result = parser.parseBox("ola mundo", "Titulo do Box");
-		Assert.assertEquals("<div class=\"box\"><h3>Titulo do Box</h3>\nola mundo</div>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\nola mundo</div>", result);
 	}
 	
 	@Test
 	public void testBoxTagWithInnerTags() {
 		//Should not parse. BoxTag just create the box structure
 		String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-		Assert.assertEquals("<div class=\"box\"><h3>Titulo do Box</h3>\n__ola__ **mundo**</div>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\n__ola__ **mundo**</div>", result);
 	}
 	
 	@Test
 	public void testBoxTagWithInnerTagsOnTitle() {
 		//Should not parse. BoxTag just create the box structure
 		String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-		Assert.assertEquals("<div class=\"box\"><h3>Titulo **do Box**</h3>\nola mundo</div>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo **do Box**</h4>\nola mundo</div>", result);
 	}
 	
 //	@Test
@@ -245,5 +245,3 @@ public class HtmlParserTest {
 	}
 	
 }
-
-
