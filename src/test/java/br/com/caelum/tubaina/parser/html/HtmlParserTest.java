@@ -81,7 +81,7 @@ public class HtmlParserTest {
 	@Test
 	public void testParagraphTagWithInnerTagsInline() {
 		String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");
-		Assert.assertEquals("<span class=\"paragraph\"><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</span>", result);
+		Assert.assertEquals("<p><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</p>", result);
 	}
 
 	@Test
@@ -218,9 +218,9 @@ public class HtmlParserTest {
 				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
 		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
 		Assert.assertEquals(3, chunks.size());
-		Assert.assertEquals("<li><span class=\"paragraph\">Refactoring, Martin Fowler</span></li>", chunks.get(0).getContent(parser));
-		Assert.assertEquals("<li><span class=\"paragraph\">Effective Java, Joshua Bloch</span></li>", chunks.get(1).getContent(parser));
-		Assert.assertEquals("<li><span class=\"paragraph\">Design Patterns, Erich Gamma et al</span></li>", chunks.get(2).getContent(parser));
+		Assert.assertEquals("<li><p>Refactoring, Martin Fowler</p></li>", chunks.get(0).getContent(parser));
+		Assert.assertEquals("<li><p>Effective Java, Joshua Bloch</p></li>", chunks.get(1).getContent(parser));
+		Assert.assertEquals("<li><p>Design Patterns, Erich Gamma et al</p></li>", chunks.get(2).getContent(parser));
 	}
 	
 }
