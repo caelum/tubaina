@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link rel="stylesheet" href="template/css/yui-3.3-reset-min.css" type="text/css">
+	<link rel="stylesheet" href="template/css/yui-3.3-base-min.css" type="text/css">
+	<link rel="stylesheet" href="template/css/yui-3.3-fonts-min.css" type="text/css">
+
+	<link rel="stylesheet" href="template/css/structure.css" type="text/css" media="screen, print">
+	<link rel="stylesheet" href="template/css/layout.css" type="text/css" media="screen, print">
+	<link rel="stylesheet" href="template/css/screen.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="template/css/print.css" type="text/css" media="print">
+	
+	<link rel="stylesheet" href="template/js/syntax-highlighter/styles/shCoreEclipse.css" type="text/css">
+	<link rel="stylesheet" href="template/js/syntax-highlighter/styles/shThemeEclipse.css" type="text/css">
+	<link rel="stylesheet" href="template/css/highlight.css" type="text/css" media="screen">
+	
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shCore.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushJava.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushXml.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushRuby.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushJScript.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushGroovy.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushCss.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushScala.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushSql.js"></script>
+	<script type="text/javascript" src="template/js/syntax-highlighter/scripts/shBrushPython.js"></script>
+	
+	<script type="text/javascript" src="template/js/jquery-1.6.1.min.js"></script>
+	<script type="text/javascript" src="template/js/tubaina.js"></script>
+	<script>
+	window.onload = function() {
+		Tubaina.init({
+			title: 'FJ-16: Laboratório Java de XML e Testes',
+			footer: 'Capítulo {chapterNumber} - {chapter} - {section} - Página {page}',
+			debug: true
+		});
+	}
+	</script>
+</head>
+<body>
+
+<div id="tubaina">
+	
+<h1>Trabalhando com XML</h1>
+<q cite="Isaac Newton">"Se eu enxerguei longe, foi por ter subido nos ombros de gigantes."</q>
+
+<div class="note">
+	<p>A explicacao sobre XML é bem rapida. Aqui esta mais como um guia basico de XML, mas na 
+	aula nao compensa ficar falando de caracteres de escape ou ficar detalhando algoritmos
+	de parsing de XML.</p>
+	
+	<p>Comente a sintaxe hierarquica, declarativa. Suas caracteristicas de interoperabilidade,
+	de ser um padrao. Comente que ha varias formas de se ler um XML, por exemplo carregar 
+	tudo pra memoria e montar uma arvore (DOM) ou ir lendo tag a tag e processar cada
+	acontecimento de abertura/fechamento de tag (SAX / StAX).</p>
+	
+	<p>Aí mostra um XML da bolsa com negocios e fala de APIs para le-los. Comenta que há
+	varias opcoes (JAX-*, uns Commons, XStream). Vamos usar XStream por ser muito facil
+	e suportar recursos que o JAX-* nao suporta (binding com classe imutavel).</p>
+	
+	<p>Mostra o toXML, fala do alias, mostra o fromXML.</p>
+</div>
+
+<h2>Os dados da bolsa de valores</h2>
+
+<p>Como <u>vamos</u> puxar os dados da bolsa de valores para popular nossos <em>candles</em>?</p>
+
+<p>Existem inúmeros formatos para se trabalhar com diversas bolsas. Sem dúvida XML
+é um formato comumente encontrado em diversas indústrias, inclusive na bolsa de valores.</p>
+
+<p>Utilizaremos esse tal de XML. Para isso, precisamos conhecê-lo mais a fundo, seus objetivos,
+e como manipulá-lo. Considere que vamos consumir um arquivo XML como o que segue:</p>
+
+<pre class="code xml" data-highlight="2,8">
+&lt;list&gt;
+	&lt;negocio&gt;
+		&lt;preco&gt;43.5&lt;/preco&gt;
+		&lt;quantidade&gt;1000&lt;/quantidade&gt;
+		&lt;data&gt;
+			&lt;time&gt;555454646&lt;/time&gt;
+		&lt;/data&gt;
+	&lt;/negocio&gt;
+	&lt;negocio&gt;
+		&lt;preco&gt;44.1&lt;/preco&gt;
+		&lt;quantidade&gt;700&lt;/quantidade&gt;
+		&lt;data&gt;
+			&lt;time&gt;555454646&lt;/time&gt;
+		&lt;/data&gt;
+	&lt;/negocio&gt;
+	&lt;negocio&gt;
+		&lt;preco&gt;42.3&lt;/preco&gt;
+		&lt;quantidade&gt;1200&lt;/quantidade&gt;
+		&lt;data&gt;
+			&lt;time&gt;559329406&lt;/time&gt;
+		&lt;/data&gt;
+	&lt;/negocio&gt;
+&lt;/list&gt;
+</pre>
+
+<p>Uma lista de negócios! Cada negócio informa o preço, quantidade e uma data. Essa data
+é composta por um horário dado no formato de <code>Timestamp</code>, e opcionalmente um <code>Timezone</code>.</p>
+
+<h2>XML</h2>
+
+<div class="note">
+<p>Começa falando sobre XML, o que é, como usa, flexibilidade, onde e para que vem 
+sendo usado: comunicação, configuração,...</p>
+
+<p><em>copiado do</em> http://www.w3schools.com/xml/xml_whatis.asp</p>
+
+	<ul>
+	    <li>XML stands for EXtensible Markup Language</li>
+	    <li>XML is a markup language much like HTML</li>
+	    <li>XML was designed to carry data, not to display data</li>
+	    <li>XML tags are not predefined. You must define your own tags</li>
+	    <li>XML is designed to be self-descriptive</li>
+	    <li>XML is a W3C Recommendation</li>
+	</ul>
+</div>
+
+<p><strong>XML</strong> (eXtensible Markup Language) é uma formalização da W3C para gerar linguagens 
+de marcação que podem se adaptar a quase qualquer tipo de necessidade. Algo bem extensível,
+flexível, de fácil leitura e hierarquização. Sua definição formal pode ser encontrada em:</p>
+
+<p><a href="http://www.w3.org/XML/">http://www.w3.org/XML/</a></p>
+
+<p>Exemplo de dados que são armazenados em XMLs e que não conhecemos tão bem, é o formato
+aberto de gráficos vetoriais, o SVG (usado pelo Corel Draw, Firefox, Inkscape, etc), e
+o Open Document Format (ODF), formato usado pelo OpenOffice, e hoje em dia um padrão
+ISO de extrema importância. (na verdade o ODF é um ZIP que contém XMLs internamente).</p>
+
+<p>A ideia era criar uma linguagem de marcação que fosse muito fácil de ser lida e gerada
+por softwares, e pudesse ser integrada as outras linguagens. Entre seus princípios
+básicos, definidos pelo W3C:</p>
+
+<ul>
+    <li>Separação do conteúdo da formatação</li>
+    <li>Simplicidade e Legibilidade</li>
+    <li>Possibilidade de criação de tags novas</li>
+    <li>Criação de arquivos para validação (DTDs e schemas)</li>
+</ul>
+
+<p>O XML é uma excelente opção para documentos que precisam ter seus dados organizados com 
+uma certa hierarquia (uma árvore), com relação de pai-filho entre seus elementos. Esse 
+tipo de arquivo é dificilmente organizado com CSVs ou properties. Como a própria imagem 
+do wikipedia nos trás e mostra o uso estruturado e encadeado de maneira hierárquica do XML:</p>
+
+<img src="img/xml.png" width=""/>
+
+<p>O cabeçalho opcional de todo XML é o que se segue:</p>
+
+<pre class="code xml">
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+</pre>
+
+<p>Esses caracteres não devem ser usados como elemento, e devem ser "escapados":</p>
+
+<ul>
+  <li>&amp;, use &amp;amp;</li>
+  <li>&#x27;, use &amp;apos;</li>
+  <li>&quot;, use &amp;quot;</li>
+  <li>&lt;, use &amp;lt;</li>
+  <li>&gt;, use &amp;gt;</li>
+</ul>
+
+<p>Você pode, em Java, utilizar a classe <code>String</code> e as regex do pacote <code>java.util.regex</code> 
+para criar um programa que lê um arquivo XML. Isso é uma grande perda de tempo, visto que 
+o Java, assim como quase toda e qualquer linguagem existente, possui uma ou mais formas 
+de ler um XML. O Java possui diversas, vamos ver algumas delas, suas vantagens e suas 
+desvantagens.</p>
+
+<h2>Lendo XML com Java de maneira difícil, o SAX</h2>
+
+<p>O SAX (<strong>Simple API for XML</strong>) é uma API para ler dados em XML, também conhecido como 
+<strong>Parser de XML</strong>. <big style="font-size: 32px">Um</big> parser serve para analisar uma estrutura de dados e geralmente o 
+que fazemos é transformá-la em uma outra. Mais texto aqui pra encher linguiça.</p>
+
+<p>Neste processo de análise também podemos ler o arquivo XML para procurar algum 
+determinado elemento e manipular seu conteúdo.</p> 
+
+<p class="ha">O parser lê os dados XML como um fluxo ou uma sequência de dados. Baseado no 
+conteúdo lido, o parser vai disparando eventos. É o mesmo que dizer que o parser 
+SAX funciona orientado a eventos.</p>
+
+<p>Existem vários tipos de eventos, por exemplo:</p>
+
+<ul>
+  <li>início do documento XML;</li>
+  <li>início de um novo elemento;</li>
+  <li>novo atributo;</li>
+  <li>início do conteúdo dentro de um elemento.</li>
+</ul>
+
+<p>Para tratar estes eventos, o programador deve passar um objeto <strong>listener</strong> ao 
+parser que será notificado automaticamente pelo parser quando um desses eventos 
+ocorrer. Comumente, este objeto é chamado de <strong>Handler</strong>, <strong>Observer</strong>, ou 
+<strong>Listener</strong> e é quem faz o trabalho necessário de processamento do XML. </p>
+
+<pre class="code java">
+public class NegociacaoHandler extends DefaultHandler {
+
+	@Override
+	public void startDocument() throws SAXException {
+
+	}
+
+	@Override
+	public void startElement(String uri, String localName, 
+				String name, Attributes attributes) throws SAXException {
+		// aqui voce &eacute; avisado, por exemplo
+		// do inicio da tag &quot;&lt;preco&gt;&quot;
+	}
+
+	@Override
+	public void characters(char[] chars, int offset, int len) throws SAXException {
+		// aqui voce seria avisado do inicio
+		// do conteudo que fica entre as tags, como por exemplo 30
+		// de dentro de &quot;&lt;preco&gt;30&lt;/preco&gt;&quot;
+
+		// para saber o que fazer com esses dados, voce precisa antes ter
+		// guardado em algum atributo qual era a negocia&ccedil;&atilde;o que estava
+		// sendo percorrida
+	}
+
+	@Override
+	public void endElement(String uri, String localName, String name) throws SAXException {
+		// aviso de fechamento de tag
+	}
+}
+</pre>
+
+<p>A classe <code>DefaultHandler</code> permite que você reescreva métodos que vão te notificar sobre 
+quando um elemento (tag) está sendo aberto, quando está sendo fechado, quando caracteres 
+estão sendo parseados (conteúdo de uma tag), etc.. Você é o responsável por saber em que 
+posição do object model (árvore) está, e que atitude deve ser tomada. A interface 
+<code>ContentHandler</code> define mais alguns outros métodos.</p>
+
+<div class="note">
+	<p>	Coloque esse codigo na lousa, apesar de que nao vamos usar. Mostre pra eles
+	como isso ai ficaria complicado, cheio de ifs e Strings. Alguem logo dara a ideia
+	que voce deveria ai colocar um "controller" para disparar "commands".</p>
+	
+	<p>Discuta o design pattern Observer/Listener. Ele sera revisto no capitulo de Swing Basico.</p>
+	
+	<p>Nota do Sergio: eu nao coloco esse codigo na lousa e ainda passo batido nele :)
+	Nota do Paulo: é, tem de passar bem rapido aqui. Mas é importante que eles saibam
+	algumas siglas como Sax, Dom, etc.</p>
+</div> 
+
+<div class="box"><h4>Curiosidade sobre o SAX</h4>
+	<p>Originalmente o SAX foi escrito só para Java e vem de um projeto da comunidade 
+	(http://www.saxproject.org), mas existem outras implementações em C++, Perl 
+	e Python.</p>  
+
+	<p>O SAX está atualmente na versão 2 e faz parte do JAX-P (Java API for XML Processing).</p>
+</div>
+
+<p>O SAX somente sabe ler dados e nunca modificá-los e só consegue ler para frente, 
+nunca para trás. Quando passou um determinado pedaço do XML que já foi lido, não há 
+mais como voltar. O parser SAX não guarda a estrutura do documento XML na memória.</p> 
+
+<p>Também não há como fazer acesso aleatório aos itens do documento XML, somente 
+sequencial.</p>
+
+<p>Por outro lado, como os dados vão sendo analisados e transformados (pelo Handler) 
+na hora da leitura, o SAX ocupa pouca memória, principalmente porque nunca 
+vai conhecer o documento inteiro e sim somente um pequeno pedaço. Devido também a 
+leitura sequencial, ele é muito rápido comparado com os parsers que analisam a 
+árvore do documento XML completo.</p>
+
+<p>Quando for necessário ler um documento em partes ou só determinado pedaço e apenas 
+uma vez, o SAX parser é uma excelente opção.</p>
+
+<div class="box">
+	<h4>StAX - Streaming API for XML</h4>
+	
+	<p><strong>StAX</strong> é um projeto que foi desenvolvido pela empresa BEA e padronizado pela 
+	JSR-173. Ele é mais novo do que o SAX e foi criado para facilitar o trabalho com XML. 
+	StAX faz parte do Java SE 6 e JAX-P.</p>
+	
+	<p>Como o SAX, o StAX também lê os dados de maneira sequencial. A diferença entre os 
+	dois é a forma como é notificada a ocorrência de um evento. </p>
+	
+	<p>No Sax temos que registrar um <code>Handler</code>. É o SAX que avisa o <code>Handler</code> e chama
+	os métodos dele. Ele empurra os dados para o <code>Handler</code> e por isso ele é um parser 
+	do tipo <code>PUSH</code>, .</p>    
+	
+	<p>O StAX, ao contrário, não precisa deste Handler. Podemos usar a API do StAX para 
+	chamar seus métodos, quando e onde é preciso. O cliente decide, e não o parser. É 
+	ele quem pega/tira os dados do StAX e por isso é um parser do tipo <code>PULL</code>.</p> 
+	
+	<p>O site http://www.xmlpull.org fornece mais informações sobre a técnica de 
+	<strong>Pull Parsing</strong>, que tem sido considerada por muitos como a forma mais eficiente 
+	de processar documentos xml.</p>
+	
+	<p>A biblioteca XPP3 é a implementação em Java mais conhecida deste conceito. 
+	É usada por outras bibliotecas de processamento de xml, como o CodeHaus 
+	XStream.</p>
+</div>
+
+
+
+
+
+
+<h2>XStream</h2>
+
+<p>O <strong>XStream</strong> é uma alternativa perfeita para os casos de uso de XML em persistência, 
+transmissão de dados e configuração. Sua facilidade de uso e performance elevada são os 
+seus principais atrativos.</p> 
+
+<p>É um projeto hospedado na Codehaus, um repositório de código open source focado em Java, 
+que foi formado por desenvolvedores de famosos projetos como o XDoclet, PicoContainer e 
+Maven. O grupo é patrocinado por empresas como a ThoughWorks, BEA e Atlassian. Entre os 
+seis desenvolvedores do projeto, Guilherme Silveira da Caelum está também presente.</p>
+
+<p><a href="http://xstream.codehaus.org">http://xstream.codehaus.org</a></p>
+
+<p>Diversos projetos opensource, como o container de inversão de controle NanoContainer, o 
+framework de redes neurais Joone, dentre outros, passaram a usar XStream depois de 
+experiências com outras bibliotecas. O XStream é conhecido pela sua extrema facilidade de
+uso. Repare que raramente precisaremos fazer configurações ou mapeamentos, como é 
+extremamente comum nas outras bibliotecas mesmo para os casos mais básicos.</p>
+
+<p>Como gerar o XML de uma negociação? Primeiramente devemos ter uma referência ao bean. 
+Podemos simplesmente criar um e populá-lo, ou este pode ser, por exemplo, uma entidade do Hibernate.</p>
+
+<p>Com a referência <code>negocio</code> em mãos, basta agora pedirmos ao XStream que gera o XML correspondente:</p>
+
+<pre class="code java">
+	Negocio negocio = new Negocio(42.3, 100, Calendar.getInstance());
+
+	XStream stream = new XStream(new DomDriver());
+	System.out.println(stream.toXML(negocio));
+</pre>
+
+<p>E o resultado é:</p>
+
+<pre class="code xml">
+&lt;br.com.caelum.argentum.Negocio&gt;
+  &lt;preco&gt;42.3&lt;/preco&gt;
+  &lt;quantidade&gt;100&lt;/quantidade&gt;
+  &lt;data&gt;
+    &lt;time&gt;1220009639873&lt;/time&gt;
+    &lt;timezone&gt;America/Sao_Paulo&lt;/timezone&gt;
+  &lt;/data&gt;
+&lt;/br.com.caelum.argentum.Negocio&gt;
+</pre>
+
+<p>A classe XStream atua como <strong>façade</strong> de acesso para os principais recursos da biblioteca. 
+O construtor da classe XStream recebe como argumento um <code>Driver</code>, que é a engine que 
+vai gerar/consumir o XML. Aqui você pode definir se quer usar SAX, DOM, DOM4J dentre outros, 
+e com isso o XStream vai ser mais rápido, mais lento, usar mais ou menos memória, etc.</p>
+
+<p>O default do XStream é usar um driver chamado XPP3, desenvolvido na universidade de 
+Indiana e conhecido por ser extremamente rápido (leia mais no box de pull parsers). Para 
+usá-lo você precisa de um outro JAR no classpath do seu projeto.</p>
+
+<p>O método <code>toXML</code> retorna uma <code>String</code>. Isso pode gastar muita memória no caso de você 
+serializar uma lista grande de objetos. Ainda existe um overload do toXML, que além de um 
+<code>Object</code> recebe um <code>OutputStream</code> como argumento para você poder gravar diretamente num 
+arquivo, socket, etc.</p>
+ 
+<p>Diferentemente de outros parsers do Java, o XStream serializa por default os objetos através 
+de seus atributos (sejam privados ou não), e não através de getters e setters. </p>
+
+<p>Repare que o XStream gerou a tag raiz com o nome de <code>br.com.caelum.argentum.Negocio</code>. 
+Isso porque não existe um conversor para ela, então ele usa o próprio nome da classe e 
+gera o XML recursivamente para cada atributo não transiente daquela classe.</p>
+
+<p>Porém, muitas vezes temos um esquema de XML já muito bem definido, ou simplesmente não 
+queremos gerar um XML com cara de java. Para isso podemos utilizar um <code>alias</code>. Vamos 
+modificar nosso código que gera o XML:</p>
+
+<pre class="code java">
+	XStream stream = new XStream(new DomDriver());
+	stream.alias(&quot;negocio&quot;, Negocio.class);
+</pre>
+
+<p>Essa configuração também pode ser feita através da anotação <code>@XStramAlias("negocio")</code> em cima
+da classe <code>Negocio</code>.</p>
+
+<p>Podemos agora fazer o processo inverso. Dado um XML que representa um bean da nossa classe 
+<code>Negocio</code>, queremos popular esse bean. O código é novamente extremamente simples:</p>
+
+<pre class="code java">
+	XStream stream = new XStream(new DomDriver());
+	stream.alias(&quot;negocio&quot;, Negocio.class);
+	Negocio n = (Negocio) stream.fromXML(&quot;&lt;negocio&gt;&quot; +
+						&quot;&lt;preco&gt;42.3&lt;/preco&gt;&quot; +
+						&quot;&lt;quantidade&gt;100&lt;/quantidade&gt;&quot; +
+					     &quot;&lt;/negocio&gt;&quot;);
+	System.out.println(negocio.getPreco());
+</pre>
+
+<p>Obviamente não teremos um XML dentro de um código Java. O exemplo aqui é meramente 
+ilustrativo (útil em um teste!). Os atributos não existentes ficarão como <code>null</code> no 
+objeto, como é o caso aqui do atributo <code>data</code>, ausente no XML.</p>
+ 
+<p>O XStream possui um overload do método <code>fromXML</code> que recebe um <code>InputStream</code> como 
+argumento, outro que recebe um <code>Reader</code>. </p>
+
+<div class="box"><h4>JAXB ou XStream?</h4>
+	<p>A vantagem do JAXB é ser uma especificação da Sun, e a do XStream é ser mais flexível
+	e deixar trabalhar com classes imutáveis.</p>
+</div>
+
+<div class="box">
+	<h4>@XstreamAlias</h4>
+	
+	<p>Ao invés de chamar <code>stream.alias("negocio", Negocio.class);</code>, podemos fazer
+	essa configuração direto na classe <code>Negocio</code> com uma anotação:</p>
+	
+<pre class="code java" data-highlight="1">
+@XstreamAlias("negocio")
+public class Negocio {
+}
+</pre>
+	
+	<p>Para habilitar o suporte a anotações, precisamos chamar no <code>xstream</code>:</p>
+	
+<pre class="code java">
+	stream.autodetectAnnotations(true);
+</pre>
+	
+	<p>Ou então, se precisarmos processar as anotações de apenas uma única classe, basta
+	indicá-la, como abaixo:</p>
+	
+<pre class="code java">
+	stream.processAnnotations(Negocio.class);
+</pre>
+</div>
+
+<div class="note">
+	Pra trabalhar com classes imutaveis, o XStream faz um bypass dos construtores
+	atraves de recursos da JVM em questao, usando magicas... Cada VM possui metodos
+	internos que fazem newinstance sem passar pelo construtor (o framework
+	objenesis (googlecode) faz isso, usando esses recursos).
+</div>
+
+<h2 class="exercise">Exercícios: Lendo o XML</h2>
+
+<div class="question">
+	<p>texto</p>
+	<pre class>
+	
+	<div class="answer">
+		
+	</div>
+</div>
+
+
+<p class="exercise newquestion">Para usarmos o XStream, precisamos copiar seus JARs para o
+nosso projeto e adicioná-los no <u>Build Path</u>. Para facilitar, vamos criar
+uma pasta <strong>lib</strong> para colocar todos os arquivos JAR que necessitarmos.</p>
+
+<p>Clique com o botão direito no nome do projeto e vá em <strong>New > Folder</strong>:</p>
+	
+	<img src="img/new-folder.png"/>
+
+<p>Coloque o nome de <strong>lib</strong> e clique OK:</p>
+
+	<img src="img/folder-lib.png"/>
+	
+
+<p class="newquestion">Vamos instalar o XStream no nosso projeto. Vá na pasta <strong>Caelum</strong> no seu Desktop
+e entre em <strong>16</strong>. Localize o arquivo do xstream:</p>
+	
+	<img src="img/pasta-caelum.png"/>
+
+<p>Esse é o mesmo arquivo que é baixado do site do XStream.</p>
+
+<p>Copie esse arquivo para o seu Desktop. Dê dois cliques para abrir o descompactador 
+do Linux. Na próxima tela, clique em Extract:</p>
+	
+	<img src="img/extract.png"/>
+
+<p>Com o próprio Desktop selecionado, clique Extract:</p>
+	
+	<img src="img/extract-desktop.png"/>
+			
+
+<p class="newquestion">Entre na pasta <strong>xstream-1.3/lib</strong> no seu Desktop. Há vários JARs do XStream lá,
+vamos precisar apenas do <strong>xstream-1.3.jar</strong>. O restante são dependências que não
+precisamos. Copie esse JAR para dentro da sua pasta <code>lib</code> do projeto.</p>
+
+<p>Depois, pelo Eclipse, entre na pasta <strong>lib</strong>, de refresh nela, selecione o jar, clique com o botão
+direito e vá em	<strong>Build Path</strong>, <strong>Add to build path</strong>. A partir de agora o Eclipse
+considerará as classes do XStream para esse nosso projeto.</p>
+
+
+<p class="newquestion">Vamos agora, finalmente, implementar a leitura do XML, delegando o trabalho
+para o XStream. Criamos a classe <code>LeitorXML</code> dentro do pacote 
+<code>br.com.caelum.argentum.reader</code>:</p>
+		
+<pre class="code java numbered">
+package br.com.caelum.argentum.reader;
+
+// imports...
+
+public class LeitorXML {
+
+	public List&lt;Negocio&gt; carrega(Reader fonte) {
+		XStream stream = new XStream(new DomDriver());
+		stream.alias(&quot;negocio&quot;, Negocio.class);
+		return (List&lt;Negocio&gt;) stream.fromXML(fonte);
+	}
+
+}	
+</pre>
+
+<p class="newquestion">Crie um teste unitário <code>LeitorXMLTest</code> pelo Eclipse para testarmos a leitura do XML.
+Basta clicar com botão direito na classe <code>LeitorXML</code> e selecionar <strong>New > JUnit Test Case</strong>:</p>
+	<img src="img/new-testcase.png"/>
+
+<p>Lembre-se de colocá-lo no diretório <strong>src/test/java</strong>.</p>
+
+<p>Para não ter de criar um arquivo XML no sistema de arquivos, podemos usar
+um truque interessante: coloque o trecho do XML em uma String Java,
+e passe um <code>StringReader</code>:</p>
+		
+<pre class="code java">
+	@Test
+	public void testLeitorDeXmlCarregaListaDeNegocio() {
+		String xmlDeTeste = &quot;...&quot;; // o XML vai aqui!
+		
+		LeitorXML leitor = new LeitorXML();
+		List&lt;Negocio&gt; negocios = leitor.carrega(new StringReader(xmlDeTeste));
+	}
+</pre>
+
+<p>Use o seguinte XML de teste, <em>substituindo as reticências no código acima pelo texto abaixo:</em></p>
+		
+<pre class="code xml">
+	&lt;list&gt;
+		&lt;negocio&gt;
+			&lt;preco&gt;43.5&lt;/preco&gt;
+			&lt;quantidade&gt;1000&lt;/quantidade&gt;
+			&lt;data&gt;
+				&lt;time&gt;555454646&lt;/time&gt;
+			&lt;/data&gt;
+		&lt;/negocio&gt;
+	&lt;/list&gt;
+</pre>
+		
+<p>Faça algumas asserções:</p>
+
+<ul>
+  <li>a lista devolvida deve ter tamanho 1</li>
+  <li>o negócio deve ter preço 43.5</li>
+  <li>a quantidade deve ser 1000</li>
+</ul>
+		
+<p>Opcionalmente crie mais de um teste se possível, testando casos excepcionais,
+como XML inválido, zero negócios, e dados faltando.</p>
+
+
+<p class="newquestion">(importante, conceitual)
+E o que falta agora? Testar nosso código com um real XML?</p>
+
+<p>É muito comum sentirmos a vontade de fazer um teste "maior":
+um teste que realmente abre um <code>FileReader</code>, passa o XML
+para o <code>LeitorXML</code> e depois chama a <code>CandlestickFactory</code> para
+quebrar os negócios em candles.</p>
+
+<p>Esse teste seria quase um teste de integração, e não de unidade. Se
+criássemos esse teste, e ele falhasse, ficaria muito difícil de detectar
+o ponto de falha! Mais ainda: pode parecer difícil de perceber, mas
+já que testamos todas as peças (units) do nosso motor (aplicação), é muito provável
+que ele funcione quando rodado! Só falta testar as "ligas", que normalmente
+são bem leves e poucas (o tal do baixo acoplamento).</p>
+
+<p>Pensar em sempre testar as menores unidades possíveis força que a gente sempre
+crie programas com baixo acoplamento: poderíamos ter criado um <code>LeitorXML</code>
+que devolvesse diretamente uma <code>List<Candlestick></code>, já chamando a fábrica.
+Mas isso faria com que o nosso teste do leitor de XML testasse muito mais
+que apenas a leitura de XML (pois estaria passando pela nossa <code>CandlestickFactory</code>).</p>
+
+<div class="note">
+	As vezes nao da pra evitar e os nossos testes de unidade testam mais que a classe X.
+	o ideal é minimizar isso
+</div>
+
+<p class="newquestion">(opcional) Faça mais testes de unidade de outros casos com o <code>LeitorXML</code>.
+Algumas ideias:</p>
+
+<ul>
+ 	<li>Teste a leitura de XMLs com quantidades diferentes de negócios (1, 2, nenhum);</li>
+
+ 	<li>Teste a passagem de um XML com erros. O que deve acontecer? Uma <code>ConversionException</code>
+do XStream ocorre. Pense se seria interessante tratá-la dentro do Leitor ou não.</li>
+
+ 	<li>Teste a geração do XML (toXML) a partir da lista de negócios lida.</li>
+
+	<li>Faça mais etstes</li>
+</ul>
+
+
+<h1>Novo Capitulo</h1>
+<h1>Outro Capitulo</h1>
+
+
+
+</div>
+</body>
+</html>

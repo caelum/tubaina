@@ -1,0 +1,14 @@
+* Instale o Firefox 4.0 ou superior (nightly builds OK)
+
+* File > Page Setup. Escolha "A4 (Sheet Feeder - Borderless)" [ou crie um papel custom de tamanho 21 por 29.7cm com bordas 0]
+
+* Vá em about:config e procure por "margin". Mude para "0" todos os valores das chaves print.print_margin_*
+
+* File > Print. Marque as opções:
+   - Ignore scalling and shrink to fit page width
+   - Print Background Colors
+   - Print Background Images
+
+* Ainda nessa tela, deixe todos os campos de header e footer como '--blank--'
+
+* Salve em um PDF
