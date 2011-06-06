@@ -1,0 +1,904 @@
+[chapter Trabalhando com XML]
+[quote "Se eu enxerguei longe, foi por ter subido nos ombros de gigantes."--Isaac Newton]
+
+[note]
+	A explicacao sobre XML é bem rapida. Aqui esta mais como um guia basico de XML, mas na 
+	aula nao compensa ficar falando de caracteres de escape ou ficar detalhando algoritmos
+	de parsing de XML.
+	
+	Comente a sintaxe hierarquica, declarativa. Suas caracteristicas de interoperabilidade,
+	de ser um padrao. Comente que ha varias formas de se ler um XML, por exemplo carregar 
+	tudo pra memoria e montar uma arvore (DOM) ou ir lendo tag a tag e processar cada
+	acontecimento de abertura/fechamento de tag (SAX / StAX).
+	
+	Aí mostra um XML da bolsa com negocios e fala de APIs para le-los. Comenta que há
+	varias opcoes (JAX-*, uns Commons, XStream). Vamos usar XStream por ser muito facil
+	e suportar recursos que o JAX-* nao suporta (binding com classe imutavel).
+	
+	Mostra o toXML, fala do alias, mostra o fromXML.
+[/note]
+[section Os dados da bolsa de valores]
+
+Como vamos puxar os dados da bolsa de valores para popular nossos ::candles::?
+
+Existem inúmeros formatos para se trabalhar com diversas bolsas. Sem dúvida XML
+é um formato comumente encontrado em diversas indústrias, inclusive na bolsa de valores.
+
+Utilizaremos esse tal de XML. Para isso, precisamos conhecê-lo mais a fundo, seus objetivos,
+e como manipulá-lo. Considere que vamos consumir um arquivo XML como o que segue:
+
+[xml]
+	<list>
+		<negocio>
+			<preco>43.5</preco>
+			<quantidade>1000</quantidade>
+			<data>
+				<time>555454646</time>
+			</data>
+		</negocio>
+		<negocio>
+			<preco>44.1</preco>
+			<quantidade>700</quantidade>
+			<data>
+				<time>555454646</time>
+			</data>
+		</negocio>
+		<negocio>
+			<preco>42.3</preco>
+			<quantidade>1200</quantidade>
+			<data>
+				<time>559329406</time>
+			</data>
+		</negocio>
+	</list>
+[/xml]
+
+Uma lista de negócios! Cada negócio informa o preço, quantidade e uma data. Essa data
+é composta por um horário dado no formato de %%Timestamp%%, e opcionalmente um %%Timezone%%.
+
+[TODO mesma imagem da cecilia de XML flecha Grafico]
+
+[section XML]
+
+[note]
+Começa falando sobre XML, o que é, como usa, flexibilidade, onde e para que vem 
+sendo usado: comunicação, configuração,...
+
+::copiado do:: http://www.w3schools.com/xml/xml_whatis.asp
+
+	[list]
+	    * XML stands for EXtensible Markup Language
+	    * XML is a markup language much like HTML
+	    * XML was designed to carry data, not to display data
+	    * XML tags are not predefined. You must define your own tags
+	    * XML is designed to be self-descriptive
+	    * XML is a W3C Recommendation
+	[/list]
+[/note]
+
+**XML** (eXtensible Markup Language) é uma formalização da W3C para gerar linguagens 
+de marcação que podem se adaptar a quase qualquer tipo de necessidade. Algo bem extensível,
+flexível, de fácil leitura e hierarquização. Sua definição formal pode ser encontrada em:
+
+http://www.w3.org/XML/
+
+Exemplo de dados que são armazenados em XMLs e que não conhecemos tão bem, é o formato
+aberto de gráficos vetoriais, o SVG (usado pelo Corel Draw, Firefox, Inkscape, etc), e
+o Open Document Format (ODF), formato usado pelo OpenOffice, e hoje em dia um padrão
+ISO de extrema importância. (na verdade o ODF é um ZIP que contém XMLs internamente).
+
+A ideia era criar uma linguagem de marcação que fosse muito fácil de ser lida e gerada
+por softwares, e pudesse ser integrada as outras linguagens. Entre seus princípios
+básicos, definidos pelo W3C:
+
+[list]
+    * Separação do conteúdo da formatação
+    * Simplicidade e Legibilidade
+    * Possibilidade de criação de tags novas
+    * Criação de arquivos para validação (DTDs e schemas)
+[/list]
+
+O XML é uma excelente opção para documentos que precisam ter seus dados organizados com 
+uma certa hierarquia (uma árvore), com relação de pai-filho entre seus elementos. Esse 
+tipo de arquivo é dificilmente organizado com CSVs ou properties. Como a própria imagem 
+do wikipedia nos trás e mostra o uso estruturado e encadeado de maneira hierárquica do XML:
+
+[img images/xml/xml.png w=30%]
+
+O cabeçalho opcional de todo XML é o que se segue:
+
+[xml]
+<?xml version="1.0" encoding="ISO-8859-1"?>
+[/xml]
+
+Esses caracteres não devem ser usados como elemento, e devem ser "escapados":
+
+[list]
+ * &, use &amp;
+ * ', use &apos;
+ * ", use &quot;
+ * <, use &lt;
+ * >, use &gt;
+[/list]
+
+Você pode, em Java, utilizar a classe %%String%% e as regex do pacote %%java.util.regex%% 
+para criar um programa que lê um arquivo XML. Isso é uma grande perda de tempo, visto que 
+o Java, assim como quase toda e qualquer linguagem existente, possui uma ou mais formas 
+de ler um XML. O Java possui diversas, vamos ver algumas delas, suas vantagens e suas 
+desvantagens.
+
+[section Lendo XML com Java de maneira difícil, o SAX]
+
+O SAX (**Simple API for XML**) é uma API para ler dados em XML, também conhecido como 
+**Parser de XML**. Um parser serve para analisar uma estrutura de dados e geralmente o 
+que fazemos é transformá-la em uma outra. 
+
+Neste processo de análise também podemos ler o arquivo XML para procurar algum 
+determinado elemento e manipular seu conteúdo. 
+
+O parser lê os dados XML como um fluxo ou uma sequência de dados. Baseado no 
+conteúdo lido, o parser vai disparando eventos. É o mesmo que dizer que o parser 
+SAX funciona orientado a eventos.
+
+Existem vários tipos de eventos, por exemplo:
+
+[list]
+  * início do documento XML;
+  * início de um novo elemento;
+  * novo atributo;
+  * início do conteúdo dentro de um elemento.
+[/list]
+
+Para tratar estes eventos, o programador deve passar um objeto **listener** ao 
+parser que será notificado automaticamente pelo parser quando um desses eventos 
+ocorrer. Comumente, este objeto é chamado de **Handler**, **Observer**, ou 
+**Listener** e é quem faz o trabalho necessário de processamento do XML. 
+
+[java]
+    public class NegociacaoHandler extends DefaultHandler {
+
+  		@Override
+  		public void startDocument() throws SAXException {
+
+  		}
+	
+  		@Override
+  		public void startElement(String uri, String localName, 
+  					String name, Attributes attributes) throws SAXException {
+			// aqui voce é avisado, por exemplo
+			// do inicio da tag "<preco>"
+  		}
+	
+  		@Override
+  		public void characters(char[] chars, int offset, int len) throws SAXException {
+  			// aqui voce seria avisado do inicio
+  			// do conteudo que fica entre as tags, como por exemplo 30
+  			// de dentro de "<preco>30</preco>"
+  			
+  			// para saber o que fazer com esses dados, voce precisa antes ter
+  			// guardado em algum atributo qual era a negociação que estava
+  			// sendo percorrida
+  		}
+	
+  		@Override
+  		public void endElement(String uri, String localName, String name) throws SAXException {
+			// aviso de fechamento de tag
+  		}
+  	}
+[/java]
+
+A classe %%DefaultHandler%% permite que você reescreva métodos que vão te notificar sobre 
+quando um elemento (tag) está sendo aberto, quando está sendo fechado, quando caracteres 
+estão sendo parseados (conteúdo de uma tag), etc.. Você é o responsável por saber em que 
+posição do object model (árvore) está, e que atitude deve ser tomada. A interface 
+%%ContentHandler%% define mais alguns outros métodos.
+
+[note]
+	Coloque esse codigo na lousa, apesar de que nao vamos usar. Mostre pra eles
+	como isso ai ficaria complicado, cheio de ifs e Strings. Alguem logo dara a ideia
+	que voce deveria ai colocar um "controller" para disparar "commands".
+	
+	Discuta o design pattern Observer/Listener. Ele sera revisto no capitulo de Swing Basico.
+	
+	Nota do Sergio: eu nao coloco esse codigo na lousa e ainda passo batido nele :)
+	Nota do Paulo: é, tem de passar bem rapido aqui. Mas é importante que eles saibam
+	algumas siglas como Sax, Dom, etc.
+[/note] 
+
+[box Curiosidade sobre o SAX]
+	Originalmente o SAX foi escrito só para Java e vem de um projeto da comunidade 
+	(http://www.saxproject.org), mas existem outras implementações em C++, Perl 
+	e Python.  
+
+	O SAX está atualmente na versão 2 e faz parte do JAX-P (Java API for XML Processing).
+[/box]
+
+O SAX somente sabe ler dados e nunca modificá-los e só consegue ler para frente, 
+nunca para trás. Quando passou um determinado pedaço do XML que já foi lido, não há 
+mais como voltar. O parser SAX não guarda a estrutura do documento XML na memória. 
+
+Também não há como fazer acesso aleatório aos itens do documento XML, somente 
+sequencial.
+
+Por outro lado, como os dados vão sendo analisados e transformados (pelo Handler) 
+na hora da leitura, o SAX ocupa pouca memória, principalmente porque nunca 
+vai conhecer o documento inteiro e sim somente um pequeno pedaço. Devido também a 
+leitura sequencial, ele é muito rápido comparado com os parsers que analisam a 
+árvore do documento XML completo.
+
+Quando for necessário ler um documento em partes ou só determinado pedaço e apenas 
+uma vez, o SAX parser é uma excelente opção.
+
+[box StAX - Streaming API for XML]
+	**StAX** é um projeto que foi desenvolvido pela empresa BEA e padronizado pela 
+	JSR-173. Ele é mais novo do que o SAX e foi criado para facilitar o trabalho com XML. 
+	StAX faz parte do Java SE 6 e JAX-P.
+	
+	Como o SAX, o StAX também lê os dados de maneira sequencial. A diferença entre os 
+	dois é a forma como é notificada a ocorrência de um evento. 
+	
+	No Sax temos que registrar um %%Handler%%. É o SAX que avisa o %%Handler%% e chama
+	os métodos dele. Ele empurra os dados para o %%Handler%% e por isso ele é um parser 
+	do tipo %%PUSH%%, .    
+	
+	O StAX, ao contrário, não precisa deste Handler. Podemos usar a API do StAX para 
+	chamar seus métodos, quando e onde é preciso. O cliente decide, e não o parser. É 
+	ele quem pega/tira os dados do StAX e por isso é um parser do tipo %%PULL%%. 
+	
+	O site http://www.xmlpull.org fornece mais informações sobre a técnica de 
+	**Pull Parsing**, que tem sido considerada por muitos como a forma mais eficiente 
+	de processar documentos xml.
+	
+	A biblioteca XPP3 é a implementação em Java mais conhecida deste conceito. 
+	É usada por outras bibliotecas de processamento de xml, como o CodeHaus 
+	XStream.
+[/box]
+
+[TODO DOM]
+[TODO box JDOM]
+[TODO JAXB]
+[TODO XML binding e fazer analogia com mapeamento objeto relacional do hibernate]
+
+[section XStream]
+
+O **XStream** é uma alternativa perfeita para os casos de uso de XML em persistência, 
+transmissão de dados e configuração. Sua facilidade de uso e performance elevada são os 
+seus principais atrativos. 
+
+É um projeto hospedado na Codehaus, um repositório de código open source focado em Java, 
+que foi formado por desenvolvedores de famosos projetos como o XDoclet, PicoContainer e 
+Maven. O grupo é patrocinado por empresas como a ThoughWorks, BEA e Atlassian. Entre os 
+seis desenvolvedores do projeto, Guilherme Silveira da Caelum está também presente.
+
+http://xstream.codehaus.org
+
+Diversos projetos opensource, como o container de inversão de controle NanoContainer, o 
+framework de redes neurais Joone, dentre outros, passaram a usar XStream depois de 
+experiências com outras bibliotecas. O XStream é conhecido pela sua extrema facilidade de
+uso. Repare que raramente precisaremos fazer configurações ou mapeamentos, como é 
+extremamente comum nas outras bibliotecas mesmo para os casos mais básicos.
+
+Como gerar o XML de uma negociação? Primeiramente devemos ter uma referência ao bean. 
+Podemos simplesmente criar um e populá-lo, ou este pode ser, por exemplo, uma entidade do Hibernate.
+
+Com a referência %%negocio%% em mãos, basta agora pedirmos ao XStream que gera o XML correspondente:
+
+[java]
+	Negocio negocio = new Negocio(42.3, 100, Calendar.getInstance());
+
+	XStream stream = new XStream(new DomDriver());
+	System.out.println(stream.toXML(negocio));
+[/java]
+
+E o resultado é:
+
+[xml]
+    <br.com.caelum.argentum.Negocio>
+      <preco>42.3</preco>
+      <quantidade>100</quantidade>
+      <data>
+        <time>1220009639873</time>
+        <timezone>America/Sao_Paulo</timezone>
+      </data>
+    </br.com.caelum.argentum.Negocio>
+[/xml]
+
+A classe XStream atua como **façade** de acesso para os principais recursos da biblioteca. 
+O construtor da classe XStream recebe como argumento um %%Driver%%, que é a engine que 
+vai gerar/consumir o XML. Aqui você pode definir se quer usar SAX, DOM, DOM4J dentre outros, 
+e com isso o XStream vai ser mais rápido, mais lento, usar mais ou menos memória, etc.
+
+O default do XStream é usar um driver chamado XPP3, desenvolvido na universidade de 
+Indiana e conhecido por ser extremamente rápido (leia mais no box de pull parsers). Para 
+usá-lo você precisa de um outro JAR no classpath do seu projeto.
+
+O método %%toXML%% retorna uma %%String%%. Isso pode gastar muita memória no caso de você 
+serializar uma lista grande de objetos. Ainda existe um overload do toXML, que além de um 
+%%Object%% recebe um %%OutputStream%% como argumento para você poder gravar diretamente num 
+arquivo, socket, etc.
+ 
+Diferentemente de outros parsers do Java, o XStream serializa por default os objetos através 
+de seus atributos (sejam privados ou não), e não através de getters e setters. 
+
+Repare que o XStream gerou a tag raiz com o nome de %%br.com.caelum.argentum.Negocio%%. 
+Isso porque não existe um conversor para ela, então ele usa o próprio nome da classe e 
+gera o XML recursivamente para cada atributo não transiente daquela classe.
+
+Porém, muitas vezes temos um esquema de XML já muito bem definido, ou simplesmente não 
+queremos gerar um XML com cara de java. Para isso podemos utilizar um %%alias%%. Vamos 
+modificar nosso código que gera o XML:
+
+[java]
+	XStream stream = new XStream(new DomDriver());
+	stream.alias("negocio", Negocio.class);
+[/java]
+
+Essa configuração também pode ser feita através da anotação %%@XStramAlias("negocio")%% em cima
+da classe %%Negocio%%.
+
+Podemos agora fazer o processo inverso. Dado um XML que representa um bean da nossa classe 
+%%Negocio%%, queremos popular esse bean. O código é novamente extremamente simples:
+
+[java]
+	XStream stream = new XStream(new DomDriver());
+	stream.alias("negocio", Negocio.class);
+	Negocio n = (Negocio) stream.fromXML("<negocio>" +
+						"<preco>42.3</preco>" +
+						"<quantidade>100</quantidade>" +
+					     "</negocio>");
+	System.out.println(negocio.getPreco());
+[/java]
+
+Obviamente não teremos um XML dentro de um código Java. O exemplo aqui é meramente 
+ilustrativo (útil em um teste!). Os atributos não existentes ficarão como %%null%% no 
+objeto, como é o caso aqui do atributo %%data%%, ausente no XML.
+ 
+O XStream possui um overload do método %%fromXML%% que recebe um %%InputStream%% como 
+argumento, outro que recebe um %%Reader%%. 
+
+[box JAXB ou XStream?]
+	A vantagem do JAXB é ser uma especificação da Sun, e a do XStream é ser mais flexível
+	e deixar trabalhar com classes imutáveis.
+[/box]
+
+[box @XstreamAlias]
+	Ao invés de chamar %%stream.alias("negocio", Negocio.class);%%, podemos fazer
+	essa configuração direto na classe %%Negocio%% com uma anotação:
+	
+	[java h=1]
+	@XstreamAlias("negocio")
+	public class Negocio {
+	}
+	[/java]
+	
+	Para habilitar o suporte a anotações, precisamos chamar no %%xstream%%:
+	
+	[java]
+		stream.autodetectAnnotations(true);
+	[/java]
+	
+	Ou então, se precisarmos processar as anotações de apenas uma única classe, basta
+	indicá-la, como abaixo:
+	
+	[java]
+		stream.processAnnotations(Negocio.class);
+	[/java]
+[/box]
+
+[note]
+	Pra trabalhar com classes imutaveis, o XStream faz um bypass dos construtores
+	atraves de recursos da JVM em questao, usando magicas... Cada VM possui metodos
+	internos que fazem newinstance sem passar pelo construtor (o framework
+	objenesis (googlecode) faz isso, usando esses recursos).
+[/note]
+
+[section Exercícios: Lendo o XML]
+[exercise]
+	[question]
+		Para usarmos o XStream, precisamos copiar seus JARs para o
+		nosso projeto e adicioná-los no __Build Path__. Para facilitar, vamos criar
+		uma pasta **lib** para colocar todos os arquivos JAR que necessitarmos.
+		
+		Clique com o botão direito no nome do projeto e vá em **New > Folder**:
+			
+			[img images/xml/new-folder.png w=70]
+		
+		Coloque o nome de **lib** e clique OK:
+		
+			[img images/xml/folder-lib.png w=35]
+	[/question]
+	
+	[question]
+		Vamos instalar o XStream no nosso projeto. Vá na pasta **Caelum** no seu Desktop
+		e entre em **16**. Localize o arquivo do xstream:
+			
+			[img images/xml/pasta-caelum.png w=60]
+		
+		Esse é o mesmo arquivo que é baixado do site do XStream.
+		
+		Copie esse arquivo para o seu Desktop. Dê dois cliques para abrir o descompactador 
+		do Linux. Na próxima tela, clique em Extract:
+			
+			[img images/xml/extract.png w=65]
+		
+		Com o próprio Desktop selecionado, clique Extract:
+			
+			[img images/xml/extract-desktop.png w=60]
+			
+	[/question]
+	
+	[question]
+		Entre na pasta **xstream-1.3/lib** no seu Desktop. Há vários JARs do XStream lá,
+		vamos precisar apenas do **xstream-1.3.jar**. O restante são dependências que não
+		precisamos. Copie esse JAR para dentro da sua pasta %%lib%% do projeto.
+		
+		Depois, pelo Eclipse, entre na pasta **lib**, de refresh nela, selecione o jar, clique com o botão
+		direito e vá em	**Build Path**, **Add to build path**. A partir de agora o Eclipse
+		considerará as classes do XStream para esse nosso projeto.
+	[/question]
+	
+	[question]
+		Vamos agora, finalmente, implementar a leitura do XML, delegando o trabalho
+		para o XStream. Criamos a classe %%LeitorXML%% dentro do pacote 
+		%%br.com.caelum.argentum.reader%%:
+		
+		[java #]
+		package br.com.caelum.argentum.reader;
+
+		// imports...
+
+		public class LeitorXML {
+
+			public List<Negocio> carrega(Reader fonte) {
+				XStream stream = new XStream(new DomDriver());
+				stream.alias("negocio", Negocio.class);
+				return (List<Negocio>) stream.fromXML(fonte);
+			}
+	
+		}	
+		[/java]
+	[/question]
+	
+	[question]
+		Crie um teste unitário %%LeitorXMLTest%% pelo Eclipse para testarmos a leitura do XML.
+		Basta clicar com botão direito na classe %%LeitorXML%% e selecionar **New > JUnit Test Case**:
+			[img images/xml/new-testcase.png w=70]
+		
+		Lembre-se de colocá-lo no diretório **src/test/java**.
+		
+		Para não ter de criar um arquivo XML no sistema de arquivos, podemos usar
+		um truque interessante: coloque o trecho do XML em uma String Java,
+		e passe um %%StringReader%%:
+		
+		[java]
+			@Test
+			public void testLeitorDeXmlCarregaListaDeNegocio() {
+				String xmlDeTeste = "..."; // o XML vai aqui!
+				
+				LeitorXML leitor = new LeitorXML();
+				List<Negocio> negocios = leitor.carrega(new StringReader(xmlDeTeste));
+			}
+		[/java]
+
+		Use o seguinte XML de teste, ::substituindo as reticências no código acima pelo texto abaixo:::
+		
+		[xml]
+			<list>
+				<negocio>
+					<preco>43.5</preco>
+					<quantidade>1000</quantidade>
+					<data>
+						<time>555454646</time>
+					</data>
+				</negocio>
+			</list>
+		[/xml]
+		
+		Faça algumas asserções:
+		
+		[list]
+		  * a lista devolvida deve ter tamanho 1
+		  * o negócio deve ter preço 43.5
+		  * a quantidade deve ser 1000
+		[/list]
+				
+		Opcionalmente crie mais de um teste se possível, testando casos excepcionais,
+		como XML inválido, zero negócios, e dados faltando.
+	[/question]
+	
+	[question]
+		(importante, conceitual)
+		E o que falta agora? Testar nosso código com um real XML?
+		
+		É muito comum sentirmos a vontade de fazer um teste "maior":
+		um teste que realmente abre um %%FileReader%%, passa o XML
+		para o %%LeitorXML%% e depois chama a %%CandlestickFactory%% para
+		quebrar os negócios em candles.
+		
+		Esse teste seria quase um teste de integração, e não de unidade. Se
+		criássemos esse teste, e ele falhasse, ficaria muito difícil de detectar
+		o ponto de falha! Mais ainda: pode parecer difícil de perceber, mas
+		já que testamos todas as peças (units) do nosso motor (aplicação), é muito provável
+		que ele funcione quando rodado! Só falta testar as "ligas", que normalmente
+		são bem leves e poucas (o tal do baixo acoplamento).
+		
+		Pensar em sempre testar as menores unidades possíveis força que a gente sempre
+		crie programas com baixo acoplamento: poderíamos ter criado um %%LeitorXML%%
+		que devolvesse diretamente uma %%List<Candlestick>%%, já chamando a fábrica.
+		Mas isso faria com que o nosso teste do leitor de XML testasse muito mais
+		que apenas a leitura de XML (pois estaria passando pela nossa %%CandlestickFactory%%).
+		
+		[note]
+			As vezes nao da pra evitar e os nossos testes de unidade testam mais que a classe X.
+			o ideal é minimizar isso
+		[/note]
+	[/question]
+	[question]
+		(opcional) Faça mais testes de unidade de outros casos com o %%LeitorXML%%.
+		Algumas ideias:
+		
+		[list]
+		* Teste a leitura de XMLs com quantidades diferentes de negócios (1, 2, nenhum);
+		
+		* Teste a passagem de um XML com erros. O que deve acontecer? Uma %%ConversionException%%
+		do XStream ocorre. Pense se seria interessante tratá-la dentro do Leitor ou não.
+		
+		* Teste a geração do XML (toXML) a partir da lista de negócios lida.
+		[/list]
+	[/question]
+	
+[/exercise]
+
+[section Exercícios: Separando os candles]
+[TODO texto explicacao antes do exercicio, pros alunos nao seguirem direto]
+
+Poderíamos criar uma classe %%LeitorXML%% que pega todo o XML e converte em 
+candles, mas ela teria muita responsabilidade. Vamos cuidar da lógica que 
+separa os negócios em vários candles por datas em outro lugar.
+
+[exercise]
+	[question]
+		Vamos então, em nossa classe de factory, pegar uma série de negócios e 
+		transformar em uma lista de candles. Para isso vamos precisar separar 
+		os negócios que são da mesma data.
+	
+		Para saber se ainda estamos percorrendo negócios da mesma data, vamos usar
+		um método auxiliar que verifica se o dia, mês e ano são os mesmos.
+		
+		Seguindo os princípios do TDD, começamos escrevendo um teste na classe
+		%%CandlestickFactoryTest%%:
+		
+		[java]
+			@Test
+			public void testComparaMesmoDiaCalendar() {
+				CandlestickFactory factory = new CandlestickFactory();
+				Calendar data1 = Calendar.getInstance();
+				Calendar data2 = Calendar.getInstance();
+		
+				Assert.assertTrue(factory.isMesmoDia(data1, data2));
+			}
+		[/java]
+	
+		Esse código não vai compilar de imediato, já que não temos esse método
+		na nossa classe. No Eclipse, aperte **Ctrl + 1** em cima do erro e escolha
+		**Create method isMesmoDia**.
+		
+		[img images/xml/TDD-criando-metodo.png w=85]
+		
+		E qual será uma implementação interessante? Que tal simplificar usando
+		o método %%equals%% de %%Calendar%%? 
+		
+		[java]
+		public boolean isMesmoDia(Calendar data1, Calendar data2) {
+			return data1.equals(data2);
+		}
+		[/java]
+	
+		Rode o teste! Passa?
+	[/question]
+	
+	[question]
+		Nosso teste passou de primeira! Vamos tentar mais algum teste?
+		Vamos testar datas iguais em horas diferentes, 
+		crie o método a seguir na classe %%CandlestickFactoryTest%%:
+		
+	[java]
+	@Test
+	public void testComparaMesmoDiaHorasDiferentes() {
+		CandlestickFactory factory = new CandlestickFactory();
+		
+		// usando GregorianCalendar(year, month, day, hour, minute)
+		Calendar data1  = new GregorianCalendar(2008, 12, 25, 8, 30);
+		Calendar data2 = new GregorianCalendar(2008, 12, 25, 10, 30);
+		
+		Assert.assertTrue(factory.isMesmoDia(data1, data2));
+	}
+	[/java]		
+
+		Rode o teste. Não passa!
+	
+		Infelizmente, usar o %%equals%% não resolve nosso problema de comparação.
+		
+		Lembre que um %%Calendar%% possui um ::timestamp::, isso quer dizer que além do
+		dia, do mês e do ano, há também informações de hora, segundos etc. A
+		implementação correta que compara dia, mês e ano seria:
+
+		[java]
+		public boolean isMesmoDia(Calendar data1, Calendar data2) {
+			return data1.get(Calendar.DAY_OF_MONTH) == data2.get(Calendar.DAY_OF_MONTH)
+					&& data1.get(Calendar.MONTH) == data2.get(Calendar.MONTH)
+					&& data1.get(Calendar.YEAR) == data2.get(Calendar.YEAR);
+		}
+		[/java]	
+
+		**Altere o método** %%isMesmoDia%% na classe %%CandlestickFactory%% e rode os testes 
+		anteriores. Passamos agora?
+	[/question]
+
+	[question]
+		Próximo passo: dada uma lista de Negocios de várias datas diferentes mas
+		ordenada por data, quebrar em uma lista de Candlesticks, um para cada data.
+	
+		TDD: começamos pelo teste! **Adicione o método** %%testConstruirCandlesDeMuitosNegocios%% 
+		na classe %%CandlestickfactoryTest%%:
+		
+		[java #]
+		@Test
+		public void testConstruirCandlesDeMuitosNegocios() {
+			Calendar hoje = Calendar.getInstance();
+	
+			Negocio negocio1 = new Negocio(40.5, 100, hoje);
+			Negocio negocio2 = new Negocio(45.0, 100, hoje);
+			Negocio negocio3 = new Negocio(39.8, 100, hoje);
+			Negocio negocio4 = new Negocio(42.3, 100, hoje);
+	
+			Calendar amanha = (Calendar) hoje.clone();
+			amanha.add(Calendar.DAY_OF_MONTH, 1);
+	
+			Negocio negocio5 = new Negocio(48.8, 100, amanha);
+			Negocio negocio6 = new Negocio(49.3, 100, amanha);
+	
+			Calendar depois = (Calendar) amanha.clone();
+			depois.add(Calendar.DAY_OF_MONTH, 1);
+	
+			Negocio negocio7 = new Negocio(51.8, 100, depois);
+			Negocio negocio8 = new Negocio(52.3, 100, depois);
+	
+			List<Negocio> negocios = Arrays.asList(negocio1, negocio2, negocio3,
+					negocio4, negocio5, negocio6, negocio7, negocio8);
+	
+			CandlestickFactory fabrica = new CandlestickFactory();
+	
+			List<Candlestick> candles = fabrica.constroiCandles(negocios);
+	
+			Assert.assertEquals(3, candles.size());
+			Assert.assertEquals(40.5, candles.get(0).getAbertura(), 0.00001);
+			Assert.assertEquals(42.3, candles.get(0).getFechamento(), 0.00001);
+			Assert.assertEquals(48.8, candles.get(1).getAbertura(), 0.00001);
+			Assert.assertEquals(49.3, candles.get(1).getFechamento(), 0.00001);
+			Assert.assertEquals(51.8, candles.get(2).getAbertura(), 0.00001);
+			Assert.assertEquals(52.3, candles.get(2).getFechamento(), 0.00001);
+		}	
+		[/java]
+		
+		A chamada ao método %%constroiCandles%% não compila pois o método não
+		existe ainda. **Ctrl + 1** e **Create method**. 
+		
+		Como implementamos? Precisamos:
+		
+		[list]
+		* Criar a List<Candlestick>
+		* Percorrer a List<Negocio> adicionando cada negocio no Candlestick atual
+		* Quando achar um negócio de um novo dia, cria um Candlestick novo e adiciona
+		* Devolve a lista de candles
+		[/list]
+		
+		O código talvez fique um pouco grande. Ainda bem que temos nosso teste!
+		
+		[note]
+			Tem que explicar mto bem o codigo abaixo antes dos alunos fazerem o exercicio,
+			em especial o funcionamento do algoritmo.
+			
+			Antes de colocar codigo na lousa, faça um desenho para as pessoas entenderem
+			como isso funciona. Desenhe uma lista de varios negocios, identificando que
+			sao de dias diferentes. Ai desenhe a lista auxiliar ao lado e simule o
+			algoritmo de copia de uma lista pra outra. Esboço:
+			
+			todosNegocios = [1, 1, 1, 2, 2, 3, 3]
+			
+			negociosMesmoDia = [1, 1, 1] => Candlestick 1
+			                 = [2, 2]    => Candlestick 2
+			                 = [3, 3]    => Candlestick 3
+			                 
+			A frase chave é: "Pego a data do primeiro negócio, aí percorro os negócios
+			e vou adicionando na negociosMesmoDia enquanto for do mesmo dia. Quando achar
+			um negocio de dia diferente, paro, gero o candle e reinicio o negociosMesmoDia
+			com aquele último."
+		
+			Explique 30 vezes o algoritmo antes de partir pro código. No código, tente
+			seguir uma ordem didática, como a abaixo:
+			
+			- coloque a assinatura do método primeiro
+			- cria List<Candlestick> (1a linha)
+			- return candles (ultima linha)
+			- for (Negocio negocio: todosNegocios) {
+			
+			Mas como agrupar os negocios do mesmo dia? Vamos criar uma lista. Adiciona:
+			
+			- List<Negocio> negociosMesmoDia = new ArrayList<Negocio>();
+			- negociosMesmoDia.add(negocio);
+			
+			Aí fala: tenho que ter um jeito de saber se a data do negocio atual é do mesmo
+			dia que dos negocios anteriores (e referencia o desenho para entenderem), para
+			gerar o candle. Adiciona:
+			
+			- Calendar dataPrimeiro = todosNegocios.get(0).getData();
+			- if (!isMesmoDia(dataPrimeiro, negocio.getData())) {
+			- candles.add(constroiCandleParaData(dataPrimeiro, negociosMesmoDia));
+			
+			Agora, precisamos resetar a lista do mesmo dia:
+			
+			-  negociosMesmoDia = new ArrayList<Negocio>();
+			- dataPrimeiro = negocio.getData();
+			
+			Último detalhe: depois que percorre a lista, fica a última negociosDoMesmoDia
+			que precisamos converter em no último candle:
+			
+			- candles.add(constroiCandleParaData(dataPrimeiro, negociosMesmoDia));
+		
+		[/note]
+		
+	[java #]
+	public List<Candlestick> constroiCandles(List<Negocio> todosNegocios) {
+		List<Candlestick> candles = new ArrayList<Candlestick>();
+
+		// lista com negocios que sejam do mesmo dia que dataPrimeiro
+		List<Negocio> negociosMesmoDia = new ArrayList<Negocio>();
+		Calendar dataPrimeiro = todosNegocios.get(0).getData();
+
+		for (Negocio negocio : todosNegocios) {
+			// se não for mesmo dia, fecha candle e reinicia variáveis
+			if (!isMesmoDia(dataPrimeiro, negocio.getData())) {
+				candles.add(constroiCandleParaData(dataPrimeiro, negociosMesmoDia));
+				
+				negociosMesmoDia = new ArrayList<Negocio>();
+				dataPrimeiro = negocio.getData();
+			}
+			
+			negociosMesmoDia.add(negocio);
+		}
+
+		// adiciona último candle 
+		candles.add(constroiCandleParaData(dataPrimeiro, negociosMesmoDia));
+
+		return candles;
+	}
+	[/java]
+	
+		Rode o teste!
+		
+		[note]
+			Dependendo da turma, vale falar que "voce nao entende completamente esse codigo?
+			mas entende o teste? lembre-se sempre de confiar no teste, mais que no codigo.
+			se passa no seu criterio de teste, o codigo esta correto."
+			
+			Isso alivia um pouco para os alunos que estao tendo problemas com a logica do
+			algoritmo em si.
+		[/note]
+	[/question]
+[/exercise]
+
+[section Exercícios opcionais]
+
+[exercise]
+	[question]
+		E se passarmos para o método %%constroiCandles%% da fábrica uma lista de negócios que não
+		está na ordem crescente? O resultado vai ser candles em ordem diferentes,
+		e provavelmente com valores errados. Apesar da especificação dizer que os negócios
+		vem ordenados pela data, é boa prática programar defensivamente em relação
+		aos parâmetros recebidos.
+		
+		Aqui temos diversas opções. Uma delas é, caso algum  %%Negocio%% venha em ordem
+		diferente da crescente, lançamos uma exception, a %%IllegalStateException%%.
+		
+		Pra isso modificamos o código da seguinte forma:
+		
+		[java]
+			for (Negocio negocio : todosNegocios) {
+				if (dataPrimeiro.after(negocio.getData())) {
+					throw new IllegalStateException("negocios em ordem errada");
+				}
+				...
+			}
+		[/java]
+		
+		E criamos um teste que espera essa exceção ser lançada.
+		Crie o %%testConstruirCandlesComNegociosForaDeOrdem%% e
+		faça os devidos asserts. Basta usar o mesmo teste que tínhamos antes, porém
+		dessa vez adicionar os negócios com datas diferentes e não crescentes.
+		
+	[/question]
+	[question]
+		Vamos criar um gerador automático de arquivos para testes da bolsa.
+		Ele vai gerar 30 dias de candle, sendo que cada candle pode ser composto de 0 a 19 negócios.
+		Esses preços podem variar.
+		
+		[java #]
+			public class GeradorXMLAleatorio {
+			
+				public static void main(String[] args) {
+			
+					Calendar data = Calendar.getInstance();
+					Random random = new Random(123);
+					List<Negocio> negocios = new ArrayList<Negocio>();
+			
+					double valor = 40;
+					int quantidade = 1000;
+			
+					// 30 dias:
+					for (int i = 0; i < 30; i++) {
+			
+						// cada dia com 0 a 19 negocios dentro
+						for (int x = 0; x < random.nextInt(20); x++) {
+							// sobe 1,00 ou cai 1,00
+							valor += (random.nextInt(200) - 100) / 100.0;
+			
+							// sobe 100 ou desce 100
+							quantidade += (random.nextInt(200) - 100);
+			
+							Negocio n = new Negocio(valor, quantidade, data);
+							negocios.add(n);
+						}
+			
+						data = (Calendar) data.clone();
+						data.add(Calendar.DAY_OF_YEAR, 1);
+					}
+			
+					XStream stream = new XStream(new DomDriver());
+					stream.alias("negocio", Negocio.class);
+					System.out.println(stream.toXML(negocios));
+			
+				}
+			}
+		[/java]
+		
+		[TODO explicar passo a passo]
+		
+		Se você olhar o resultado do XML, verá que, por usarmos o mesmo objeto Calendar em vários lugares,
+		o XStream coloca referências no próprio XML evitando a cópia do mesmo dado. Mas talvez isso não
+		seja tão interessante na prática, pois é mais comum na hora de integrar sistemas, passar um XML
+		simples com todos os dados.
+		
+		A opção %%XStream.NO_REFERENCES%% serve para indicar ao XStream que não queremos que ele crie 'referências'
+		a tags que já foram serializadas igualzinhas. Você pode passar esse argumento para o método %%setMode%% do
+		XStream. Faça o teste sem e com essa opção para entender a diferença.
+		
+	[/question]
+
+	[question]
+		Faça com que %%Negocio%% seja um objeto %%Comparable%%, implementando
+		essa interface. O critério de comparação deve ser delegado para a data do negócio
+		(%%Calendar%% é %%Comparable%%).
+		
+		[TODO box do effecive java do comparable e codigo aqui]
+		
+		Agora podemos, logo no início do método, ordenar todos os negócios com 
+		%%Collections.sort%% e não precisamos mais verificar se os negócios estão vindo 
+		em ordem crescente!
+		
+		Perceba que mudamos uma regra de negócio, então teremos de refletir isso no
+		nosso teste unitário que estava com %%expected=IllegalStateException.class%% no caso
+		de vir em ordem errada.  O resultado agora com essa modificação
+		tem de dar o mesmo que com as datas crescentes.
+	[/question]
+	
+[/exercise]
+
+[TODO section Para saber mais: DTDs e Schemas]
+[TODO dtds é antigo, mais fraco, schema é tipado, XSD]
+[TODO
+	Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(new File("bolsa.xsd"));
+	unmarshaller.setSchema(schema);
+]
+
+[section Discussão em aula: Onde usar XML e o abuso do mesmo]
