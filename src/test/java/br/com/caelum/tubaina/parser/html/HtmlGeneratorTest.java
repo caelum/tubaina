@@ -133,37 +133,25 @@ public class HtmlGeneratorTest {
 		Book b = builder.build();
 		try {
 			generator.generate(b, temp);
-		} catch (TubainaException t) {
-			Assert.fail("Should not raise an exception");
+		} catch (TubainaException e) {
+			Assert.fail("Should not complain if one uses twice the same image");
 		}
-		// OK
 	}
 
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("Com imagens");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
-		try {
-			Book b = builder.build();
-			generator.generate(b, temp);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
-			// OK
-		}
+		Book b = builder.build();
+		generator.generate(b, temp);
 	}
 
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("teste");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "alguma coisa\n[chapter qualquer um]outra coisa"));
-		try {
-			Book b = builder.build();
-			generator.generate(b, temp);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
-			System.out.println(t.getMessage());
-			// OK
-		}
+		Book b = builder.build();
+		generator.generate(b, temp);
 	}
 
 	@Test
