@@ -8,8 +8,8 @@ public class QuestionTagTest {
 
 	@Test
 	public void testQuestionTag() {
-		QuestionTag tag = new QuestionTag();
-		Assert.assertEquals("<li>texto da questao</li>", tag.parse("texto da questao", null));
+		String result = new QuestionTag().parse("texto da questao", null);
+		Assert.assertEquals("<li class=\"question\">texto da questao</li>", result);
 	}
 
 	
