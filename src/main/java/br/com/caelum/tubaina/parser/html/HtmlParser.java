@@ -57,7 +57,7 @@ public class HtmlParser implements Parser {
 
     public String parseCode(String text, String options) {
         text = this.sanitizer.sanitize(text);
-        return new CodeTag(new SimpleIndentator()).parse(text, options);
+        return new CodeTag().parse(text, options);
     }
 
     public String parseList(String text, String options) {

@@ -3,7 +3,6 @@ package br.com.caelum.tubaina.parser.html;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class CodeTag implements Tag {
@@ -12,11 +11,6 @@ public class CodeTag implements Tag {
 	public static final String CLOSE_HEADER = ">\n";
 	public static final String END = "\n</pre>";
 
-	private final Indentator indentator;
-
-	public CodeTag(Indentator indentator) {
-		this.indentator = indentator;
-	}
 	public String parse(String content, String options) {
 		String preOptions = classAssembler(options);
 
