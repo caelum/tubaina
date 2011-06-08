@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Client Rect</title>
+    <meta charset="utf-8">
+    <style>
+      #tubaina {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="tubaina">
+      <h1>Título do Capítulo</h1>
+      <p>Um texto de parágrafo longo, longo mesmo, para ter várias linhas. A
+        intençnao é detectar quantas linhas tem um elemento e também qual é
+        a altura de cada uma das linhas de texto, para poder calcular com
+        maior precisão a quebra de páginas. Na verdade eu preciso que esse
+        texto tenha pelo menos meia dúzia de linhas para ver se funciona
+        direito essa função getClientRects. Mas quatro já tá bom. Tá, três.</p>
+    </div>
+
+    <script type="text/javascript" src="template/js/tubaina_utils.js"></script>
+    <script type="text/javascript">
+      var element = document.querySelector("#tubaina p");
+
+      var calculated = (parseFloat(element.computedStyle("line-height").replace('px', '')) * element.lineCount()).toFixed(1);
+      var direct = parseFloat(element.computedStyle('height').replace('px', ''));
+
+      console.log(calculated == direct);
+    </script>
+
+  </body>
+</html>
