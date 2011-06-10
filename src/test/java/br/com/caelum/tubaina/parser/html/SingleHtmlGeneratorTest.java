@@ -1,11 +1,10 @@
 package br.com.caelum.tubaina.parser.html;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -23,7 +22,6 @@ import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class SingleHtmlGeneratorTest {
 	private SingleHtmlGenerator generator;
-	private Book book;
 	private File directory;
 
 	@Before
@@ -37,12 +35,6 @@ public class SingleHtmlGeneratorTest {
 
 		generator = new SingleHtmlGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR);
 
-		BookBuilder builder = new BookBuilder("livro");
-		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
-				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
-				+ "texto da segunda seção\n\n"));
-		builder.add(new StringReader("[chapter Introdução]\n" + "Algum texto de introdução\n"));
-		book = builder.build();
 		directory = new File("tmp");
 		directory.mkdir();
 
@@ -55,6 +47,8 @@ public class SingleHtmlGeneratorTest {
 	
 	@Test
 	public void shouldCreateAppropriateDirectoryStructure() throws Exception {
+		Book book = createsSimpleBookWithTitle("livro");
+
 		generator.generate(book, directory);
 		
 		File bookRoot = new File(directory, "livro/");
@@ -63,14 +57,47 @@ public class SingleHtmlGeneratorTest {
 		assertTrue("should contain directory with chosen book name", bookRoot.exists());
 		assertTrue("should contain includes directory", includes.exists());
 	}
+
+	private Book createsSimpleBookWithTitle(String title) {
+		BookBuilder builder = new BookBuilder(title);
+		
+		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
+				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
+				+ "texto da segunda seção\n\n"));
+		
+		builder.add(new StringReader("[chapter Introdução]\n" + "Algum texto de introdução\n"));
+		
+		return builder.build();
+	}
 	
 	@Test
 	public void shouldCreateTheBookFile() throws Exception {
+		Book book = createsSimpleBookWithTitle("livro");
+		
 		generator.generate(book, directory);
 		
 		File bookRoot = new File(directory, "livro/");
 		File theBookItself = new File(bookRoot, "index.html");
 		
 		assertTrue("should create the index.html containing the whole book", theBookItself.exists());
+	}
+	
+	@Test
+	public void shouldCreateADirectoryForEachChapterThatContainsImages() throws Exception {
+		BookBuilder builder = new BookBuilder("Com Imagens");
+		builder.add(new StringReader("[chapter Um capítulo]\n" +
+										"Uma introdução com imagem: \n\n" +
+										"[img baseJpgImage.jpg]"));
+		Book imageBook = builder.build();
+
+		generator.generate(imageBook, directory);
+		
+		File bookRoot = new File(directory, "com-imagens/");
+		File firstChapter = new File(bookRoot, "um-capitulo/");
+		File firstChaptersImage = new File(firstChapter, "baseJpgImage.jpg");
+		
+		assertTrue(bookRoot.exists());
+		assertTrue(firstChapter.exists());
+		assertTrue(firstChaptersImage.exists());
 	}
 }

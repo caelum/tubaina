@@ -48,6 +48,7 @@ public class ChapterToString {
 		map.put("book", book);
 		map.put("chapter", chapter);
 		map.put("parser", parser);
+		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "singlehtml/chapter.ftl");
 	}
 	

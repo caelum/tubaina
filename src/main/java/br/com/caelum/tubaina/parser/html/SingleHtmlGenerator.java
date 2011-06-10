@@ -42,9 +42,10 @@ public class SingleHtmlGenerator {
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);
 		cfg.setObjectWrapper(new BeansWrapper());
-
-		File bookRoot = new File(directory, book.getName());
+		
+		File bookRoot = new File(directory, Utilities.toDirectoryName(null, book.getName()));
 		bookRoot.mkdir();
+		
 		StringBuffer bookContent = createBookHeader(book, cfg);
 		
 		for (Chapter c : book.getChapters()) {
@@ -81,8 +82,6 @@ public class SingleHtmlGenerator {
 
 		boolean resourceCopyFailed = false;
 
-		
-		
 		// Dependencies (CSS, images, javascripts)
 		File includes = new File(templateDir, "singlehtml/includes/");
 
@@ -92,13 +91,11 @@ public class SingleHtmlGenerator {
 		Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
 
 		for (Chapter c : book.getChapters()) {
-			File chapdir = new File(bookRoot, Utilities.toDirectoryName(null, c.getTitle()));
-
-			File resources = new File(chapdir, "../resources/");
-			resources.mkdir();
+			File chapterDirectory = new File(bookRoot, Utilities.toDirectoryName(null, c.getTitle()));
+			chapterDirectory.mkdir();
 
 			File logo = new File(templateDir, "html/logo.png");
-			ResourceManipulator manipulator = new HtmlResourceManipulator(resources, indexes, logo);
+			ResourceManipulator manipulator = new HtmlResourceManipulator(chapterDirectory, indexes, logo);
 
 			for (Resource r : c.getResources()) {
 				try {
