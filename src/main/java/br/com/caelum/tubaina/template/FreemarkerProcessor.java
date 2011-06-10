@@ -1,9 +1,5 @@
 package br.com.caelum.tubaina.template;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
@@ -21,20 +17,6 @@ public class FreemarkerProcessor {
 
 	public FreemarkerProcessor(final Configuration configuration) {
 		this.configuration = configuration;
-	}
-
-	@Deprecated
-	public void processToFile(final Map<String, Object> map, final File destination, final String template)
-			throws IOException {
-		LOG.info(String.format("Processing template %s into file %s", template, destination.getCanonicalPath()));
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(destination), "UTF-8"));
-		try {
-			Template temp = configuration.getTemplate(template);
-			temp.process(map, out);
-		} catch (Exception e) {
-			throw new TubainaException(e);
-		}
-		out.flush();
 	}
 
 	public StringBuffer process(final Map<String, Object> map, final String template) {
