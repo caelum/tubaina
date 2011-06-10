@@ -22,6 +22,7 @@ import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.HtmlGenerator;
 import br.com.caelum.tubaina.parser.html.HtmlParser;
+import br.com.caelum.tubaina.parser.html.SingleHtmlGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -127,7 +128,18 @@ public class TubainaBuilder {
 			}
 		}
 
-		
+		if (parseType.equals(ParseTypes.SINGLE_HTML)) {
+			HtmlParser htmlParser = new HtmlParser(conf.read(
+					"/regex.properties", "/html.properties"), noAnswer);
+			SingleHtmlGenerator generator = new SingleHtmlGenerator(htmlParser, templateDir);
+			File file = new File(outputDir, "singlehtml");
+			FileUtils.forceMkdir(file);
+			try {
+				generator.generate(b, file);
+			} catch (TubainaException e) {
+				LOG.warn(e.getMessage());
+			}
+		}
 	}
 
 	static List<Reader> getAfcsFrom(final File file)

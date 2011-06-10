@@ -19,7 +19,7 @@ public class SectionToString {
 
 	private final List<String> dirTree;
 
-	public SectionToString(final Parser parser, final Configuration cfg, final List<String> dirTree) {
+	public SectionToString(Parser parser, Configuration cfg, List<String> dirTree) {
 		this.parser = parser;
 		this.cfg = cfg;
 		this.dirTree = dirTree;
@@ -63,6 +63,13 @@ public class SectionToString {
 		map.put("anchorlink", dirTree.get(currentDir).split("#")[1]);
 
 		return new FreemarkerProcessor(cfg).process(map, "html/section-flat.ftl");
+	}
+
+	public StringBuffer generateSingleHtmlSection(Section s) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("section", s);
+		map.put("parser", parser);
+		return new FreemarkerProcessor(cfg).process(map, "singlehtml/section.ftl");
 	}
 
 }

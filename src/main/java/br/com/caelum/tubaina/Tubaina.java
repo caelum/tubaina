@@ -46,9 +46,11 @@ public class Tubaina {
 			type = ParseTypes.HTMLFLAT;
 		} else if (cmd.hasOption("latex")) {
 			type = ParseTypes.LATEX;
+		} else if (cmd.hasOption("singlehtml")){
+			type = ParseTypes.SINGLE_HTML;
 		} else {
 			throw new TubainaException(
-					"Argumento --html, --htmlflat ou --latex é obrigatório");
+					"Argumento --html, --htmlflat, --singlehtml ou --latex é obrigatório");
 		}
 		TubainaBuilder builder = new TubainaBuilder(type, cmd
 				.getOptionValue('n'));
@@ -105,7 +107,9 @@ public class Tubaina {
 		options.addOption("html", "html", false,
 				"generates an html output on given outputdir");
 		options.addOption("htmlflat", "htmlflat", false,
-		"generates an flat html output on given outputdir");
+				"generates an flat html output on given outputdir");
+		options.addOption("singlehtml", "singlehtml", false,
+				"outputs the whole textbook in a single html file");
 
 		options.addOption("h", "help", false, "print this message");
 		// inputdir
@@ -154,7 +158,7 @@ public class Tubaina {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter
 				.printHelp(
-						"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname>",
+						"tubaina [-html|-latex|-htmlflat|-singlehtml] -i <inputdir> -o <outputdir> -n <bookname>",
 						options);
 	}
 
