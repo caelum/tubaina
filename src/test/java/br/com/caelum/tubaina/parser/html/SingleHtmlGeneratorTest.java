@@ -88,6 +88,9 @@ public class SingleHtmlGeneratorTest {
 		builder.add(new StringReader("[chapter Um capítulo]\n" +
 										"Uma introdução com imagem: \n\n" +
 										"[img baseJpgImage.jpg]"));
+		builder.add(new StringReader("[chapter Outro capítulo]\n" +
+										"Uma introdução com imagem: \n\n" +
+										"[img basePngImage.png]"));
 		Book imageBook = builder.build();
 
 		generator.generate(imageBook, directory);
@@ -95,9 +98,13 @@ public class SingleHtmlGeneratorTest {
 		File bookRoot = new File(directory, "com-imagens/");
 		File firstChapter = new File(bookRoot, "um-capitulo/");
 		File firstChaptersImage = new File(firstChapter, "baseJpgImage.jpg");
+		File secondChapter = new File(bookRoot, "outro-capitulo/");
+		File secondChaptersImage = new File(secondChapter, "basePngImage.png");
 		
 		assertTrue(bookRoot.exists());
 		assertTrue(firstChapter.exists());
 		assertTrue(firstChaptersImage.exists());
+		assertTrue(secondChapter.exists());
+		assertTrue(secondChaptersImage.exists());
 	}
 }
