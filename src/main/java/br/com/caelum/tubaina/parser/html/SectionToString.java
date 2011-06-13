@@ -69,7 +69,7 @@ public class SectionToString {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("section", s);
 		map.put("parser", parser);
-		return new FreemarkerProcessor(cfg).process(map, "singlehtml/section.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
 
 }

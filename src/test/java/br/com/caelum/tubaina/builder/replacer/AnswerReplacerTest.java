@@ -26,7 +26,7 @@ public class AnswerReplacerTest {
 	}
 
 	@Test
-	public void testReplacesCorrectAnswer() {
+	public void canReplaceAnswerTagProperlyOpenedAndClosed() {
 		String answer = "[answer]ola mundo[/answer] ola resto";
 		Assert.assertTrue(replacer.accepts(answer));
 		String resto = replacer.execute(answer, chunks);
@@ -36,14 +36,14 @@ public class AnswerReplacerTest {
 	}
 
 	@Test(expected=TubainaException.class)
-	public void testDoesntAcceptWithoutEndTag() {
+	public void cantAcceptAnswerWithoutEndTag() {
 		String answer = "[answer]ola mundo ola resto";
 		Assert.assertTrue(replacer.accepts(answer));
 		replacer.execute(answer, chunks);
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testDoesntAcceptWithoutBeginTag() {
+	public void cantAcceptAnswerWithoutBeginTag() {
 		String answer = "ola mundo[/answer] ola resto";
 		Assert.assertFalse(replacer.accepts(answer));
 		replacer.execute(answer, chunks);

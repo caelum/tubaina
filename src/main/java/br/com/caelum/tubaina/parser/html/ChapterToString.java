@@ -49,7 +49,7 @@ public class ChapterToString {
 		map.put("chapter", chapter);
 		map.put("parser", parser);
 		map.put("sanitizer", new HtmlSanitizer());
-		return new FreemarkerProcessor(cfg).process(map, "singlehtml/chapter.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
 	}
 	
 	public StringBuffer generateFlatChapterHead(final Book b, final Chapter c, final int index, final int currentDir) {

@@ -1,6 +1,7 @@
 package br.com.caelum.tubaina.parser.html;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
@@ -106,5 +107,24 @@ public class SingleHtmlGeneratorTest {
 		assertTrue(firstChaptersImage.exists());
 		assertTrue(secondChapter.exists());
 		assertTrue(secondChaptersImage.exists());
+	}
+
+	@Test
+	public void shouldNotCreateADirectoryChapterThatDoesntContainAnyImages() throws Exception {
+		BookBuilder builder = new BookBuilder("Com Imagens");
+		builder.add(new StringReader("[chapter Um capítulo]\n" +
+				"Uma introdução com imagem:\n"));
+		builder.add(new StringReader("[chapter Outro capítulo]\n" +
+				"Uma introdução com imagem: \n\n" +
+				"[img basePngImage.png]"));
+		Book imageBook = builder.build();
+		
+		generator.generate(imageBook, directory);
+		
+		File bookRoot = new File(directory, "com-imagens/");
+		File firstChapter = new File(bookRoot, "um-capitulo/");
+		
+		assertTrue(bookRoot.exists());
+		assertFalse(firstChapter.exists());
 	}
 }
