@@ -132,10 +132,10 @@ public class TubainaBuilder {
 			HtmlParser htmlParser = new HtmlParser(conf.read(
 					"/regex.properties", "/html.properties"), noAnswer);
 			SingleHtmlGenerator generator = new SingleHtmlGenerator(htmlParser, templateDir);
-			File file = new File(outputDir, "singlehtml");
-			FileUtils.forceMkdir(file);
+			File output = new File(outputDir, "singlehtml");
+			FileUtils.forceMkdir(output);
 			try {
-				generator.generate(b, file);
+				generator.generate(b, output);
 			} catch (TubainaException e) {
 				LOG.warn(e.getMessage());
 			}
