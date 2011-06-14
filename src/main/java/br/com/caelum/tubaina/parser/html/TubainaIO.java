@@ -43,10 +43,9 @@ public class TubainaIO {
 		return directory;
 	}
 	
-
 	private void copyResources(Book book, File bookRoot) throws IOException {
 		File templateIncludes = new File(templateDir, "includes/");
-		NotFileFilter excludingVersionControlFiles = new NotFileFilter(new NameFileFilter(Arrays.asList("CVS", ".svn")));
+		NotFileFilter excludingVersionControlFiles = new NotFileFilter(new NameFileFilter(Arrays.asList("CVS", ".svn", ".git")));
 		FileUtilities.copyDirectoryToDirectory(templateIncludes, bookRoot, excludingVersionControlFiles);
 
 		//TODO: desperately refactor this...
@@ -57,14 +56,16 @@ public class TubainaIO {
 			if(!chapter.getResources().isEmpty())
 				resourceCopyFailed = copyChaptersResources(bookRoot, chapter, indexes);
 		}
-		
+
 		if (resourceCopyFailed) {
 			throw new TubainaException("Couldn't copy some resources. See the Logger for further information");
 		}
 	}
 	
 	private boolean copyChaptersResources(File bookRoot, Chapter chapter, Map<String, Integer> indexes) {
+		//TODO: remove this asap too
 		File logo = new File(templateDir, "html/logo.png");
+		
 		File chapterDirectory = new File(bookRoot, Utilities.toDirectoryName(null, chapter.getTitle()));
 		chapterDirectory.mkdir();
 		ResourceManipulator manipulator = new HtmlResourceManipulator(chapterDirectory, indexes, logo);

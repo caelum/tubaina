@@ -35,18 +35,16 @@ public class FlatHtmlGenerator {
 
 	private final File templateDir;
 
+	private Configuration cfg;
+
 	public FlatHtmlGenerator(final HtmlParser parser, final boolean shouldValidateXHTML, final File templateDir) {
 		this.parser = parser;
 		this.shouldValidateXHTML = shouldValidateXHTML;
 		this.templateDir = templateDir;
+		configureFreemarker();
 	}
 
 	public void generate(final Book b, final File directory) throws IOException {
-		// FreeMarker configuration
-		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(templateDir);
-		cfg.setObjectWrapper(new BeansWrapper());
-
 		List<String> dirTree = createDirTree(b, directory);
 
 		StringBuffer sb = new BookToTOC().generateTOC(b, cfg, dirTree);
@@ -57,8 +55,8 @@ public class FlatHtmlGenerator {
 		for (Chapter c : b.getChapters()) {
 			int curdir = currentDir++;
 			StringBuffer chHead = new ChapterToString(parser, cfg, dirTree).generateFlatChapterHead(b, c, chapterIndex, curdir);
-			StringBuffer chTail = new ChapterToString(parser, cfg, dirTree).generateFlatChapterTail(b, c, chapterIndex, curdir);
 			StringBuffer chFullText = new StringBuffer().append(chHead);
+			StringBuffer chTail = new ChapterToString(parser, cfg, dirTree).generateFlatChapterTail(b, c, chapterIndex, curdir);
 
 			int sectionIndex = 1;
 			for (Section s : c.getSections()) {
@@ -83,6 +81,16 @@ public class FlatHtmlGenerator {
 		}
 
 		copyResources(b, root, dirTree, cfg);
+	}
+
+	private void configureFreemarker() {
+		cfg = new Configuration();
+		try {
+			cfg.setDirectoryForTemplateLoading(templateDir);
+		} catch (IOException e) {
+			new TubainaException("Couldn't load freemarker templates for Flat HTML mode", e);
+		}
+		cfg.setObjectWrapper(new BeansWrapper());
 	}
 
 	private List<String> createDirTree(final Book b, final File parent) {
