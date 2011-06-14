@@ -50,11 +50,14 @@ public class TubainaIO {
 
 		//TODO: desperately refactor this...
 		Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
-
+		
+		File resourcesDirectory = new File(bookRoot.getParent(), "resources/");
+		resourcesDirectory.mkdir();
+		
 		boolean resourceCopyFailed = false;
 		for (Chapter chapter : book.getChapters()) {
 			if(!chapter.getResources().isEmpty())
-				resourceCopyFailed = copyChaptersResources(bookRoot, chapter, indexes);
+				resourceCopyFailed = copyChaptersResources(resourcesDirectory, chapter, indexes);
 		}
 
 		if (resourceCopyFailed) {
@@ -62,13 +65,11 @@ public class TubainaIO {
 		}
 	}
 	
-	private boolean copyChaptersResources(File bookRoot, Chapter chapter, Map<String, Integer> indexes) {
+	private boolean copyChaptersResources(File resourcesDirectory, Chapter chapter, Map<String, Integer> indexes) {
 		//TODO: remove this asap too
-		File logo = new File(templateDir, "html/logo.png");
+		File logo = new File(templateDir, "logo.png");
 		
-		File chapterDirectory = new File(bookRoot, Utilities.toDirectoryName(null, chapter.getTitle()));
-		chapterDirectory.mkdir();
-		ResourceManipulator manipulator = new HtmlResourceManipulator(chapterDirectory, indexes, logo);
+		ResourceManipulator manipulator = new HtmlResourceManipulator(resourcesDirectory , indexes, logo);
 		for (Resource r : chapter.getResources()) {
 			try {
 				r.copyTo(manipulator);

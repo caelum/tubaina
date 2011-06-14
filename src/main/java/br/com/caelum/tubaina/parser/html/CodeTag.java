@@ -27,7 +27,7 @@ public class CodeTag implements Tag {
 	
 	private String detectLanguage(String options) {
 		if (options != null) {
-			String languageCandidate = options.split(" ")[0];
+			String languageCandidate = options.trim().split(" ")[0];
 			if (!languageCandidate.contains("#") && !languageCandidate.startsWith("h=") && !languageCandidate.isEmpty())
 				return " " + languageCandidate;
 		}

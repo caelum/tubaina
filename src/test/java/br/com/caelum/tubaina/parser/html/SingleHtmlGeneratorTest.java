@@ -97,15 +97,13 @@ public class SingleHtmlGeneratorTest {
 		generator.generate(imageBook, directory);
 		
 		File bookRoot = new File(directory, "com-imagens/");
-		File firstChapter = new File(bookRoot, "um-capitulo/");
-		File firstChaptersImage = new File(firstChapter, "baseJpgImage.jpg");
-		File secondChapter = new File(bookRoot, "outro-capitulo/");
-		File secondChaptersImage = new File(secondChapter, "basePngImage.png");
+		File resources = new File(bookRoot.getParentFile(), "resources/");
+		File firstChaptersImage = new File(resources, "baseJpgImage.jpg");
+		File secondChaptersImage = new File(resources, "basePngImage.png");
 		
 		assertTrue(bookRoot.exists());
-		assertTrue(firstChapter.exists());
+		assertTrue(resources.exists());
 		assertTrue(firstChaptersImage.exists());
-		assertTrue(secondChapter.exists());
 		assertTrue(secondChaptersImage.exists());
 	}
 
