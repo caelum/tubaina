@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.SimpleIndentator;
-
 
 public class CodeTagTest {
 	

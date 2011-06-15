@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class SectionToStringTest {
 	@Before
 	public void setUp() throws IOException {
 		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(TubainaBuilder.DEFAULT_TEMPLATE_DIR);
+		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
 		cfg.setObjectWrapper(new BeansWrapper());
 
 		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
@@ -48,7 +49,7 @@ public class SectionToStringTest {
 	@Test
 	public void testSection() {
 		Section section = createSection("este é o texto da seção");
-		String string = sectionToString.generateSection(new BookBuilder("").build(), "capitulo", 7, section, 4, 2)
+		String string = sectionToString.generateSection(new BookBuilder("livro").build(), "capitulo", 7, section, 4, 2)
 				.toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
@@ -58,7 +59,7 @@ public class SectionToStringTest {
 	@Test
 	public void testFlatSection() {
 		Section section = createSection("este é o texto da seção");
-		String string = sectionToString.generateSection(new BookBuilder("").build(), "capitulo", 7, section, 4, 2)
+		String string = sectionToString.generateSection(new BookBuilder("livro").build(), "capitulo", 7, section, 4, 2)
 				.toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));

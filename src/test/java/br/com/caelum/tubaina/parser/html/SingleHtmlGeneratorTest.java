@@ -1,7 +1,7 @@
 package br.com.caelum.tubaina.parser.html;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,12 +97,10 @@ public class SingleHtmlGeneratorTest {
 		generator.generate(imageBook, directory);
 		
 		File bookRoot = new File(directory, "com-imagens/");
-		File resources = new File(bookRoot.getParentFile(), "resources/");
-		File firstChaptersImage = new File(resources, "baseJpgImage.jpg");
-		File secondChaptersImage = new File(resources, "basePngImage.png");
+		File firstChaptersImage = new File(bookRoot, "baseJpgImage.jpg");
+		File secondChaptersImage = new File(bookRoot, "basePngImage.png");
 		
 		assertTrue(bookRoot.exists());
-		assertTrue(resources.exists());
 		assertTrue(firstChaptersImage.exists());
 		assertTrue(secondChaptersImage.exists());
 	}

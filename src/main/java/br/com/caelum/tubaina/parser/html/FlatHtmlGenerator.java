@@ -16,6 +16,8 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.io.TubainaDir;
+import br.com.caelum.tubaina.io.TubainaHtmlIO;
 import br.com.caelum.tubaina.resources.HtmlResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceManipulator;
@@ -40,38 +42,42 @@ public class FlatHtmlGenerator {
 	public FlatHtmlGenerator(final HtmlParser parser, final boolean shouldValidateXHTML, final File templateDir) {
 		this.parser = parser;
 		this.shouldValidateXHTML = shouldValidateXHTML;
-		this.templateDir = templateDir;
+		this.templateDir = new File(templateDir, "html/");
 		configureFreemarker();
 	}
 
-	public void generate(final Book b, final File directory) throws IOException {
-		List<String> dirTree = createDirTree(b, directory);
-
-		StringBuffer sb = new BookToTOC().generateTOC(b, cfg, dirTree);
-		File root = saveToFile(new File(directory, dirTree.get(0)), sb);
-
+	public void generate(Book book, File directory) throws IOException {
+		TubainaDir bookRoot = new TubainaHtmlIO(templateDir).createTubainaDir(directory, book);
+		
+		List<String> dirTree = createDirTree(book, directory);
+		StringBuffer toc = new BookToTOC().generateTOC(book, cfg, dirTree);
+		bookRoot.writeIndex(toc);
+		
+		
 		int chapterIndex = 1;
 		int currentDir = 1;
-		for (Chapter c : b.getChapters()) {
+		for (Chapter chapter : book.getChapters()) {
 			int curdir = currentDir++;
-			StringBuffer chHead = new ChapterToString(parser, cfg, dirTree).generateFlatChapterHead(b, c, chapterIndex, curdir);
+			StringBuffer chHead = new ChapterToString(parser, cfg, dirTree).generateFlatChapterHead(book, chapter, chapterIndex, curdir);
 			StringBuffer chFullText = new StringBuffer().append(chHead);
-			StringBuffer chTail = new ChapterToString(parser, cfg, dirTree).generateFlatChapterTail(b, c, chapterIndex, curdir);
 
 			int sectionIndex = 1;
-			for (Section s : c.getSections()) {
-				if (s.getTitle() != null) { // intro
-					sb = new SectionToString(parser, cfg, dirTree).generateFlatSection(b, c.getTitle(), chapterIndex, s,
-							sectionIndex, currentDir);
-					chFullText.append(sb);
+			for (Section section : chapter.getSections()) {
+				if (section.getTitle() != null) { // intro
+					toc = new SectionToString(parser, cfg, dirTree).generateFlatSection(book, chapter.getTitle(), chapterIndex, 
+																								section, sectionIndex, currentDir);
+					chFullText.append(toc);
 					currentDir++;
 					sectionIndex++;
 				}
 			}
 			
+			StringBuffer chTail = new ChapterToString(parser, cfg, dirTree).generateFlatChapterTail(book, chapter, chapterIndex, curdir);
 			chFullText.append(chTail);
-			
-			saveToFile(new File(directory, dirTree.get(curdir)), chFullText);
+
+			bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle()))
+					.writeIndex(chFullText)
+					.writeResources(chapter.getResources());
 
 			chapterIndex++;
 		}
@@ -80,7 +86,11 @@ public class FlatHtmlGenerator {
 			validateXHTML(directory, dirTree);
 		}
 
-		copyResources(b, root, dirTree, cfg);
+		// TODO: this won't work
+		Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
+		StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes);
+		bookRoot.cd("index")
+				.writeIndex(index);
 	}
 
 	private void configureFreemarker() {
@@ -141,7 +151,6 @@ public class FlatHtmlGenerator {
 
 		// Dependencies (CSS, images, javascripts)
 		File includes = new File(templateDir, "html/includes/");
-
 		FileUtilities.copyDirectoryToDirectory(includes, directory, new NotFileFilter(new NameFileFilter(new String[] {
 				"CVS", ".svn" })));
 

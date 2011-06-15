@@ -2,7 +2,9 @@ package br.com.caelum.tubaina.parser.html;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -11,6 +13,9 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.io.TubainaDir;
+import br.com.caelum.tubaina.io.TubainaHtmlIO;
+import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
@@ -30,15 +35,19 @@ public class SingleHtmlGenerator {
 		configureFreemarker();
 	}
 
-	public void generate(Book book, File outputFolder) throws IOException {
+	public void generate(Book book, File outputDir) throws IOException {
+		List<Resource> resources = new ArrayList<Resource>();
 		StringBuffer bookContent = generateHeader(book);
 		for (Chapter c : book.getChapters()) {
 			StringBuffer chapterContent = generateChapter(book, c);
 			bookContent.append(chapterContent);
+			resources.addAll(c.getResources());
 		}
 		bookContent.append(generateFooter());
-		
-		new TubainaIO(templateDir).saveFilesForThis(book, outputFolder, bookContent);
+
+		TubainaDir bookRoot = new TubainaHtmlIO(templateDir).createTubainaDir(outputDir, book);
+		bookRoot.writeIndex(bookContent)
+				.writeResources(resources);
 	}
 	
 	private StringBuffer generateHeader(Book book) {

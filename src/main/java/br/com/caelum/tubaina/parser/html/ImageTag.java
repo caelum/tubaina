@@ -9,7 +9,7 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag {
 
-	private static final String RELATIVEPATH = "../resources/";
+	private static final String RELATIVEPATH = "../";
 
 	public String parse(final String path, final String options) {
 		String imgsrc = FilenameUtils.getName(path);

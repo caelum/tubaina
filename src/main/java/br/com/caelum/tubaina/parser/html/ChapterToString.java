@@ -40,7 +40,7 @@ public class ChapterToString {
 		} else {
 			map.put("next", "");
 		}
-		return new FreemarkerProcessor(cfg).process(map, "html/chapter.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
 	}
 	
 	public StringBuffer generateSingleHtmlChapter(Book book, Chapter chapter) {
@@ -68,7 +68,7 @@ public class ChapterToString {
 			map.put("next", "");
 		}
 
-		return new FreemarkerProcessor(cfg).process(map, "html/chapter-flat-head.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "chapter-flat-head.ftl");
 	}
 	
 	public StringBuffer generateFlatChapterTail(final Book b, final Chapter c, final int index, final int currentDir) {
@@ -87,7 +87,7 @@ public class ChapterToString {
 			map.put("next", "");
 		}
 
-		return new FreemarkerProcessor(cfg).process(map, "html/chapter-flat-tail.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "chapter-flat-tail.ftl");
 	}
 
 }
