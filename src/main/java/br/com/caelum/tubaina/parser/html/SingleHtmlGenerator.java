@@ -64,7 +64,11 @@ public class SingleHtmlGenerator {
 				chapterContent.append(sectionContent);
 			}
 		}
-		return chapterContent;
+		return fixPaths(chapterContent);
+	}
+
+	private StringBuffer fixPaths(StringBuffer chapterContent) {
+		return new StringBuffer(chapterContent.toString().replace("$$RELATIVE$$", "."));
 	}
 	
 	private StringBuffer generateFooter() {

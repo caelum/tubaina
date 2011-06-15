@@ -51,7 +51,7 @@ public class HtmlGenerator {
 		for (Chapter chapter : book.getChapters()) {
 			StringBuffer chapterContent = new ChapterToString(parser, cfg, dirTree).generateChapter(book, chapter, chapterIndex, currentDir);
 			TubainaDir chapterRoot = bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle()));
-			chapterRoot.writeIndex(chapterContent)
+			chapterRoot.writeIndex(fixPaths(chapterContent))
 						.writeResources(chapter.getResources());
 			
 			int sectionIndex = 1;
@@ -60,7 +60,7 @@ public class HtmlGenerator {
 					StringBuffer sectionContent = new SectionToString(parser, cfg, dirTree).generateSection(book, chapter.getTitle(), chapterIndex, s,
 							sectionIndex, currentDir);
 					chapterRoot.cd(Utilities.toDirectoryName(null, s.getTitle()))
-								.writeIndex(sectionContent);
+								.writeIndex(fixPaths(sectionContent));
 
 					sectionIndex++;
 				}
@@ -78,6 +78,10 @@ public class HtmlGenerator {
 		StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes);
 		bookRoot.cd("index")
 				.writeIndex(index);
+	}
+
+	private StringBuffer fixPaths(StringBuffer chapterContent) {
+		return new StringBuffer(chapterContent.toString().replace("$$RELATIVE$$", ".."));
 	}
 
 	private void configureFreemarker() {

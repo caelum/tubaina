@@ -76,7 +76,7 @@ public class FlatHtmlGenerator {
 			chFullText.append(chTail);
 
 			bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle()))
-					.writeIndex(chFullText)
+					.writeIndex(fixPaths(chFullText))
 					.writeResources(chapter.getResources());
 
 			chapterIndex++;
@@ -91,6 +91,10 @@ public class FlatHtmlGenerator {
 		StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes);
 		bookRoot.cd("index")
 				.writeIndex(index);
+	}
+
+	private StringBuffer fixPaths(StringBuffer chFullText) {
+		return new StringBuffer(chFullText.toString().replace("$$RELATIVE$$", "."));
 	}
 
 	private void configureFreemarker() {
