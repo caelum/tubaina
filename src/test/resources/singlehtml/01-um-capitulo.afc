@@ -3,6 +3,10 @@
 [section Minha seção]
 
 	Um texto aqui e continuar escrevendo o texto normalmente.
+	
+	[img ../baseJpgImage.jpg]
+	
+	Uma imagem para alegrar o dia... e mostrar o bug.
 
 [section Outra]
 
