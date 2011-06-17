@@ -9,6 +9,7 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag {
 
+	// TODO: make it work more gracefully... i.e., eliminate this workaround
 	private static final String RELATIVEPATH = "$$RELATIVE$$/";
 
 	public String parse(final String path, final String options) {
