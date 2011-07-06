@@ -16,6 +16,7 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.HtmlResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceManipulator;
@@ -29,13 +30,13 @@ public class FlatHtmlGenerator {
 
 	private static final Logger LOG = Logger.getLogger(FlatHtmlGenerator.class);
 
-	private final HtmlParser parser;
+	private final Parser parser;
 
 	private final boolean shouldValidateXHTML;
 
 	private final File templateDir;
 
-	public FlatHtmlGenerator(final HtmlParser parser, final boolean shouldValidateXHTML, final File templateDir) {
+	public FlatHtmlGenerator(final Parser parser, final boolean shouldValidateXHTML, final File templateDir) {
 		this.parser = parser;
 		this.shouldValidateXHTML = shouldValidateXHTML;
 		this.templateDir = templateDir;

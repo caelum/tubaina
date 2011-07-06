@@ -18,12 +18,9 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.HtmlGenerator;
-import br.com.caelum.tubaina.parser.html.HtmlParser;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
-import br.com.caelum.tubaina.parser.latex.LatexParser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class TubainaBuilder {
@@ -81,13 +78,11 @@ public class TubainaBuilder {
 		}
 
 		RegexConfigurator conf = new RegexConfigurator();
+		
+		Parser parser = parseType.getParser(conf, noAnswer, showNotes);
+		
 		if (parseType.equals(ParseTypes.LATEX)) {
-			List<Tag> tags = conf
-					.read("/regex.properties", "/latex.properties");
-
-			Parser parser = new LatexParser(tags, showNotes, noAnswer);
-			LatexGenerator generator = new LatexGenerator(parser, templateDir,
-					noAnswer);
+			LatexGenerator generator = new LatexGenerator(parser, templateDir, noAnswer);
 			File file = new File(outputDir, "latex");
 			FileUtils.forceMkdir(file);
 			try {
@@ -98,10 +93,7 @@ public class TubainaBuilder {
 		}
 
 		if (parseType.equals(ParseTypes.HTML)) {
-			HtmlParser htmlParser = new HtmlParser(conf.read(
-					"/regex.properties", "/html.properties"), noAnswer);
-			HtmlGenerator generator = new HtmlGenerator(htmlParser,
-					strictXhtml, templateDir);
+			HtmlGenerator generator = new HtmlGenerator(parser, strictXhtml, templateDir);
 			File file = new File(outputDir, "html");
 			FileUtils.forceMkdir(file);
 			try {
@@ -112,11 +104,8 @@ public class TubainaBuilder {
 		}
 
 		if (parseType.equals(ParseTypes.HTMLFLAT)) {
-			HtmlParser htmlParser = new HtmlParser(conf.read(
-					"/regex.properties", "/html.properties"), noAnswer);
-			FlatHtmlGenerator generator = new FlatHtmlGenerator(htmlParser,
-					strictXhtml, templateDir);
-			File file = new File(outputDir, "htmlflat");
+			FlatHtmlGenerator generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
+			File file = new File(outputDir,parseType.getType());
 			FileUtils.forceMkdir(file);
 			try {
 				generator.generate(b, file);
@@ -124,8 +113,6 @@ public class TubainaBuilder {
 				LOG.warn(e.getMessage());
 			}
 		}
-
-		
 	}
 
 	static List<Reader> getAfcsFrom(final File file)
