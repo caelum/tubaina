@@ -1,18 +1,37 @@
 package br.com.caelum.tubaina;
 
+import java.io.IOException;
+import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.html.HtmlParser;
+import br.com.caelum.tubaina.parser.latex.LatexParser;
+
 public enum ParseTypes {
 	
-	HTML("html"), LATEX("latex"), HTMLFLAT("htmlflat"), SINGLE_HTML("singlehtml");
-
-	private final String type;
-
-	private ParseTypes(String type) {
-		this.type = type;
-	}
+	HTML{
+		@Override
+		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
+			return new HtmlParser(conf.read(
+					"/regex.properties", "/html.properties"), noAnswer);
+		}
+	}, LATEX{
+		@Override
+		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
+			return new LatexParser(conf.read("/regex.properties", "/latex.properties"), showNotes, noAnswer);
+		}
+	}, HTMLFLAT{
+		@Override
+		public Parser getParser(RegexConfigurator conf, boolean noAnswer,
+				boolean showNotes) throws IOException {
+			return new HtmlParser(conf.read(
+					"/regex.properties", "/html.properties"), noAnswer);
+		}
+	};
 	
 	public String getType() {
-		return type;
-		
+		return this.toString().toLowerCase();
 	}
+	
+	public abstract Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException ;
 	
 }
