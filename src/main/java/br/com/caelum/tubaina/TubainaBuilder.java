@@ -37,7 +37,7 @@ public class TubainaBuilder {
 
 	private File outputDir = new File(".");
 
-	private final String bookName;
+	private String bookName = "book";
 
 	private boolean strictXhtml = false;
 
@@ -53,10 +53,8 @@ public class TubainaBuilder {
 
 	private String outputFileName = "book.tex";
 
-	public TubainaBuilder(ParseTypes type, String bookName) {
+	public TubainaBuilder(ParseTypes type) {
 		this.parseType = type;
-		this.bookName = bookName;
-
 	}
 
 	public void build() throws IOException {
@@ -117,12 +115,12 @@ public class TubainaBuilder {
 		return readers;
 	}
 
-	public TubainaBuilder setInputDir(File inputDir) {
+	public TubainaBuilder inputDir(File inputDir) {
 		this.inputDir = inputDir;
 		return this;
 	}
 
-	public TubainaBuilder setOutputDir(File outputDir) {
+	public TubainaBuilder outputDir(File outputDir) {
 		this.outputDir = outputDir;
 		return this;
 	}
@@ -132,7 +130,7 @@ public class TubainaBuilder {
 		return this;
 	}
 
-	public TubainaBuilder setTemplateDir(File templateDir) {
+	public TubainaBuilder templateDir(File templateDir) {
 		this.templateDir = templateDir;
 		return this;
 	}
@@ -152,8 +150,13 @@ public class TubainaBuilder {
 		return this;
 	}
 
-	public TubainaBuilder setOutputFileName(String fileName) {
+	public TubainaBuilder outputFileName(String fileName) {
 		this.outputFileName = fileName;
+		return this;
+	}
+	
+	public TubainaBuilder bookName(String bookName) {
+		this.bookName = bookName;
 		return this;
 	}
 
