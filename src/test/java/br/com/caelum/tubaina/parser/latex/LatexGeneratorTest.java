@@ -25,17 +25,17 @@ public class LatexGeneratorTest {
 	private LatexGenerator generator;
 	private Book book;
 	private File temp;
+	private LatexParser parser;
 
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
-		List<Tag> tags = configurator.read("/regex.properties",
-				"/html.properties");
-		LatexParser parser = new LatexParser(tags);
+		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+		parser = new LatexParser(tags);
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		generator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false);
+		generator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, "teste.tex");
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n"
 				+ "texto da seção\n" + "[section Primeira seção]\n"
@@ -56,7 +56,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void testGenerator() throws IOException {
-		generator.generate(book, temp, "teste.tex");
+		generator.generate(book, temp);
 
 		// Book LaTeX
 		File texFile = new File(temp, "teste.tex");
@@ -88,7 +88,7 @@ public class LatexGeneratorTest {
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]"));
 		Book b = builder.build();
 
-		generator.generate(b, temp, "teste.tex");
+		generator.generate(b, temp);
 
 		File[] images = temp.listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
@@ -108,7 +108,7 @@ public class LatexGeneratorTest {
 
 		Book b = builder.build();
 		try {
-			generator.generate(b, temp, "errado.tex");
+			generator.generate(b, temp);
 		} catch (TubainaException t) {
 			Assert.fail("Should not raise an exception");
 		}
@@ -121,7 +121,7 @@ public class LatexGeneratorTest {
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
 		try {
 			Book b = builder.build();
-			generator.generate(b, temp, "errado.tex");
+			generator.generate(b, temp);
 			Assert.fail("Should raise an exception");
 		} catch (TubainaException t) {
 			// OK
@@ -137,12 +137,12 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		LatexGenerator customGenerator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false);
+		LatexGenerator customGenerator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, "teste.tex");
 		BookBuilder builder = new BookBuilder("Do Instrutor");
 		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
 		Book b = builder.build(true);
 		Assert.assertTrue(b.isInstructorBook());
-		customGenerator.generate(b, temp, "teste.tex");
+		customGenerator.generate(b, temp);
 		File texFile = new File(temp, "teste.tex");
 		Assert.assertTrue("Book file should exist", texFile.exists());
 		Assert.assertTrue("Should have INSTRUCTOR TEXTBOOK on the first page", containsText(texFile, "INSTRUCTOR TEXTBOOK"));
@@ -155,7 +155,7 @@ public class LatexGeneratorTest {
 		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
 		Book b = builder.build(false);
 		Assert.assertFalse(b.isInstructorBook());
-		generator.generate(b, temp, "teste.tex");
+		generator.generate(b, temp);
 		File texFile = new File(temp, "teste.tex");
 		Assert.assertTrue("Book file should exist", texFile.exists());
 		Assert.assertFalse("Should not have INSTRUCTOR TEXTBOOK on the first page", containsText(texFile, "INSTRUCTOR TEXTBOOK"));
