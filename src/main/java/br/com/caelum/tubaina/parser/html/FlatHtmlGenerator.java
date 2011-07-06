@@ -41,7 +41,7 @@ public class FlatHtmlGenerator {
 		this.templateDir = templateDir;
 	}
 
-	public void generate(final Book b, final File directory) throws IOException {
+	public void generate(Book b, File directory) throws IOException {
 		// FreeMarker configuration
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);

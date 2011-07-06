@@ -67,10 +67,6 @@ public class Tubaina {
 				builder.setTemplateDir(new File(cmd.getOptionValue('t')));
 			}
 
-			if (cmd.hasOption('l')) {
-				builder.listTodos();
-			}
-
 			if (cmd.hasOption('x')) {
 				builder.strictXhtml();
 			}
@@ -124,8 +120,6 @@ public class Tubaina {
 				"name").hasArg().isRequired().withDescription(
 				"name of your book").create('n'));
 		// optional
-		options.addOption("l", "list-todos", false,
-				"lists todos from all files");
 		options.addOption("x", "strict-xhtml", false,
 				"perform an xhtml validation");
 		options.addOption("s", "show-notes", false,

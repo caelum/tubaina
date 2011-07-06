@@ -41,8 +41,6 @@ public class TubainaBuilder {
 
 	private final String bookName;
 
-	private boolean listTodos = false;
-
 	private boolean strictXhtml = false;
 
 	private File templateDir = DEFAULT_TEMPLATE_DIR;
@@ -150,11 +148,6 @@ public class TubainaBuilder {
 
 	public TubainaBuilder setOutputDir(File outputDir) {
 		this.outputDir = outputDir;
-		return this;
-	}
-
-	public TubainaBuilder listTodos() {
-		this.listTodos = true;
 		return this;
 	}
 

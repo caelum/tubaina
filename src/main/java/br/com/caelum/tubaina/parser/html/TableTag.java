@@ -5,15 +5,12 @@ import br.com.caelum.tubaina.parser.Tag;
 public class TableTag implements Tag {
 
 	private boolean noborder;
-	private final Integer columns;
 	
-	public TableTag(boolean noborder, Integer columns) {
+	public TableTag(boolean noborder) {
 		this.noborder = noborder;
-		this.columns = columns;
 	}
 
 	public String parse(String string, String options) {
-		// TODO Generate a pretty table based on the number of columns
 		String result = "";
 		if (options != null && options.trim().length() > 0)
 			result += "<h3>" + options + "</h3>";
