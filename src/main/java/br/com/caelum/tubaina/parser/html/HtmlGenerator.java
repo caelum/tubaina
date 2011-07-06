@@ -26,7 +26,7 @@ import br.com.caelum.tubaina.util.XHTMLValidator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class HtmlGenerator {
+public class HtmlGenerator implements Generator {
 
 	private static final Logger LOG = Logger.getLogger(HtmlGenerator.class);
 
@@ -42,7 +42,7 @@ public class HtmlGenerator {
 		this.templateDir = templateDir;
 	}
 
-	public void generate(final Book b, final File directory) throws IOException {
+	public void generate(Book b, File directory) throws IOException {
 		// FreeMarker configuration
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);

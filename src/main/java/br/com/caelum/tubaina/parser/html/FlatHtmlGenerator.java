@@ -26,7 +26,7 @@ import br.com.caelum.tubaina.util.XHTMLValidator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class FlatHtmlGenerator {
+public class FlatHtmlGenerator implements Generator{
 
 	private static final Logger LOG = Logger.getLogger(FlatHtmlGenerator.class);
 

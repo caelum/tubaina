@@ -15,6 +15,7 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.html.Generator;
 import br.com.caelum.tubaina.resources.AnswerResource;
 import br.com.caelum.tubaina.resources.LatexResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;
@@ -22,7 +23,7 @@ import br.com.caelum.tubaina.resources.ResourceManipulator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class LatexGenerator {
+public class LatexGenerator implements Generator{
 
 	private final Parser parser;
 
@@ -32,13 +33,16 @@ public class LatexGenerator {
 
 	private final boolean noAnswer;
 
-	public LatexGenerator(Parser parser, File templateDir, boolean noAnswer) {
+	private final String outputFileName;
+
+	public LatexGenerator(Parser parser, File templateDir, boolean noAnswer, String outputFileName) {
 		this.parser = parser;
 		this.templateDir = templateDir;
 		this.noAnswer = noAnswer;
+		this.outputFileName = outputFileName;
 	}
 
-	public void generate(Book book, File directory, String outputFileName) throws IOException {
+	public void generate(Book book, File directory) throws IOException {
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);
 		cfg.setObjectWrapper(new BeansWrapper());

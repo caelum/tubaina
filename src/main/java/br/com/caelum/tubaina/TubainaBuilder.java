@@ -19,6 +19,7 @@ import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
+import br.com.caelum.tubaina.parser.html.Generator;
 import br.com.caelum.tubaina.parser.html.HtmlGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -81,37 +82,25 @@ public class TubainaBuilder {
 		
 		Parser parser = parseType.getParser(conf, noAnswer, showNotes);
 		
+		Generator generator = null;
 		if (parseType.equals(ParseTypes.LATEX)) {
-			LatexGenerator generator = new LatexGenerator(parser, templateDir, noAnswer);
-			File file = new File(outputDir, "latex");
-			FileUtils.forceMkdir(file);
-			try {
-				generator.generate(b, file, outputFileName);
-			} catch (TubainaException e) {
-				LOG.warn(e.getMessage());
-			}
+			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName);
 		}
 
 		if (parseType.equals(ParseTypes.HTML)) {
-			HtmlGenerator generator = new HtmlGenerator(parser, strictXhtml, templateDir);
-			File file = new File(outputDir, "html");
-			FileUtils.forceMkdir(file);
-			try {
-				generator.generate(b, file);
-			} catch (TubainaException e) {
-				LOG.warn(e.getMessage());
-			}
+			generator = new HtmlGenerator(parser, strictXhtml, templateDir);
 		}
 
 		if (parseType.equals(ParseTypes.HTMLFLAT)) {
-			FlatHtmlGenerator generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
-			File file = new File(outputDir,parseType.getType());
-			FileUtils.forceMkdir(file);
-			try {
-				generator.generate(b, file);
-			} catch (TubainaException e) {
-				LOG.warn(e.getMessage());
-			}
+			generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
+		}
+		
+		File file = new File(outputDir,parseType.getType());
+		FileUtils.forceMkdir(file);
+		try {
+			generator.generate(b, file);
+		} catch (TubainaException e) {
+			LOG.warn(e.getMessage());
 		}
 	}
 

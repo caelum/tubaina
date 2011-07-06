@@ -25,7 +25,7 @@ import br.com.caelum.tubaina.util.Utilities;
 
 public class HtmlGeneratorTest {
 
-	private HtmlGenerator generator;
+	private Generator generator;
 
 	private Book book;
 
