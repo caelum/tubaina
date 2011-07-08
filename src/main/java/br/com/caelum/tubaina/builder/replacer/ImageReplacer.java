@@ -29,6 +29,7 @@ public class ImageReplacer extends PatternReplacer {
 	public Chunk createChunk(Matcher matcher) {
 		int width = 0;
 		String path = matcher.group(1);
+		System.out.println(path);
 		File image = ResourceLocator.getInstance().getFile(path);
 		try {
 			BufferedImage measurable = ImageIO.read(image);

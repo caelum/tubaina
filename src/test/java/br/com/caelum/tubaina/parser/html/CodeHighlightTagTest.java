@@ -33,7 +33,7 @@ public class CodeHighlightTagTest {
 	@Test
 	public void testInvalidLineNumbers() throws Exception {
 		String input = "Só uma linha";
-		String output = new CodeHighlightTag().parseHtml(input, Arrays.asList(new Integer[] {23}));
+		String output = new CodeHighlightTag().parseHtml(input, Arrays.asList(23));
 		Assert.assertEquals(input, output);
 	}
 }

@@ -3,11 +3,13 @@ package br.com.caelum.tubaina.parser.html;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -112,17 +114,12 @@ public class HtmlGeneratorTest {
 
 		generator.generate(b, temp);
 		// testar se a imagem foi copiada pro diretorio images
-
-		// System.out.println(new File(temp, "com-imagens/").list()[2]);
-
-		File images = new File(temp, "com-imagens/qualquer-um/resources/");
-		Assert.assertTrue(images.exists());
-
-		Assert.assertEquals(1, images.list().length);
-		// File original = new File("src/test/h1-caelum.gif");
-		File copied = new File(images, "baseJpgImage.jpg");
+		File chapterDir = new File(temp, "com-imagens/qualquer-um/");
+		Assert.assertTrue(chapterDir.exists());
+		
+		Assert.assertEquals(1, chapterDir.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
+		File copied = new File(chapterDir, "baseJpgImage.jpg");
 		Assert.assertTrue(copied.exists());
-		// Assert.assertTrue(FileUtils.contentEquals(original, copied));
 	}
 
 	@Test
@@ -133,37 +130,25 @@ public class HtmlGeneratorTest {
 		Book b = builder.build();
 		try {
 			generator.generate(b, temp);
-		} catch (TubainaException t) {
-			Assert.fail("Should not raise an exception");
+		} catch (TubainaException e) {
+			Assert.fail("Should not complain if one uses twice the same image");
 		}
-		// OK
 	}
 
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("Com imagens");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
-		try {
-			Book b = builder.build();
-			generator.generate(b, temp);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
-			// OK
-		}
+		Book b = builder.build();
+		generator.generate(b, temp);
 	}
 
-	@Test
+	@Test(expected=TubainaException.class)
 	public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("teste");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "alguma coisa\n[chapter qualquer um]outra coisa"));
-		try {
-			Book b = builder.build();
-			generator.generate(b, temp);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
-			System.out.println(t.getMessage());
-			// OK
-		}
+		Book b = builder.build();
+		generator.generate(b, temp);
 	}
 
 	@Test

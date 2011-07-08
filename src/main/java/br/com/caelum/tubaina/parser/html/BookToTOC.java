@@ -20,6 +20,6 @@ public class BookToTOC {
 		map.put("textbookVersion", new VersionGenerator().generate());
 		map.put("sanitizer", new HtmlSanitizer());
 
-		return new FreemarkerProcessor(cfg).process(map, "html/toc.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "toc.ftl");
 	}
 }

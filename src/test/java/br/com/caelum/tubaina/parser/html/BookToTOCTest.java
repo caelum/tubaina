@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class BookToTOCTest {
 	@Before
 	public void setUp() throws IOException {
 		cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(TubainaBuilder.DEFAULT_TEMPLATE_DIR);
+		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
 		cfg.setObjectWrapper(new BeansWrapper());
 
 		chapterIdentifier = "class=\"indexChapter\"";

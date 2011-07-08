@@ -35,8 +35,7 @@ public class Tubaina {
 	}
 
 	private static TubainaBuilder parseOptions(CommandLine cmd, Options options) {
-		ParseTypes type = selectParseTypeFromCommandLine(cmd);
-
+		ParseType type = selectParseTypeFromCommandLine(cmd);
 		TubainaBuilder builder = new TubainaBuilder(type);
 
 		if (cmd.hasOption("h")) {
@@ -50,8 +49,8 @@ public class Tubaina {
 		return builder;
 	}
 
-	private static ParseTypes selectParseTypeFromCommandLine(CommandLine cmd) {
-		for (ParseTypes type : ParseTypes.values()) {
+	private static ParseType selectParseTypeFromCommandLine(CommandLine cmd) {
+		for (ParseType type : ParseType.values()) {
 			if (cmd.hasOption(type.getType())) {
 				return type;
 			}
@@ -67,7 +66,9 @@ public class Tubaina {
 		options.addOption("html", "html", false,
 				"generates an html output on given outputdir");
 		options.addOption("htmlflat", "htmlflat", false,
-		"generates an flat html output on given outputdir");
+				"generates an flat html output on given outputdir");
+		options.addOption("singlehtml", "singlehtml", false,
+				"outputs the whole textbook in a single html file");
 
 		options.addOption("h", "help", false, "print this message");
 
@@ -83,7 +84,7 @@ public class Tubaina {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter
 				.printHelp(
-						"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname>",
+						"tubaina [-html|-latex|-htmlflat|-singlehtml] -i <inputdir> -o <outputdir> -n <bookname>",
 						options);
 	}
 

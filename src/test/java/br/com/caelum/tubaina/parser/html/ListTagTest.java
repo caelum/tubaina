@@ -9,28 +9,28 @@ public class ListTagTest {
 	public void testList() {
 		ListTag tag = new ListTag();
 		String result = tag.parse("conteudo da lista", "");
-		Assert.assertEquals("<ul class=\"list\">conteudo da lista</ul>", result);
+		Assert.assertEquals("<ul>conteudo da lista</ul>", result);
 	}
 	
 	@Test
 	public void testListNumber() {
 		ListTag tag = new ListTag();
 		String result = tag.parse("conteudo da lista", "number");
-		Assert.assertEquals("<ol class=\"list\" type=\"1\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol>conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListLetter() {
 		ListTag tag = new ListTag();
 		String result = tag.parse("conteudo da lista", "letter");
-		Assert.assertEquals("<ol class=\"list\" type=\"a\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListRoman() {
 		ListTag tag = new ListTag();
 		String result = tag.parse("conteudo da lista", "roman");
-		Assert.assertEquals("<ol class=\"list\" type=\"I\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
 	}
 	
 }

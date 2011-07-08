@@ -3,11 +3,13 @@ package br.com.caelum.tubaina.parser.html;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -104,17 +106,12 @@ public class FlatHtmlGeneratorTest {
 
 		generator.generate(b, temp);
 		// testar se a imagem foi copiada pro diretorio images
-
-		// System.out.println(new File(temp, "com-imagens/").list()[2]);
-
-		File images = new File(temp, "com-imagens/resources/");
+		File images = new File(temp, "com-imagens/qualquer-um/");
 		Assert.assertTrue(images.exists());
-
-		Assert.assertEquals(1, images.list().length);
-		// File original = new File("src/test/h1-caelum.gif");
+		
+		Assert.assertEquals(1, images.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
 		File copied = new File(images, "baseJpgImage.jpg");
 		Assert.assertTrue(copied.exists());
-		// Assert.assertTrue(FileUtils.contentEquals(original, copied));
 	}
 
 	@Test

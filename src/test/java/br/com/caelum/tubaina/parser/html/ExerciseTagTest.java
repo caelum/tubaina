@@ -8,8 +8,7 @@ public class ExerciseTagTest {
 	
 	@Test
 	public void testExerciseTag(){
-		ExerciseTag tag = new ExerciseTag();
-		String result = tag.parse("texto do exercicio", null);
+		String result = new ExerciseTag().parse("texto do exercicio", null);
 		Assert.assertEquals("<ol class=\"exercise\">texto do exercicio</ol>", result);
 	}
 

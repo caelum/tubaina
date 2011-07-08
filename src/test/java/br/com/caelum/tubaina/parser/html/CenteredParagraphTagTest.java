@@ -8,6 +8,6 @@ public class CenteredParagraphTagTest {
 	public void testCenteredParagraphTest() {
 		CenteredParagraphTag tag = new CenteredParagraphTag();
 		String result = tag.parse("texto centralizado", null);
-		Assert.assertEquals("<div style=\"text-align:center\">texto centralizado</div>", result);
+		Assert.assertEquals("<p class=\"center\">texto centralizado</p>", result);
 	}
 }

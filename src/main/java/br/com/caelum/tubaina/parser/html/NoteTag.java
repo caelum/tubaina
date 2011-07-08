@@ -4,8 +4,8 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class NoteTag implements Tag {
 
-	public String parse(String string, String options) {
-		return "";
+	public String parse(String content, String options) {
+		return "<div class=\"note\">" + content.trim() + "</div>";
 	}
 
 }

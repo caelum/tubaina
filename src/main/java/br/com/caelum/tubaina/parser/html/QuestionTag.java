@@ -5,7 +5,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class QuestionTag implements Tag {
 
 	public String parse(String string, String options) {
-		return "<li>" + string + "</li>";
+		return "<li class=\"question\">" + string + "</li>";
 	}
 
 }

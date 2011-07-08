@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class ChapterToStringTest {
 	@Before
 	public void setUp() throws IOException {
 		Configuration cfg = new Configuration();
-		cfg.setDirectoryForTemplateLoading(TubainaBuilder.DEFAULT_TEMPLATE_DIR);
+		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
 		cfg.setObjectWrapper(new BeansWrapper());
 
 		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
@@ -54,7 +55,7 @@ public class ChapterToStringTest {
 		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
 				+ "\n[section segunda] conteudo da segunda");
 
-		String string = chapterToString.generateChapter(new BookBuilder("").build(), c, 1, 1).toString();
+		String string = chapterToString.generateChapter(new BookBuilder("meu-livro").build(), c, 1, 1).toString();
 
 		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira/\""));
@@ -66,7 +67,7 @@ public class ChapterToStringTest {
 	@Test
 	public void testGenerateChapterWithIntroduction() {
 		Chapter c = createChapter("conteudo da secao vazia", "");
-		String string = chapterToString.generateChapter(new BookBuilder("").build(), c, 2, 1).toString();
+		String string = chapterToString.generateChapter(new BookBuilder("meu-livro").build(), c, 2, 1).toString();
 
 		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
 		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">2<"));

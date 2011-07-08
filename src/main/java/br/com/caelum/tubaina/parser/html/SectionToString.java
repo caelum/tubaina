@@ -19,14 +19,14 @@ public class SectionToString {
 
 	private final List<String> dirTree;
 
-	public SectionToString(final Parser parser, final Configuration cfg, final List<String> dirTree) {
+	public SectionToString(Parser parser, Configuration cfg, List<String> dirTree) {
 		this.parser = parser;
 		this.cfg = cfg;
 		this.dirTree = dirTree;
 	}
 
-	public StringBuffer generateSection(final Book b, final String chapterTitle, final int chapterIndex,
-			final Section s, final int sectionIndex, final int currentDir) {
+	public StringBuffer generateSection(Book b, String chapterTitle, int chapterIndex,
+			Section s, int sectionIndex, int currentDir) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("book", b);
 		map.put("title", chapterTitle);
@@ -44,8 +44,7 @@ public class SectionToString {
 			map.put("next", "");
 		}
 		
-
-		return new FreemarkerProcessor(cfg).process(map, "html/section.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
 	
 	public StringBuffer generateFlatSection(final Book b, final String chapterTitle, final int chapterIndex,
@@ -62,7 +61,14 @@ public class SectionToString {
 		map.put("sanitizer", new HtmlSanitizer());
 		map.put("anchorlink", dirTree.get(currentDir).split("#")[1]);
 
-		return new FreemarkerProcessor(cfg).process(map, "html/section-flat.ftl");
+		return new FreemarkerProcessor(cfg).process(map, "section-flat.ftl");
+	}
+
+	public StringBuffer generateSingleHtmlSection(Section s) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("section", s);
+		map.put("parser", parser);
+		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
 
 }
