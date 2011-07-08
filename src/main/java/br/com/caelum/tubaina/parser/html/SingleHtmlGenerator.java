@@ -13,21 +13,22 @@ import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.TubainaDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.Utilities;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class SingleHtmlGenerator {
+public class SingleHtmlGenerator implements Generator {
 
 	private static final Logger LOG = Logger.getLogger(SingleHtmlGenerator.class);
 
-	private HtmlParser parser;
+	private Parser parser;
 	private File templateDir;
 	private Configuration cfg;
 
 
-	public SingleHtmlGenerator(HtmlParser parser, File templateDir) {
+	public SingleHtmlGenerator(Parser parser, File templateDir) {
 		this.parser = parser;
 		this.templateDir = new File(templateDir, "singlehtml/");
 		configureFreemarker();

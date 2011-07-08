@@ -21,6 +21,7 @@ import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.Generator;
 import br.com.caelum.tubaina.parser.html.HtmlGenerator;
+import br.com.caelum.tubaina.parser.html.SingleHtmlGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
@@ -43,7 +44,7 @@ public class TubainaBuilder {
 
 	private File templateDir = DEFAULT_TEMPLATE_DIR;
 
-	private final ParseTypes parseType;
+	private final ParseType parseType;
 
 	private boolean showNotes = false;
 
@@ -53,7 +54,7 @@ public class TubainaBuilder {
 
 	private String outputFileName = "book.tex";
 
-	public TubainaBuilder(ParseTypes type) {
+	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
 	}
 
@@ -81,16 +82,19 @@ public class TubainaBuilder {
 		Parser parser = parseType.getParser(conf, noAnswer, showNotes);
 		
 		Generator generator = null;
-		if (parseType.equals(ParseTypes.LATEX)) {
+		if (parseType.equals(ParseType.LATEX)) {
 			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName);
 		}
 
-		if (parseType.equals(ParseTypes.HTML)) {
+		if (parseType.equals(ParseType.HTML)) {
 			generator = new HtmlGenerator(parser, strictXhtml, templateDir);
 		}
 
-		if (parseType.equals(ParseTypes.HTMLFLAT)) {
+		if (parseType.equals(ParseType.HTMLFLAT)) {
 			generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
+		}
+		if (parseType.equals(ParseType.SINGLEHTML)) {
+			generator = new SingleHtmlGenerator(parser, templateDir);
 		}
 		
 		File file = new File(outputDir,parseType.getType());

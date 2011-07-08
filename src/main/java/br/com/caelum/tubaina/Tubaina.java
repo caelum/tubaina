@@ -35,7 +35,7 @@ public class Tubaina {
 	}
 
 	private static TubainaBuilder parseOptions(CommandLine cmd, Options options) {
-		ParseTypes type = selectParseTypeFromCommandLine(cmd);
+		ParseType type = selectParseTypeFromCommandLine(cmd);
 		TubainaBuilder builder = new TubainaBuilder(type);
 
 		if (cmd.hasOption("h")) {
@@ -49,8 +49,8 @@ public class Tubaina {
 		return builder;
 	}
 
-	private static ParseTypes selectParseTypeFromCommandLine(CommandLine cmd) {
-		for (ParseTypes type : ParseTypes.values()) {
+	private static ParseType selectParseTypeFromCommandLine(CommandLine cmd) {
+		for (ParseType type : ParseType.values()) {
 			if (cmd.hasOption(type.getType())) {
 				return type;
 			}

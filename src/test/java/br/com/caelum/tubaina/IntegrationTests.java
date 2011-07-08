@@ -10,6 +10,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import  br.com.caelum.tubaina.Tubaina;
+
 public class IntegrationTests {
 
 	@Test
