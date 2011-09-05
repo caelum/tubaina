@@ -47,10 +47,12 @@
                {\begin{flushright}
                    \begin{minipage}{16cm}
                      \begin{tabular}{p{15.6cm}}
-                       #1
-                       \rowcolor{boxhead}
+                       \rowcolor{lightgray}
+                       \hline
+                       #1 \\
+                       \hline
                      \end{tabular}
-                     \\[1em]
+                     \\
                }
                {\end{minipage}
                    \\[1em]
@@ -261,7 +263,7 @@
 %%  chapapp
 
 \def\quadradocinza#1{%
-  \rlap{\gray \vrule height 0.8cm width 1cm depth 0.2cm}%
+  \rlap{\black \vrule height 0.8cm width 1cm depth 0.2cm}%
   \rlap{\hbox to 1cm{\hss\mbox{\bfseries \white #1}\hss}}%
   \vrule height 0pt width 1cm depth 0pt}
 
