@@ -10,18 +10,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
-import  br.com.caelum.tubaina.Tubaina;
-
 public class IntegrationTests {
-
-	@Test
-	public void completeIntegrationTestForLatex() throws Exception {
-		Tubaina.main("--latex", "-i", "src/test/resources/", "-o", "bin/",
-				"-n", "\"Meu teste master legal\"");
-		String expected = leArquivo("src/test/resources/expected.tex").split("fancyhf")[1];
-		String actual = leArquivo("bin/latex/book.tex").split("fancyhf")[1];
-		Assert.assertEquals(expected, actual);
-	}
 
 	@Test
 	public void completeIntegrationTestForSingleHtml() throws Exception {
