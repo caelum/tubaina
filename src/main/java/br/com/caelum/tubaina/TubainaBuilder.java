@@ -20,7 +20,6 @@ import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.Generator;
-import br.com.caelum.tubaina.parser.html.HtmlGenerator;
 import br.com.caelum.tubaina.parser.html.SingleHtmlGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -85,15 +84,10 @@ public class TubainaBuilder {
 		if (parseType.equals(ParseType.LATEX)) {
 			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName);
 		}
-
-		if (parseType.equals(ParseType.HTML)) {
-			generator = new HtmlGenerator(parser, strictXhtml, templateDir);
-		}
-
 		if (parseType.equals(ParseType.HTMLFLAT)) {
 			generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
 		}
-		if (parseType.equals(ParseType.SINGLEHTML)) {
+		if (parseType.equals(ParseType.HTML)) {
 			generator = new SingleHtmlGenerator(parser, templateDir);
 		}
 		

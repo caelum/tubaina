@@ -64,11 +64,9 @@ public class Tubaina {
 		options.addOption("latex", "latex", false,
 				"generates an latex output on given outputdir");
 		options.addOption("html", "html", false,
-				"generates an html output on given outputdir");
+				"outputs the whole textbook in a single html5 file");
 		options.addOption("htmlflat", "htmlflat", false,
 				"generates an flat html output on given outputdir");
-		options.addOption("singlehtml", "singlehtml", false,
-				"outputs the whole textbook in a single html file");
 
 		options.addOption("h", "help", false, "print this message");
 
@@ -80,12 +78,10 @@ public class Tubaina {
 	}
 
 	private static void printUsage(final Options options) {
-		// automatically generate the help statement
 		HelpFormatter formatter = new HelpFormatter();
-		formatter
-				.printHelp(
-						"tubaina [-html|-latex|-htmlflat|-singlehtml] -i <inputdir> -o <outputdir> -n <bookname>",
-						options);
+		formatter.printHelp(
+				"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname>",
+				options);
 	}
 
 }

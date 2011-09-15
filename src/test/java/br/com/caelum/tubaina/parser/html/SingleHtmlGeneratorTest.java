@@ -6,15 +6,19 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -126,5 +130,42 @@ public class SingleHtmlGeneratorTest {
 		
 		assertTrue(bookRoot.exists());
 		assertFalse(firstChapter.exists());
+	}
+	
+	@Test
+	public void testGeneratorWithCorrectImages() throws IOException {
+		BookBuilder builder = new BookBuilder("Com imagens");
+		builder.add(new StringReader("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]"));
+		Book b = builder.build();
+
+		generator.generate(b, directory);
+		// testar se a imagem foi copiada pro diretorio images
+		File chapterDir = new File(directory, "com-imagens/qualquer-um/");
+		Assert.assertTrue(chapterDir.exists());
+		
+		Assert.assertEquals(1, chapterDir.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
+		File copied = new File(chapterDir, "baseJpgImage.jpg");
+		Assert.assertTrue(copied.exists());
+	}
+
+	@Test
+	public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
+		BookBuilder builder = new BookBuilder("Com imagens");
+		builder.add(new StringReader("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]"));
+
+		Book b = builder.build();
+		try {
+			generator.generate(b, directory);
+		} catch (TubainaException e) {
+			Assert.fail("Should not complain if one uses twice the same image");
+		}
+	}
+
+	@Test(expected=TubainaException.class)
+	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
+		BookBuilder builder = new BookBuilder("Com imagens");
+		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
+		Book b = builder.build();
+		generator.generate(b, directory);
 	}
 }

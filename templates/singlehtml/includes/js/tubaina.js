@@ -357,9 +357,9 @@ var Tubaina = (function() {
 		},
 		mergeObjects: function(obj1, obj2) {
 			var result = {}, name;
-    		for (name in obj1) result[name] = obj1[name];
-	        for (name in obj2) result[name] = obj2[name];
-	        return result;
+			for (name in obj1) result[name] = obj1[name];
+			for (name in obj2) result[name] = obj2[name];
+			return result;
 		},
 		hasClass: function(element, className) {
 			return (" " + element.className + " ").indexOf(" " + className + " ") > -1;

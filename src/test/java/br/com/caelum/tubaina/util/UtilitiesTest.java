@@ -44,4 +44,13 @@ public class UtilitiesTest {
 		image.close();
 		Assert.assertTrue(destImage.exists());
 	}
+	
+	@Test
+	public void testToDirectoryName() {
+		//TODO: missing other bizarre case tests
+		Assert.assertEquals("01-o-que-e-java", Utilities.toDirectoryName(1, "O que é Java?"));
+		Assert.assertEquals("10-o-que-e-java", Utilities.toDirectoryName(10, "O    que\t é Java?"));
+		Assert.assertEquals("05-c-que-e-java", Utilities.toDirectoryName(5, "Ç  %  que\t é Java?"));
+		Assert.assertEquals("08-c-que-e-java", Utilities.toDirectoryName(8, " $  Ç  %  que\t é Java?"));
+	}
 }

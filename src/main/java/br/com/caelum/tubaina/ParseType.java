@@ -8,14 +8,13 @@ import br.com.caelum.tubaina.parser.latex.LatexParser;
 
 public enum ParseType {
 	
-	HTML,
 	LATEX{
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
 			return new LatexParser(conf.read("/regex.properties", "/latex.properties"), showNotes, noAnswer);
 		}
 	},
-	HTMLFLAT, SINGLEHTML;
+	HTMLFLAT, HTML;
 	
 	public String getType() {
 		return this.toString().toLowerCase();
