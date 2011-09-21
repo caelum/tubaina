@@ -384,6 +384,8 @@ var Tubaina = (function() {
 			var el = elements[i];
 			var opt = { };
 
+			if (helpers.hasClass(el, 'text')) continue;
+			
 			if (helpers.hasClass(el, 'numbered')) 
 				opt.gutter = true;
 			else
