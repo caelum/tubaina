@@ -61,9 +61,9 @@ public class LatexGenerator implements Generator{
 
 	private void copyResources(File directory, Book b) throws IOException {
 		// Dependencies (styles, logo)
-		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/tubaina.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/xcolor.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "latex/mintedx.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/tubaina.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/xcolor.sty"), directory);
+		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/mintedx.sty"), directory);
 		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.contains(".png") || name.contains(".bib");
