@@ -100,10 +100,6 @@ public class LatexGenerator implements Generator{
 
 			}
 		}
-		File bibliography = new File(b.getName() + ".bib");
-		if(bibliography.exists()) {
-			FileUtils.copyFileToDirectory(bibliography, directory);
-		}
 		if (resourceCopyFailed)
 			throw new TubainaException("Couldn't copy some resources. See the Logger for further information");
 	}

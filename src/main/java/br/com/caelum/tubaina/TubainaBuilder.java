@@ -51,7 +51,7 @@ public class TubainaBuilder {
 
 	private boolean noAnswer = false;
 
-	private String outputFileName = "book.tex";
+	private String outputFileName = "book";
 
 	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
@@ -82,7 +82,7 @@ public class TubainaBuilder {
 		
 		Generator generator = null;
 		if (parseType.equals(ParseType.LATEX)) {
-			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName);
+			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName + ".tex");
 		}
 		if (parseType.equals(ParseType.HTMLFLAT)) {
 			generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
@@ -93,6 +93,11 @@ public class TubainaBuilder {
 		
 		File file = new File(outputDir,parseType.getType());
 		FileUtils.forceMkdir(file);
+		File bibliography = new File(inputDir, outputFileName + ".bib");
+		if(bibliography.exists()) {
+			FileUtils.copyFileToDirectory(bibliography, file);
+		}
+		
 		try {
 			generator.generate(b, file);
 		} catch (TubainaException e) {
@@ -105,7 +110,6 @@ public class TubainaBuilder {
 		List<Reader> readers = new ArrayList<Reader>();
 		List<String> files = new ArrayList<String>();
 		Collections.addAll(files, file.list(new SuffixFileFilter(".afc")));
-		Collections.addAll(files, file.list(new SuffixFileFilter(".bib")));
 		Collections.sort(files);
 		for (String s : files) {
 			readers.add(new InputStreamReader(new FileInputStream(new File(
