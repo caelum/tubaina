@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import static org.junit.Assert.*;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -116,7 +118,7 @@ public class LatexGeneratorTest {
 	}
 
 	@Test
-	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
+	public void testGeneratorWithNonExistantImage() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("Com imagens");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));
 		try {
@@ -161,7 +163,7 @@ public class LatexGeneratorTest {
 		Assert.assertFalse("Should not have INSTRUCTOR TEXTBOOK on the first page", containsText(texFile, "INSTRUCTOR TEXTBOOK"));
 		Assert.assertFalse("Should not display the note", containsText(texFile, "uma nota para o instrutor"));
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	private boolean containsText(File texFile, String text) throws IOException {
 		List<String> lines = FileUtils.readLines(texFile);

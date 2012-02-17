@@ -105,6 +105,7 @@ public class TubainaBuilder {
 		List<Reader> readers = new ArrayList<Reader>();
 		List<String> files = new ArrayList<String>();
 		Collections.addAll(files, file.list(new SuffixFileFilter(".afc")));
+		Collections.addAll(files, file.list(new SuffixFileFilter(".bib")));
 		Collections.sort(files);
 		for (String s : files) {
 			readers.add(new InputStreamReader(new FileInputStream(new File(
