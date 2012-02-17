@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
-import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.html.Generator;
@@ -99,6 +98,10 @@ public class LatexGenerator implements Generator{
 				}
 
 			}
+		}
+		File bibliography = new File(b.getName() + ".bib");
+		if(bibliography.exists()) {
+			FileUtils.copyFileToDirectory(bibliography, directory);
 		}
 		if (resourceCopyFailed)
 			throw new TubainaException("Couldn't copy some resources. See the Logger for further information");
