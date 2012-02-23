@@ -2,15 +2,22 @@ package br.com.caelum.tubaina.parser.latex;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTagTest {
 
+	private Tag tag;
+
+	@Before
+	public void setUp() {
+		tag = new ImageTag();
+	}
+	
 	@Test
 	public void testFullImageTag() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=30 \"Imagem de alguma coisa\"");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -20,8 +27,17 @@ public class ImageTagTest {
 	}
 
 	@Test
+	public void labelToImageShouldBeParsed() throws Exception {
+		String result = tag.parse("image.png", "label=important");
+		Assert.assertEquals(
+				"\\begin{figure}[H]\n\\centering\n" +
+				"\\includegraphics[width=\\textwidth]{image.png}\n" +
+				"\\label{important}\n" +
+				"\\end{figure}\n\n", result);
+	}
+	
+	@Test
 	public void testImageTagWithoutBounds() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "\"Imagem de alguma coisa\"");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -32,7 +48,6 @@ public class ImageTagTest {
 
 	@Test
 	public void testImageTagWithoutDesc() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=42");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -42,7 +57,6 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithPercentageSymbol() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=40%");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -52,7 +66,6 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithoutPercentageSymbol() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=40");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -62,7 +75,6 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithInvalidBounds() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("imagem.png", "w=42");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +
@@ -72,7 +84,6 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithPath() {
-		Tag tag = new ImageTag();
 		String result = tag.parse("some/path/imagem.png", "w=42");
 		Assert.assertEquals(
 				"\\begin{figure}[H]\n\\centering\n" +

@@ -16,22 +16,25 @@ public class ImageTag implements Tag {
 
 		output = output + "\\includegraphics";
 
-		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
-		Matcher sMatcher = horizontalScale.matcher(options);
+		Pattern label = Pattern.compile("(?s)(?i)label=(\\w+)%?");
+		Matcher labelMatcher = label.matcher(options);
 
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
-		Matcher dMatcher = description.matcher(options);
+		Matcher descriptionMatcher = description.matcher(options);
+		
+		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
+		Matcher horizontalMatcher = horizontalScale.matcher(options);
 
 		Pattern actualWidth = Pattern.compile("(?s)(?i)\\[(.+?)\\]");
-		Matcher aMatcher = actualWidth.matcher(options);
+		Matcher actualWidthMatcher = actualWidth.matcher(options);
 
 		double width = Double.MAX_VALUE;
-		if (aMatcher.find()) {
-			width = Double.parseDouble(aMatcher.group(1));
+		if (actualWidthMatcher.find()) {
+			width = Double.parseDouble(actualWidthMatcher.group(1));
 		}
 
-		if (sMatcher.find()) {
-			output = output + "[width=" + pageWidth * (Double.parseDouble(sMatcher.group(1)) / 100) + "mm]";
+		if (horizontalMatcher.find()) {
+			output = output + "[width=" + pageWidth * (Double.parseDouble(horizontalMatcher.group(1)) / 100) + "mm]";
 		} else if (width > pageWidth) {
 			output = output + "[width=\\textwidth]";
 		} else {
@@ -40,9 +43,13 @@ public class ImageTag implements Tag {
 
 		String imgsrc = FilenameUtils.getName(path);
 		output = output + "{" + imgsrc + "}\n";
+		
+		if (labelMatcher.find()) {
+			output += "\\label{" + labelMatcher.group(1) + "}\n";
+		}
 
-		if (dMatcher.find()) {
-			output = output + "\n\n\\caption{" + dMatcher.group(1) + "}\n\n";
+		if (descriptionMatcher.find()) {
+			output = output + "\n\n\\caption{" + descriptionMatcher.group(1) + "}\n\n";
 		}
 
 		output = output + "\\end{figure}\n\n";
