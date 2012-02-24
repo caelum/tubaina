@@ -44,12 +44,12 @@ public class ImageTag implements Tag {
 		String imgsrc = FilenameUtils.getName(path);
 		output = output + "{" + imgsrc + "}\n";
 		
-		if (labelMatcher.find()) {
-			output += "\\label{" + labelMatcher.group(1) + "}\n";
-		}
-
 		if (descriptionMatcher.find()) {
 			output = output + "\n\n\\caption{" + descriptionMatcher.group(1) + "}\n\n";
+		}
+		
+		if (labelMatcher.find()) {
+			output += "\\label{" + labelMatcher.group(1) + "}\n";
 		}
 
 		output = output + "\\end{figure}\n\n";
