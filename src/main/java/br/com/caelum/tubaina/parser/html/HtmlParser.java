@@ -60,6 +60,10 @@ public class HtmlParser implements Parser {
         return new CodeTag().parse(text, options);
     }
 
+    public String parseGist(String options) {
+    	return new GistTag().parse(null, options);
+    }
+
     public String parseList(String text, String options) {
         return new ListTag().parse(text, options);
     }

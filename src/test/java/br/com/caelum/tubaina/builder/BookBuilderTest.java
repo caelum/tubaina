@@ -16,6 +16,7 @@ import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
+import br.com.caelum.tubaina.chunk.GistChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
@@ -194,6 +195,18 @@ public class BookBuilderTest {
 
 		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals("\nAlgum corpo de texto\nque é preformatado\n", chunks.get(0).getContent(parser));
+	}
+
+	@Test
+	public void testGistsChunk() {
+		List<Chapter> chapters = getChapters("[chapter  Capítulo cheio de Chunks]\n" + "[section secao]"
+				+ "\n\n[gist 1940936]\n\n");
+		
+		List<Chunk> chunks = chapters.get(0).getSections().get(0).getChunks();
+		Assert.assertEquals(1, chunks.size());
+		
+		Assert.assertEquals(GistChunk.class, chunks.get(0).getClass());
+		Assert.assertEquals("1940936", chunks.get(0).getContent(parser));
 	}
 
 	@Test

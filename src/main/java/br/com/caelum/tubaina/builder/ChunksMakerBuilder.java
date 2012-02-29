@@ -11,6 +11,7 @@ import br.com.caelum.tubaina.builder.replacer.BoxReplacer;
 import br.com.caelum.tubaina.builder.replacer.CenteredParagraphReplacer;
 import br.com.caelum.tubaina.builder.replacer.CodeReplacer;
 import br.com.caelum.tubaina.builder.replacer.ExerciseReplacer;
+import br.com.caelum.tubaina.builder.replacer.GistReplacer;
 import br.com.caelum.tubaina.builder.replacer.ImageReplacer;
 import br.com.caelum.tubaina.builder.replacer.IndexReplacer;
 import br.com.caelum.tubaina.builder.replacer.ItemReplacer;
@@ -32,7 +33,7 @@ public class ChunksMakerBuilder {
 
 	private Map<String, List<Replacer>> replacerMap = new HashMap<String, List<Replacer>>();
 
-	private String paragraphTerminator = "java|box|code|img|list|xml|exercise|note|answer|item|question|todo|index|ruby|table|row|center";
+	private String paragraphTerminator = "java|box|code|gist|img|list|xml|exercise|note|answer|item|question|todo|index|ruby|table|row|center";
 
 	private static final List<String> CLOSABLE_TAGS;
 	static {
@@ -53,6 +54,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
@@ -70,6 +72,7 @@ public class ChunksMakerBuilder {
 		// Box tag
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
@@ -93,6 +96,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new ImageReplacer(resources));
@@ -117,6 +121,7 @@ public class ChunksMakerBuilder {
 		// Note tag
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
@@ -135,6 +140,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new AnswerReplacer(resources));
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
@@ -165,6 +171,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());
@@ -181,6 +188,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
 		replacers.add(new ImageReplacer(resources));
 		replacers.add(new JavaReplacer());

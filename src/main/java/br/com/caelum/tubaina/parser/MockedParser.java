@@ -20,6 +20,11 @@ public class MockedParser implements Parser {
 
         return text;
     }
+    
+    public String parseGist(String options) {
+    	
+    	return options;
+    }
 
     public String parseExercise(String text, int id) {
 

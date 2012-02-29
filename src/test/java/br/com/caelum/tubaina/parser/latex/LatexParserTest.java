@@ -121,18 +121,6 @@ public class LatexParserTest {
 		Assert.assertEquals("(\\link{http://www.caelum.com.br})", result);
 	}
 	
-//	@Test
-//	public void testLinkSemHttpTagInline() {
-//		String result = parser.parse("[url ola mundo | www.caelum.com.br]");
-//		Assert.assertEquals("\\link{ola mundo}{www.caelum.com.br}", result);
-//	}
-//
-//	@Test
-//	public void testLinkTagMultiline() {
-//		String result = parser.parse("[url ola mu\nndo|http://www.caelum.com.br ]");
-//		Assert.assertEquals("\\link{ola mu\nndo}{http://www.caelum.com.br}", result);
-//	}
-
 	@Test
 	public void testMailTagInline() {
 		String result = parser.parse("[mail]olamundo@caelum.com.br[/mail]");
@@ -174,6 +162,11 @@ public class LatexParserTest {
 	@Test
 	public void testParseCode() {
 		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "{text}\ntest" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "text"));
+	}
+
+	@Test
+	public void testParseGist() {
+		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "{ruby}\nputs \"Ola\"" + CodeTag.END + "\n\\\\[1em]\n", parser.parseGist("1943913"));
 	}
 	
 	@Test

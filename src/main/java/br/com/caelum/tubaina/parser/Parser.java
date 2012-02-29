@@ -7,6 +7,7 @@ public interface Parser {
 	public String parseBox(String text, String options);
 	public String parseImage(String text, String options);
 	public String parseCode(String text, String options);
+	public String parseGist(String options);
 	public String parseList(String text, String options);
 	public String parseXml(String text, String options);
 	public String parseExercise(String text, int id);

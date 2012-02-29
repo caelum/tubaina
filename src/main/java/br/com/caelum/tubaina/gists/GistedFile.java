@@ -17,7 +17,7 @@ public class GistedFile {
 	}
 
 	public String getLanguage() {
-		return language;
+		return language.toLowerCase();
 	}
 
 	public String getContent() {
