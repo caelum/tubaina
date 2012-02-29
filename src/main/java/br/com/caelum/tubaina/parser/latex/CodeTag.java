@@ -13,13 +13,16 @@ public class CodeTag implements Tag {
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
 	}
-
 	public String parse(String string, String options) {
-		String chosenLanguage = options == null ? "" : options.trim().split(" ")[0].trim();	
+		options = options == null ? "" : options;
+		String lineNumbers = options.contains("#") ? "[linenos, numbersep=5pt]": "";
+		options = options.replaceAll("#", "").trim();
+		String chosenLanguage = options.trim().split(" ")[0].trim();
+		
 		if(chosenLanguage.isEmpty()){
 			chosenLanguage = "text";
 		}
-		String lineNumbers = options.contains("#") ? "[linenos, numbersep=5pt]": "";
+		
 		
 		String indentedString = this.indentator.indent(string);
 		return CodeTag.BEGIN + lineNumbers + "{" + chosenLanguage + "}\n" + indentedString + CodeTag.END;
