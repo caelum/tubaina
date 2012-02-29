@@ -64,4 +64,14 @@ public class CodeTagTest {
 							CodeTag.END, output);
 	}
 	
+	@Test
+	public void codeWithoutDefinedLanguageWillBeTextInsideMintedEnvironment() throws Exception {
+		String string = "public static void main(String[] args) {";
+		String options = "";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "{text}\n" +
+							string + 
+							CodeTag.END, output);
+	}
+	
 }
