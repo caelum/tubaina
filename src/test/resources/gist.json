@@ -1,0 +1,51 @@
+{
+  "files": {
+    "GivenFile": {
+      "content": "GivenCode",
+      "type": "text/plain",
+      "raw_url": "https://gist.github.com/raw/417835/8b6f42716dfabbf010320b490b2e787a96464071/Bookmarklet Hack Banco Real",
+      "language": null,
+      "size": 107,
+      "filename": "Bookmarklet Hack Banco Real"
+    }
+  },
+  "history": [
+    {
+      "change_status": {
+        "additions": 1,
+        "deletions": 0,
+        "total": 1
+      },
+      "committed_at": "2010-05-28T22:29:07Z",
+      "user": {
+        "login": "sergiolopes",
+        "url": "https://api.github.com/users/sergiolopes",
+        "avatar_url": "https://secure.gravatar.com/avatar/3244c236c487924b4309fdd53cbb8633?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+        "gravatar_id": "3244c236c487924b4309fdd53cbb8633",
+        "id": 91123
+      },
+      "url": "https://api.github.com/gists/417835/b2d90ad71b7e3458f024d1c429910e56a17d220d",
+      "version": "b2d90ad71b7e3458f024d1c429910e56a17d220d"
+    }
+  ],
+  "public": true,
+  "comments": 0,
+  "updated_at": "2010-06-09T20:57:49Z",
+  "forks": [
+
+  ],
+  "user": {
+    "login": "sergiolopes",
+    "url": "https://api.github.com/users/sergiolopes",
+    "avatar_url": "https://secure.gravatar.com/avatar/3244c236c487924b4309fdd53cbb8633?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
+    "gravatar_id": "3244c236c487924b4309fdd53cbb8633",
+    "id": 91123
+  },
+  "url": "https://api.github.com/gists/417835",
+  "created_at": "2010-05-28T22:29:07Z",
+  "git_pull_url": "git://gist.github.com/417835.git",
+  "id": "417835",
+  "description": "Bookmarklet para tirar a verificação do módulo de proteção do Home Banking do Banco Real",
+  "html_url": "https://gist.github.com/417835",
+  "git_push_url": "git@gist.github.com:417835.git"
+}

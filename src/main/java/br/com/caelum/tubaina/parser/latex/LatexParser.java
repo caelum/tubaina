@@ -2,6 +2,10 @@ package br.com.caelum.tubaina.parser.latex;
 
 import java.util.List;
 
+import br.com.caelum.tubaina.gists.GistConnector;
+import br.com.caelum.tubaina.gists.GistRequest;
+import br.com.caelum.tubaina.gists.GistResultRetriever;
+import br.com.caelum.tubaina.gists.JsonToGistResultConverter;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -63,6 +67,16 @@ public class LatexParser implements Parser {
         String string = new CodeTag(new SimpleIndentator())
                 .parse(text, options);
         return VSPACE + string + VSPACE;
+    }
+
+    public String parseGist(String options) {
+    	
+    	GistResultRetriever retriever = new GistResultRetriever(new GistConnector(
+				new JsonToGistResultConverter(), new GistRequest()));
+    	SimpleIndentator ident = new SimpleIndentator();
+    	
+		String string = new GistTag(ident, retriever).parse(null, options);
+    	return VSPACE + string + VSPACE;
     }
 
     public String parseList(String text, String options) {
