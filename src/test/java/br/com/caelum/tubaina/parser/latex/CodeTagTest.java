@@ -65,23 +65,34 @@ public class CodeTagTest {
 	}
 	
 	@Test
-	public void codeWithoutDefinedLanguageWillBeTextInsideMintedEnvironment() throws Exception {
-		String string = "public static void main(String[] args) {";
-		String options = "";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
-		Assert.assertEquals(CodeTag.BEGIN + "{text}\n" +
-							string + 
-							CodeTag.END, output);
-	}
-	
-	@Test
-	public void codeWithoutDefinedLanguageWithSharp() throws Exception {
-		String string = "public static void main(String[] args) {";
+	public void languageCodeTagShouldUnderstandLineNumbersEvenWhenNoLanguageIsSelected(){
+		String string = "def some: \"bizarre code\" in: unknownLanguage";
 		String options = "#";
 		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{text}\n" +
-							string + 
-							CodeTag.END, output);
+				string + 
+				CodeTag.END, output);
+	}
+
+	@Test
+	public void languageCodeTagShouldUnderstandLineNumbersAndHighlightsWhenNoLanguageIsSelected(){
+		String string = "def some: \"bizarre code\" \nin: unknownLanguage";
+		String options = "# h=1,2";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt, h=1,2]{text}\n" +
+				string + 
+				CodeTag.END, output);
 	}
 	
+	@Test
+	public void languageCodeTagShouldUnderstandLineNumbersAndCSharpLanguage(){
+		String string = "public class SomeClass {";
+		String options = "C# #";
+		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{C#}\n" +
+				string + 
+				CodeTag.END, output);
+	}
+	
+	//TODO: file name as an option to code
 }
