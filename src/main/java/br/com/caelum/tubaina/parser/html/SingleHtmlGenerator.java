@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
@@ -21,12 +19,9 @@ import freemarker.template.Configuration;
 
 public class SingleHtmlGenerator implements Generator {
 
-	private static final Logger LOG = Logger.getLogger(SingleHtmlGenerator.class);
-
-	private Parser parser;
-	private File templateDir;
+	private final Parser parser;
+	private final File templateDir;
 	private Configuration cfg;
-
 
 	public SingleHtmlGenerator(Parser parser, File templateDir) {
 		this.parser = parser;
