@@ -37,6 +37,16 @@ public class ImageTagTest {
 	}
 	
 	@Test
+	public void labelNotInformed() throws Exception {
+		String result = tag.parse("image.png", "label=");
+		Assert.assertEquals(
+				"\\begin{figure}[H]\n\\centering\n" +
+				"\\includegraphics[width=\\textwidth]{image.png}\n" +
+				"\\label{image.png}\n" +
+				"\\end{figure}\n\n", result);
+	}
+	
+	@Test
 	public void labelAndCaption() throws Exception {
 		String result = tag.parse("image.png", "label=important \"a caption to the image\"");
 		Assert.assertEquals(
