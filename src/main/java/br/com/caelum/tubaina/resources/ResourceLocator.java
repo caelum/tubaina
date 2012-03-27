@@ -22,7 +22,7 @@ public class ResourceLocator {
 	
 	public static void initialize(File rootDir) {
 		if (locator != null) {
-			LOG.warn("Locator has already been initialized"+locator.getInstance().rootDir.getAbsolutePath());
+			LOG.warn("Locator has already been initialized"+ResourceLocator.getInstance().rootDir.getAbsolutePath());
 		}
 		if(!rootDir.exists()) {
 			throw new RuntimeException("Resource directory does not exist: " + rootDir.getAbsolutePath());
