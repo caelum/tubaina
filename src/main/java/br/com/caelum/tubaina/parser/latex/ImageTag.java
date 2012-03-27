@@ -52,10 +52,6 @@ public class ImageTag implements Tag {
 			output += "\\label{" + labelMatcher.group(1) + "}\n";
 		}
 
-		if (labelMatcher.find()) {
-			output += "\\label{" + labelMatcher.group(1) + "}\n";
-		}
-
 		output = output + "\\end{figure}\n\n";
 
 		return output;
