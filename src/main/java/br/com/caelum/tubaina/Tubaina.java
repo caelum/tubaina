@@ -80,7 +80,7 @@ public class Tubaina {
 	private static void printUsage(final Options options) {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(
-				"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname>",
+				"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname> -c <codelength>",
 				options);
 	}
 

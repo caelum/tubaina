@@ -74,6 +74,29 @@ public enum TubainaOption {
 			builder.dontCare();
 		}
 	},
+	CODE_LENGHT('c', "codelenght", "defines how many characters can be used at code blocks per line") {
+		@Override
+		public void configure(TubainaBuilder builder, CommandLine cmd) {
+			try {
+				String optionValue = cmd.getOptionValue(getShortName());
+				Integer length = Integer.valueOf(optionValue);
+				builder.codeLength(length);
+			} catch (NumberFormatException e) {
+				throw new TubainaException("Code Lenght (-c) argument wasn't a valid number", e);
+			}
+		}
+		
+		@Override
+		@SuppressWarnings("static-access")
+		public Option buildOption() {
+			return OptionBuilder
+						.withArgName("codelength")
+						.withLongOpt(getLongName())
+						.hasArg()
+						.withDescription(getDescription())
+						.create(getShortName());
+		}
+	},
 	NO_ANSWERS('a', "no-answers", "don't make the answers booklet") {
 		@Override
 		public void configure(TubainaBuilder builder, CommandLine cmd) {

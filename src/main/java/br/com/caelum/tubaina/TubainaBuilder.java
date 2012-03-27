@@ -30,7 +30,7 @@ public class TubainaBuilder {
 
 	public static final Logger LOG = Logger.getLogger(TubainaBuilder.class);
 
-	public static final int MAX_LINE_LENGTH = 93; // believe us... this is what
+	private static Integer codeLenght = 93; // believe us... this is what
 	// fits in Latex A4 templates.
 
 	private File inputDir = new File(".");
@@ -58,7 +58,6 @@ public class TubainaBuilder {
 	}
 
 	public void build() throws IOException {
-
 		ResourceLocator.initialize(inputDir);
 		List<Reader> readers = getAfcsFrom(inputDir);
 		BookBuilder builder = new BookBuilder(bookName);
@@ -163,4 +162,12 @@ public class TubainaBuilder {
 		return this;
 	}
 
+	public TubainaBuilder codeLength(Integer length) {
+		codeLenght = length;
+		return this;
+	}
+
+	public static Integer getCodeLength() {
+		return codeLenght;
+	}
 }

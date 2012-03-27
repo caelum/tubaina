@@ -16,9 +16,9 @@ public class CodeReplacer extends AbstractReplacer {
 	@Override
 	public Chunk createChunk(String options, String content) {
 		int maxLineLenght = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
-		if(maxLineLenght >TubainaBuilder.MAX_LINE_LENGTH)
+		if(maxLineLenght >TubainaBuilder.getCodeLength())
 			throw new TubainaException ("Chapter " + Chapter.getChaptersCount() + 
-										"  -  Code has " + maxLineLenght + " columns:\n\n" + content);
+										"  -  Code has " + maxLineLenght + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
 		return new CodeChunk(content, options);
 	}
 

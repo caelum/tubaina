@@ -34,9 +34,9 @@ public class JavaReplacer extends AbstractReplacer {
 			}
 		}
 		int maxLineLenght = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
-		if(maxLineLenght >TubainaBuilder.MAX_LINE_LENGTH)
+		if(maxLineLenght >TubainaBuilder.getCodeLength())
 			throw new TubainaException ("Chapter " + Chapter.getChaptersCount() + 
-										"  -  Java code has " + maxLineLenght + " columns:\n\n" + content);
+					"  -  Code has " + maxLineLenght + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
 		return new JavaChunk(options, content);
 	}
 
