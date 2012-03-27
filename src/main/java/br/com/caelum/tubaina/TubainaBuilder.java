@@ -32,6 +32,8 @@ public class TubainaBuilder {
 
 	private static Integer codeLenght = 93; // believe us... this is what
 	// fits in Latex A4 templates.
+	
+	private static Integer maximumImageWidth = 175;
 
 	private File inputDir = new File(".");
 
@@ -166,8 +168,17 @@ public class TubainaBuilder {
 		codeLenght = length;
 		return this;
 	}
+	
+	public TubainaBuilder maximumImageWidth(Integer width) {
+		maximumImageWidth = width;
+		return this;
+	}
 
 	public static Integer getCodeLength() {
 		return codeLenght;
+	}
+	
+	public static Integer getMaximumWidth() {
+		return maximumImageWidth;
 	}
 }

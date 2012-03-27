@@ -97,6 +97,31 @@ public enum TubainaOption {
 						.create(getShortName());
 		}
 	},
+	
+	MAXIMUM_IMAGE_WIDTH('w', "maximum_image_width", "Defines the maximum width of images in milimeters") {
+		@Override
+		public void configure(TubainaBuilder builder, CommandLine cmd) {
+			try {
+				String optionValue = cmd.getOptionValue(getShortName());
+				Integer width = Integer.valueOf(optionValue);
+				builder.maximumImageWidth(width);
+			} catch (NumberFormatException e) {
+				throw new TubainaException("Maximum Image Width (-w) argument wasn't a valid number", e);
+			}
+		}
+		
+		@Override
+		@SuppressWarnings("static-access")
+		public Option buildOption() {
+			return OptionBuilder
+						.withArgName("maximum_image_width")
+						.withLongOpt(getLongName())
+						.hasArg()
+						.withDescription(getDescription())
+						.create(getShortName());
+		}
+	},
+	
 	NO_ANSWERS('a', "no-answers", "don't make the answers booklet") {
 		@Override
 		public void configure(TubainaBuilder builder, CommandLine cmd) {

@@ -5,11 +5,10 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag {
-
-	double pageWidth = 175;
 
 	public String parse(final String path, final String options) {
 		String output = "\\begin{figure}[H]\n\\centering\n";
@@ -34,8 +33,8 @@ public class ImageTag implements Tag {
 		}
 
 		if (horizontalMatcher.find()) {
-			output = output + "[width=" + pageWidth * (Double.parseDouble(horizontalMatcher.group(1)) / 100) + "mm]";
-		} else if (width > pageWidth) {
+			output = output + "[width=" + TubainaBuilder.getMaximumWidth() * (Double.parseDouble(horizontalMatcher.group(1)) / 100) + "mm]";
+		} else if (width > TubainaBuilder.getMaximumWidth()) {
 			output = output + "[width=\\textwidth]";
 		} else {
 			output = output + "[scale=1]";
