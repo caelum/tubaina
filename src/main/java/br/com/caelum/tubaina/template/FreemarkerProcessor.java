@@ -4,16 +4,12 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import br.com.caelum.tubaina.TubainaException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 public class FreemarkerProcessor {
 	private final Configuration configuration;
-
-	private final static Logger LOG = Logger.getLogger(FreemarkerProcessor.class);
 
 	public FreemarkerProcessor(final Configuration configuration) {
 		this.configuration = configuration;
