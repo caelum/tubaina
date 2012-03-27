@@ -7,8 +7,8 @@ public class CodeTag implements Tag {
 
 	private final Indentator indentator;
 
-	public static final String BEGIN = "{\\begin{flushright} \\begin{minipage}{16.9cm} \\small \n\\begin{minted}";
-	public static final String END = "\n\\end{minted}\n\\end{minipage}\\end{flushright}}";
+	public static final String BEGIN = "\\small \n\\begin{minted}";
+	public static final String END = "\n\\end{minted}";
 
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
