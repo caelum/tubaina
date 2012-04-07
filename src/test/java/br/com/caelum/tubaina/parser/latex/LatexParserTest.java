@@ -116,6 +116,12 @@ public class LatexParserTest {
 	}
 	
 	@Test
+	public void testLinkComHttpsTagInline() {
+		String result = parser.parse("https://www.caelum.com.br");
+		Assert.assertEquals("\\link{https://www.caelum.com.br}", result);
+	}
+	
+	@Test
 	public void testLinkComParentesis() {
 		String result = parser.parse("(http://www.caelum.com.br)");
 		Assert.assertEquals("(\\link{http://www.caelum.com.br})", result);

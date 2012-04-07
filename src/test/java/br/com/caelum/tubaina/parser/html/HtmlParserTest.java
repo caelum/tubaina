@@ -115,6 +115,12 @@ public class HtmlParserTest {
 	}
 	
 	@Test
+	public void testLinkComHttpsTagInline() {
+		String result = parser.parse("https://www.caelum.com.br");
+		Assert.assertEquals("<a href=\"https://www.caelum.com.br\">https://www.caelum.com.br</a>", result);
+	}
+	
+	@Test
 	public void testLinkComParentesis() {
 		String result = parser.parse("(http://www.caelum.com.br)");
 		Assert.assertEquals("(<a href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>)", result);
