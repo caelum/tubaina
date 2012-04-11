@@ -11,7 +11,7 @@ public class CodeTag implements Tag {
 	private final Indentator indentator;
 
 	public static final String BEGIN = "\\small \n\\begin{minted}";
-	public static final String END = "\n\\end{minted}";
+	public static final String END = "\n\\end{minted}\\normalsize";
 
 	public CodeTag(Indentator indentator) {
 		this.indentator = indentator;
