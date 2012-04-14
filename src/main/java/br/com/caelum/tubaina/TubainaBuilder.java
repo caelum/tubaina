@@ -30,7 +30,7 @@ public class TubainaBuilder {
 
 	public static final Logger LOG = Logger.getLogger(TubainaBuilder.class);
 
-	private static Integer codeLenght = 93; // believe us... this is what
+	private static Integer codeLength = 93; // believe us... this is what
 	// fits in Latex A4 templates.
 	
 	private static Integer maximumImageWidth = 175;
@@ -165,7 +165,7 @@ public class TubainaBuilder {
 	}
 
 	public TubainaBuilder codeLength(Integer length) {
-		codeLenght = length;
+		codeLength = length;
 		return this;
 	}
 	
@@ -175,7 +175,7 @@ public class TubainaBuilder {
 	}
 
 	public static Integer getCodeLength() {
-		return codeLenght;
+		return codeLength;
 	}
 	
 	public static Integer getMaximumWidth() {

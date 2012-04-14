@@ -74,7 +74,7 @@ public enum TubainaOption {
 			builder.dontCare();
 		}
 	},
-	CODE_LENGHT('c', "codelenght", "defines how many characters can be used at code blocks per line") {
+	CODE_LENGHT('c', "codelength", "defines how many characters can be used at code blocks per line") {
 		@Override
 		public void configure(TubainaBuilder builder, CommandLine cmd) {
 			try {
@@ -82,7 +82,7 @@ public enum TubainaOption {
 				Integer length = Integer.valueOf(optionValue);
 				builder.codeLength(length);
 			} catch (NumberFormatException e) {
-				throw new TubainaException("Code Lenght (-c) argument wasn't a valid number", e);
+				throw new TubainaException("Code Length (-c) argument wasn't a valid number", e);
 			}
 		}
 		
