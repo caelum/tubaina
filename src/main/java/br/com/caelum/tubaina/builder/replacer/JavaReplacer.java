@@ -33,10 +33,10 @@ public class JavaReplacer extends AbstractReplacer {
 				LOG.warn("Failed to read file", e);
 			}
 		}
-		int maxLineLenght = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
-		if(maxLineLenght >TubainaBuilder.getCodeLength())
+		int maxLineLength = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
+		if(maxLineLength >TubainaBuilder.getCodeLength())
 			throw new TubainaException ("Chapter " + Chapter.getChaptersCount() + 
-					"  -  Code has " + maxLineLenght + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
+					"  -  Code has " + maxLineLength + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
 		return new JavaChunk(options, content);
 	}
 
