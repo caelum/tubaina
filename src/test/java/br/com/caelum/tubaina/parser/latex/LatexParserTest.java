@@ -167,12 +167,12 @@ public class LatexParserTest {
 	
 	@Test
 	public void testParseCode() {
-		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "{text}\ntest" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "text"));
+		Assert.assertEquals(CodeTag.BEGIN + "{text}\ntest" + CodeTag.END + "\n\\\\[1em]\n", parser.parseCode("test", "text"));
 	}
 
 	@Test
 	public void testParseGist() {
-		Assert.assertEquals("\n\\\\[1em]\n" + CodeTag.BEGIN + "{ruby}\nputs \"Ola\"" + CodeTag.END + "\n\\\\[1em]\n", parser.parseGist("1943913"));
+		Assert.assertEquals(CodeTag.BEGIN + "{ruby}\nputs \"Ola\"" + CodeTag.END + "\n\\\\[1em]\n", parser.parseGist("1943913"));
 	}
 	
 	@Test
