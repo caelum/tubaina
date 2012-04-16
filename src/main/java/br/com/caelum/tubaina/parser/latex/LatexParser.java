@@ -55,7 +55,7 @@ public class LatexParser implements Parser {
     public String parseJava(String text, String options) {
         String string = new JavaTag(new SimpleIndentator())
                 .parse(text, options);
-        return VSPACE + string;
+        return string;
     }
 
     public String parseParagraph(String text) {
@@ -66,7 +66,7 @@ public class LatexParser implements Parser {
     public String parseCode(String text, String options) {
         String string = new CodeTag(new SimpleIndentator())
                 .parse(text, options);
-        return VSPACE + string + VSPACE;
+        return string + VSPACE;
     }
 
     public String parseGist(String options) {
@@ -76,7 +76,7 @@ public class LatexParser implements Parser {
     	SimpleIndentator ident = new SimpleIndentator();
     	
 		String string = new GistTag(ident, retriever).parse(null, options);
-    	return VSPACE + string + VSPACE;
+        return string + VSPACE;
     }
 
     public String parseList(String text, String options) {
@@ -85,7 +85,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseXml(String text, String options) {
-        return VSPACE + new XmlTag(new SimpleIndentator()).parse(text, options)
+        return new XmlTag(new SimpleIndentator()).parse(text, options)
                 + VSPACE;
     }
 
@@ -141,6 +141,6 @@ public class LatexParser implements Parser {
     public String parseRuby(String content, String options) {
         String result = new RubyTag(new SimpleIndentator()).parse(content,
                 options);
-        return VSPACE + result + VSPACE;
+        return result + VSPACE;
     }
 }
