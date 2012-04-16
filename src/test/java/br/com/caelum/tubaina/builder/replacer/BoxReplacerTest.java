@@ -34,11 +34,14 @@ public class BoxReplacerTest {
 		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test(expected = TubainaException.class)
+	@Test
 	public void testReplacesBoxWithNoTitle() {
 		String box = "[box]ola mundo[/box] ola resto";
 		Assert.assertTrue(replacer.accepts(box));
-		replacer.execute(box, chunks);
+		String resto = replacer.execute(box, chunks);
+		Assert.assertEquals(" ola resto", resto);
+		Assert.assertEquals(1, chunks.size());
+		Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
 	}
 
 	@Test(expected = TubainaException.class)

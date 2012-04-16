@@ -22,7 +22,7 @@ public class BoxTagTest {
 	@Test
 	public void testChangeTitleToEmptyStringIfItsNull(){
 		String result = new BoxTag().parse("Text", null);
-		Assert.assertEquals("\\begin{tubainabox}{}\nText\n\\end{tubainabox}", result);
+		Assert.assertEquals("\\begin{tubainabox}{\\ }\nText\n\\end{tubainabox}", result);
 	}
 
 }
