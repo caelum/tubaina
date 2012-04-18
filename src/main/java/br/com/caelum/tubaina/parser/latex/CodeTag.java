@@ -8,49 +8,71 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class CodeTag implements Tag {
 
-	private final Indentator indentator;
+    private final Indentator indentator;
 
     public static final String BEGIN = "\n\\begin{small}\n\\begin{minted}";
     public static final String END = "\n\\end{minted}\n\\end{small}";
 
-	public CodeTag(Indentator indentator) {
-		this.indentator = indentator;
-	}
-	public String parse(String string, String options) {
-		StringBuilder optionsBuilder = new StringBuilder("[");
-		if (options.contains("#")) {
-			optionsBuilder.append("linenos, numbersep=5pt");
-			options = removeSharp(options); 
-		}
-		Matcher highlightPattern = Pattern.compile("h=(\\d+(,\\d+)*)").matcher(options);
-		if (highlightPattern.find()) {
-			if(optionsBuilder.length() > 1)
-				optionsBuilder.append(", ");
-			
-			String highlights = highlightPattern.group();
-			optionsBuilder.append(highlights);
-			options = removeHighlights(options, highlights); 
-		}
-		optionsBuilder.append("]");
-		
-		String optionalParameters = optionsBuilder.length() > 2 ? optionsBuilder.toString() : "";
-		String chosenLanguage = options == null ? "" : options.trim().split(" ")[0].trim();	
-		if(chosenLanguage.isEmpty()){
-			chosenLanguage = "text";
-		}
-		
-		String indentedString = this.indentator.indent(string);
-		return CodeTag.BEGIN + optionalParameters + "{" + chosenLanguage + "}\n" + indentedString + CodeTag.END;
-	}
+    public CodeTag(Indentator indentator) {
+        this.indentator = indentator;
+    }
 
+    public String parse(String string, String options) {
+        StringBuilder latexOptionsBuilder = new StringBuilder("[");
+        String optionsWithoutSharp = matchSharpOption(options, latexOptionsBuilder);
+        String optionsWithoutHighlight = matchHighlightOption(optionsWithoutSharp,
+                latexOptionsBuilder);
+        latexOptionsBuilder.append("]");
 
-	private String removeHighlights(String options, String highlights) {
-		return options.replace(highlights, "");
-	}
+        String optionsLeft = optionsWithoutHighlight;
 
-	private String removeSharp(String options) {
-		int lastSharp = options.lastIndexOf("#");
-		return options.substring(0, lastSharp) + options.substring(lastSharp + 1);
-	}
-	
+        String latexOptionalParameters = latexOptionsBuilder.length() > 2 ? latexOptionsBuilder
+                .toString() : "";
+
+        String chosenLanguage = matchLanguage(optionsLeft);
+
+        String indentedString = this.indentator.indent(string);
+
+        return CodeTag.BEGIN + latexOptionalParameters + "{" + chosenLanguage + "}\n"
+                + indentedString + CodeTag.END;
+    }
+
+    private String matchLanguage(String optionsLeft) {
+        String chosenLanguage = optionsLeft == null ? "" : optionsLeft.trim().split(" ")[0].trim();
+        if (chosenLanguage.isEmpty()) {
+            chosenLanguage = "text";
+        }
+        return chosenLanguage;
+    }
+
+    private String matchHighlightOption(String options, StringBuilder optionsBuilder) {
+        Matcher highlightPattern = Pattern.compile("h=(\\d+(,\\d+)*)").matcher(options);
+        if (highlightPattern.find()) {
+            if (optionsBuilder.length() > 1)
+                optionsBuilder.append(", ");
+
+            String highlights = highlightPattern.group();
+            optionsBuilder.append(highlights);
+            options = removeHighlights(options, highlights);
+        }
+        return options;
+    }
+
+    private String matchSharpOption(String options, StringBuilder optionsBuilder) {
+        if (options.contains("#")) {
+            optionsBuilder.append("linenos, numbersep=5pt");
+            options = removeSharp(options);
+        }
+        return options;
+    }
+
+    private String removeHighlights(String options, String highlights) {
+        return options.replace(highlights, "");
+    }
+
+    private String removeSharp(String options) {
+        int lastSharp = options.lastIndexOf("#");
+        return options.substring(0, lastSharp) + options.substring(lastSharp + 1);
+    }
+
 }
