@@ -12,6 +12,9 @@ public class CodeTag implements Tag {
 
     public static final String BEGIN = "\n\\begin{small}\n\\begin{minted}";
     public static final String END = "\n\\end{minted}\n\\end{small}";
+    private static final String LATEXCODECOUNTER = "codecounter";
+    public static final String CODEREFERENCE = "\n\\refstepcounter{" + LATEXCODECOUNTER
+            + "}\\tubainacodecaption{\\the" + LATEXCODECOUNTER + "}";
 
     public CodeTag(Indentator indentator) {
         this.indentator = indentator;
@@ -29,12 +32,38 @@ public class CodeTag implements Tag {
         String latexOptionalParameters = latexOptionsBuilder.length() > 2 ? latexOptionsBuilder
                 .toString() : "";
 
-        String chosenLanguage = matchLanguage(optionsLeft);
+        StringBuilder labelBuilder = new StringBuilder();
+        String optionsWithoutLabel = matchLabel(optionsLeft, labelBuilder);
+        String label = labelBuilder.toString();
+        String latexReference = latexReferenceFor(label);
+        optionsLeft = optionsWithoutLabel;
 
+        String chosenLanguage = matchLanguage(optionsLeft);
         String indentedString = this.indentator.indent(string);
 
-        return CodeTag.BEGIN + latexOptionalParameters + "{" + chosenLanguage + "}\n"
-                + indentedString + CodeTag.END;
+        return latexReference + CodeTag.BEGIN + latexOptionalParameters + "{" + chosenLanguage
+                + "}\n" + indentedString + CodeTag.END;
+    }
+
+    private String latexReferenceFor(String label) {
+        if (label.isEmpty())
+            return "";
+        return CodeTag.CODEREFERENCE + "\\label{" + label + "}\n";
+    }
+
+    private String matchLabel(String options, StringBuilder labelBuilder) {
+        String label = "";
+        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+        if (labelMatcher.find()) {
+            label = labelMatcher.group(1);
+            int indexOfLabel = options.indexOf("label");
+            String optionsWithoutLabel = options.substring(0, indexOfLabel)
+                    + options.subSequence(indexOfLabel + 6 + label.length(), options.length());
+            options = optionsWithoutLabel;
+        }
+        
+        labelBuilder.append(label);
+        return options;
     }
 
     private String matchLanguage(String optionsLeft) {
