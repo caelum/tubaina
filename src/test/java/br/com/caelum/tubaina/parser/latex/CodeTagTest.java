@@ -100,7 +100,7 @@ public class CodeTagTest {
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
         String output = new CodeTag(new SimpleIndentator()).parse(code, options);
-        Assert.assertEquals(CodeTag.CODEREFERENCE + "\\label{javacode1}\n" + CodeTag.BEGIN
+        Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n" + CodeTag.BEGIN
                 + "{text}\n" + code + CodeTag.END,
                 output);
 
@@ -112,7 +112,7 @@ public class CodeTagTest {
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
         String output = new CodeTag(new SimpleIndentator()).parse(code, options);
-        Assert.assertEquals(CodeTag.CODEREFERENCE + "\\label{javacode1}\n" + CodeTag.BEGIN
+        Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n" + CodeTag.BEGIN
                 + "{java}\n" + code + CodeTag.END, output);
 
     }

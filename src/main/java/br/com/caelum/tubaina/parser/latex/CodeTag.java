@@ -12,9 +12,7 @@ public class CodeTag implements Tag {
 
     public static final String BEGIN = "\n\\begin{small}\n\\begin{minted}";
     public static final String END = "\n\\end{minted}\n\\end{small}";
-    private static final String LATEXCODECOUNTER = "codecounter";
-    public static final String CODEREFERENCE = "\n\\refstepcounter{" + LATEXCODECOUNTER
-            + "}\\tubainacodecaption{\\the" + LATEXCODECOUNTER + "}";
+    public static final String CODE_LABEL = "\\tubainaCodeLabel{";
 
     public CodeTag(Indentator indentator) {
         this.indentator = indentator;
@@ -37,7 +35,7 @@ public class CodeTag implements Tag {
         StringBuilder labelBuilder = new StringBuilder();
         String optionsWithoutLabel = matchLabel(optionsLeft, labelBuilder);
         String label = labelBuilder.toString();
-        String latexReference = latexReferenceFor(label);
+        String latexReference = latexLabelFor(label);
         optionsLeft = optionsWithoutLabel;
 
         String chosenLanguage = matchLanguage(optionsLeft);
@@ -47,10 +45,10 @@ public class CodeTag implements Tag {
                 + "}\n" + indentedString + CodeTag.END;
     }
 
-    private String latexReferenceFor(String label) {
+    private String latexLabelFor(String label) {
         if (label.isEmpty())
             return "";
-        return CodeTag.CODEREFERENCE + "\\label{" + label + "}\n";
+        return CodeTag.CODE_LABEL + label + "}\n";
     }
 
     private String matchLabel(String options, StringBuilder labelBuilder) {

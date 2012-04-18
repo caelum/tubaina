@@ -73,8 +73,8 @@
 }
 
 %Code listing caption to be referenced
-\newcommand{\tubainacodecaption}[1]{
-	Listing #1
+\newcommand{\tubainaCodeLabel}[1]{
+	\refstepcounter{codecounter}Listing {\thecodecounter}\label{#1}:
 }
 
 \paragraphSpacer
