@@ -22,9 +22,11 @@ public class CodeTag implements Tag {
 
     public String parse(String string, String options) {
         StringBuilder latexOptionsBuilder = new StringBuilder("[");
+
         String optionsWithoutSharp = matchSharpOption(options, latexOptionsBuilder);
         String optionsWithoutHighlight = matchHighlightOption(optionsWithoutSharp,
                 latexOptionsBuilder);
+
         latexOptionsBuilder.append("]");
 
         String optionsLeft = optionsWithoutHighlight;
