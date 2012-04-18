@@ -92,3 +92,6 @@
 
 \pagenumbering{arabic}
 \setcounter{page}{1}
+
+%code listings counter
+\newcounter{codecounter}
