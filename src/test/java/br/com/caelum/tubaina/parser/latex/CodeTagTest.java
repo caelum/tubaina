@@ -117,5 +117,39 @@ public class CodeTagTest {
 
     }
 
+    @Test
+    public void codeTagWithFileNameWithoutLanguage() throws Exception {
+        String options = "filename=src/Main.java";
+        String code = "class Main {\n" + "public static void main(String[] args) {\n"
+                + "System.out.println(\"Hello world\");\n" + "}\n}";
+        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        Assert.assertEquals("\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{text}\n"
+                + code
+                + CodeTag.END, output);
+
+    }
+
+    @Test
+    public void codeTagWithFileNameWithLanguage() throws Exception {
+        String options = "java filename=src/Main.java";
+        String code = "class Main {\n" + "public static void main(String[] args) {\n"
+                + "System.out.println(\"Hello world\");\n" + "}\n}";
+        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        Assert.assertEquals("\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{java}\n"
+                + code + CodeTag.END, output);
+    }
+
+    @Test
+    public void codeTagWithFileNameWithLanguageAndLabel() throws Exception {
+        String options = "java filename=src/Main.java label=javacode1";
+        String code = "class Main {\n" + "public static void main(String[] args) {\n"
+                + "System.out.println(\"Hello world\");\n" + "}\n}";
+        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n"
+                + "\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{java}\n"
+                + code + CodeTag.END, output);
+
+    }
+
 	//TODO: file name as an option to code
 }

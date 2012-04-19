@@ -13,23 +13,22 @@ public class CodeTag implements Tag {
     public static final String BEGIN = "\n\\begin{small}\n\\begin{minted}";
     public static final String END = "\n\\end{minted}\n\\end{small}";
     public static final String CODE_LABEL = "\\tubainaCodeLabel{";
+    private static final String FILE_NAME = "\\tubainaCodeFileName";
 
     public CodeTag(Indentator indentator) {
         this.indentator = indentator;
     }
 
     public String parse(String string, String options) {
-        StringBuilder latexOptionsBuilder = new StringBuilder("[");
+        StringBuilder mintedOptionsBuilder = new StringBuilder("[");
 
-        String optionsWithoutSharp = matchSharpOption(options, latexOptionsBuilder);
+        String optionsWithoutSharp = matchSharpOption(options, mintedOptionsBuilder);
         String optionsWithoutHighlight = matchHighlightOption(optionsWithoutSharp,
-                latexOptionsBuilder);
-
-        latexOptionsBuilder.append("]");
+                mintedOptionsBuilder);
 
         String optionsLeft = optionsWithoutHighlight;
 
-        String latexOptionalParameters = latexOptionsBuilder.length() > 2 ? latexOptionsBuilder
+        String mintedOptionalParameters = mintedOptionsBuilder.length() > 2 ? mintedOptionsBuilder
                 .toString() : "";
 
         StringBuilder labelBuilder = new StringBuilder();
@@ -38,11 +37,36 @@ public class CodeTag implements Tag {
         String latexReference = latexLabelFor(label);
         optionsLeft = optionsWithoutLabel;
 
+        StringBuilder filenameBuilder = new StringBuilder();
+        String optionsWithoutFileName = matchFilename(optionsLeft, filenameBuilder);
+        optionsLeft = optionsWithoutFileName;
+        String filename = filenameBuilder.toString();
+        String latexFilename = latexFilenameFor(filename);
+
         String chosenLanguage = matchLanguage(optionsLeft);
         String indentedString = this.indentator.indent(string);
 
-        return latexReference + CodeTag.BEGIN + latexOptionalParameters + "{" + chosenLanguage
-                + "}\n" + indentedString + CodeTag.END;
+        return latexReference + latexFilename + CodeTag.BEGIN + mintedOptionalParameters + "{"
+                + chosenLanguage + "}\n" + indentedString + CodeTag.END;
+    }
+
+    private String latexFilenameFor(String filename) {
+        return filename.isEmpty() ? "" : FILE_NAME + "{src/Main.java}\n";
+    }
+
+    private String matchFilename(String options, StringBuilder filenameBuilder) {
+        String filename = "";
+        Matcher filenameMatcher = Pattern.compile("filename=(\\S+)").matcher(options);
+        if (filenameMatcher.find()) {
+            filename = filenameMatcher.group(1);
+            int indexOfFilename = options.indexOf("filename");
+            String optionsFilename = options.substring(0, indexOfFilename)
+                    + options.subSequence(indexOfFilename + 9 + filename.length(), options.length());
+            options = optionsFilename;
+        }
+
+        filenameBuilder.append(filename);
+        return options;
     }
 
     private String latexLabelFor(String label) {
@@ -84,6 +108,7 @@ public class CodeTag implements Tag {
             optionsBuilder.append(highlights);
             options = removeHighlights(options, highlights);
         }
+        optionsBuilder.append("]");
         return options;
     }
 
