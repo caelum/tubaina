@@ -23,7 +23,7 @@ public class ChunksMaker {
 				    try {
 				        text = replacer.execute(text, chunks);
                         accepted = true;
-                    } catch (TubainaException e) {
+                    } catch (Exception e) {
                         exceptions.add(e);
                     }
 				    break;

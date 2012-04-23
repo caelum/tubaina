@@ -20,6 +20,12 @@ public class TubainaSyntaxErrorsException extends RuntimeException {
         }
     }
     
+    public TubainaSyntaxErrorsException(String message, TubainaSyntaxErrorsException e) {
+        super(message);
+        this.exceptions = new ArrayList<Exception>();
+        exceptions.add(e);
+    }
+
     public void addError(Exception t) {
         exceptions.add(t);
     }

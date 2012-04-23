@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
-import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
@@ -49,8 +48,8 @@ public class ChapterBuilder {
 					try {
 					    Section section = new SectionBuilder(sectionTitle, sectionContent, resources).build();
 					    sections.add(section);
-					} catch (TubainaException e) {
-					    exceptions.add(new TubainaException("There are syntax errors on section named \"" 
+					} catch (TubainaSyntaxErrorsException e) {
+					    exceptions.add(new TubainaSyntaxErrorsException("There are syntax errors on section named \"" 
 					                + sectionTitle + "\"", e));
 					}
 				}
