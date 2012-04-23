@@ -18,6 +18,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -136,7 +137,7 @@ public class FlatHtmlGeneratorTest {
 			Book b = builder.build();
 			generator.generate(b, temp);
 			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
+		} catch (TubainaSyntaxErrorsException t) {
 			// OK
 		}
 	}
@@ -149,7 +150,7 @@ public class FlatHtmlGeneratorTest {
 			Book b = builder.build();
 			generator.generate(b, temp);
 			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
+		} catch (TubainaSyntaxErrorsException t) {
 			System.out.println(t.getMessage());
 			// OK
 		}

@@ -19,6 +19,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -161,7 +162,7 @@ public class SingleHtmlGeneratorTest {
 		}
 	}
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
 		BookBuilder builder = new BookBuilder("Com imagens");
 		builder.add(new StringReader("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]"));

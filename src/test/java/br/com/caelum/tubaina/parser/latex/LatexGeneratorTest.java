@@ -1,7 +1,5 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -17,6 +15,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -125,7 +124,7 @@ public class LatexGeneratorTest {
 			Book b = builder.build();
 			generator.generate(b, temp);
 			Assert.fail("Should raise an exception");
-		} catch (TubainaException t) {
+		} catch (TubainaSyntaxErrorsException t) {
 			// OK
 		}
 	}

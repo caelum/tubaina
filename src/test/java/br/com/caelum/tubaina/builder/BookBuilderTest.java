@@ -12,7 +12,7 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
-import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
@@ -126,7 +126,7 @@ public class BookBuilderTest {
 		Assert.assertEquals("texto da segunda seção", sections.get(1).getChunks().get(0).getContent(parser));
 	}
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testMultiChaptersMustThrowAnException() {
 		getChapters("[chapter     O que é java?   ]\n" + "texto da introdução\n"
 				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"

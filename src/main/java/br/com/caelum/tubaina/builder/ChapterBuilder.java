@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -32,6 +34,7 @@ public class ChapterBuilder {
 
 		List<Section> sections = new ArrayList<Section>();
 		List<Resource> resources = new ArrayList<Resource>();
+		List<Exception> exceptions = new ArrayList<Exception>();
 		if (content != null && content.trim().length() > 0) {
 
 			Integer offset = 0;
@@ -43,11 +46,19 @@ public class ChapterBuilder {
 				}
 				String sectionContent = matcher.group(2);
 				if (sectionTitle != null || sectionContent.trim().length() > 0) {
-					Section section = new SectionBuilder(sectionTitle, sectionContent, resources).build();
-					sections.add(section);
+					try {
+					    Section section = new SectionBuilder(sectionTitle, sectionContent, resources).build();
+					    sections.add(section);
+					} catch (TubainaException e) {
+					    exceptions.add(new TubainaException("There are syntax errors on section named \"" 
+					                + sectionTitle + "\"", e));
+					}
 				}
 				offset = matcher.end(2);
 			}
+			if (!exceptions.isEmpty()) {
+	            throw new TubainaSyntaxErrorsException("There are syntax errors on a chapter. See the messages below.", exceptions);
+	        }
 		}
 
 		IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all").splitChunks(introduction));

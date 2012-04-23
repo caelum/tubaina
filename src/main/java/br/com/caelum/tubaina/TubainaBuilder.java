@@ -75,7 +75,10 @@ public class TubainaBuilder {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-		}
+		} catch (TubainaSyntaxErrorsException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
 
 		RegexConfigurator conf = new RegexConfigurator();
 		

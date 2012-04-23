@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -44,7 +45,7 @@ public class TableRowReplacerTest {
 		Assert.assertEquals(TableRowChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test(expected = TubainaException.class)
+	@Test(expected = TubainaSyntaxErrorsException.class)
 	public void testDoesntAcceptWithoutColsInside() {
 		String cell = "[row]some text[/row] text after";
 		Assert.assertTrue(replacer.accepts(cell));

@@ -12,11 +12,14 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 
 public class BookBuilder {
 
 	private final Logger LOG = Logger.getLogger(BookBuilder.class);
 	private final String name;
+	
+	private int chapterCount;
 	
 	private final List<Reader> readers = new ArrayList<Reader>();
 	
@@ -38,13 +41,24 @@ public class BookBuilder {
 	
 	public Book build(boolean showNotes) {
 		List<Chapter> chapters = new ArrayList<Chapter>();
+		List<Exception> exceptions = new ArrayList<Exception>();
 		for (Reader reader : readers) {
-			LOG.info("Parsing chapter " + Chapter.getChaptersCount());
+			LOG.info("Parsing chapter " + chapterCount);
 			Scanner scanner = new Scanner(reader);
 			scanner.useDelimiter("$$");
-			if (scanner.hasNext())
-				chapters.addAll(parse(scanner.next()));
+			if (scanner.hasNext()) {
+				try {
+				    chapters.addAll(parse(scanner.next()));
+				}
+				catch(Exception e) {
+				    exceptions.add(e);
+				}
+			}
 		}
+		if (!exceptions.isEmpty()) {
+            TubainaSyntaxErrorsException e = new TubainaSyntaxErrorsException("There are syntax errors on your book. See messages below.", exceptions);
+            throw e;
+        }
 		return new Book(name, chapters, showNotes);
 	}
 
@@ -53,16 +67,16 @@ public class BookBuilder {
 		Matcher matcher = pattern.matcher(text);
 
 		List<Chapter> chapters = new ArrayList<Chapter>();
+		
+		List<Exception> exceptions = new ArrayList<Exception>();
 
 		Integer offset = 0;
 
 		while (matcher.find(offset)) {
 			
-			
 			String title = matcher.group(1).trim();
 			String content = matcher.group(2);
 			offset = matcher.end(2);
-
 			
 			Pattern introductionPattern = Pattern.compile("(?i)(?s)(.*?)(?:\\[section|\\z)");
 			Matcher introductionMatcher = introductionPattern.matcher(content);
@@ -72,10 +86,20 @@ public class BookBuilder {
 				introduction = introductionMatcher.group(1);
 			
 			content = content.substring(introduction.length());
-
-			Chapter chapter = new ChapterBuilder(title, introduction, content).build();
-			chapters.add(chapter);
+			chapterCount++;
 			
+			try { 
+			    Chapter chapter = new ChapterBuilder(title, introduction, content).build();
+			    chapters.add(chapter);
+			} catch (Exception e) {
+			    exceptions.add(e);
+			}
+			
+		}
+		
+		if (!exceptions.isEmpty()) {
+		    TubainaSyntaxErrorsException e = new TubainaSyntaxErrorsException("There are syntax errors the chapter " + chapterCount + ". See messages below.", exceptions);
+            throw e;
 		}
 		
 		//TODO : Refactoring

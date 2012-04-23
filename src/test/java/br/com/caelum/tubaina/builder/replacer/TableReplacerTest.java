@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -84,14 +85,14 @@ public class TableReplacerTest {
 		Assert.assertEquals(TableChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test(expected = TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testDoesntAcceptWithoutRowTagInside() {
 		String table = "[table]texto[/table] resto";
 		Assert.assertTrue(replacer.accepts(table));
 		replacer.execute(table, chunks);
 	}
 
-	@Test(expected = TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testDoesntAcceptWithOnlyColTagInside() {
 		String table = "[table][col]texto[/col][/table] resto";
 		Assert.assertTrue(replacer.accepts(table));

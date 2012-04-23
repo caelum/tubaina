@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
@@ -275,7 +275,7 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(13).getClass());
 	}
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testChunksMakerBuilderForAllDoesntAcceptQuestionTagOutsideExercise() {
 		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
 				.build("all");
@@ -287,7 +287,7 @@ public class ChunksMakerBuilderTest {
 		Assert.fail("Should not accept question tag outside exercise tag");
 	}
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=TubainaSyntaxErrorsException.class)
 	public void testChunksMakerBuilderDoesntAcceptNoteInsideExerciseOutsideQuestion() {
 		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
 				.build("exercise");
@@ -295,4 +295,5 @@ public class ChunksMakerBuilderTest {
 		chunksMaker.make(exercise);
 		Assert.fail("Should not accept notes inside exercise tag but outside question tag");
 	}
+
 }
