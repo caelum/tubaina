@@ -43,7 +43,7 @@ public class BookBuilder {
 		List<Chapter> chapters = new ArrayList<Chapter>();
 		List<Exception> exceptions = new ArrayList<Exception>();
 		for (Reader reader : readers) {
-			LOG.info("Parsing chapter " + chapterCount);
+			LOG.info("Parsing chapter " + (chapterCount + 1));
 			Scanner scanner = new Scanner(reader);
 			scanner.useDelimiter("$$");
 			if (scanner.hasNext()) {
@@ -87,6 +87,7 @@ public class BookBuilder {
 			
 			content = content.substring(introduction.length());
 			chapterCount++;
+			Chapter.setChaptersCount(chapterCount);
 			
 			try { 
 			    Chapter chapter = new ChapterBuilder(title, introduction, content).build();

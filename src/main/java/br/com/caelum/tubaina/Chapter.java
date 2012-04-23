@@ -44,4 +44,8 @@ public class Chapter {
 	public static int getChaptersCount() {
 		return COUNT;
 	}
+	
+	public static void setChaptersCount(int count) {
+        COUNT = count;
+    }
 }

@@ -23,7 +23,7 @@ public class ChunksMaker {
 				    try {
 				        text = replacer.execute(text, chunks);
                         accepted = true;
-                    } catch (TubainaSyntaxErrorsException e) {
+                    } catch (TubainaException e) {
                         exceptions.add(e);
                     }
 				    break;
@@ -37,7 +37,7 @@ public class ChunksMaker {
             }
 		}
 		if (!exceptions.isEmpty()) {
-		    throw new TubainaSyntaxErrorsException("There was syntax errors on a section of chapter "+ 
+		    throw new TubainaSyntaxErrorsException("There are syntax errors on a section of chapter "+ 
                     Chapter.getChaptersCount() + ". See the messages below.", exceptions);
 		}
 		return chunks;
