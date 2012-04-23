@@ -141,12 +141,12 @@ public class CodeTagTest {
 
     @Test
     public void codeTagWithFileNameWithLanguageAndLabel() throws Exception {
-        String options = "java filename=src/Main.java label=javacode1";
+        String options = "java filename=src/Main2.java label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
         String output = new CodeTag(new SimpleIndentator()).parse(code, options);
         Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n"
-                + "\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{java}\n"
+                + "\\tubainaCodeFileName{src/Main2.java}\n" + CodeTag.BEGIN + "{java}\n"
                 + code + CodeTag.END, output);
 
     }

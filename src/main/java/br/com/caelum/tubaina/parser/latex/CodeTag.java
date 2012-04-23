@@ -51,7 +51,7 @@ public class CodeTag implements Tag {
     }
 
     private String latexFilenameFor(String filename) {
-        return filename.isEmpty() ? "" : FILE_NAME + "{src/Main.java}\n";
+        return filename.isEmpty() ? "" : FILE_NAME + "{" + filename + "}\n";
     }
 
     private String matchFilename(String options, StringBuilder filenameBuilder) {
