@@ -3,44 +3,44 @@ package br.com.caelum.tubaina;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TubainaSyntaxErrorsException extends RuntimeException {
+public class TubainaSyntaxErrorsException extends TubainaException {
     
-    List<Exception> exceptions;
+    List<TubainaException> exceptions;
     
     public TubainaSyntaxErrorsException() {
         super();
-        exceptions = new ArrayList<Exception>();
+        exceptions = new ArrayList<TubainaException>();
     }
     
-    public TubainaSyntaxErrorsException(String message, List<Exception> exceptions) {
+    public TubainaSyntaxErrorsException(String message, List<TubainaException> exceptions) {
         super(message);
-        this.exceptions = new ArrayList<Exception>();
-        for (Exception exception : exceptions) {
+        this.exceptions = new ArrayList<TubainaException>();
+        for (TubainaException exception : exceptions) {
             addError(exception);
         }
     }
     
-    public TubainaSyntaxErrorsException(String message, TubainaSyntaxErrorsException e) {
+    public TubainaSyntaxErrorsException(String message, TubainaException e) {
         super(message);
-        this.exceptions = new ArrayList<Exception>();
+        this.exceptions = new ArrayList<TubainaException>();
         exceptions.add(e);
     }
 
-    public void addError(Exception t) {
-        exceptions.add(t);
+    public void addError(TubainaException e) {
+        exceptions.add(e);
     }
     
-    public void addErrors(List<Exception> exceptions) {
-        for (Exception throwable : exceptions) {
-            this.addError(throwable);
+    public void addErrors(List<TubainaException> exceptions) {
+        for (TubainaException exception : exceptions) {
+            this.addError(exception);
         }
     }
     
     @Override
     public void printStackTrace() {
         super.printStackTrace();
-        for (Exception t : exceptions) {
-            t.printStackTrace();
+        for (Exception e : exceptions) {
+            e.printStackTrace();
         }
     }
     

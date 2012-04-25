@@ -68,6 +68,9 @@ public class TubainaBuilder {
 		Book b = null;
 		try {
 			b = builder.build(showNotes);
+		} catch (TubainaSyntaxErrorsException e) {
+		    e.printStackTrace();
+		    System.exit(-1);
 		} catch (TubainaException e) {
 			if (dontCare) {
 				LOG.warn(e);
@@ -75,10 +78,7 @@ public class TubainaBuilder {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-		} catch (TubainaSyntaxErrorsException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+		}
 
 		RegexConfigurator conf = new RegexConfigurator();
 		

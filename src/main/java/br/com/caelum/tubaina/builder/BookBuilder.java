@@ -41,7 +41,7 @@ public class BookBuilder {
 	
 	public Book build(boolean showNotes) {
 		List<Chapter> chapters = new ArrayList<Chapter>();
-		List<Exception> exceptions = new ArrayList<Exception>();
+		List<TubainaException> exceptions = new ArrayList<TubainaException>();
 		for (Reader reader : readers) {
 			LOG.info("Parsing chapter " + (chapterCount + 1));
 			Scanner scanner = new Scanner(reader);
@@ -50,7 +50,7 @@ public class BookBuilder {
 				try {
 				    chapters.addAll(parse(scanner.next()));
 				}
-				catch(Exception e) {
+				catch(TubainaException e) {
 				    exceptions.add(e);
 				}
 			}
@@ -68,7 +68,7 @@ public class BookBuilder {
 
 		List<Chapter> chapters = new ArrayList<Chapter>();
 		
-		List<Exception> exceptions = new ArrayList<Exception>();
+		List<TubainaException> exceptions = new ArrayList<TubainaException>();
 
 		Integer offset = 0;
 
@@ -92,7 +92,7 @@ public class BookBuilder {
 			try { 
 			    Chapter chapter = new ChapterBuilder(title, introduction, content).build();
 			    chapters.add(chapter);
-			} catch (Exception e) {
+			} catch (TubainaException e) {
 			    exceptions.add(e);
 			}
 			

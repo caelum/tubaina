@@ -14,16 +14,16 @@ public class ChunksMaker {
 	private final List<Replacer> replacers = new ArrayList<Replacer>();
 
 	public List<Chunk> make(String text) {
-        List<Exception> exceptions = new ArrayList<Exception>();
+        List<TubainaException> exceptions = new ArrayList<TubainaException>();
 		List<Chunk> chunks = new ArrayList<Chunk>();
 		while (text.trim().length() != 0) {
 			boolean accepted = false;
 			for (Replacer replacer : replacers) {
-				if(replacer.accepts(text)) {
+				if (replacer.accepts(text)) {
 				    try {
 				        text = replacer.execute(text, chunks);
                         accepted = true;
-                    } catch (Exception e) {
+                    } catch (TubainaException e) {
                         exceptions.add(e);
                     }
 				    break;

@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.TubainaSyntaxErrorsException;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
@@ -33,7 +34,7 @@ public class ChapterBuilder {
 
 		List<Section> sections = new ArrayList<Section>();
 		List<Resource> resources = new ArrayList<Resource>();
-		List<Exception> exceptions = new ArrayList<Exception>();
+		List<TubainaException> exceptions = new ArrayList<TubainaException>();
 		if (content != null && content.trim().length() > 0) {
 
 			Integer offset = 0;
