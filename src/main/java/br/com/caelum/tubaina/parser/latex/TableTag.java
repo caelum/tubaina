@@ -16,19 +16,19 @@ public class TableTag implements Tag {
 	public String parse(String text, String title) {
 		if (this.columns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
-		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
+		String tag =  "\\begin{table}[!h]\n\\begin{center}\n";
 		if (!noborder)
 			tag += "\\rowcolors[]{1}{gray!30}{gray!15}\n";
-		tag += "\\begin{tabularx}{";
+		tag += "\\begin{tabular}{";
 		for (int i = 0; i < columns; i++)
-			tag += "X";
+			tag += "c";
 		tag += "}\n";
 		if (!noborder)
 			tag += "\\hline\n";
 		tag += text;
 		if (!noborder)
 			tag += "\n\\hline";
-		tag += "\n\\end{tabularx}\n\\end{center}\n\\end{table}";
+		tag += "\n\\caption{" + title + "}\n\\end{tabular}\n\\end{center}\n\\end{table}";
 		return tag;
 	}
 
