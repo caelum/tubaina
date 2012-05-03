@@ -14,7 +14,7 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
-import br.com.caelum.tubaina.parser.html.Generator;
+import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.resources.AnswerResource;
 import br.com.caelum.tubaina.resources.LatexResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;

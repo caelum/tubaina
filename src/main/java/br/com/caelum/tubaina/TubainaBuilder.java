@@ -18,9 +18,9 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.html.FlatHtmlGenerator;
-import br.com.caelum.tubaina.parser.html.Generator;
-import br.com.caelum.tubaina.parser.html.SingleHtmlGenerator;
+import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
+import br.com.caelum.tubaina.parser.html.desktop.Generator;
+import br.com.caelum.tubaina.parser.html.desktop.SingleHtmlGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 

@@ -3,7 +3,7 @@ package br.com.caelum.tubaina;
 import java.io.IOException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.html.HtmlParser;
+import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
 
 public enum ParseType {

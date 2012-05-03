@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
-import br.com.caelum.tubaina.parser.html.ImageTag;
+import br.com.caelum.tubaina.parser.html.desktop.ImageTag;
 import br.com.caelum.tubaina.util.Utilities;
 
 public class HtmlResourceManipulator implements ResourceManipulator {
