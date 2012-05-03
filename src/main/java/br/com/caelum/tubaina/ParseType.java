@@ -4,6 +4,7 @@ import java.io.IOException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
+import br.com.caelum.tubaina.parser.html.kindle.KindleParser;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
 
 public enum ParseType {
@@ -14,6 +15,14 @@ public enum ParseType {
 			return new LatexParser(conf.read("/regex.properties", "/latex.properties"), showNotes, noAnswer);
 		}
 	},
+	
+	KINDLE{
+		@Override
+		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
+			return new KindleParser(conf.read("/regex.properties", "/latex.properties"), noAnswer);
+		}
+	},
+	
 	HTMLFLAT, HTML;
 	
 	public String getType() {

@@ -21,6 +21,7 @@ import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.parser.html.desktop.SingleHtmlGenerator;
+import br.com.caelum.tubaina.parser.html.kindle.KindleGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
@@ -90,6 +91,9 @@ public class TubainaBuilder {
 		}
 		if (parseType.equals(ParseType.HTML)) {
 			generator = new SingleHtmlGenerator(parser, templateDir);
+		}
+		if (parseType.equals(ParseType.KINDLE)) {
+			generator = new KindleGenerator(parser, templateDir);
 		}
 		
 		File file = new File(outputDir,parseType.getType());

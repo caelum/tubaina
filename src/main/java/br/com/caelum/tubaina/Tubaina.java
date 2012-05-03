@@ -55,7 +55,7 @@ public class Tubaina {
 				return type;
 			}
 		}
-		throw new TubainaException("Argumento --html, --htmlflat ou --latex é obrigatório");
+		throw new TubainaException("Argumento --html, --htmlflat, --kindle ou --latex é obrigatório");
 	}
 
 	private static Options registerOptions() {
@@ -67,6 +67,8 @@ public class Tubaina {
 				"outputs the whole textbook in a single html5 file");
 		options.addOption("htmlflat", "htmlflat", false,
 				"generates an flat html output on given outputdir");
+		options.addOption("kindle", "kindle", false,
+				"generates an kindle html output on given outputdir");
 
 		options.addOption("h", "help", false, "print this message");
 
@@ -80,7 +82,7 @@ public class Tubaina {
 	private static void printUsage(final Options options) {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp(
-				"tubaina [-html|-latex|-htmlflat] -i <inputdir> -o <outputdir> -n <bookname> -c <codelength> -w <maximum_image_width>",
+				"tubaina [-html|-latex|-htmlflat|-kindle] -i <inputdir> -o <outputdir> -n <bookname> -c <codelength> -w <maximum_image_width>",
 				options);
 	}
 
