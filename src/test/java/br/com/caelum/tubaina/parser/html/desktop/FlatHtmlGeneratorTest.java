@@ -17,12 +17,14 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
+import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 import br.com.caelum.tubaina.util.Utilities;
@@ -35,6 +37,8 @@ public class FlatHtmlGeneratorTest {
 
 	private File temp;
 	
+	private TubainaBuilderData data;
+	
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
@@ -43,8 +47,9 @@ public class FlatHtmlGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
+		data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false, "teste.tex");
 
-		generator = new FlatHtmlGenerator(parser, false, TubainaBuilder.DEFAULT_TEMPLATE_DIR);
+		generator = new FlatHtmlGenerator(parser, data);
 
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"

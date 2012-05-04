@@ -8,6 +8,7 @@ import java.util.Map;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.TubainaDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
@@ -23,9 +24,9 @@ public class SingleHtmlGenerator implements Generator {
 	private final File templateDir;
 	private Configuration cfg;
 
-	public SingleHtmlGenerator(Parser parser, File templateDir) {
+	public SingleHtmlGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.templateDir = new File(templateDir, "singlehtml/");
+		this.templateDir = new File(data.templateDir, "singlehtml/");
 		configureFreemarker();
 	}
 

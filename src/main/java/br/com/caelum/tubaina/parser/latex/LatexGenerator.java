@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
@@ -34,11 +35,11 @@ public class LatexGenerator implements Generator{
 
 	private final String outputFileName;
 
-	public LatexGenerator(Parser parser, File templateDir, boolean noAnswer, String outputFileName) {
+	public LatexGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.templateDir = templateDir;
-		this.noAnswer = noAnswer;
-		this.outputFileName = outputFileName;
+		this.templateDir = data.templateDir;
+		this.noAnswer = data.noAnswer;
+		this.outputFileName = data.outputFileName;
 	}
 
 	public void generate(Book book, File directory) throws IOException {

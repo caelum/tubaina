@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.TubainaDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
@@ -33,10 +34,10 @@ public class FlatHtmlGenerator implements Generator{
 
 	private Configuration cfg;
 
-	public FlatHtmlGenerator(final Parser parser, final boolean shouldValidateXHTML, final File templateDir) {
+	public FlatHtmlGenerator(final Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.shouldValidateXHTML = shouldValidateXHTML;
-		this.templateDir = new File(templateDir, "html/");
+		this.shouldValidateXHTML = data.strictXhtml;
+		this.templateDir = new File(data.templateDir, "html/");
 		configureFreemarker();
 	}
 

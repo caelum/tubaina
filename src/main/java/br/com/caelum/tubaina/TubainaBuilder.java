@@ -42,19 +42,11 @@ public class TubainaBuilder {
 
 	private String bookName = "book";
 
-	private boolean strictXhtml = false;
-
-	private File templateDir = DEFAULT_TEMPLATE_DIR;
-
 	private final ParseType parseType;
-
-	private boolean showNotes = false;
 
 	private boolean dontCare = false;
 
-	private boolean noAnswer = false;
-
-	private String outputFileName = "book";
+	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book");
 
 	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
@@ -68,7 +60,7 @@ public class TubainaBuilder {
 
 		Book b = null;
 		try {
-			b = builder.build(showNotes);
+			b = builder.build(data.showNotes);
 		} catch (TubainaException e) {
 			if (dontCare) {
 				LOG.warn(e);
@@ -78,27 +70,12 @@ public class TubainaBuilder {
 			}
 		}
 
-		RegexConfigurator conf = new RegexConfigurator();
-		
-		Parser parser = parseType.getParser(conf, noAnswer, showNotes);
-		
-		Generator generator = null;
-		if (parseType.equals(ParseType.LATEX)) {
-			generator = new LatexGenerator(parser, templateDir, noAnswer, outputFileName + ".tex");
-		}
-		if (parseType.equals(ParseType.HTMLFLAT)) {
-			generator = new FlatHtmlGenerator(parser, strictXhtml, templateDir);
-		}
-		if (parseType.equals(ParseType.HTML)) {
-			generator = new SingleHtmlGenerator(parser, templateDir);
-		}
-		if (parseType.equals(ParseType.KINDLE)) {
-			generator = new KindleGenerator(parser, templateDir);
-		}
+		GeneratorFactory generatorFactory = new GeneratorFactory();
+		Generator generator = generatorFactory.generatorFor(parseType, data);
 		
 		File file = new File(outputDir,parseType.getType());
 		FileUtils.forceMkdir(file);
-		File bibliography = new File(inputDir, outputFileName + ".bib");
+		File bibliography = new File(inputDir, data.outputFileName + ".bib");
 		if(bibliography.exists()) {
 			FileUtils.copyFileToDirectory(bibliography, file);
 		}
@@ -134,17 +111,17 @@ public class TubainaBuilder {
 	}
 
 	public TubainaBuilder strictXhtml() {
-		this.strictXhtml = true;
+		this.data.strictXhtml = true;
 		return this;
 	}
 
 	public TubainaBuilder templateDir(File templateDir) {
-		this.templateDir = templateDir;
+		this.data.templateDir = templateDir;
 		return this;
 	}
 
 	public TubainaBuilder showNotes() {
-		this.showNotes = true;
+		this.data.showNotes = true;
 		return this;
 	}
 
@@ -154,12 +131,12 @@ public class TubainaBuilder {
 	}
 
 	public TubainaBuilder noAnswer() {
-		this.noAnswer = true;
+		this.data.noAnswer = true;
 		return this;
 	}
 
 	public TubainaBuilder outputFileName(String fileName) {
-		this.outputFileName = fileName;
+		this.data.outputFileName = fileName;
 		return this;
 	}
 	

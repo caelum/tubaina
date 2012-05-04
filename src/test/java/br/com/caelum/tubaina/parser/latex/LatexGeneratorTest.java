@@ -16,10 +16,12 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.html.desktop.SingleHtmlGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 
@@ -28,6 +30,7 @@ public class LatexGeneratorTest {
 	private Book book;
 	private File temp;
 	private LatexParser parser;
+	private TubainaBuilderData data;
 
 	@Before
 	public void setUp() throws IOException {
@@ -37,7 +40,10 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		generator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, "teste.tex");
+		data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false, "teste.tex");
+
+		generator = new LatexGenerator(parser, data);
+		
 		BookBuilder builder = new BookBuilder("livro");
 		builder.add(new StringReader("[chapter     O que é java?   ]\n"
 				+ "texto da seção\n" + "[section Primeira seção]\n"
@@ -139,7 +145,7 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		LatexGenerator customGenerator = new LatexGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, "teste.tex");
+		LatexGenerator customGenerator = new LatexGenerator(parser, data);
 		BookBuilder builder = new BookBuilder("Do Instrutor");
 		builder.add(new StringReader("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]"));
 		Book b = builder.build(true);

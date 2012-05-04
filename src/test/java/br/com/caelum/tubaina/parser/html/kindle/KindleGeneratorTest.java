@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -40,7 +41,9 @@ public class KindleGeneratorTest {
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
 
-		generator = new KindleGenerator(parser, TubainaBuilder.DEFAULT_TEMPLATE_DIR);
+		TubainaBuilderData data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false, null);
+		
+		generator = new KindleGenerator(parser, data);
 
 		directory = new File("tmp");
 		directory.mkdir();
