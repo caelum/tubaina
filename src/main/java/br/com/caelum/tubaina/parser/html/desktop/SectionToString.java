@@ -68,6 +68,7 @@ public class SectionToString {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("section", s);
 		map.put("parser", parser);
+		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
 
