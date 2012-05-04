@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
@@ -71,5 +72,14 @@ public class SectionToString {
 		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
+	
+	public StringBuffer generateKindleHtmlSection(Section section, Chapter chapter) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("section", section);
+        map.put("parser", parser);
+        map.put("chapter", chapter);
+        map.put("sanitizer", new HtmlSanitizer());
+        return new FreemarkerProcessor(cfg).process(map, "section.ftl");
+    }
 
 }

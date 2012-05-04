@@ -57,10 +57,10 @@ public class KindleGenerator implements Generator {
 	}
 
 	private StringBuffer generateChapter(Book book, Chapter chapter) {
-		StringBuffer chapterContent = new ChapterToString(parser, cfg, null).generateSingleHtmlChapter(book, chapter);
+		StringBuffer chapterContent = new ChapterToString(parser, cfg, null).generateKindleHtmlChapter(book, chapter);
 		for (Section section : chapter.getSections()) {
 			if (section.getTitle() != null) { // intro
-				StringBuffer sectionContent = new SectionToString(parser, cfg, null).generateSingleHtmlSection(section);
+				StringBuffer sectionContent = new SectionToString(parser, cfg, null).generateKindleHtmlSection(section, chapter);
 				chapterContent.append(sectionContent);
 			}
 		}

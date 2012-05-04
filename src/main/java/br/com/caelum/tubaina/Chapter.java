@@ -16,12 +16,15 @@ public class Chapter {
 	private List<Resource> resources;
 
 	private Chunk introduction;
+	
+	private int chapterNumber;
 
 	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources) {
 		this.title = title;
 		this.sections = sections;
 		this.resources = resources;
 		this.introduction = introduction;
+		chapterNumber = COUNT;
 		COUNT++;
 	}
 
@@ -44,4 +47,8 @@ public class Chapter {
 	public static int getChaptersCount() {
 		return COUNT;
 	}
+	
+	public int getChapterNumber() {
+        return chapterNumber;
+    }
 }
