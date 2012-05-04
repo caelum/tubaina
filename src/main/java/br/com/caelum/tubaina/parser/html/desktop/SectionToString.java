@@ -73,12 +73,13 @@ public class SectionToString {
 		return new FreemarkerProcessor(cfg).process(map, "section.ftl");
 	}
 	
-	public StringBuffer generateKindleHtmlSection(Section section, Chapter chapter) {
+	public StringBuffer generateKindleHtmlSection(Section section, Chapter chapter, int sectionNumber) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("section", section);
         map.put("parser", parser);
         map.put("chapter", chapter);
         map.put("sanitizer", new HtmlSanitizer());
+        map.put("sectionNumber", sectionNumber);
         return new FreemarkerProcessor(cfg).process(map, "section.ftl");
     }
 

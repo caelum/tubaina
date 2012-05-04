@@ -9,13 +9,10 @@ public class Section {
 	private List<Chunk> chunks;
 
 	private String title;
-	
-	private int sectionNumber;
 
 	public Section(String title, List<Chunk> chunks) {
 		this.title = title;
 		this.chunks = chunks;
-		sectionNumber = COUNT;
 		COUNT++;
 	}
 
@@ -31,7 +28,4 @@ public class Section {
 		return COUNT;
 	}
 	
-	public int getSectionNumber() {
-        return sectionNumber;
-    }
 }
