@@ -1,7 +1,5 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -21,7 +19,6 @@ import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.SingleHtmlGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 

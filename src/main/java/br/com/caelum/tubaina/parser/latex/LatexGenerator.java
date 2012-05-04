@@ -33,13 +33,13 @@ public class LatexGenerator implements Generator{
 
 	private final boolean noAnswer;
 
-	private final String outputFileName;
+	private final String latexOutputFileName;
 
 	public LatexGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
 		this.templateDir = data.templateDir;
 		this.noAnswer = data.noAnswer;
-		this.outputFileName = data.outputFileName;
+		this.latexOutputFileName = data.outputFileName;
 	}
 
 	public void generate(Book book, File directory) throws IOException {
@@ -51,7 +51,7 @@ public class LatexGenerator implements Generator{
 		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg);
 
 		// print the latex document to an archive
-		File fileBook = new File(directory, outputFileName);
+		File fileBook = new File(directory, latexOutputFileName);
 		PrintStream stream = new PrintStream(fileBook, "UTF-8");
 		stream.append(latex);
 		stream.close();

@@ -16,13 +16,7 @@ import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.builder.BookBuilder;
-import br.com.caelum.tubaina.parser.Parser;
-import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
-import br.com.caelum.tubaina.parser.html.desktop.SingleHtmlGenerator;
-import br.com.caelum.tubaina.parser.html.kindle.KindleGenerator;
-import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class TubainaBuilder {
@@ -46,7 +40,7 @@ public class TubainaBuilder {
 
 	private boolean dontCare = false;
 
-	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book");
+	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book.tex");
 
 	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
