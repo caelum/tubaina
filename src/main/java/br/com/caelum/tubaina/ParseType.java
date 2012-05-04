@@ -16,14 +16,7 @@ public enum ParseType {
 		}
 	},
 	
-	KINDLE{
-		@Override
-		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new KindleParser(conf.read("/regex.properties", "/latex.properties"), noAnswer);
-		}
-	},
-	
-	HTMLFLAT, HTML;
+	HTMLFLAT, HTML, KINDLE;
 	
 	public String getType() {
 		return this.toString().toLowerCase();
