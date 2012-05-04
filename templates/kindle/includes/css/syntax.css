@@ -1,0 +1,21 @@
+.syntax-container {
+	font-size: 14px;
+	padding: 0 !important;
+	padding-bottom: 18px !important;
+}
+
+.syntax-container .toolbar {
+	display: none ! important;
+}
+
+.syntax-container .syntax {
+	background: none !important;
+	border: none !important;
+}
+
+.syntax-container .syntax pre {
+	overflow: hidden !important;
+}
+.syntax-container table, .syntax-container td, .syntax-container tr {
+	border: none;
+}

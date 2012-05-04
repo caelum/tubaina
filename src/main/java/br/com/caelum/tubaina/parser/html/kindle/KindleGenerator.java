@@ -29,7 +29,7 @@ public class KindleGenerator implements Generator {
 
 	public KindleGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.templateDir = new File(data.templateDir, "singlehtml/");
+		this.templateDir = new File(data.templateDir, "kindle/");
 		configureFreemarker();
 	}
 
