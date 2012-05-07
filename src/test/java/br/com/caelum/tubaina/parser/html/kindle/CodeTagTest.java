@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.kindle.CodeTag;
-
 
 public class CodeTagTest {
 	
@@ -18,6 +16,8 @@ public class CodeTagTest {
 				"	String name = \"Gabriel\";\n" +
 				"	System.out.println(\"Hello, \" + name);\n" +
 				"}";
+		code = code.replaceAll(" ", "&nbsp;");
+		code = code.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 	}
 	
 	@Test
@@ -32,6 +32,7 @@ public class CodeTagTest {
 		String options = "ruby";
 		String rubyCode = "@name = \"Gabriel\"\n" +
 						  "puts \"Hello, \" + name";
+		rubyCode = rubyCode.replaceAll(" ", "&nbsp;");
 		String output = new CodeTag().parse(rubyCode, options);
 		Assert.assertEquals("<pre class=\"ruby\">\n" + rubyCode + "\n</pre>", output);
 	}
@@ -41,6 +42,7 @@ public class CodeTagTest {
 		String options="";
 		String noParticularLanguage = "Some text explaining some new bizarre\n" +
 										"syntax in a very code alike way";
+		noParticularLanguage = noParticularLanguage.replaceAll(" ", "&nbsp;");
 		String output = new CodeTag().parse(noParticularLanguage, options);
 		Assert.assertEquals("<pre class=\"text\">\n" 
 													+ noParticularLanguage + "\n</pre>", output);
