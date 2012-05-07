@@ -24,7 +24,7 @@ public class CodeTagTest {
 	public void plainJavaCode() throws Exception {
 		String options = "java";
 		String output = new CodeTag().parse(code, options);
-		Assert.assertEquals("<code class=\"java\">\n" + code + "\n</code>", output);
+		Assert.assertEquals("<pre class=\"java\">\n" + code + "\n</pre>", output);
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class CodeTagTest {
 		String rubyCode = "@name = \"Gabriel\"\n" +
 						  "puts \"Hello, \" + name";
 		String output = new CodeTag().parse(rubyCode, options);
-		Assert.assertEquals("<code class=\"ruby\">\n" + rubyCode + "\n</code>", output);
+		Assert.assertEquals("<pre class=\"ruby\">\n" + rubyCode + "\n</pre>", output);
 	}
 	
 	@Test
@@ -42,7 +42,7 @@ public class CodeTagTest {
 		String noParticularLanguage = "Some text explaining some new bizarre\n" +
 										"syntax in a very code alike way";
 		String output = new CodeTag().parse(noParticularLanguage, options);
-		Assert.assertEquals("<code class=\"text\">\n" 
-													+ noParticularLanguage + "\n</code>", output);
+		Assert.assertEquals("<pre class=\"text\">\n" 
+													+ noParticularLanguage + "\n</pre>", output);
 	}
 }

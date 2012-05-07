@@ -5,7 +5,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class CodeTag implements Tag {
 
 	public String parse(String content, String options) {
-		return "<code class=\"" + detectLanguage(options) + "\">\n"+ content + "\n</code>";
+		return "<pre class=\"" + detectLanguage(options) + "\">\n"+ content + "\n</pre>";
 	}
 	
 	private String detectLanguage(String options) {
