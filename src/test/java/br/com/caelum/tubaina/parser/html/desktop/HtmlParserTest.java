@@ -11,7 +11,6 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
 
 public class HtmlParserTest {
 
@@ -220,14 +219,14 @@ public class HtmlParserTest {
 	}
 	
 	@Test
-	public void testItemSplittBug(){
+	public void testParagraphInsiideItem(){
 		String input = "* Refactoring, Martin Fowler\n\n" +
 				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
 		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
 		Assert.assertEquals(3, chunks.size());
-		Assert.assertEquals("<li><p>Refactoring, Martin Fowler</p></li>", chunks.get(0).getContent(parser));
-		Assert.assertEquals("<li><p>Effective Java, Joshua Bloch</p></li>", chunks.get(1).getContent(parser));
-		Assert.assertEquals("<li><p>Design Patterns, Erich Gamma et al</p></li>", chunks.get(2).getContent(parser));
+		Assert.assertEquals("<li>Refactoring, Martin Fowler</li>", chunks.get(0).getContent(parser));
+		Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>", chunks.get(1).getContent(parser));
+		Assert.assertEquals("<li>Design Patterns, Erich Gamma et al</li>", chunks.get(2).getContent(parser));
 	}
 	
 }

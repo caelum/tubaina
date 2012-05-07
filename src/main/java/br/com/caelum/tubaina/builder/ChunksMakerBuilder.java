@@ -18,6 +18,7 @@ import br.com.caelum.tubaina.builder.replacer.ItemReplacer;
 import br.com.caelum.tubaina.builder.replacer.JavaReplacer;
 import br.com.caelum.tubaina.builder.replacer.ListReplacer;
 import br.com.caelum.tubaina.builder.replacer.NoteReplacer;
+import br.com.caelum.tubaina.builder.replacer.ParagraphInsideItemReplacer;
 import br.com.caelum.tubaina.builder.replacer.ParagraphReplacer;
 import br.com.caelum.tubaina.builder.replacer.QuestionReplacer;
 import br.com.caelum.tubaina.builder.replacer.Replacer;
@@ -30,7 +31,6 @@ import br.com.caelum.tubaina.builder.replacer.XmlReplacer;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class ChunksMakerBuilder {
-
 	private Map<String, List<Replacer>> replacerMap = new HashMap<String, List<Replacer>>();
 
 	private String paragraphTerminator = "java|box|code|gist|img|list|xml|exercise|note|answer|item|question|todo|index|ruby|table|row|center";
@@ -108,7 +108,7 @@ public class ChunksMakerBuilder {
 
 		replacers.add(new RubyReplacer());
 		replacers.add(new CenteredParagraphReplacer());
-		replacers.add(new ParagraphReplacer(paragraphTerminator));
+		replacers.add(new ParagraphInsideItemReplacer(paragraphTerminator));
 		replacerMap.put("item", replacers);
 
 		// List tag

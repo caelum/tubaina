@@ -12,7 +12,7 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
-import br.com.caelum.tubaina.chunk.ParagraphChunk;
+import br.com.caelum.tubaina.chunk.ParagraphInsideItemChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class ListReplacerTest {
@@ -64,7 +64,7 @@ public class ListReplacerTest {
 
 		List<Chunk> chunks2 = (List<Chunk>) itemBody.get(chunks1.get(0));
 		Assert.assertEquals(2, chunks2.size());
-		Assert.assertEquals(ParagraphChunk.class, chunks2.get(0).getClass());
+		Assert.assertEquals(ParagraphInsideItemChunk.class, chunks2.get(0).getClass());
 		Assert.assertEquals(ListChunk.class, chunks2.get(1).getClass());
 		List<Chunk> chunks3 = (List<Chunk>) listBody.get(chunks2.get(1));
 		List<Chunk> chunks4 = (List<Chunk>) itemBody.get(chunks3.get(0));

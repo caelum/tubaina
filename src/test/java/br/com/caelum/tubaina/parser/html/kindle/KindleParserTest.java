@@ -224,9 +224,9 @@ public class KindleParserTest {
 				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
 		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
 		Assert.assertEquals(3, chunks.size());
-		Assert.assertEquals("<li><p>Refactoring, Martin Fowler</p></li>", chunks.get(0).getContent(parser));
-		Assert.assertEquals("<li><p>Effective Java, Joshua Bloch</p></li>", chunks.get(1).getContent(parser));
-		Assert.assertEquals("<li><p>Design Patterns, Erich Gamma et al</p></li>", chunks.get(2).getContent(parser));
+		Assert.assertEquals("<li>Refactoring, Martin Fowler</li>", chunks.get(0).getContent(parser));
+		Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>", chunks.get(1).getContent(parser));
+		Assert.assertEquals("<li>Design Patterns, Erich Gamma et al</li>", chunks.get(2).getContent(parser));
 	}
 	
 }
