@@ -3,6 +3,7 @@ package br.com.caelum.tubaina.parser;
 public interface Parser {
 	public String parse(String text);
 	public String parseParagraph(String text);
+	public String parseParagraphInsideItem(String text);
 	public String parseJava(String text, String options);
 	public String parseBox(String text, String options);
 	public String parseImage(String text, String options);

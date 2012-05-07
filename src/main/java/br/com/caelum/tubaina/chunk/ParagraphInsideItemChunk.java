@@ -12,7 +12,7 @@ public class ParagraphInsideItemChunk implements Chunk {
     }
     
     public String getContent(Parser p) {
-        return content;
+        return p.parseParagraphInsideItem(content);
     }
 
 }

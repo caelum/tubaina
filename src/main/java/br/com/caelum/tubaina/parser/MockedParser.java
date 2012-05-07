@@ -107,4 +107,8 @@ public class MockedParser implements Parser {
         return text;
     }
 
+    public String parseParagraphInsideItem(String text) {
+        return text;
+    }
+
 }
