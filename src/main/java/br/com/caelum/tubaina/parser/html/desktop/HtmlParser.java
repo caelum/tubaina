@@ -129,4 +129,10 @@ public class HtmlParser implements Parser {
         return new RubyTag(new SimpleIndentator()).parse(content, options);
     }
 
+    public String parseParagraphInsideItem(String text) {
+        String string = this.sanitizer.sanitize(text);
+        string = this.parse(string);
+        return string;
+    }
+
 }

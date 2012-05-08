@@ -51,6 +51,12 @@ public class KindleParser implements Parser {
         string = this.parse(string);
         return string;
     }
+    
+    public String parseParagraphInsideItem(String text) {
+        String string = this.sanitizer.sanitize(text);
+        string = this.parse(string);
+        return string;
+    }
 
     public String parseCode(String text, String options) {
         text = this.sanitizer.sanitize(text);
@@ -123,5 +129,6 @@ public class KindleParser implements Parser {
     public String parseRuby(String content, String options) {
     	return null;
     }
+
 
 }

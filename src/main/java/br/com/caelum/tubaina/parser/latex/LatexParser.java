@@ -143,4 +143,8 @@ public class LatexParser implements Parser {
                 options);
         return result + VSPACE;
     }
+
+    public String parseParagraphInsideItem(String text) {
+        return parse(text);
+    }
 }

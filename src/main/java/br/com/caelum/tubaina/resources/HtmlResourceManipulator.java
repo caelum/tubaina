@@ -41,6 +41,8 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 
 	public void copyImage(File srcImage, String attribs) {
 		Integer scale = new ImageTag().getScale(attribs);
+		if (scale == null)
+		    scale = 100;
 		
 		if (srcImage.exists()) {
 			File destinationFile = new File(this.imageDestinationPath, FilenameUtils.getName(srcImage.getPath()));
