@@ -19,7 +19,7 @@ public class KindleParserTest {
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
-		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+		List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
 		this.parser = new KindleParser(tags, false);
 	}
 
@@ -87,13 +87,13 @@ public class KindleParserTest {
 	@Test
 	public void testQuotationTagInline() {
 		String result = parser.parse("[quote ola mundo --Anonimo]");
-		Assert.assertEquals("<q cite=\"Anonimo\">ola mundo</q>", result);
+		Assert.assertEquals("<q cite=\"Anonimo\">ola mundo <br/> --Anonimo</q>", result);
 	}
 	
 	@Test
 	public void testQuotationTagMultiline() {
 		String result = parser.parse("[quote ola mu\nndo-- Anonimo]");
-		Assert.assertEquals("<q cite=\"Anonimo\">ola mu\nndo</q>", result);
+		Assert.assertEquals("<q cite=\"Anonimo\">ola mu\nndo <br/> --Anonimo</q>", result);
 	}
 
 	@Test

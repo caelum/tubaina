@@ -56,7 +56,7 @@ public enum ParseType {
 
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new KindleParser(conf.read("/regex.properties", "/html.properties"), noAnswer);
+			return new KindleParser(conf.read("/regex.properties", "/kindle.properties"), noAnswer);
 		}
 
 		@Override
