@@ -18,23 +18,52 @@ public class ReferenceParser {
     }
 
     public String replaceReferences() {
+        replaceTextLabels();
+        replaceImages();
+        return outputDocument.toString();
+    }
+
+    private void replaceTextLabels() {
         List<Element> references = source.getAllElementsByClass("reference");
         for (Element reference : references) {
             String labelId = reference.getAttributeValue("href").replace("#", "");
-            Element containerReferenceable = findReferenceableContainer(labelId);
+            Element label = source.getElementById(labelId);
+            
+            Element div = findReferenceableContainer(label);
+            if (!isValid(div)) {
+                outputDocument.replace(reference, reference.toString().replace("*", "?"));
+                continue;
+            }
+            
+            if(label.getName().equals("img")) continue;
+            Element title = div.getFirstElementByClass("referenceableTitle");
+            String number = title.getTextExtractor().toString().split("-")[0].trim();
+            outputDocument.replace(reference, reference.toString().replace("*", number));
+        }
+    }
+    
+    private void replaceImages() {
+        List<Element> references = source.getAllElementsByClass("reference");
+        for (Element reference : references) {
+            String labelId = reference.getAttributeValue("href").replace("#", "");
+            Element label = source.getElementById(labelId);
+            
+            Element containerReferenceable = findReferenceableContainer(label);
             if (!isValid(containerReferenceable)) {
                 outputDocument.replace(reference, reference.toString().replace("*", "?"));
                 continue;
             }
+            
+            if(!label.getName().equals("img")) continue;
+            List<Element> imgs = containerReferenceable.getAllElements("img");
+            int imagePosition = imgs.indexOf(label) + 1;
             Element title = containerReferenceable.getFirstElementByClass("referenceableTitle");
             String number = title.getTextExtractor().toString().split("-")[0].trim();
-            outputDocument.replace(reference, reference.toString().replace("*", number));
+            outputDocument.replace(reference, reference.toString().replace("*", number+"."+imagePosition));
         }
-        return outputDocument.toString();
     }
 
-    private Element findReferenceableContainer(String labelId) {
-        Element label = source.getElementById(labelId);
+    private Element findReferenceableContainer(Element label) {
         if (label == null)
             return null;
         Element container = label.getParentElement();
