@@ -30,12 +30,9 @@ public class ReferenceParserTest {
         compareInputAndExpected("exampleBookExpected.html", "exampleBook.html");
     }
     
-    @Test(expected = IllegalStateException.class)
-    public void shouldThrowISEIfTheChapterOrSectionAreNotInsideADiv() throws Exception {
-        String htmlContent = new Scanner(new File("src/test/resources/kindle/invalid.html"))
-        .useDelimiter("$$").next();
-        ReferenceParser referenceParser = new ReferenceParser(htmlContent);
-        referenceParser.replaceReferences();
+    @Test
+    public void shouldNotReplaceInvalidReferences() throws Exception {
+        compareInputAndExpected("invalidReferencesTestExpected.html", "invalidReferencesTest.html");
     }
     
     private void compareInputAndExpected(String expectedFileName, String currentFileName)

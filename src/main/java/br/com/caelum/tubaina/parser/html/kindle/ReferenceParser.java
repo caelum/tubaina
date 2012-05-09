@@ -23,7 +23,8 @@ public class ReferenceParser {
             String labelId = reference.getAttributeValue("href").replace("#", "");
             Element containerReferenceable = findReferenceableContainer(labelId);
             if (!isValid(containerReferenceable)) {
-                throw new IllegalStateException("you should wrap the chapter or section with a div of 'referenceable' class");
+                outputDocument.replace(reference, reference.toString().replace("*", "?"));
+                continue;
             }
             Element title = containerReferenceable.getFirstElementByClass("referenceableTitle");
             String number = title.getTextExtractor().toString().split("-")[0].trim();
@@ -33,8 +34,11 @@ public class ReferenceParser {
     }
 
     private Element findReferenceableContainer(String labelId) {
-        Element container = source.getElementById(labelId).getParentElement();
-        while(container!=null && !container.getName().equals("div")){
+        Element label = source.getElementById(labelId);
+        if (label == null)
+            return null;
+        Element container = label.getParentElement();
+        while (container != null && !container.getName().equals("div")) {
             container = container.getParentElement();
         }
         return container;
