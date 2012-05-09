@@ -47,6 +47,8 @@ public class KindleGenerator implements Generator {
 		}
 		bookContent.append(generateFooter());
 
+		bookContent = new StringBuffer(new ReferenceParser(bookContent.toString()).replaceReferences());
+		
 		bookRoot.writeIndex(bookContent);
 	}
 	

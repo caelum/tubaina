@@ -27,6 +27,7 @@ repositories {
 }
 
 dependencies {
+	compile group: 'net.htmlparser.jericho', name: 'jericho-html', version: '3.1'
 	compile group: 'de.java2html', name: 'java2html', version: '5.0'
 	compile group: 'log4j', name: 'log4j', version: '1.2.12'
 	compile group: 'commons-io', name: 'commons-io', version: '1.3.1'
