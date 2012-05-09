@@ -1,4 +1,4 @@
-package br.com.caelum.tubaina.parser.html.kindle;
+package br.com.caelum.tubaina.parser.html.kindle.referencereplacer;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import org.junit.Test;
+
+import br.com.caelum.tubaina.parser.html.referencereplacer.ChapterAndSectionReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
 
 public class ReferenceParserTest {
 
@@ -42,9 +45,10 @@ public class ReferenceParserTest {
         String htmlContentExpected = new Scanner(new File(
                 "src/test/resources/kindle/"+expectedFileName)).useDelimiter("$$")
                 .next();
-        ReferenceParser referenceParser = new ReferenceParser(htmlContent);
 
-        assertEquals(htmlContentExpected, referenceParser.replaceReferences());
+        String output = new ImageReferenceReplacer().replace(htmlContent);
+        output = new ChapterAndSectionReferenceReplacer().replace(output);
+        assertEquals(htmlContentExpected, output);
     }
 
 
