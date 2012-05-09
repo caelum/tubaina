@@ -21,7 +21,7 @@ public class ReferenceParser {
         List<Element> references = source.getAllElementsByClass("reference");
         for (Element reference : references) {
             String labelId = reference.getAttributeValue("href").replace("#", "");
-            Element containerReferenceable = source.getElementById(labelId).getParentElement();
+            Element containerReferenceable = findReferenceableContainer(labelId);
             if (!isValid(containerReferenceable)) {
                 throw new IllegalStateException("you should wrap the chapter or section with a div of 'referenceable' class");
             }
@@ -30,6 +30,14 @@ public class ReferenceParser {
             outputDocument.replace(reference, reference.toString().replace("*", number));
         }
         return outputDocument.toString();
+    }
+
+    private Element findReferenceableContainer(String labelId) {
+        Element container = source.getElementById(labelId).getParentElement();
+        while(container!=null && !container.getName().equals("div")){
+            container = container.getParentElement();
+        }
+        return container;
     }
 
     private boolean isValid(Element containerReferenceable) {

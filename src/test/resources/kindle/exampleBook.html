@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="includes/css/layout.css" type="text/css" media="screen, print">
+
+</head>
+<body>
+        <div class='referenceable'>
+            <h1 class='referenceableTitle'>1 - Como escrever livros com o Tubaina?</h1>
+    
+            
+        </div>        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.1 - Cria&ccedil;&atilde;o de cap&iacute;tulos</h2>
+            
+                <p>Todos os novos cap&iacute;tulos, devem ser identificados com a Tag [chapter]. Um arquivo s&oacute; pode ter um chapter. No caso desse cap&iacute;tulo, utilizamos o seguinte:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[chapter&nbsp;Como&nbsp;escrever&nbsp;livros&nbsp;com&nbsp;o&nbsp;Tubaina?]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.2 - Cria&ccedil;&atilde;o de se&ccedil;&otilde;es</h2>
+            
+                <p>As se&ccedil;&otilde;es podem ser criadas a partir do uso da Tag <code>section</code>, contendo o nome da se&ccedil;&atilde;o a frente. No caso dessa
+        se&ccedil;&atilde;o, fica:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[section&nbsp;Cria&ccedil;&atilde;o&nbsp;de&nbsp;se&ccedil;&otilde;es]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Em&nbsp;seguida&nbsp;vai&nbsp;o&nbsp;conte&uacute;do&nbsp;da&nbsp;se&ccedil;&atilde;o...
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.3 - Quebras de linha e de p&aacute;gina</h2>
+            
+                <p>As quebras de linha devem ser especificadas no arquivo .afc com duas quebras (ou seja, dois enter). Uma s&oacute; quebra &eacute; desconsiderada,
+        pois admite-se que &eacute; apenas para organiza&ccedil;&atilde;o do arquivo fonte. Portanto, sempre que quiser um novo par&aacute;grafo (como o abaixo), 
+        utilize duas quebras de linha.</p>
+                <p>As quebras de p&aacute;gina s&atilde;o feitas automaticamente no build do livro.</p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.4 - T&iacute;tulos</h2>
+            
+                <p>Para criar t&iacute;tulo para um assunto dentro de uma se&ccedil;&atilde;o, pode-se utilizar a Tag <code>title</code> contendo o t&iacute;tulo que ser&aacute; utilizado.</p>
+                <p><h3>Conclus&atilde;o e como usar</h3>
+        Com isso, basta utilizar em algum lugar do seu arquivo .afc o seguinte conte&uacute;do:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[title&nbsp;Conclus&atilde;o&nbsp;e&nbsp;como&nbsp;usar]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.5 - Defini&ccedil;&atilde;o de boxes</h2>
+            
+                <p>Quando quiser detalhar algo que est&aacute; no texto, sem perder a linearidade do mesmo, recomendamos o uso de um Box, onde &eacute;
+        poss&iacute;vel adicionar algum conte&uacute;do, como a seguir:</p>
+                <hr/><h4>Linearidade do texto</h4>
+<p>Ao apresentarmos uma ideia, devemos manter uma sequ&ecirc;ncia l&oacute;gica em nosso texto...</p><hr/>
+                <p>Criar um box &eacute; extremamente simples, bastando que definamos uma Tag <code>box</code> contendo um t&iacute;tulo e o conte&uacute;do esteja
+        dentor da Tag. No caso do anterior, tivemos o seguinte:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[box&nbsp;Linearidade&nbsp;do&nbsp;texto]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ao&nbsp;apresentarmos&nbsp;uma&nbsp;ideia,&nbsp;devemos&nbsp;manter&nbsp;uma&nbsp;sequ&ecirc;ncia&nbsp;l&oacute;gica&nbsp;em&nbsp;noss&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texto...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/box]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.6 - &Iacute;ndice remissivo</h2>
+            
+                <p>O &iacute;ndice remissivo &eacute; criado a partir da defini&ccedil;&atilde;o do autor dos pontos de &iacute;ndice. Para isso, em qualquer lugar do texto, basta
+        utilizar a Tag %%</p>
+                <p>[index]%% contendo o nome do &iacute;ndice. Automaticamente o n&uacute;mero da p&aacute;gina &eacute; descoberto e colocado no &iacute;ndice.</p>
+                
+<a id="&Iacute;ndice"></a>
+
+                <p>No caso dessa se&ccedil;&atilde;o, foi definido um &iacute;ndice que pode ser visto no final do livro. Para isso, utilizamos o seguinte:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[index&nbsp;&Iacute;ndice]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.7 - Como colocar imagens</h2>
+            
+                <p>Para adicionar imagens, basta utilizar a Tag <code>img</code> indicando qual o nome do arquivo que deseja importar. Lembre-se de que
+        o caminho do arquivo da imagem, dever&aacute; ser relativo ao diret&oacute;rio onde se encontra o arquivo <code>.afc</code>.</p>
+                <p>Tamb&eacute;m &eacute; poss&iacute;vel dizer a propor&ccedil;&atilde;o que deve ser utilizada para a imagem atrav&eacute;s de uma porcentagem.</p>
+                <p>Um exemplo de uso &eacute;:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[img&nbsp;caminho/do/arquivo/de/imagens&nbsp;w=100%]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>&Eacute; recomendado tamb&eacute;m adicionar legenda nas fotos. Para isso, basta adicionar um texto entre aspas:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[img&nbsp;caminho/do/arquivo/de/imagens&nbsp;w=90%&nbsp;"imagem&nbsp;com&nbsp;legenda"]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>1.8 - Cria&ccedil;&atilde;o de To-Dos</h2>
+            
+                <p>Voc&ecirc; pode criar to-dos, que s&atilde;o lembretes de algo que voc&ecirc; precisa fazer depois. Os textos marcados como To-Dos n&atilde;o
+        saem na impress&atilde;o, &eacute; s&oacute; s&atilde;o visualizadas no arquivo fonte .afc.</p>
+                <p>A imagem permite visualizar um candlestick.</p>
+                <p>Para adicionar um To-Do, utilize a Tag <code>TODO</code>:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[TODO&nbsp;Algo&nbsp;que&nbsp;eu&nbsp;tenho&nbsp;que&nbsp;me&nbsp;lembrar&nbsp;de&nbsp;re-ler&nbsp;depois]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Esses To-Dos aparecem no build do livro, junto do pdf da vers&atilde;o buildada.</p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h1 class='referenceableTitle'>2 - Mais detalhes da sintaxe do tubaina</h1>
+    
+            <p><q cite="Fran&ccedil;ois Chateaubriand">"D&aacute;-se import&acirc;ncia aos antepassados quando j&aacute; n&atilde;o temos nenhum." <br/> --Fran&ccedil;ois Chateaubriand</q></p>
+        </div>        <div class='referenceable'>
+            <h2 class='referenceableTitle'>2.1 - Adicione cita&ccedil;&otilde;es</h2>
+            
+                <p>&Eacute; poss&iacute;vel adicionar cita&ccedil;&otilde;es adicionando a Tag <code>quote</code> com o texto em seguida. No exemplo desse cap&iacute;tulo,
+        foi adicionado o seguinte conte&uacute;do:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[quote&nbsp;"D&aacute;-se&nbsp;import&acirc;ncia&nbsp;aos&nbsp;antepassados&nbsp;quando&nbsp;j&aacute;&nbsp;n&atilde;o&nbsp;temos&nbsp;nenhum."&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;Fran&ccedil;ois&nbsp;Chateaubriand]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>2.2 - Trabalhando com it&aacute;lico, negrito e c&oacute;digo inline</h2>
+            
+                <p>Quando quiser que um texto apare&ccedil;a em it&aacute;lico, basta adicion&aacute;-lo entre : : conte&uacute;do aqui : : (dois dois pontos), dessa forma, o texto ficar&aacute; em <em>it&aacute;lico</em>.</p>
+                <p>Para fazer com que um treco do texto fique em negrito, coloque-o entre * * conte&uacute;do aqui * * (dois asteriscos), com isso, o texto ficar&aacute; em <strong>negrito</strong>.</p>
+                <p>Quando precisamos utilizar no meio de um texto algum conte&uacute;do de c&oacute;digo, citar algum arquivo, nome de classe ou algo do tipo,
+        sem gerar uma quebra de linha para isso, ou seja, inline, podemos utilizar % % codigo aqui % % (dois %). 
+        Um exemplo &eacute;: <code>&lt;html&gt;&lt;/html&gt;</code>. Esse texto ter&aacute; fonte monoespa&ccedil;ada.</p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>2.3 - Organize informa&ccedil;&otilde;es com listas</h2>
+            
+                <p>Se deseja enumerar itens, pode-se utilizar uma lista numerada, atrav&eacute;s da Tag <code>list</code> com o atributo <code>number</code>. Cada item
+        da lista deve ser identificado com um * no in&iacute;cio:</p>
+                <ol><li>Primeiro item;</li><li>Segundo item;</li><li>Terceiro item;</li></ol>
+                <p>Tamb&eacute;m &eacute; poss&iacute;vel utilizar letras para ordenas (&uacute;til para criar sublistas):</p>
+                <ol class="letter"><li>Item A;</li><li>Item B;</li><li>Item C;</li></ol>
+                <p>Caso n&atilde;o deseja uma lista ordenada, ou seja, sua lista ter&aacute; apenas os bullets, omita o tipo da lista:</p>
+                <ul><li>Bullet 1</li><li>Bullet 2</li><li>Bullet 3</li></ul>
+                <p>Nos casos anteriores, tivemos o seguinte c&oacute;digo:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[list&nbsp;number]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Primeiro&nbsp;item;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Segundo&nbsp;item;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Terceiro&nbsp;item;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/list]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[list&nbsp;letter]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Item&nbsp;A;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Item&nbsp;B;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Item&nbsp;C;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/list]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[list]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Bullet&nbsp;1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Bullet&nbsp;2
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;Bullet&nbsp;3
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/list]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>2.4 - Escrevendo c&oacute;digos</h2>
+            
+                <p>&Eacute; poss&iacute;vel escrever c&oacute;digo em diversas linguagens e fazer com que eles tenham syntax highlight adequado. Para isso,
+        basta usar a Tag <code>code</code> especificando uma linguagem.</p>
+                <p>Exemplo:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[code&nbsp;java]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;variavel;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("oi");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/code]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>E isso gerar&aacute; o seguinte conte&uacute;do:</p>
+                <pre class="java">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;variavel;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("oi");
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Para a identa&ccedil;&atilde;o do c&oacute;digo ser&aacute; utilizada a mesma que for colocada dentro da Tag <code>code</code>.</p>
+                <p>Caso seja necess&aacute;rio identificar o n&uacute;mero da linha, &eacute; poss&iacute;vel adicion&aacute;-las colocando uma # na Tag <code>code</code>:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[code&nbsp;java&nbsp;#]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;1");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;2");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;3");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/code]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Que gera:</p>
+                <pre class="java">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;1");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;2");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;3");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Tamb&eacute;m &eacute; poss&iacute;vel destacar linhas do c&oacute;digo, utilizando o atributo <code>h</code> na Tag <code>code</code>:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[code&nbsp;java&nbsp;#&nbsp;h=2]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;1");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;2");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;3");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/code]
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Que gerar&aacute;:</p>
+                <pre class="java">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;1");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;2");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("linha&nbsp;3");
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Para uma lista das linguagens dispon&iacute;veis, veja: <a href="http://pygments.org/docs/lexers/">http://pygments.org/docs/lexers/</a></p>
+                <p>Caso precise de uma nova linguagem que n&atilde;o esteja dispon&iacute;vel ainda, contate os editores.</p>
+                <p>Se necess&aacute;rio, &eacute; poss&iacute;vel utilizar um trecho de c&oacute;digo sem formata&ccedil;&atilde;o alguma. Para isso, basta omitir a
+        linguagem.</p>
+                <p>Voc&ecirc; pode utilizar a Tag <code>code</code> dentro de qualquer lugar, como por exemplo, um Box, ou uma lista.</p>
+                <p><strong>Cuidado pois existe um limite de caracteres em uma linha para o c&oacute;digo do livro. No caso dos livros, esse limite
+        e de 73 caracteres, para se encaixar bem na p&aacute;gina. O autor deve quebrar o c&oacute;digo onde
+        achar mais conveniente. Caso o limite de caracteres seja estourado, o build falhar&aacute;.</strong></p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h1 class='referenceableTitle'>3 - Usando refer&ecirc;ncias bibliogr&aacute;ficas e para o pr&oacute;prio livro</h1>
+    
+            <p><q cite="Paulo Silveira">"Oh! Como era dif&iacute;cil trabalhar com editoras tradicionais." <br/> --Paulo Silveira</q></p><p><a id="capitulo-referencias" class='label' /></p>
+        </div>        <div class='referenceable'>
+            <h2 class='referenceableTitle'>3.1 - Adicione refer&ecirc;ncias</h2>
+            
+                <p><a id="adicione-referencias" class='label' /></p>
+                
+<a id="&iacute;ndice!criando bibliografia"></a>
+
+                <p>Fica f&aacute;cil criar uma bibliografia s&oacute;lida e consistente. Ali&aacute;s, &eacute; importante sempre citar outras fontes que
+sustentem suas afirma&ccedil;&otilde;es, em especial opini&otilde;es. Se for algo muito pol&ecirc;mico, compensa tamb&eacute;m citar fontes que
+pensam diferentemente e deixar o olhar cr&iacute;tico do leitor agir. Primeiramente, dentro do arquivo <code>book.bib</code>,
+voc&ecirc; deve criar o livro ou site que quer se referenciar. Olhe esses dois exemplos:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@article{getters-setters-silveira,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;author&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Paulo&nbsp;Silveira},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Como&nbsp;n&atilde;o&nbsp;aprender&nbsp;orienta&ccedil;&atilde;o&nbsp;a&nbsp;objetos:&nbsp;getters
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;setters},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2006},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;howpublished&nbsp;=&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{\url{http://www.iturls.com/english/expert/craig/craig1.pdf}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@book{lean-startup-ries,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;author&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Eric&nbsp;Ries},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{Lean&nbsp;Startup},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;year&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{2011},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;publisher&nbsp;=&nbsp;{Editora&nbsp;Convencional},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;howpublished&nbsp;=&nbsp;{\url{http://www.theleanstartup.com/book}}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Para se referenciar, basta fazer:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...&nbsp;esses&nbsp;recursos&nbsp;s&atilde;o&nbsp;realmente&nbsp;fundamentais&nbsp;e&nbsp;transformaram&nbsp;a&nbsp;vida&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;de&nbsp;muitas&nbsp;empresas&nbsp;[ref&nbsp;lean-startup-ries].
+&nbsp;&nbsp;&nbsp;&nbsp;
+</pre>
+                <p>Isso ficar&aacute; assim: "<em>esses recursos s&atilde;o realmente fundamentais e transformaram a vida de muitas empresas [ref lean-startup-ries]</em>".</p>
+                <p>Verifique no fim desse PDF como a bibliografia aparecer&aacute;! Isso pode ser alterado, claro, para se utilizar iniciais
+dos autores em vez de n&uacute;meros, aparecer primeiro ano e depois editora, etc.</p>
+                <p>Quando for uma primeira cita&ccedil;&atilde;o a um livro importante, pode ser interessante escrever o nome do livro: "<em>O termo
+lean startup foi cunhado por Eric Ries em seu livro seminal Lean Startup [ref lean-startup-ries]</em>.". A n&atilde;o ser em casos
+espec&iacute;ficos, n&atilde;o h&aacute; necessidade de ficar escrevendo o nome do livro/blog/site toda hora! Evite tamb&eacute;m utilizar a bibliografia como conte&uacute;do na frase. Isto &eacute;, <strong>evite</strong>: "<em>Os getters e setters s&atilde;o ruins, como visto em [ref getters-setters-silveira]</em>", prefira "<em>Os getters e setters j&aacute; s&atilde;o considerados m&aacute; pr&aacute;tica por muitos desenvolvedores [ref getters-setters-silveira]</em>::".</p>
+                <p>Voc&ecirc; pode se referenciar a dois itens dentro de uma mesma tag <code>ref</code>, separando por virgula (<code>ref 
+getters-setters-silveira, lean-startup-ries </code>), gerando [ref getters-setters-paulo-silveira, lean-startup-ries].</p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>3.2 - Referenciando uma se&ccedil;&atilde;o ou cap&iacute;tulo</h2>
+            
+                <p>Voc&ecirc; gostou desse nosso cap&iacute;tulo de n&uacute;mero <a href="#capitulo-referencias" class='reference'>*</a>? J&aacute; aprendeu a escrever refer&ecirc;ncia bibliogr&aacute;fica na se&ccedil;&atilde;o <a href="#adicione-referencias" class='reference'>*</a>?</p>
+                <p>Mas e se adicionarmos um cap&iacute;tulo ou se&ccedil;&atilde;o nova, teremos o trabalho de procurar essa cita&ccedil;&otilde;es, tipo "como vimos
+ no cap&iacute;tulo X"? Seus problemas acabaram! Basta, dentro de uma se&ccedil;&atilde;o ou cap&iacute;tulo, criar um label. Por exemplo:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;label&nbsp;adicione-referencias&nbsp;]
+
+</pre>
+                <p>E agora, para se referenciar, basta fazer:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;Voc&ecirc;&nbsp;gostou&nbsp;do&nbsp;cap&iacute;tulo&nbsp;[ref-label&nbsp;capitulo-referencias]?&nbsp;J&aacute;&nbsp;aprendeu&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;a&nbsp;escrever&nbsp;refer&ecirc;ncia&nbsp;bibliogr&aacute;fica&nbsp;na&nbsp;se&ccedil;&atilde;o&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;[ref-label&nbsp;adicione-referencias]?
+
+</pre>
+                <p>Ele mesmo saber&aacute; se a refer&ecirc;ncia &eacute; a um cap&iacute;tulo ou se&ccedil;&atilde;o, dependendo de onde voc&ecirc; criou o label (se for antes de qualquer se&ccedil;&atilde;o, ser&aacute; usada a numera&ccedil;&atilde;o de cap&iacute;tulo).</p>
+                <p>H&aacute; tamb&eacute;m como se referenciar a uma p&aacute;gina, mas n&atilde;o utilizaremos esse recurso pois formatos como epub e mobi podem
+n&atilde;o trabalhar bem com a ideia de uma p&aacute;gina (kindle, por exemplo).</p>
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>3.3 - Referenciando uma imagem</h2>
+            
+                <p>Para referenciar uma imagem voc&ecirc; deve definir um label para a imagem na tag <code>img</code>. Depois, para referenciar a imagem no texto, use a tag <code>ref-label</code>, como no seguinte exemplo:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;[img&nbsp;resources/candle.jpeg&nbsp;w=50&nbsp;"imagem&nbsp;de&nbsp;um&nbsp;candlestick"&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;label=candlestick]
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;imagem&nbsp;[ref-label&nbsp;candlestick]&nbsp;exibe&nbsp;um&nbsp;candlestick.
+&nbsp;&nbsp;
+</pre>
+                <p>Que resulta na seguinte imagem, seguida pelo texto:</p>
+                <img src="usando-referencias-bibliograficas-e-para-o-proprio-livro/candle.jpeg" id="candlestick" alt="imagem de um candlestick" />
+                <p>A imagem <a href="#candlestick" class='reference'>*</a> exibe um candlestick.</p>
+                
+            
+            <br/>
+        </div>
+        <div class='referenceable'>
+            <h2 class='referenceableTitle'>3.4 - Referenciando trechos de c&oacute;digo</h2>
+            
+                <p>Agora voc&ecirc; tamb&eacute;m pode referenciar trechos de c&oacute;digo do livro, para isso, voc&ecirc; tamb&eacute;m deve definir um label na tag <code>code</code>. Para referenci&aacute;-lo no texto, use a tag <code>ref-code</code>, por exemplo:</p>
+                <pre class="text">
+
+&nbsp;&nbsp;&nbsp;&nbsp;[code&nbsp;label=world]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Hello&nbsp;world!");
+&nbsp;&nbsp;&nbsp;&nbsp;[/code]
+&nbsp;&nbsp;&nbsp;&nbsp;O&nbsp;execu&ccedil;&atilde;o&nbsp;do&nbsp;c&oacute;digo&nbsp;na&nbsp;listagem&nbsp;[ref-code&nbsp;world]&nbsp;resulta&nbsp;em...
+&nbsp;&nbsp;
+</pre>
+                <p>Que resulta no seguinte texto:</p>
+                <pre class="label=world">
+
+&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Hello&nbsp;world!");
+&nbsp;&nbsp;
+</pre>
+                <p>O execu&ccedil;&atilde;o do c&oacute;digo na listagem [ref-code world] resulta em...</p>
+            
+            <br/>
+        </div>
+</body>
+</html>

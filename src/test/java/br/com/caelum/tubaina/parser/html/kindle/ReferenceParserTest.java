@@ -25,6 +25,11 @@ public class ReferenceParserTest {
         compareInputAndExpected("mixedReferencesTestExpected.html", "mixedReferencesTest.html");
     }
     
+    @Test
+    public void shouldReplaceAExampleBook() throws Exception {
+        compareInputAndExpected("exampleBookExpected.html", "exampleBook.html");
+    }
+    
     @Test(expected = IllegalStateException.class)
     public void shouldThrowISEIfTheChapterOrSectionAreNotInsideADiv() throws Exception {
         String htmlContent = new Scanner(new File("src/test/resources/kindle/invalid.html"))
