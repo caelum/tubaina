@@ -87,13 +87,13 @@ public class KindleParserTest {
 	@Test
 	public void testQuotationTagInline() {
 		String result = parser.parse("[quote ola mundo --Anonimo]");
-		Assert.assertEquals("<q cite=\"Anonimo\">ola mundo <br/> --Anonimo</q>", result);
+		Assert.assertEquals("<p class=\"quote\">ola mundo <br/> --Anonimo</p>", result);
 	}
 	
 	@Test
 	public void testQuotationTagMultiline() {
 		String result = parser.parse("[quote ola mu\nndo-- Anonimo]");
-		Assert.assertEquals("<q cite=\"Anonimo\">ola mu\nndo <br/> --Anonimo</q>", result);
+		Assert.assertEquals("<p class=\"quote\">ola mu\nndo <br/> --Anonimo</p>", result);
 	}
 
 	@Test
@@ -153,21 +153,21 @@ public class KindleParserTest {
 	@Test
 	public void testBoxTagWithoutInnerTags() {
 		String result = parser.parseBox("ola mundo", "Titulo do Box");
-		Assert.assertEquals("<hr/><h4>Titulo do Box</h4>\nola mundo<hr/>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\nola mundo</div>", result);
 	}
 	
 	@Test
 	public void testBoxTagWithInnerTags() {
 		//Should not parse. BoxTag just create the box structure
 		String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-		Assert.assertEquals("<hr/><h4>Titulo do Box</h4>\n__ola__ **mundo**<hr/>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\n__ola__ **mundo**</div>", result);
 	}
 	
 	@Test
 	public void testBoxTagWithInnerTagsOnTitle() {
 		//Should not parse. BoxTag just creates the box structure
 		String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-		Assert.assertEquals("<hr/><h4>Titulo **do Box**</h4>\nola mundo<hr/>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo **do Box**</h4>\nola mundo</div>", result);
 	}
 	
 	@Test

@@ -1,11 +1,23 @@
-
-q {
+p.quote {
 	display: block;
 	font-style: italic;
 	text-align: right;
 	}
-	q:after {
-		content: "-- " attr(cite);
-		display: block;
-		text-align: right;
-	}
+pre{
+	margin: 0.5em 0px;
+}
+
+div.box{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;	
+}
+
+
+div.note{
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;	
+}
+
+div.note:before{
+	content: "<h4>Instructor Note</h4><br/>";
+}
