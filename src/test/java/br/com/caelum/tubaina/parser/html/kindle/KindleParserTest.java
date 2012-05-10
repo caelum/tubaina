@@ -20,7 +20,7 @@ public class KindleParserTest {
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
 		List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
-		this.parser = new KindleParser(tags, false);
+		this.parser = new KindleParser(tags, false, true);
 	}
 
 	@Test
@@ -229,4 +229,18 @@ public class KindleParserTest {
 		Assert.assertEquals("<li>Design Patterns, Erich Gamma et al</li>", chunks.get(2).getContent(parser));
 	}
 	
+	@Test
+	public void testNoteTagShouldntBeParsed() throws IOException {
+	    RegexConfigurator configurator = new RegexConfigurator();
+        List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
+        this.parser = new KindleParser(tags, false, false);
+        String input = "Should not appear";
+        Assert.assertEquals("", parser.parseNote(input, ""));
+	}
+	
+	@Test
+	public void testNoteTagShouldBeParsed() throws IOException {
+	    String input = "Should appear";
+	    Assert.assertEquals("<div class=\"note\">Should appear</div>", parser.parseNote(input, ""));
+	}
 }

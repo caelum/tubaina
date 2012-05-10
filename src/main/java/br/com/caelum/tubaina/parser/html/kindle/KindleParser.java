@@ -16,9 +16,12 @@ public class KindleParser implements Parser {
 
     private final boolean noAnswer;
 
-    public KindleParser(List<Tag> tags, boolean noAnswer) {
+    private final boolean showNotes;
+
+    public KindleParser(List<Tag> tags, boolean noAnswer, boolean showNotes) {
         this.tags = tags;
         this.noAnswer = noAnswer;
+        this.showNotes = showNotes;
     }
 
     public String parse(String string) {
@@ -92,6 +95,8 @@ public class KindleParser implements Parser {
     }
 
     public String parseNote(String text, String title) {
+        if (!showNotes)
+            return "";
         return new NoteTag().parse(text, title);
     }
 
