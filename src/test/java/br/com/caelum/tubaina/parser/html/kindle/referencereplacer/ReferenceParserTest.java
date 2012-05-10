@@ -30,11 +30,6 @@ public class ReferenceParserTest {
     }
     
     @Test
-    public void shouldReplaceAExampleBook() throws Exception {
-        compareInputAndExpected("exampleBookExpected.html", "exampleBook.html");
-    }
-    
-    @Test
     public void shouldNotReplaceInvalidReferences() throws Exception {
         compareInputAndExpected("invalidReferencesTestExpected.html", "invalidReferencesTest.html");
     }

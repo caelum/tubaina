@@ -90,10 +90,11 @@ public class ChapterToString {
 		return new FreemarkerProcessor(cfg).process(map, "chapter-flat-tail.ftl");
 	}
 	
-	public StringBuffer generateKindleHtmlChapter(Book book, Chapter chapter) {
+	public StringBuffer generateKindleHtmlChapter(Book book, Chapter chapter, StringBuffer allSectionsContent) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("book", book);
         map.put("chapter", chapter);
+        map.put("allSectionsContent", allSectionsContent);
         map.put("parser", parser);
         map.put("sanitizer", new HtmlSanitizer());
         return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
