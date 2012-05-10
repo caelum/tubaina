@@ -19,32 +19,14 @@ public class CodeTagTest {
 		code = code.replaceAll(" ", "&nbsp;");
 		code = code.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 	}
-	
 	@Test
-	public void plainJavaCode() throws Exception {
-		String options = "java";
-		String output = new CodeTag().parse(code, options);
-		Assert.assertEquals("<pre class=\"java\">\n" + code + "\n</pre>", output);
-	}
-	
-	@Test
-	public void plainRubyCode() throws Exception {
-		String options = "ruby";
-		String rubyCode = "@name = \"Gabriel\"\n" +
-						  "puts \"Hello, \" + name";
-		rubyCode = rubyCode.replaceAll(" ", "&nbsp;");
-		String output = new CodeTag().parse(rubyCode, options);
-		Assert.assertEquals("<pre class=\"ruby\">\n" + rubyCode + "\n</pre>", output);
-	}
-	
-	@Test
-	public void noLanguageDefinedIsTreatedAsText() throws Exception {
-		String options="";
+	public void labelShouldBeShown() throws Exception {
+		String options="label=bizarre-code";
 		String noParticularLanguage = "Some text explaining some new bizarre\n" +
-										"syntax in a very code alike way";
+				"syntax in a very code alike way";
 		noParticularLanguage = noParticularLanguage.replaceAll(" ", "&nbsp;");
 		String output = new CodeTag().parse(noParticularLanguage, options);
-		Assert.assertEquals("<pre class=\"text\">\n" 
-													+ noParticularLanguage + "\n</pre>", output);
+		Assert.assertEquals("<pre id=\"bizarre-code\">\n" 
+				+ noParticularLanguage + "\n</pre>", output);
 	}
 }

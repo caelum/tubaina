@@ -18,6 +18,7 @@ import br.com.caelum.tubaina.parser.html.desktop.ChapterToString;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.parser.html.desktop.SectionToString;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ChapterAndSectionReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.CodeReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceParser;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceReplacer;
@@ -54,9 +55,13 @@ public class KindleGenerator implements Generator {
 
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
         ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
+        CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
+        
         ReferenceParser referenceParser = new ReferenceParser(Arrays.asList(
                 chapterAndSectionReferenceReplacer,
-                imageReferenceReplacer));
+                imageReferenceReplacer,
+                codeReferenceReplacer
+        		));
 
         bookContent = new StringBuffer(referenceParser.replaceReferences(bookContent.toString()));
 
