@@ -3,14 +3,16 @@ package br.com.caelum.tubaina.parser.html.kindle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class CodeTag implements Tag {
 
     public String parse(String content, String options) {
-        String indentedCode = content.replaceAll(" ", "&nbsp;");
-        indentedCode = indentedCode.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
-        
+    	
+    	SimpleIndentator simpleIndentator = new SimpleIndentator();
+        String indentedCode = simpleIndentator.indent(content);
+
         StringBuilder parsedLabel = new StringBuilder();
         parsedLabel.append(matchLabel(options));
         
