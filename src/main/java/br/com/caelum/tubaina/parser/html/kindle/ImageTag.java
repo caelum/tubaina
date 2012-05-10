@@ -7,13 +7,8 @@ public class ImageTag implements Tag {
 	
 	private ImageTagTemplate template = new ImageTagTemplate();
 	
-	private static final String RELATIVEPATH = "$$RELATIVE$$/";
-
 	public String parse(final String path ,final String options) {
-		return template.parse(path, options);
+		return template.parse(path, options, true);
 	}
 	
-	public Integer getScale(final String string) {
-		return template.getScale(string);
-	}
 }	

@@ -8,7 +8,7 @@ public class ImageTag implements Tag {
 	private ImageTagTemplate template = new ImageTagTemplate();
 	
 	public String parse(final String path, final String options) {
-		return template.parse(path, options);
+		return template.parse(path, options, false);
 	}
 
 	public Integer getScale(final String string) {

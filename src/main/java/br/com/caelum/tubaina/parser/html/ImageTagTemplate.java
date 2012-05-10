@@ -5,16 +5,15 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.caelum.tubaina.parser.Tag;
-
-public class ImageTagTemplate implements Tag {
+public class ImageTagTemplate {
 
 	// TODO: make it work more gracefully... i.e., eliminate this workaround
 	private static final String RELATIVEPATH = "$$RELATIVE$$/";
 
-	public String parse(final String path, final String options) {
+	public String parse(final String path, final String options, boolean shouldUseHTMLWidth) {
 		String imgsrc = FilenameUtils.getName(path);
 		String output = "<img src=\"" + RELATIVEPATH + imgsrc + "\" ";
+		String width = "";
 
 		Pattern label = Pattern.compile("(?s)(?i)label=(\\w+)%?");
 		Matcher labelMatcher = label.matcher(options);
@@ -26,11 +25,15 @@ public class ImageTagTemplate implements Tag {
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
 		Matcher descriptionMatcher = description.matcher(options);
 		
+		if (shouldUseHTMLWidth && getScale(options) != null) {
+		    width = "width='" +getScale(options) + "%' "; 
+		}
+		
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
-			output = output + "alt=\"" + descriptionMatcher.group(1) + "\" />";
+			output = output + width + "alt=\"" + descriptionMatcher.group(1) + "\" />";
 		} else {
-			output = output + "alt=\"" + imgsrc + "\" />";
+			output = output + width + "alt=\"" + imgsrc + "\" />";
 		}
 		
 		return output;
