@@ -15,12 +15,14 @@ import br.com.caelum.tubaina.util.Utilities;
 public class TubainaHtmlIO {
 
 	private final File templateDir;
+	private final ResourceManipulatorFactory resourceManipulatorFactory;
 
-	public TubainaHtmlIO(File templateDir) {
+	public TubainaHtmlIO(File templateDir, ResourceManipulatorFactory resourceManipulatorFactory) {
 		this.templateDir = templateDir;
+		this.resourceManipulatorFactory = resourceManipulatorFactory;
 	}
 
-	public TubainaDir createTubainaDir(File  outputFolder, Book book) {
+	public TubainaHtmlDir createTubainaDir(File  outputFolder, Book book) {
 		String bookName = Utilities.toDirectoryName(null, book.getName());
 		File bookRoot = new File(outputFolder, bookName);
 		try {
@@ -31,8 +33,8 @@ public class TubainaHtmlIO {
 		} catch (IOException e) {
 			throw new TubainaException("Error while copying template files", e);
 		}
-
-		return new TubainaDir(bookRoot, templateDir);
+		
+		return new TubainaHtmlDir(bookRoot, templateDir, resourceManipulatorFactory);
 	}
 	
 }

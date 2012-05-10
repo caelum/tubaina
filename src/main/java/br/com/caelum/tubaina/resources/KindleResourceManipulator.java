@@ -16,22 +16,20 @@ import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.parser.html.desktop.ImageTag;
 import br.com.caelum.tubaina.util.Utilities;
 
-public class HtmlResourceManipulator implements ResourceManipulator {
+public class KindleResourceManipulator implements ResourceManipulator {
 
 	private File imageDestinationPath;
 
-	private static final Logger LOG = Logger.getLogger(HtmlResourceManipulator.class);
+	private static final Logger LOG = Logger.getLogger(KindleResourceManipulator.class);
 
 	private static final int PAGE_WIDTH = 700;
 
 	private final Map<String, Integer> indexes;
 
-	private final File logo;
 
-	public HtmlResourceManipulator(File imageDestinationPath, Map<String,Integer> indexes, File logo) {
+	public KindleResourceManipulator(File imageDestinationPath, Map<String,Integer> indexes) {
 		this.imageDestinationPath = imageDestinationPath;
 		this.indexes = indexes;
-		this.logo = logo;
 	}
 	
 	public void copyAnswer(AnswerChunk chunk) {
@@ -40,10 +38,6 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 	}
 
 	public void copyImage(File srcImage, String attribs) {
-		Integer scale = new ImageTag().getScale(attribs);
-		if (scale == null)
-		    scale = 100;
-		
 		if (srcImage.exists()) {
 			File destinationFile = new File(this.imageDestinationPath, FilenameUtils.getName(srcImage.getPath()));
 			if (!destinationFile.exists()) {
@@ -53,14 +47,6 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 					LOG.info("copying image: "+ srcImage.getPath());
 					ImageOutputStream stream = new FileImageOutputStream(destinationFile);
 					
-					if (Utilities.getImageWidth(srcImage) > PAGE_WIDTH) {
-						scale = 1;
-					}
-					Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (double) scale/100);
-					srcImage = destinationFile;
-		
-					Utilities.getImageWithLogo(srcImage, stream, Utilities.getFormatName(srcImage), logo);
-					stream.close();
 				} catch (IOException e) {
 					LOG.warn("Error while copying " + srcImage.getPath() + ":\n" +
 							"\t\t" + e.getMessage());

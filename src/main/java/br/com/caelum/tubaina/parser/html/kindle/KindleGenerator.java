@@ -11,7 +11,9 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.io.TubainaDir;
+import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
+import br.com.caelum.tubaina.io.ResourceManipulatorFactory;
+import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.html.desktop.ChapterToString;
@@ -41,7 +43,10 @@ public class KindleGenerator implements Generator {
 
     public void generate(Book book, File outputDir) throws IOException {
         StringBuffer bookContent = generateHeader(book);
-        TubainaDir bookRoot = new TubainaHtmlIO(templateDir).createTubainaDir(outputDir, book);
+        
+        ResourceManipulatorFactory kindleResourceManipulatorFactory = new KindleResourceManipulatorFactory();
+        
+        TubainaHtmlDir bookRoot = new TubainaHtmlIO(templateDir, kindleResourceManipulatorFactory).createTubainaDir(outputDir, book);
 
         for (Chapter c : book.getChapters()) {
             StringBuffer chapterContent = generateChapter(book, c);

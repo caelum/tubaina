@@ -10,7 +10,9 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.io.TubainaDir;
+import br.com.caelum.tubaina.io.HtmlResourceManipulatorFactory;
+import br.com.caelum.tubaina.io.ResourceManipulatorFactory;
+import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
@@ -32,7 +34,10 @@ public class SingleHtmlGenerator implements Generator {
 
 	public void generate(Book book, File outputDir) throws IOException {
 		StringBuffer bookContent = generateHeader(book);
-		TubainaDir bookRoot = new TubainaHtmlIO(templateDir).createTubainaDir(outputDir, book);
+		
+		ResourceManipulatorFactory htmlResourceManipulatorFactory = new HtmlResourceManipulatorFactory();
+		
+		TubainaHtmlDir bookRoot = new TubainaHtmlIO(templateDir, htmlResourceManipulatorFactory).createTubainaDir(outputDir, book);
 
 		for (Chapter c : book.getChapters()) {
 			StringBuffer chapterContent = generateChapter(book, c);
