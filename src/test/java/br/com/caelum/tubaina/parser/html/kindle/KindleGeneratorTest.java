@@ -60,10 +60,8 @@ public class KindleGeneratorTest {
 
 		generator.generate(book, directory);
 		
-		File bookRoot = new File(directory, "livro/");
-		File includes = new File(bookRoot, "includes/");
+		File includes = new File(directory, "includes/");
 		
-		assertTrue("should contain directory with chosen book name", bookRoot.exists());
 		assertTrue("should contain includes directory", includes.exists());
 	}
 
@@ -85,8 +83,7 @@ public class KindleGeneratorTest {
 		
 		generator.generate(book, directory);
 		
-		File bookRoot = new File(directory, "livro/");
-		File theBookItself = new File(bookRoot, "index.html");
+		File theBookItself = new File(directory, "index.html");
 		
 		assertTrue("should create the index.html containing the whole book", theBookItself.exists());
 	}
@@ -104,13 +101,11 @@ public class KindleGeneratorTest {
 
 		generator.generate(imageBook, directory);
 		
-		File bookRoot = new File(directory, "com-imagens/");
-		File firstChapter = new File(bookRoot, "um-capitulo/");
+		File firstChapter = new File(directory, "um-capitulo/");
 		File firstChaptersImage = new File(firstChapter, "baseJpgImage.jpg");
-		File secondChapter = new File(bookRoot, "outro-capitulo/");
+		File secondChapter = new File(directory, "outro-capitulo/");
 		File secondChaptersImage = new File(secondChapter, "basePngImage.png");
 		
-		assertTrue(bookRoot.exists());
 		assertTrue(firstChapter.exists());
 		assertTrue(firstChaptersImage.exists());
 		assertTrue(secondChapter.exists());
@@ -129,10 +124,8 @@ public class KindleGeneratorTest {
 		
 		generator.generate(imageBook, directory);
 		
-		File bookRoot = new File(directory, "com-imagens/");
-		File firstChapter = new File(bookRoot, "um-capitulo/");
+		File firstChapter = new File(directory, "um-capitulo/");
 		
-		assertTrue(bookRoot.exists());
 		assertFalse(firstChapter.exists());
 	}
 	
@@ -144,7 +137,7 @@ public class KindleGeneratorTest {
 
 		generator.generate(b, directory);
 		// testar se a imagem foi copiada pro diretorio images
-		File chapterDir = new File(directory, "com-imagens/qualquer-um/");
+		File chapterDir = new File(directory, "qualquer-um/");
 		Assert.assertTrue(chapterDir.exists());
 		
 		Assert.assertEquals(1, chapterDir.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
