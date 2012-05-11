@@ -34,10 +34,6 @@ public class ReferenceParserTest {
         compareInputAndExpected("invalidReferencesTestExpected.html", "invalidReferencesTest.html");
     }
     
-    @Test
-    public void shouldReplaceCodeReferences() throws Exception {
-    	compareInputAndExpected("codeReferencesTestExpected.html", "codeReferencesTest.html");
-    }
     
     private void compareInputAndExpected(String expectedFileName, String currentFileName)
             throws FileNotFoundException {
