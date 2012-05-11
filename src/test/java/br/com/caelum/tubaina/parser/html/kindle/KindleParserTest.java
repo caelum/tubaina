@@ -241,6 +241,6 @@ public class KindleParserTest {
 	@Test
 	public void testNoteTagShouldBeParsed() throws IOException {
 	    String input = "Should appear";
-	    Assert.assertEquals("<div class=\"note\">Should appear</div>", parser.parseNote(input, ""));
+	    Assert.assertEquals("<hr/>Should appear<hr/>", parser.parseNote(input, ""));
 	}
 }
