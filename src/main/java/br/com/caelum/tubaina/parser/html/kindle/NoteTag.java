@@ -5,7 +5,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class NoteTag implements Tag {
 
 	public String parse(String content, String options) {
-		return "<hr/>" + content.trim() + "<hr/>";
+		return "<hr/><hr/><hr/>" + content.trim() + "<hr/><hr/><hr/>";
 	}
 
 }

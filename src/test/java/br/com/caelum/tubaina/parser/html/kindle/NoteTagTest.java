@@ -10,7 +10,7 @@ public class NoteTagTest {
 	@Test
 	public void testNoteTag(){
 		String result = new NoteTag().parse("qualquer texto de nota", null);
-		Assert.assertEquals(result, "<hr/>qualquer texto de nota<hr/>");
+		Assert.assertEquals(result, "<hr/><hr/><hr/>qualquer texto de nota<hr/><hr/><hr/>");
 	}
 	
 }
