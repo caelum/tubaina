@@ -18,7 +18,7 @@ public class QuestionReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-		ChunkSplitter splitter = new ChunkSplitter(resources, "question");
+		ChunkSplitter splitter = new ChunkSplitter(resources, ReplacerType.QUESTION);
 		List<Chunk> chunks = splitter.splitChunks(content);
 		return new QuestionChunk(chunks);
 	}

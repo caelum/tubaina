@@ -19,7 +19,7 @@ public class BoxReplacer extends AbstractReplacer {
 	@Override
 	public Chunk createChunk(String options, String content) {
 		String title = options.trim();
-		List<Chunk> body = new ChunkSplitter(resources, "box").splitChunks(content);
+		List<Chunk> body = new ChunkSplitter(resources, ReplacerType.BOX).splitChunks(content);
 		return new BoxChunk(title, body);
 	}
 

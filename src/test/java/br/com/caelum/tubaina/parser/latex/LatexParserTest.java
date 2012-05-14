@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
+import br.com.caelum.tubaina.builder.replacer.ReplacerType;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
 
@@ -205,7 +206,7 @@ public class LatexParserTest {
 	public void testItemSplittBug(){
 		String input = "* Refactoring, Martin Fowler\n\n" +
 				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
-		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
+		List<Chunk> chunks = new ChunkSplitter(null, ReplacerType.LIST).splitChunks(input);
 		Assert.assertEquals(3, chunks.size());
 		Assert.assertEquals("\n\\item{Refactoring, Martin Fowler}\n", chunks.get(0).getContent(parser));
 		Assert.assertEquals("\n\\item{Effective Java, Joshua Bloch}\n", chunks.get(1).getContent(parser));
@@ -215,7 +216,7 @@ public class LatexParserTest {
 	@Test
 	public void testLinkWithBracesInsideBug() {
 		String input = "http://localhost/{id}";
-		List<Chunk> chunks = new ChunkSplitter(null, "all").splitChunks(input);
+		List<Chunk> chunks = new ChunkSplitter(null, ReplacerType.ALL).splitChunks(input);
 		Assert.assertEquals(1, chunks.size());
 		Assert.assertEquals("\n\n\\link{http://localhost/{id}}", chunks.get(0).getContent(parser));
 	}
@@ -223,7 +224,7 @@ public class LatexParserTest {
 	@Test
 	public void testLinkWithMultipleBracesInsideBug() {
 		String input = "http://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg";
-		List<Chunk> chunks = new ChunkSplitter(null, "all").splitChunks(input);
+		List<Chunk> chunks = new ChunkSplitter(null, ReplacerType.ALL).splitChunks(input);
 		Assert.assertEquals(1, chunks.size());
 		Assert.assertEquals("\n\n\\link{http://farm{farm-id}.static.flickr.com/{server-id}/{id}\\_{secret}.jpg}", chunks.get(0).getContent(parser));
 	}

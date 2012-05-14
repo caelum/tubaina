@@ -3,14 +3,15 @@ package br.com.caelum.tubaina.builder;
 import java.util.List;
 
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.builder.replacer.ReplacerType;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class ChunkSplitter {
 
 	private List<Resource> resources;
-	private String replacerType;
+	private ReplacerType replacerType;
 
-	public ChunkSplitter(List<Resource> resources, String replacerType) {
+	public ChunkSplitter(List<Resource> resources, ReplacerType replacerType) {
 		this.resources = resources;
 		this.replacerType = replacerType;
 	}

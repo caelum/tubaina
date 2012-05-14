@@ -59,8 +59,8 @@ public class KindleGenerator implements Generator {
         bookContent.append(generateFooter());
 
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
-        ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
-        CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
+        ReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
+        ReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
         
         ReferenceParser referenceParser = new ReferenceParser(Arrays.asList(
                 chapterAndSectionReferenceReplacer,

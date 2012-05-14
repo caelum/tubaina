@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.builder.replacer.ReplacerType;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -50,7 +51,7 @@ public class ChapterBuilder {
 			}
 		}
 
-		IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all").splitChunks(introduction));
+		IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, ReplacerType.ALL).splitChunks(introduction));
 
 		return new Chapter(title, intro, sections, resources);
 	}

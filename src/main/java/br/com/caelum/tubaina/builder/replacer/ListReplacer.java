@@ -18,7 +18,7 @@ public class ListReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-		ChunkSplitter splitter = new ChunkSplitter(resources, "list");
+		ChunkSplitter splitter = new ChunkSplitter(resources, ReplacerType.LIST);
 		return new ListChunk(options, splitter.splitChunks(content));
 	}
 

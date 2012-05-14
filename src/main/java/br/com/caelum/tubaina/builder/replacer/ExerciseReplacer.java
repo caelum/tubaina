@@ -23,7 +23,7 @@ public class ExerciseReplacer extends AbstractReplacer {
 	@Override
 	public Chunk createChunk(String options, String content) {
 		ArrayList<Resource> subResources = new ArrayList<Resource>();
-		ChunkSplitter splitter = new ChunkSplitter(subResources, "exercise");
+		ChunkSplitter splitter = new ChunkSplitter(subResources, ReplacerType.EXERCISE);
 		List<Chunk> chunks = splitter.splitChunks(content);
 		if (hasAnswer(subResources))
 			resources.add(new ExerciseResource(ExerciseChunk.getExerciseCount()));

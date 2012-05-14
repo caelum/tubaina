@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
+import br.com.caelum.tubaina.builder.replacer.ReplacerType;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
 
@@ -222,7 +223,7 @@ public class HtmlParserTest {
 	public void testParagraphInsiideItem(){
 		String input = "* Refactoring, Martin Fowler\n\n" +
 				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
-		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
+		List<Chunk> chunks = new ChunkSplitter(null, ReplacerType.LIST).splitChunks(input);
 		Assert.assertEquals(3, chunks.size());
 		Assert.assertEquals("<li>Refactoring, Martin Fowler</li>", chunks.get(0).getContent(parser));
 		Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>", chunks.get(1).getContent(parser));

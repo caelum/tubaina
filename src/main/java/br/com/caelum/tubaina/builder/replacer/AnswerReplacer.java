@@ -19,7 +19,7 @@ public class AnswerReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-		AnswerChunk chunk = new AnswerChunk(new ChunkSplitter(resources, "answer").splitChunks(content));
+		AnswerChunk chunk = new AnswerChunk(new ChunkSplitter(resources, ReplacerType.ANSWER).splitChunks(content));
 		resources.add(new AnswerResource(chunk));
 		return chunk;
 	}

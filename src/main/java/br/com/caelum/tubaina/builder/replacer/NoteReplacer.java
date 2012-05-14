@@ -21,7 +21,7 @@ public class NoteReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-		ChunkSplitter splitter = new ChunkSplitter(resources, "note");
+		ChunkSplitter splitter = new ChunkSplitter(resources, ReplacerType.NOTE);
 		List<Chunk> list = new ArrayList<Chunk>();
 		list.add(new MockedChunk(INSTRUCTOR_NOTE));
 		return new NoteChunk(list, splitter.splitChunks(content));

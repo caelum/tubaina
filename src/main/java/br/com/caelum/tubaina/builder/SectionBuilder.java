@@ -3,6 +3,7 @@ package br.com.caelum.tubaina.builder;
 import java.util.List;
 
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.builder.replacer.ReplacerType;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class SectionBuilder {
@@ -20,6 +21,6 @@ public class SectionBuilder {
 	}
 
 	public Section build() {
-		return new Section(sectionTitle, new ChunkSplitter(resources, "all").splitChunks(sectionContent));
+		return new Section(sectionTitle, new ChunkSplitter(resources, ReplacerType.ALL).splitChunks(sectionContent));
 	}
 }

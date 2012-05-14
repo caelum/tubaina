@@ -27,7 +27,7 @@ public class ItemReplacerTest {
 		String test = "* quero que o codigo java abaixo não tenha itens \n" + "[java]blah blah[/java]" + "[java] \n"
 				+ "/**\n" + " * texto qualquer\n\n" + " *outro comentario\n" + "[/java]\n"
 				+ "  *mas que isso seja outro item";
-		List<Chunk> chunks = new ChunkSplitter(resources, "list").splitChunks(test);
+		List<Chunk> chunks = new ChunkSplitter(resources, ReplacerType.LIST).splitChunks(test);
 		MockedParser parser = new MockedParser();
 		Assert.assertEquals(2, chunks.size());
 		Assert.assertEquals(ItemChunk.class, chunks.get(0).getClass());
@@ -42,6 +42,6 @@ public class ItemReplacerTest {
 	public void testItensWithParagraphs() throws Exception {
 		String test = "blah blah blah \n    *uma lista, com coisas...\n  * outra lista";
 
-		new ChunkSplitter(resources, "list").splitChunks(test);
+		new ChunkSplitter(resources, ReplacerType.LIST).splitChunks(test);
 	}
 }

@@ -18,7 +18,7 @@ public class TableColumnReplacer extends AbstractReplacer {
 
 	@Override
 	protected Chunk createChunk(String options, String content) {
-		List<Chunk> cell = new ChunkSplitter(resources, "col").splitChunks(content);
+		List<Chunk> cell = new ChunkSplitter(resources, ReplacerType.COLUMN).splitChunks(content);
 		return new TableColumnChunk(cell);
 	}
 

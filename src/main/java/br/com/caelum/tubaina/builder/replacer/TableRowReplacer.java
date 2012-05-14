@@ -19,7 +19,7 @@ public class TableRowReplacer extends AbstractReplacer {
 
 	@Override
 	protected Chunk createChunk(String options, String content) {
-		List<Chunk> cols = new ChunkSplitter(resources, "row").splitChunks(content);
+		List<Chunk> cols = new ChunkSplitter(resources, ReplacerType.ROW).splitChunks(content);
 		if (cols.size() == 0)
 			throw new TubainaException("Row without columns inside");
 		return new TableRowChunk(cols);

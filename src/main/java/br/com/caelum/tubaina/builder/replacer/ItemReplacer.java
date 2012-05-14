@@ -25,7 +25,7 @@ public class ItemReplacer implements Replacer {
 	}
 
 	public Chunk createChunk(final String content) {
-		return new ItemChunk(new ChunkSplitter(resources, "item").splitChunks(content));
+		return new ItemChunk(new ChunkSplitter(resources, ReplacerType.ITEM).splitChunks(content));
 	}
 
 	public String execute(final String text, final List<Chunk> chunks) {
