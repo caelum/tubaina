@@ -11,9 +11,8 @@ public class Book {
 
 	private final boolean showNotes;
 
-	public Book(String name, List<Chapter> chapters, boolean showNotes) {
-	    this.bookParts = new ArrayList<BookPart>();
-	    bookParts.add(new BookPart(chapters));
+	public Book(String name, List<BookPart> bookParts, boolean showNotes) {
+	    this.bookParts = bookParts;
 		this.name = name;
 		this.showNotes = showNotes;
 	}
@@ -25,6 +24,10 @@ public class Book {
         }
 		return allChapters;
 	}
+	
+	public List<BookPart> getBookParts() {
+        return bookParts;
+    }
 
 	public String getName() {
 		return name;

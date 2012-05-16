@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.builder;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Field;
@@ -11,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
@@ -349,5 +352,24 @@ public class BookBuilderTest {
 		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(7).getClass());
 		Assert.assertEquals("Algum texto centralizado\n\nCom várias linhas", chunks.get(7).getContent(parser));
 	}
+	
+	@Test
+    public void testBookWithMultipleParts() throws Exception {
+	    BookBuilder builder = new BookBuilder("livro");
+        String content = "[part parte um]\n" +
+        		"[chapter capitulo um]\n" +
+        		"introducao do capitulo um\n" +
+        		"[section secao um]\n" +
+        		"conteudo da secao um";
+        builder.addAllReaders(Arrays.asList((Reader)new StringReader(content)));
+        Book b = builder.build();
+        BookPart bookPart = b.getBookParts().get(0);
+        Chapter chapter = bookPart.getChapters().get(0);
+        assertEquals("capitulo um", chapter.getTitle());
+        assertEquals("secao um", chapter.getSections().get(0).getTitle());
+        
+        assertEquals("parte um", bookPart.getTitle());
+        
+    }
 
 }
