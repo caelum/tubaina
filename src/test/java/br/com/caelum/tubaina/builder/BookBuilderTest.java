@@ -363,13 +363,13 @@ public class BookBuilderTest {
         		"conteudo da secao um";
         builder.addAllReaders(Arrays.asList((Reader)new StringReader(content)));
         Book b = builder.build();
-        BookPart bookPart = b.getBookParts().get(0);
+        BookPart bookPart = b.getParts().get(0);
         Chapter chapter = bookPart.getChapters().get(0);
         assertEquals("capitulo um", chapter.getTitle());
         assertEquals("secao um", chapter.getSections().get(0).getTitle());
         
         assertEquals("parte um", bookPart.getTitle());
-        assertEquals(true, bookPart.isPrintablePart());
+        assertEquals(true, bookPart.isPrintable());
     }
 	
 	@Test
@@ -383,15 +383,15 @@ public class BookBuilderTest {
 	            "conteudo da secao um";
 	    builder.addAllReaders(Arrays.asList((Reader)new StringReader(chapter0), (Reader)new StringReader(chapter1)));
 	    Book b = builder.build();
-	    BookPart bookPart = b.getBookParts().get(1);
+	    BookPart bookPart = b.getParts().get(1);
 	    Chapter chapter = bookPart.getChapters().get(0);
 	    assertEquals("capitulo um", chapter.getTitle());
 	    assertEquals("secao um", chapter.getSections().get(0).getTitle());
 	    
 	    assertEquals("parte um", bookPart.getTitle());
-	    assertEquals(true, bookPart.isPrintablePart());
+	    assertEquals(true, bookPart.isPrintable());
 	    
-	    assertEquals(false, b.getBookParts().get(0).isPrintablePart());
+	    assertEquals(false, b.getParts().get(0).isPrintable());
 	}
 
 }

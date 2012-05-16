@@ -5,28 +5,28 @@ import java.util.List;
 
 public class Book {
 
-	private List<BookPart> bookParts;
+	private List<BookPart> book;
 
 	private String name;
 
 	private final boolean showNotes;
 
 	public Book(String name, List<BookPart> bookParts, boolean showNotes) {
-	    this.bookParts = bookParts;
+	    this.book = bookParts;
 		this.name = name;
 		this.showNotes = showNotes;
 	}
 
 	public List<Chapter> getChapters() {
 	    ArrayList<Chapter> allChapters = new ArrayList<Chapter>();
-		for (BookPart part : bookParts) {
+		for (BookPart part : book) {
 		    allChapters.addAll(part.getChapters());
         }
 		return allChapters;
 	}
 	
-	public List<BookPart> getBookParts() {
-        return bookParts;
+	public List<BookPart> getParts() {
+        return book;
     }
 
 	public String getName() {

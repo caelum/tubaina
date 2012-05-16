@@ -7,10 +7,10 @@ public class BookPart {
     
     private List<Chapter> chapters;
     private String title;
-    private boolean printablePart;
+    private boolean printable;
 
     public BookPart(String title, boolean printableType) {
-        printablePart = printableType;
+        printable = printableType;
         this.chapters = new ArrayList<Chapter>();
         this.title = title;
     }
@@ -27,7 +27,7 @@ public class BookPart {
         this.chapters.addAll(chapters);
     }
     
-    public boolean isPrintablePart() {
-        return printablePart;
+    public boolean isPrintable() {
+        return printable;
     }
 }

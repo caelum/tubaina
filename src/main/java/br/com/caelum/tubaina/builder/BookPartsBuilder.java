@@ -5,11 +5,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 
 public class BookPartsBuilder {
 
+    private final Logger LOG = Logger.getLogger(BookPartsBuilder.class);
+    
     List<BookPart> bookParts;
 
     public BookPartsBuilder() {
@@ -20,6 +24,7 @@ public class BookPartsBuilder {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);
             bookParts.add(new BookPart(bookPartTitle, true));
+            LOG.info("Parsing part: " + bookPartTitle);
         }
     }
 
