@@ -49,19 +49,19 @@ public class BookBuilder {
 	}
 
 	private List<Chapter> parse(String text) {
-		Pattern pattern = Pattern.compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
-		Matcher matcher = pattern.matcher(text);
+		Pattern chapterPattern = Pattern.compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
+		Matcher chapterMatcher = chapterPattern.matcher(text);
 
 		List<Chapter> chapters = new ArrayList<Chapter>();
 
 		Integer offset = 0;
 
-		while (matcher.find(offset)) {
+		while (chapterMatcher.find(offset)) {
 			
 			
-			String title = matcher.group(1).trim();
-			String content = matcher.group(2);
-			offset = matcher.end(2);
+			String title = chapterMatcher.group(1).trim();
+			String content = chapterMatcher.group(2);
+			offset = chapterMatcher.end(2);
 
 			
 			Pattern introductionPattern = Pattern.compile("(?i)(?s)(.*?)(?:\\[section|\\z)");

@@ -1,23 +1,29 @@
 package br.com.caelum.tubaina;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
 
-	private List<Chapter> chapters;
+	private List<BookPart> bookParts;
 
 	private String name;
 
 	private final boolean showNotes;
 
 	public Book(String name, List<Chapter> chapters, boolean showNotes) {
-		this.chapters = chapters;
+	    this.bookParts = new ArrayList<BookPart>();
+	    bookParts.add(new BookPart(chapters));
 		this.name = name;
 		this.showNotes = showNotes;
 	}
 
 	public List<Chapter> getChapters() {
-		return chapters;
+	    ArrayList<Chapter> allChapters = new ArrayList<Chapter>();
+		for (BookPart part : bookParts) {
+		    allChapters.addAll(part.getChapters());
+        }
+		return allChapters;
 	}
 
 	public String getName() {
