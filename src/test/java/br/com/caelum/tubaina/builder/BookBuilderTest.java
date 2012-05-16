@@ -369,7 +369,29 @@ public class BookBuilderTest {
         assertEquals("secao um", chapter.getSections().get(0).getTitle());
         
         assertEquals("parte um", bookPart.getTitle());
-        
+        assertEquals(true, bookPart.isPrintablePart());
     }
+	
+	@Test
+	public void testBookWithChapterOutsideParts() throws Exception {
+	    BookBuilder builder = new BookBuilder("livro");
+	    String chapter0 = "[chapter capitulo zero]";
+	    String chapter1 = "[part parte um]\n" +
+	            "[chapter capitulo um]\n" +
+	            "introducao do capitulo um\n" +
+	            "[section secao um]\n" +
+	            "conteudo da secao um";
+	    builder.addAllReaders(Arrays.asList((Reader)new StringReader(chapter0), (Reader)new StringReader(chapter1)));
+	    Book b = builder.build();
+	    BookPart bookPart = b.getBookParts().get(1);
+	    Chapter chapter = bookPart.getChapters().get(0);
+	    assertEquals("capitulo um", chapter.getTitle());
+	    assertEquals("secao um", chapter.getSections().get(0).getTitle());
+	    
+	    assertEquals("parte um", bookPart.getTitle());
+	    assertEquals(true, bookPart.isPrintablePart());
+	    
+	    assertEquals(false, b.getBookParts().get(0).isPrintablePart());
+	}
 
 }

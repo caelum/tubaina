@@ -35,45 +35,19 @@ public class BookBuilder {
 	}
 	
 	public Book build(boolean showNotes) {
-		List<Chapter> chapters = new ArrayList<Chapter>();
-		bookParts = new ArrayList<BookPart>();
+		BookPartsBuilder bookPartsBuilder = new BookPartsBuilder();
 		for (Reader reader : readers) {
 			LOG.info("Parsing chapter " + Chapter.getChaptersCount());
 			Scanner scanner = new Scanner(reader);
 			scanner.useDelimiter("$$");
 			if (scanner.hasNext()) {
 				String text = scanner.next();
-				if (containsPartTag(text)) {
-				   String bookPartTitle = extractBookTitle(text);
-				   bookParts.add(new BookPart(bookPartTitle));
-				}
-				addChaptersToLastAddedPart(parseChapters(text));
-                chapters.addAll(parseChapters(text));
+				bookPartsBuilder.addPartsFrom(text);
+				bookPartsBuilder.addChaptersToLastAddedPart(parseChapters(text));
 			}
 		}
-        return new Book(name, bookParts, showNotes);
+        return new Book(name, bookPartsBuilder.build(), showNotes);
 	}
-
-	private void addChaptersToLastAddedPart(List<Chapter> parsedChapters) {
-	    if (bookParts.isEmpty()) {
-	        bookParts.add(new BookPart("Unique part"));
-	    }
-	    int lastPartIndex = bookParts.size() - 1;
-	    bookParts.get(lastPartIndex).addAllChapters(parsedChapters);
-    }
-
-    private String extractBookTitle(String text) {
-	    Pattern bookPartPattern = Pattern.compile("(?i)(?s)(?m)^\\[part(.*?)\\].*?");
-        Matcher chapterMatcher = bookPartPattern.matcher(text);
-        chapterMatcher.find();
-        return chapterMatcher.group(1).trim();
-    }
-
-    private boolean containsPartTag(String text) {
-	    Pattern bookPartPattern = Pattern.compile("(?i)(?s)(?m)^\\[part(.*?)\\].*?");
-	    Matcher chapterMatcher = bookPartPattern.matcher(text);
-	    return chapterMatcher.matches();
-    }
 
     private List<Chapter> parseChapters(String text) {
 		Pattern chapterPattern = Pattern.compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
