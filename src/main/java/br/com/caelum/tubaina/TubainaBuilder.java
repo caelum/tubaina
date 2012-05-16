@@ -50,7 +50,7 @@ public class TubainaBuilder {
 		ResourceLocator.initialize(inputDir);
 		List<Reader> readers = getAfcsFrom(inputDir);
 		BookBuilder builder = new BookBuilder(bookName);
-		builder.addAll(readers);
+		builder.addAllReaders(readers);
 
 		Book b = null;
 		try {

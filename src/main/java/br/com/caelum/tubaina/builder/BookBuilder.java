@@ -24,11 +24,7 @@ public class BookBuilder {
 		this.name = name;
 	}
 
-	public void add(Reader fileReader) {
-		this.readers.add(fileReader);
-	}
-
-	public void addAll(List<Reader> readers) {
+	public void addAllReaders(List<Reader> readers) {
 		this.readers.addAll(readers);
 	}
 	
@@ -43,12 +39,12 @@ public class BookBuilder {
 			Scanner scanner = new Scanner(reader);
 			scanner.useDelimiter("$$");
 			if (scanner.hasNext())
-				chapters.addAll(parse(scanner.next()));
+				chapters.addAll(parseChapters(scanner.next()));
 		}
 		return new Book(name, chapters, showNotes);
 	}
 
-	private List<Chapter> parse(String text) {
+	private List<Chapter> parseChapters(String text) {
 		Pattern chapterPattern = Pattern.compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
 		Matcher chapterMatcher = chapterPattern.matcher(text);
 
@@ -57,12 +53,9 @@ public class BookBuilder {
 		Integer offset = 0;
 
 		while (chapterMatcher.find(offset)) {
-			
-			
 			String title = chapterMatcher.group(1).trim();
 			String content = chapterMatcher.group(2);
 			offset = chapterMatcher.end(2);
-
 			
 			Pattern introductionPattern = Pattern.compile("(?i)(?s)(.*?)(?:\\[section|\\z)");
 			Matcher introductionMatcher = introductionPattern.matcher(content);

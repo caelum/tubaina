@@ -2,8 +2,10 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -14,7 +16,6 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
-import br.com.caelum.tubaina.parser.html.desktop.BookToTOC;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
@@ -76,7 +77,7 @@ public class BookToTOCTest {
 
 	private Book createBook(final String bookText) {
 		BookBuilder builder = new BookBuilder("Title");
-		builder.add(new StringReader(bookText));
+		builder.addAllReaders(Arrays.asList((Reader) new StringReader(bookText)));
 		Book b = builder.build();
 		return b;
 	}

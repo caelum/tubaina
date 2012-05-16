@@ -1,7 +1,9 @@
 package br.com.caelum.tubaina.builder;
 
+import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -42,11 +44,11 @@ public class BookBuilderTest {
 
 		BookBuilder builder = new BookBuilder("livro");
 
-		builder.add(new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
+		builder.addAllReaders(Arrays.asList((Reader)new StringReader("[chapter     O que é java?   ]\n" + "texto da seção\n"
 				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
-				+ "texto da segunda seção\n\n"));
+				+ "texto da segunda seção\n\n")));
 
-		builder.add(new StringReader("[chapter Introdução]\n" + "Algum texto de introdução\n"));
+		builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n" + "Algum texto de introdução\n")));
 		Book book = builder.build();
 		Assert.assertEquals("livro", book.getName());
 
@@ -136,7 +138,7 @@ public class BookBuilderTest {
 
 	private List<Chapter> getChapters(final String string) {
 		BookBuilder builder = new BookBuilder("livro");
-		builder.add(new StringReader(string));
+		builder.addAllReaders(Arrays.asList((Reader)new StringReader(string)));
 		Book b = builder.build();
 		List<Chapter> chapters = b.getChapters();
 		return chapters;
