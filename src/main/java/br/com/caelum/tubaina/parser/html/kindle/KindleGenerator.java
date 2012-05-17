@@ -8,7 +8,6 @@ import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
-import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
@@ -41,10 +40,11 @@ public class KindleGenerator implements Generator {
 
     public void generate(Book book, File outputDir) throws IOException {
         StringBuffer bookContent = generateHeader(book);
-        
+
         ResourceManipulatorFactory kindleResourceManipulatorFactory = new KindleResourceManipulatorFactory();
-        
-        TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory).createTubainaDir(outputDir, book);
+
+        TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory)
+                .createTubainaDir(outputDir, book);
 
         for (Chapter c : book.getChapters()) {
             StringBuffer chapterContent = generateChapter(book, c);
@@ -54,17 +54,13 @@ public class KindleGenerator implements Generator {
                         c.getResources());
             }
         }
-        bookContent.append(generateFooter());
 
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
         ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
         CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
-        
+
         ReferenceParser referenceParser = new ReferenceParser(Arrays.asList(
-                chapterAndSectionReferenceReplacer,
-                imageReferenceReplacer,
-                codeReferenceReplacer
-        		));
+                chapterAndSectionReferenceReplacer, imageReferenceReplacer, codeReferenceReplacer));
 
         bookContent = new StringBuffer(referenceParser.replaceReferences(bookContent.toString()));
 
@@ -78,29 +74,14 @@ public class KindleGenerator implements Generator {
     }
 
     private StringBuffer generateChapter(Book book, Chapter chapter) {
-        StringBuffer allSectionsContent = new StringBuffer();
-        int sectionNumber = 1;
-        for (Section section : chapter.getSections()) {
-            if (section.getTitle() != null) { // intro
-                StringBuffer sectionContent = new SectionToString(parser, cfg, null)
-                        .generateKindleHtmlSection(section, chapter, sectionNumber);
-                allSectionsContent.append(sectionContent);
-                sectionNumber++;
-            }
-        }
         StringBuffer chapterContent = new ChapterToString(parser, cfg, null)
-            .generateKindleHtmlChapter(book, chapter, allSectionsContent);
+                .generateKindleHtmlChapter(chapter);
         return fixPaths(chapter, chapterContent);
     }
 
     private StringBuffer fixPaths(Chapter chapter, StringBuffer chapterContent) {
         String chapterName = Utilities.toDirectoryName(null, chapter.getTitle());
         return new StringBuffer(chapterContent.toString().replace("$$RELATIVE$$", chapterName));
-    }
-
-    private StringBuffer generateFooter() {
-        return new FreemarkerProcessor(cfg).process(new HashMap<String, Object>(),
-                "book-footer.ftl");
     }
 
     private void configureFreemarker() {

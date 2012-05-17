@@ -9,10 +9,8 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
-import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -37,8 +35,8 @@ public class ChapterToStringTest {
         chapterToString = new ChapterToString(parser, cfg, dirTree);
     }
 
-    private Chapter createChapter(String title, String introduction) {
-        return new ChapterBuilder(title, introduction, "").build();
+    private Chapter createChapter(String title, String introduction, String content) {
+        return new ChapterBuilder(title, introduction, content).build();
     }
 
     private int countOccurrences(String text, String substring) {
@@ -48,13 +46,13 @@ public class ChapterToStringTest {
 
     @Test
     public void testGenerateChapterWithSections() {
-        Chapter chapter = createChapter("titulo", "introducao");
+        Chapter chapter = createChapter("chapter title", "introduction",
+                "[section section one] section content");
 
-        Book book = new BookBuilder("meu-livro").build();
-        String generatedContent = chapterToString.generateKindleHtmlChapter(book, chapter,
-                new StringBuffer("<p>section content</p>")).toString();
-        assertEquals(1, countOccurrences(generatedContent, "<div class='referenceable'>"));
-        assertEquals(1, countOccurrences(generatedContent, "<p>section content</p>"));
+        String generatedContent = chapterToString.generateKindleHtmlChapter(chapter).toString();
+        System.out.println(generatedContent);
+        assertEquals(2, countOccurrences(generatedContent, "<div class='referenceable'>"));
+        assertEquals(1, countOccurrences(generatedContent, "<h1.*>\\d+ - chapter title</h1>"));
+        assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+\\.1 - section one</h2>"));
     }
-
 }
