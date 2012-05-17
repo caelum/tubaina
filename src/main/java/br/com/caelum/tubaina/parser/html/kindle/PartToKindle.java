@@ -28,8 +28,9 @@ public class PartToKindle {
         StringBuffer chaptersContent = new StringBuffer();
         List<Chapter> chapters = part.getChapters();
         for (Chapter chapter : chapters) {
-            StringBuffer generateKindleHtmlChapter = chapterToKindle.generateKindleHtmlChapter(chapter);
-            chaptersContent.append(generateKindleHtmlChapter);
+            StringBuffer chapterContent = chapterToKindle.generateKindleHtmlChapter(chapter);
+            fixPaths(chapter, chapterContent);
+            chaptersContent.append(chapterContent);
             if (!chapter.getResources().isEmpty()) {
                 bookRootDir.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeResources(
                         chapter.getResources());
@@ -40,6 +41,11 @@ public class PartToKindle {
         map.put("chaptersContent", chaptersContent.toString());
         map.put("sanitizer", new HtmlSanitizer());
         return new FreemarkerProcessor(cfg).process(map, "bookPart.ftl");
+    }
+    
+    private StringBuffer fixPaths(Chapter chapter, StringBuffer chapterContent) {
+        String chapterName = Utilities.toDirectoryName(null, chapter.getTitle());
+        return new StringBuffer(chapterContent.toString().replace("$$RELATIVE$$", chapterName));
     }
 
 }

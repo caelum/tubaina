@@ -6,20 +6,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
 
 public class ImageReferenceReplacerTest {
 
-    @Ignore
     @Test
     public void shouldReplaceImageReferenceWithChapterNumberOnly() throws Exception {
         compareInputAndExpected("imageReferencesTestExpected.html", "imageReferencesTest.html");
     }
 
-    @Ignore
     @Test
     public void shouldReplaceImageReferenceWithChapterNumberOnlyEvenIfTheImageIsOutsideASection()
             throws Exception {

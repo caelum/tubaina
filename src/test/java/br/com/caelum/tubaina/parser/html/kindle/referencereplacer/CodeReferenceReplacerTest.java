@@ -13,12 +13,12 @@ import br.com.caelum.tubaina.parser.html.referencereplacer.CodeReferenceReplacer
 public class CodeReferenceReplacerTest {
 
     @Test
-    public void shouldReplaceImageReferenceWithChapterNumberOnly() throws Exception {
+    public void shouldReplaceCodeReferenceWithChapterNumberOnly() throws Exception {
         compareInputAndExpected("codeReferencesTestExpected.html", "codeReferencesTest.html");
     }
 
     @Test
-    public void shouldReplaceImageReferenceWithChapterNumberOnlyEvenIfTheImageIsOutsideASection()
+    public void shouldReplaceCodeReferenceWithChapterNumberOnlyEvenIfTheImageIsOutsideASection()
             throws Exception {
         compareInputAndExpected("codeOutsideSectionReferencesTestExpected.html",
                 "codeOutsideSectionReferencesTest.html");

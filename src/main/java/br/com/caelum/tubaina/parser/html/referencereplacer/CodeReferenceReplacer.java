@@ -1,8 +1,6 @@
 package br.com.caelum.tubaina.parser.html.referencereplacer;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
@@ -15,9 +13,8 @@ public class CodeReferenceReplacer extends AbstractReferenceReplacer {
               
               Element title = containerDiv.getFirstElementByClass("referenceableTitle");
               
-              while (title.getStartTag().getName() != "h1") {
+              while (title.getStartTag().getName() != "h2") {
                   containerDiv = containerDiv.getParentElement();
-                  
                   title = containerDiv.getFirstElementByClass("referenceableTitle");
               }
               List<Element> codes = containerDiv.getAllElements("pre");

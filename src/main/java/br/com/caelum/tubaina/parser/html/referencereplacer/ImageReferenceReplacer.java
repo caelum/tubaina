@@ -12,10 +12,8 @@ public class ImageReferenceReplacer extends AbstractReferenceReplacer {
         if(label.getName().equals("img")) {
             
             Element title = containerDiv.getFirstElementByClass("referenceableTitle");
-            
-            while (title.getStartTag().getName() != "h1") {
+            while (title.getStartTag().getName() != "h2") {
                 containerDiv = containerDiv.getParentElement();
-                
                 title = containerDiv.getFirstElementByClass("referenceableTitle");
             }
             List<Element> imgs = containerDiv.getAllElements("img");
