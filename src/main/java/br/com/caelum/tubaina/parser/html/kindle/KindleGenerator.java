@@ -47,9 +47,11 @@ public class KindleGenerator implements Generator {
         TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory)
                 .createTubainaDir(outputDir, book);
 
+        int partCount = 0;
         for (BookPart part : book.getParts()) {
-            StringBuffer partContent = generatePart(book, part, bookRoot);
+            StringBuffer partContent = generatePart(book, part, bookRoot, partCount);
             bookContent.append(partContent);
+            partCount++;
         }
         
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
@@ -64,8 +66,8 @@ public class KindleGenerator implements Generator {
         bookRoot.writeIndex(bookContent);
     }
 
-    private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot) {
-        return new PartToKindle(parser, cfg).generateKindlePart(part, bookRoot);
+    private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot, int partCount) {
+        return new PartToKindle(parser, cfg).generateKindlePart(part, bookRoot, partCount);
     }
 
     private StringBuffer generateHeader(Book book) {

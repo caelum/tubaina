@@ -54,8 +54,8 @@ public class PartToKindleTest {
                 "[section section one] section content");
         List<BookPart> bookParts = new BookPartsBuilder().addPartsFrom("[part parte 1]")
                 .addChaptersToLastAddedPart(Arrays.asList(chapter)).build();
-        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null).toString();
-        assertEquals(1, countOccurrences(generatedContent, "<h1>parte 1</h1>"));
+        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null, 1).toString();
+        assertEquals(1, countOccurrences(generatedContent, "<h1>Part 1 - parte 1</h1>"));
         assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
         assertEquals(1,
                 countOccurrences(generatedContent, "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
@@ -67,7 +67,7 @@ public class PartToKindleTest {
                 "[section section one] section content");
         List<BookPart> bookParts = new BookPartsBuilder().addChaptersToLastAddedPart(
                 Arrays.asList(chapter)).build();
-        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null).toString();
+        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null, 1).toString();
         assertEquals(0, countOccurrences(generatedContent, "<h1>.*</h1>"));
         assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
         assertEquals(1,

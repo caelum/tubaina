@@ -1,5 +1,5 @@
 <#if part.printable>
-	<h1>${part.title}</h1>
+	<h1>Part ${partNumber} - ${part.title}</h1>
 </#if>
 
 ${chaptersContent}

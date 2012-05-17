@@ -23,13 +23,13 @@ public class PartToKindle {
         this.cfg = cfg;
     }
 
-    public StringBuffer generateKindlePart(BookPart part, TubainaHtmlDir bookRootDir) {
+    public StringBuffer generateKindlePart(BookPart part, TubainaHtmlDir bookRootDir, int partNumber) {
         ChapterToKindle chapterToKindle = new ChapterToKindle(parser, cfg);
         StringBuffer chaptersContent = new StringBuffer();
         List<Chapter> chapters = part.getChapters();
         for (Chapter chapter : chapters) {
             StringBuffer chapterContent = chapterToKindle.generateKindleHtmlChapter(chapter);
-            fixPaths(chapter, chapterContent);
+            chapterContent = fixPaths(chapter, chapterContent);
             chaptersContent.append(chapterContent);
             if (!chapter.getResources().isEmpty()) {
                 bookRootDir.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeResources(
@@ -38,6 +38,7 @@ public class PartToKindle {
         }
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("part", part);
+        map.put("partNumber", partNumber);
         map.put("chaptersContent", chaptersContent.toString());
         map.put("sanitizer", new HtmlSanitizer());
         return new FreemarkerProcessor(cfg).process(map, "bookPart.ftl");
