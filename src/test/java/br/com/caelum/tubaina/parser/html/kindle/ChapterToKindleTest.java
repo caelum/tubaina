@@ -18,9 +18,9 @@ import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class ChapterToStringTest {
+public class ChapterToKindleTest {
 
-    private ChapterToString chapterToString;
+    private ChapterToKindle chapterToString;
 
     @Before
     public void setUp() throws IOException {
@@ -32,7 +32,7 @@ public class ChapterToStringTest {
                 "/kindle.properties"), false);
         ArrayList<String> dirTree = new ArrayList<String>();
 
-        chapterToString = new ChapterToString(parser, cfg, dirTree);
+        chapterToString = new ChapterToKindle(parser, cfg, dirTree);
     }
 
     private Chapter createChapter(String title, String introduction, String content) {

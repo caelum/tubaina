@@ -74,7 +74,7 @@ public class KindleGenerator implements Generator {
     }
 
     private StringBuffer generateChapter(Book book, Chapter chapter) {
-        StringBuffer chapterContent = new ChapterToString(parser, cfg, null)
+        StringBuffer chapterContent = new ChapterToKindle(parser, cfg, null)
                 .generateKindleHtmlChapter(chapter);
         return fixPaths(chapter, chapterContent);
     }

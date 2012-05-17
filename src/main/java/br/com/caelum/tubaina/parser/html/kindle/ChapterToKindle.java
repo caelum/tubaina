@@ -10,12 +10,12 @@ import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
 import freemarker.template.Configuration;
 
-public class ChapterToString {
+public class ChapterToKindle {
     private final Parser parser;
 
     private final Configuration cfg;
 
-    public ChapterToString(final Parser parser, final Configuration cfg, final List<String> dirTree) {
+    public ChapterToKindle(final Parser parser, final Configuration cfg, final List<String> dirTree) {
         this.parser = parser;
         this.cfg = cfg;
     }
