@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -46,15 +47,11 @@ public class KindleGenerator implements Generator {
         TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory)
                 .createTubainaDir(outputDir, book);
 
-        for (Chapter c : book.getChapters()) {
-            StringBuffer chapterContent = generateChapter(book, c);
-            bookContent.append(chapterContent);
-            if (!c.getResources().isEmpty()) {
-                bookRoot.cd(Utilities.toDirectoryName(null, c.getTitle())).writeResources(
-                        c.getResources());
-            }
+        for (BookPart part : book.getParts()) {
+            StringBuffer partContent = generatePart(book, part, bookRoot);
+            bookContent.append(partContent);
         }
-
+        
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
         ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
         CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
@@ -67,6 +64,10 @@ public class KindleGenerator implements Generator {
         bookRoot.writeIndex(bookContent);
     }
 
+    private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot) {
+        return new PartToKindle(parser, cfg).generateKindlePart(part, bookRoot);
+    }
+
     private StringBuffer generateHeader(Book book) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("booktitle", book.getName());
@@ -74,7 +75,7 @@ public class KindleGenerator implements Generator {
     }
 
     private StringBuffer generateChapter(Book book, Chapter chapter) {
-        StringBuffer chapterContent = new ChapterToKindle(parser, cfg, null)
+        StringBuffer chapterContent = new ChapterToKindle(parser, cfg)
                 .generateKindleHtmlChapter(chapter);
         return fixPaths(chapter, chapterContent);
     }

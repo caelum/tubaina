@@ -8,7 +8,6 @@ import net.htmlparser.jericho.Source;
 
 public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
 
-
     public String replace(String htmlContent) {
         Source source = new Source(htmlContent);
         source.fullSequentialParse();

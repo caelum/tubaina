@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.gists.GistConnector;
 import br.com.caelum.tubaina.gists.GistRequest;
-import br.com.caelum.tubaina.gists.GistResult;
 import br.com.caelum.tubaina.gists.GistResultRetriever;
 import br.com.caelum.tubaina.gists.JsonToGistResultConverter;
 import br.com.caelum.tubaina.parser.SimpleIndentator;

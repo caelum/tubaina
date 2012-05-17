@@ -20,24 +20,26 @@ public class BookPartsBuilder {
         bookParts = new ArrayList<BookPart>();
     }
 
-    public void addPartsFrom(String text) {
+    public BookPartsBuilder addPartsFrom(String text) {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);
             bookParts.add(new BookPart(bookPartTitle, true));
             LOG.info("Parsing part: " + bookPartTitle);
         }
+        return this;
     }
 
     public List<BookPart> build() {
         return bookParts;
     }
 
-    public void addChaptersToLastAddedPart(List<Chapter> parsedChapters) {
+    public BookPartsBuilder addChaptersToLastAddedPart(List<Chapter> parsedChapters) {
         if (bookParts.isEmpty()) {
             bookParts.add(new BookPart("", false));
         }
         int lastPartIndex = bookParts.size() - 1;
         bookParts.get(lastPartIndex).addAllChapters(parsedChapters);
+        return this;
     }
 
     private String extractPartBookTitle(String text) {

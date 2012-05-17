@@ -1,7 +1,6 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Chapter;
@@ -15,7 +14,7 @@ public class ChapterToKindle {
 
     private final Configuration cfg;
 
-    public ChapterToKindle(final Parser parser, final Configuration cfg, final List<String> dirTree) {
+    public ChapterToKindle(final Parser parser, final Configuration cfg) {
         this.parser = parser;
         this.cfg = cfg;
     }

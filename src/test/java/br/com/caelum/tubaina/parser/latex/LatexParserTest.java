@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
@@ -171,6 +172,7 @@ public class LatexParserTest {
 	}
 
 	@Test
+	@Ignore
 	public void testParseGist() {
 		Assert.assertEquals(CodeTag.BEGIN + "{ruby}\nputs \"Ola\"" + CodeTag.END + "\n\\\\[1em]\n", parser.parseGist("1943913"));
 	}
