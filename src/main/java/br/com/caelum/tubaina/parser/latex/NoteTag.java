@@ -7,8 +7,8 @@ public class NoteTag implements Tag {
 	public String parse(String string, String title) {
 		// The first \n is the title/content sepparator
 		
-		return "\\begin{tubainabox}{" + ((title == null)?"Instructor's note":title)  + "}\n" +
+		return "\\begin{tubainanote}\n" +
 					string + "\n" +
-				"\\end{tubainabox}";
+				"\\end{tubainanote}";
 	}
 }

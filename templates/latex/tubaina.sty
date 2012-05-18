@@ -60,11 +60,30 @@
                  \end{flushright}
                }
 
+%Box
+\newenvironment{tubainanote}
+               {\begin{flushright}
+                   \begin{minipage}{16cm}
+                     \begin{tabular}{p{15.6cm}}
+                       \rowcolor{lightgray}
+                       \hline
+                       \instructornotelabel \hfill \\
+                       \hline
+                     \end{tabular}
+                     \\
+               }
+               {\end{minipage}
+                   \\[1em]
+                   \rule{16cm}{0.5pt}
+                 \end{flushright}
+               }
+
+
 \newcommand{\answerHead}[1]{
 	\subsubsection*{#1\ -\ Exercises}
 }
 
-\newcommand{\instructornote}{
+\newcommand{\instructornotelabel}{
 	Instructor's Note
 }
 
