@@ -52,7 +52,7 @@ public class PartToKindleTest {
     public void testGeneratePartWithChapters() {
         Chapter chapter = createChapter("chapter title", "introduction",
                 "[section section one] section content");
-        List<BookPart> bookParts = new BookPartsBuilder().addPartsFrom("[part parte 1]")
+        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom("[part parte 1]")
                 .addChaptersToLastAddedPart(Arrays.asList(chapter)).build();
         String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null, 1).toString();
         assertEquals(1, countOccurrences(generatedContent, "<h1>Part 1 - parte 1</h1>"));

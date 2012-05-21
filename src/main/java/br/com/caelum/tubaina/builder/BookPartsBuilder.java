@@ -20,13 +20,27 @@ public class BookPartsBuilder {
         bookParts = new ArrayList<BookPart>();
     }
 
-    public BookPartsBuilder addPartsFrom(String text) {
+    public BookPartsBuilder addPartFrom(String text) {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);
-            bookParts.add(new BookPart(bookPartTitle, true));
+            
+            String introduction = extractIntroduction(text);
+            
+            bookParts.add(new BookPart(bookPartTitle, true, introduction));
             LOG.info("Parsing part: " + bookPartTitle);
         }
         return this;
+    }
+
+    private String extractIntroduction(String text) {
+        Pattern introductionPattern = Pattern.compile("(?i)(?s)\\[part.*?\\](.*?)(\\[chapter|\\z)");
+        Matcher introductionMatcher = introductionPattern.matcher(text);
+
+        String introduction = "";
+        if (introductionMatcher.find())
+            introduction = introductionMatcher.group(1);
+        introduction = introduction.trim();
+        return introduction;
     }
 
     public List<BookPart> build() {
@@ -35,7 +49,7 @@ public class BookPartsBuilder {
 
     public BookPartsBuilder addChaptersToLastAddedPart(List<Chapter> parsedChapters) {
         if (bookParts.isEmpty()) {
-            bookParts.add(new BookPart("", false));
+            bookParts.add(new BookPart("", false, ""));
         }
         int lastPartIndex = bookParts.size() - 1;
         bookParts.get(lastPartIndex).addAllChapters(parsedChapters);
