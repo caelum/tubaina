@@ -122,4 +122,14 @@ public class ImageTagTest {
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
 				"\\end{figure}\n\n", result);
 	}
+	
+	@Test
+	public void imageTagWithoutDefinedImageProportionShouldConstrainToPageWidthWhenImageIsTooBig() {
+		int tooLargeImageWidthInPixels = 2250;
+		String result = tag.parse("imagem.png", "[" + tooLargeImageWidthInPixels + "]");
+		Assert.assertEquals(
+				"\\begin{figure}[H]\n\\centering\n" +
+				"\\includegraphics[width=\\textwidth]{imagem.png}\n" +
+				"\\end{figure}\n\n", result);
+	}
 }
