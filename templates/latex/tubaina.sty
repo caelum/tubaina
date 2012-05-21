@@ -78,6 +78,17 @@
                  \end{flushright}
                }
 
+%BookPart
+\renewcommand{\part}[1]{
+  \cleardoublepage
+  \refstepcounter{part}
+  \addcontentsline{toc}{part}{#1}
+  \thispagestyle{empty}
+  
+  {\Huge\bf \begin{center} Parte \thepart \end{center}}
+  \vspace{5cm}
+  {\Huge\bf \begin{center} #1 \end{center}}
+}
 
 \newcommand{\answerHead}[1]{
 	\subsubsection*{#1\ -\ Exercises}
