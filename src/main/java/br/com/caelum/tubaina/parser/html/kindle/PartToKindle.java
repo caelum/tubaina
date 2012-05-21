@@ -36,12 +36,18 @@ public class PartToKindle {
                         chapter.getResources());
             }
         }
+        bookRootDir.cd(Utilities.toDirectoryName(null, part.getTitle())).writeResources(
+                part.getResources());
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("part", part);
+        map.put("parser", parser);
         map.put("partNumber", partNumber);
         map.put("chaptersContent", chaptersContent.toString());
         map.put("sanitizer", new HtmlSanitizer());
-        return new FreemarkerProcessor(cfg).process(map, "bookPart.ftl");
+        StringBuffer processedContent = new FreemarkerProcessor(cfg).process(map, "bookPart.ftl");
+        String sluggedPartTitle = Utilities.toDirectoryName(null, part.getTitle());
+        processedContent = new StringBuffer(processedContent.toString().replace("$$RELATIVE$$", sluggedPartTitle));
+        return processedContent;
     }
     
     private StringBuffer fixPaths(Chapter chapter, StringBuffer chapterContent) {

@@ -47,7 +47,7 @@ public class BookPartsBuilderTest {
 
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first, second)).build();
-        assertEquals("introduction text", bookParts.get(0).getIntroduction());
+        assertEquals("introduction text", bookParts.get(0).getIntroductionText());
 
     }
     

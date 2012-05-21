@@ -10,7 +10,6 @@ import java.util.TreeMap;
 import org.apache.commons.io.IOUtils;
 
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.resources.HtmlResourceManipulator;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceManipulator;
 

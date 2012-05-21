@@ -8,7 +8,6 @@ import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.BookPart;
-import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
@@ -23,7 +22,6 @@ import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplace
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceParser;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceReplacer;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
-import br.com.caelum.tubaina.util.Utilities;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
@@ -74,17 +72,6 @@ public class KindleGenerator implements Generator {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("booktitle", book.getName());
         return new FreemarkerProcessor(cfg).process(map, "book-header.ftl");
-    }
-
-    private StringBuffer generateChapter(Book book, Chapter chapter) {
-        StringBuffer chapterContent = new ChapterToKindle(parser, cfg)
-                .generateKindleHtmlChapter(chapter);
-        return fixPaths(chapter, chapterContent);
-    }
-
-    private StringBuffer fixPaths(Chapter chapter, StringBuffer chapterContent) {
-        String chapterName = Utilities.toDirectoryName(null, chapter.getTitle());
-        return new StringBuffer(chapterContent.toString().replace("$$RELATIVE$$", chapterName));
     }
 
     private void configureFreemarker() {

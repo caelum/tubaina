@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +15,8 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookPartsBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
+import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
+import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
@@ -34,7 +35,6 @@ public class PartToKindleTest {
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
                 "/kindle.properties"), false);
-        ArrayList<String> dirTree = new ArrayList<String>();
 
         partToKindle = new PartToKindle(parser, cfg);
     }
@@ -54,11 +54,13 @@ public class PartToKindleTest {
                 "[section section one] section content");
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom("[part parte 1]")
                 .addChaptersToLastAddedPart(Arrays.asList(chapter)).build();
-        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null, 1).toString();
+        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0),
+                new TubainaHtmlDir(null, null, new KindleResourceManipulatorFactory()), 1)
+                .toString();
         assertEquals(1, countOccurrences(generatedContent, "<h1>Part 1 - parte 1</h1>"));
         assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
-        assertEquals(1,
-                countOccurrences(generatedContent, "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
+        assertEquals(1, countOccurrences(generatedContent,
+                "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
     }
 
     @Test
@@ -67,10 +69,11 @@ public class PartToKindleTest {
                 "[section section one] section content");
         List<BookPart> bookParts = new BookPartsBuilder().addChaptersToLastAddedPart(
                 Arrays.asList(chapter)).build();
-        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0), null, 1).toString();
+        String generatedContent = partToKindle.generateKindlePart(bookParts.get(0),
+                new TubainaHtmlDir(null, null, new KindleResourceManipulatorFactory()), 1).toString();
         assertEquals(0, countOccurrences(generatedContent, "<h1>.*</h1>"));
         assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
-        assertEquals(1,
-                countOccurrences(generatedContent, "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
+        assertEquals(1, countOccurrences(generatedContent,
+                "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
     }
 }

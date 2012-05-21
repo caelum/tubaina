@@ -9,24 +9,32 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.chunk.IntroductionChunk;
+import br.com.caelum.tubaina.resources.Resource;
 
 public class BookPartsBuilder {
 
     private final Logger LOG = Logger.getLogger(BookPartsBuilder.class);
-    
+
     List<BookPart> bookParts;
+
+    private Pattern bookPartPattern;
 
     public BookPartsBuilder() {
         bookParts = new ArrayList<BookPart>();
+        bookPartPattern = Pattern.compile("(?i)(?s)(?m)^\\[part(.*?)\\].*?");
     }
 
     public BookPartsBuilder addPartFrom(String text) {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);
-            
-            String introduction = extractIntroduction(text);
-            
-            bookParts.add(new BookPart(bookPartTitle, true, introduction));
+
+            String introductionText = extractIntroduction(text);
+            List<Resource> partResources = new ArrayList<Resource>();
+            IntroductionChunk introChunk = new IntroductionChunk(new ChunkSplitter(partResources, "all")
+                    .splitChunks(introductionText));
+
+            bookParts.add(new BookPart(bookPartTitle, true, introductionText, introChunk, partResources));
             LOG.info("Parsing part: " + bookPartTitle);
         }
         return this;
@@ -49,7 +57,7 @@ public class BookPartsBuilder {
 
     public BookPartsBuilder addChaptersToLastAddedPart(List<Chapter> parsedChapters) {
         if (bookParts.isEmpty()) {
-            bookParts.add(new BookPart("", false, ""));
+            bookParts.add(new BookPart("", false, "", null, new ArrayList<Resource>()));
         }
         int lastPartIndex = bookParts.size() - 1;
         bookParts.get(lastPartIndex).addAllChapters(parsedChapters);
@@ -57,14 +65,12 @@ public class BookPartsBuilder {
     }
 
     private String extractPartBookTitle(String text) {
-        Pattern bookPartPattern = Pattern.compile("(?i)(?s)(?m)^\\[part(.*?)\\].*?");
         Matcher chapterMatcher = bookPartPattern.matcher(text);
         chapterMatcher.find();
         return chapterMatcher.group(1).trim();
     }
 
     private boolean containsPartTag(String text) {
-        Pattern bookPartPattern = Pattern.compile("(?i)(?s)(?m)^\\[part(.*?)\\].*?");
         Matcher chapterMatcher = bookPartPattern.matcher(text);
         return chapterMatcher.matches();
     }
