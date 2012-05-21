@@ -10,8 +10,6 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag {
 
-	private static final int DPI = 300;
-
 	public String parse(final String path, final String options) {
 		String output = "\\begin{figure}[H]\n\\centering\n";
 
@@ -26,15 +24,17 @@ public class ImageTag implements Tag {
 		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
 		Matcher horizontalMatcher = horizontalScale.matcher(options);
 
-		Pattern actualWidth = Pattern.compile("(?s)(?i)\\[(.+?)\\]");
+		Pattern actualWidth = Pattern.compile("(?s)(?i)\\[(.+?),(.+?)\\]");
 		Matcher actualWidthMatcher = actualWidth.matcher(options);
 
 		double widthInPixels = Double.MAX_VALUE;
+		int dpi = 72;
 		if (actualWidthMatcher.find()) {
 			widthInPixels = Double.parseDouble(actualWidthMatcher.group(1));
+			dpi = Integer.parseInt(actualWidthMatcher.group(2));
 		}
 
-		double widthInMilimeters = widthInPixels * 25.4 / DPI;
+		double widthInMilimeters = widthInPixels * 25.4 / dpi;
 		
 		if (horizontalMatcher.find()) {
 			output = output + "[width=" + TubainaBuilder.getMaximumWidth() * (Double.parseDouble(horizontalMatcher.group(1)) / 100) + "mm]";

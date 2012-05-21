@@ -1,10 +1,14 @@
 package br.com.caelum.tubaina.resources;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.TubainaException;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Image;
 
 public class ResourceLocator {
 
@@ -44,5 +48,17 @@ public class ResourceLocator {
 			LOG.warn("File requested: '" + path + "' doesn't exist");
 		}
 		return file;
+	}
+
+	public Image getImage(String path) {
+		try {
+			return Image.getInstance(rootDir + File.separator + path);
+		} catch (IOException e) {
+			throw new TubainaException("Image not existant", e);
+		} catch (NullPointerException e) {
+			throw new TubainaException(path + " is not a valid image");
+		} catch (BadElementException e) {
+			throw new TubainaException(path + " is not a valid image");
+		}
 	}
 }
