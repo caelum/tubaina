@@ -12,5 +12,8 @@ mv "$1" book-utf.tex
 iconv --from-code=UTF-8 --to-code=ISO_8859-1 book-utf.tex > "$1"
 iconv --from-code=UTF-8 --to-code=ISO_8859-1 answer-utf.tex > answer.tex
 
-echo "s\n" | pdflatex -shell-escape "$1" > /dev/null
-echo "s\n" | pdflatex -shell-escape "$1" > /dev/null
+echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
+bibtex book
+makeindex book.idx
+echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
+echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
