@@ -39,7 +39,7 @@ public class LatexGenerator implements Generator{
 		this.parser = parser;
 		this.templateDir = data.templateDir;
 		this.noAnswer = data.noAnswer;
-		this.latexOutputFileName = data.outputFileName;
+		this.latexOutputFileName = data.outputFileName + ".tex";
 	}
 
 	public void generate(Book book, File directory) throws IOException {

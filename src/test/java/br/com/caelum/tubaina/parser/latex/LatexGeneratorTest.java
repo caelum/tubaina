@@ -40,7 +40,7 @@ public class LatexGeneratorTest {
         File path = new File("src/test/resources");
         ResourceLocator.initialize(path);
         data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false,
-                "teste.tex");
+                "teste");
 
         generator = new LatexGenerator(parser, data);
 

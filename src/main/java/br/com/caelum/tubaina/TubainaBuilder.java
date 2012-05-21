@@ -40,7 +40,7 @@ public class TubainaBuilder {
 
 	private boolean dontCare = false;
 
-	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book.tex");
+	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book");
 
 	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
