@@ -35,7 +35,6 @@ public class LatexParser implements Parser {
     public String parse(String string) {
         // TODO: remove eventual $1, $2 from the string so as not to be
         // interpreted
-
         string = new EscapeTag().parse(string, null);
         for (Tag tag : tags) {
             string = tag.parse(string, null);

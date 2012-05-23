@@ -227,4 +227,18 @@ public class LatexParserTest {
 		Assert.assertEquals(1, chunks.size());
 		Assert.assertEquals("\n\n\\link{http://farm{farm-id}.static.flickr.com/{server-id}/{id}\\_{secret}.jpg}", chunks.get(0).getContent(parser));
 	}
+	
+	@Test
+	public void testQuoteInsideCodeInline() {
+	    String input = "%%String s = \"string\"%%";
+	    String output = parser.parse(input);
+	    Assert.assertEquals("\\codechunk{String s = \\textquotedbl string\\textquotedbl }", output);
+	}
+	
+	@Test
+    public void testQuoteInsideJavaCodeInline() {
+        String input = "%%object.do(\"some string\", 'c');%%";
+        String output = parser.parse(input);
+        Assert.assertEquals("\\codechunk{object.do(\\textquotedbl some string\\textquotedbl , \\textquotesingle c\\textquotesingle );}", output);
+    }
 }
