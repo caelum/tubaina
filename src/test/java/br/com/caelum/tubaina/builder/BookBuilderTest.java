@@ -260,8 +260,8 @@ public class BookBuilderTest {
         Field field = ImageChunk.class.getDeclaredField("width");
         field.setAccessible(true);
 
-        int width = field.getInt(chunks.get(0));
-        Assert.assertEquals(627, width);
+        double width = field.getDouble(chunks.get(0));
+        Assert.assertEquals(627, width, 0.0001);
 
         Field field2 = ImageChunk.class.getDeclaredField("options");
         field2.setAccessible(true);
