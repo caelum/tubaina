@@ -1,0 +1,18 @@
+<bibliography>
+  <bibliography-entry>
+    <author>Jose da silva</author>
+    <title>Livro legal</title>
+    <year>2012</year>
+    <howPublished>http://google.com/</howPublished>
+    <type>book</type>
+    <label>livro-jose</label>
+  </bibliography-entry>
+  <bibliography-entry>
+    <author>Jose da silva2</author>
+    <title>Artigo legal</title>
+    <year>2000</year>
+    <howPublished>http://uol.com.br/</howPublished>
+    <type>article</type>
+    <label>artigo-jose</label>
+  </bibliography-entry>
+</bibliography>
