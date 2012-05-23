@@ -3,7 +3,6 @@ package br.com.caelum.tubaina.io;
 import java.io.File;
 import java.util.Map;
 
-import br.com.caelum.tubaina.resources.HtmlResourceManipulator;
 import br.com.caelum.tubaina.resources.KindleResourceManipulator;
 import br.com.caelum.tubaina.resources.ResourceManipulator;
 
