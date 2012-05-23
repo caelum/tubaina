@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.thoughtworks.xstream.XStream;
 
-public class BibliographyEntryTest {
+public class BibliographyTest {
 
     @Test
     public void shouldParseABibliographyFromXML() throws Exception {
@@ -19,10 +19,10 @@ public class BibliographyEntryTest {
         xstream.alias("bibliography-entry", BibliographyEntry.class);
 
         Bibliography bibliography = (Bibliography) xstream.fromXML(new File(
-                "src/test/resources/bib.xml"));
+                "src/test/resources/bibliography/bib.xml"));
         
-        assertEquals("livro-jose", bibliography.getEntries().get(0).getLabel());
-        assertEquals("artigo-jose", bibliography.getEntries().get(1).getLabel());
+        assertEquals("livro-jose", bibliography.getEntries().get(0).label);
+        assertEquals("artigo-jose", bibliography.getEntries().get(1).label);
         
         
         

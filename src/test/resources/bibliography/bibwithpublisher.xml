@@ -1,0 +1,11 @@
+<bibliography>
+  <bibliography-entry>
+    <author>Jose da silva</author>
+    <title>Livro legal</title>
+    <year>2012</year>
+    <howPublished>http://google.com/</howPublished>
+    <type>book</type>
+    <label>livro-jose</label>
+    <publisher>casa do codigo</publisher>
+  </bibliography-entry>
+</bibliography>
