@@ -69,9 +69,9 @@ public class TubainaBuilder {
 		
 		File file = new File(outputDir,parseType.getType());
 		FileUtils.forceMkdir(file);
-		File bibliography = new File(inputDir, data.outputFileName + ".bib");
-		if(bibliography.exists()) {
-			FileUtils.copyFileToDirectory(bibliography, file);
+		File bibliographyFile = new File(inputDir, "bib.xml");
+		if(bibliographyFile.exists()) {
+			FileUtils.copyFileToDirectory(bibliographyFile, file);
 		}
 		
 		try {

@@ -1,5 +1,6 @@
 package br.com.caelum.bibliography;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -8,6 +9,10 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class Bibliography {
     private List<BibliographyEntry> entries;
 
+    public Bibliography() {
+        this.entries = new ArrayList<BibliographyEntry>();
+    }
+    
     public Bibliography(List<BibliographyEntry> entries) {
         this.entries = entries;
     }

@@ -19,7 +19,7 @@ public class BibliographyToLatex {
             addField(result, "howPublished", "\\url{" + entry.howPublished + "}");
             if (entry.publisher != null)
                 addField(result, "publisher", entry.publisher);
-            result.append("}");
+            result.append("}\n");
         }
 
         return result.toString();

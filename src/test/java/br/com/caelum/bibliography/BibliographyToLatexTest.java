@@ -7,15 +7,12 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-import com.thoughtworks.xstream.XStream;
-
 public class BibliographyToLatexTest {
 
     @Test
     public void shouldGenerateBibContent() throws Exception {
-        XStream xstream = setupXStream();
 
-        Bibliography bibliography = (Bibliography) xstream.fromXML(new File(
+        Bibliography bibliography = new BibliographyFactory().build(new File(
                 "src/test/resources/bibliography/bibsimple.xml"));
         BibliographyToLatex latexBibGenerator = new BibliographyToLatex(bibliography);
 
@@ -27,9 +24,8 @@ public class BibliographyToLatexTest {
 
     @Test
     public void shouldGenerateBibContentWithPublisher() throws Exception {
-        XStream xstream = setupXStream();
 
-        Bibliography bibliography = (Bibliography) xstream.fromXML(new File(
+        Bibliography bibliography = new BibliographyFactory().build(new File(
                 "src/test/resources/bibliography/bibwithpublisher.xml"));
         BibliographyToLatex latexBibGenerator = new BibliographyToLatex(bibliography);
 
@@ -37,13 +33,5 @@ public class BibliographyToLatexTest {
                 "src/test/resources/bibliography/bookwithpublisher.bib")).useDelimiter("$$").next();
 
         assertEquals(expectedBib, latexBibGenerator.generate());
-    }
-
-    private XStream setupXStream() {
-        XStream xstream = new XStream();
-        xstream.addImplicitCollection(Bibliography.class, "entries");
-        xstream.alias("bibliography", Bibliography.class);
-        xstream.alias("bibliography-entry", BibliographyEntry.class);
-        return xstream;
     }
 }
