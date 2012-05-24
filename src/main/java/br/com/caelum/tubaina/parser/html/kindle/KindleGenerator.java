@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.caelum.bibliography.Bibliography;
+import br.com.caelum.bibliography.BibliographyFactory;
+import br.com.caelum.bibliography.BibliographyToHtml;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.TubainaBuilderData;
@@ -29,7 +32,7 @@ public class KindleGenerator implements Generator {
 
     private final Parser parser;
     private final File templateDir;
-    private Configuration cfg;
+    private Configuration freeMarkerConfig;
 
     public KindleGenerator(Parser parser, TubainaBuilderData data) {
         this.parser = parser;
@@ -52,6 +55,23 @@ public class KindleGenerator implements Generator {
             partCount++;
         }
         
+        bookContent = resolveReferencesOf(bookContent);
+        
+        String htmlBibliography = generateHtmlBibliography(outputDir);
+        
+        bookContent.append(htmlBibliography);
+        
+        bookRoot.writeIndex(bookContent);
+    }
+
+    private String generateHtmlBibliography(File outputDir) {
+        File bibliographyFile = new File(outputDir, "bib.xml");
+        Bibliography bibliography = new BibliographyFactory().build(bibliographyFile);
+        String htmlBibliography = new BibliographyToHtml(bibliography, freeMarkerConfig).generate();
+        return htmlBibliography;
+    }
+
+    private StringBuffer resolveReferencesOf(StringBuffer bookContent) {
         ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
         ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
         CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
@@ -60,27 +80,26 @@ public class KindleGenerator implements Generator {
                 chapterAndSectionReferenceReplacer, imageReferenceReplacer, codeReferenceReplacer));
 
         bookContent = new StringBuffer(referenceParser.replaceReferences(bookContent.toString()));
-
-        bookRoot.writeIndex(bookContent);
+        return bookContent;
     }
 
     private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot, int partCount) {
-        return new PartToKindle(parser, cfg).generateKindlePart(part, bookRoot, partCount);
+        return new PartToKindle(parser, freeMarkerConfig).generateKindlePart(part, bookRoot, partCount);
     }
 
     private StringBuffer generateHeader(Book book) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("booktitle", book.getName());
-        return new FreemarkerProcessor(cfg).process(map, "book-header.ftl");
+        return new FreemarkerProcessor(freeMarkerConfig).process(map, "book-header.ftl");
     }
 
     private void configureFreemarker() {
-        cfg = new Configuration();
+        freeMarkerConfig = new Configuration();
         try {
-            cfg.setDirectoryForTemplateLoading(templateDir);
+            freeMarkerConfig.setDirectoryForTemplateLoading(templateDir);
         } catch (IOException e) {
             throw new TubainaException("Couldn't load freemarker template for Kindle HTML mode", e);
         }
-        cfg.setObjectWrapper(new BeansWrapper());
+        freeMarkerConfig.setObjectWrapper(new BeansWrapper());
     }
 }

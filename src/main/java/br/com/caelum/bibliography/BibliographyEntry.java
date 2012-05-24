@@ -26,5 +26,35 @@ public class BibliographyEntry {
     public String toString() {
         return "BibliographyEntry [label=" + label + "]";
     }
+    
+    //We still need these getters to use bibliography.ftl
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getHowPublished() {
+        return howPublished;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
 
 }

@@ -11,7 +11,6 @@ public class BibliographyToLatexTest {
 
     @Test
     public void shouldGenerateBibContent() throws Exception {
-
         Bibliography bibliography = new BibliographyFactory().build(new File(
                 "src/test/resources/bibliography/bibsimple.xml"));
         BibliographyToLatex latexBibGenerator = new BibliographyToLatex(bibliography);

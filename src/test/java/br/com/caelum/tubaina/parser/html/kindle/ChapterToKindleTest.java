@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +29,6 @@ public class ChapterToKindleTest {
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
                 "/kindle.properties"), false);
-        ArrayList<String> dirTree = new ArrayList<String>();
-
         chapterToString = new ChapterToKindle(parser, cfg);
     }
 
