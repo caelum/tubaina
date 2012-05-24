@@ -30,6 +30,8 @@ public class ImageReplacer extends PatternReplacer {
 
 		Image image = ResourceLocator.getInstance().getImage(path);
 		int dpi = image.getDpiX();
+		if(dpi == 0)
+			dpi = 72;
 		width = image.getPlainWidth();
 		
 		resources.add(new ImageResource(imageFile, matcher.group(2)));
