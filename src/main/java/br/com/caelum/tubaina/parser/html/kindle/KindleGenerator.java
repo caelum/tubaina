@@ -8,7 +8,7 @@ import java.util.Map;
 
 import br.com.caelum.bibliography.Bibliography;
 import br.com.caelum.bibliography.BibliographyFactory;
-import br.com.caelum.bibliography.BibliographyToHtml;
+import br.com.caelum.bibliography.HtmlBibliographyGenerator;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.TubainaBuilderData;
@@ -67,7 +67,7 @@ public class KindleGenerator implements Generator {
     private String generateHtmlBibliography(File outputDir) {
         File bibliographyFile = new File(outputDir, "bib.xml");
         Bibliography bibliography = new BibliographyFactory().build(bibliographyFile);
-        String htmlBibliography = new BibliographyToHtml(bibliography, freeMarkerConfig).generate();
+        String htmlBibliography = new HtmlBibliographyGenerator(freeMarkerConfig).generateTextOf(bibliography);
         return htmlBibliography;
     }
 

@@ -7,17 +7,15 @@ import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
 import freemarker.template.Configuration;
 
-public class BibliographyToHtml {
+public class HtmlBibliographyGenerator implements BibliographyGenerator {
 
-    private final Bibliography bibliography;
     private final Configuration config;
 
-    public BibliographyToHtml(Bibliography bibliography, Configuration freeMarkerConfig) {
-        this.bibliography = bibliography;
+    public HtmlBibliographyGenerator(Configuration freeMarkerConfig) {
         this.config = freeMarkerConfig;
     }
 
-    public String generate() {
+    public String generateTextOf(Bibliography bibliography) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("bibliography", bibliography);
         map.put("sanitizer", new HtmlSanitizer());

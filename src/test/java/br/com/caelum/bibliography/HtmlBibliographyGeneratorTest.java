@@ -11,7 +11,7 @@ import br.com.caelum.tubaina.TubainaBuilder;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class BibliographyToHtmlTest {
+public class HtmlBibliographyGeneratorTest {
 
     @Test
     public void shouldGenerateHtmlBibContent() throws Exception {
@@ -20,12 +20,12 @@ public class BibliographyToHtmlTest {
         Configuration cfg = new Configuration();
         cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "kindle"));
         cfg.setObjectWrapper(new BeansWrapper());
-        BibliographyToHtml htmlBibGenerator = new BibliographyToHtml(bibliography, cfg);
+        HtmlBibliographyGenerator htmlBibGenerator = new HtmlBibliographyGenerator(cfg);
 
         String expectedBib = new Scanner(new File("src/test/resources/bibliography/bib.html"))
                 .useDelimiter("$$").next();
 
-        assertEquals(expectedBib, htmlBibGenerator.generate());
+        assertEquals(expectedBib, htmlBibGenerator.generateTextOf(bibliography));
     }
     
 }

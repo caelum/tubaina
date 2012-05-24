@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.bibliography.Bibliography;
 import br.com.caelum.bibliography.BibliographyFactory;
-import br.com.caelum.bibliography.BibliographyToLatex;
+import br.com.caelum.bibliography.LatexBibliographyGenerator;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
@@ -71,7 +71,7 @@ public class LatexGenerator implements Generator{
             UnsupportedEncodingException {
         File bibliographyFile = new File(directory, "bib.xml");
 		Bibliography bibliography = new BibliographyFactory().build(bibliographyFile);
-		String latexBibliography = new BibliographyToLatex(bibliography).generate();
+		String latexBibliography = new LatexBibliographyGenerator().generateTextOf(bibliography);
 		PrintStream stream = new PrintStream(new File(directory, "book.bib"), "UTF-8");
 		stream.append(latexBibliography);
 		stream.close();

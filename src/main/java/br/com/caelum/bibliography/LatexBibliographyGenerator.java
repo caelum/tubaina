@@ -1,13 +1,8 @@
 package br.com.caelum.bibliography;
 
-public class BibliographyToLatex {
-    private Bibliography bibliography;
+public class LatexBibliographyGenerator implements BibliographyGenerator {
 
-    public BibliographyToLatex(Bibliography bibliography) {
-        this.bibliography = bibliography;
-    }
-
-    public String generate() {
+    public String generateTextOf(Bibliography bibliography) {
         StringBuffer result = new StringBuffer();
 
         for (BibliographyEntry entry : bibliography.getEntries()) {
