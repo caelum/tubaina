@@ -16,21 +16,22 @@ public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
         for (Element reference : references) {
             String labelId = reference.getAttributeValue("href").replace("#", "");
             Element label = source.getElementById(labelId);
-            
-            Element div = findReferenceableContainer(label);
+
+            Element div = findLabelContainer(label);
             if (!isValid(div)) {
                 outputDocument.replace(reference, reference.toString().replace("*", "?"));
                 continue;
             }
-            
-            replaceOn(div, outputDocument, reference, label);
+
+            String text = extractTextToReplaceReference(div, label);
+            outputDocument.replace(reference, reference.toString().replace("*", text));
         }
         return outputDocument.toString();
     }
 
-    protected abstract void replaceOn(Element div, OutputDocument outputDocument, Element reference, Element label);
-    
-    private Element findReferenceableContainer(Element label) {
+    protected abstract String extractTextToReplaceReference(Element labelParentDiv, Element label);
+
+    private Element findLabelContainer(Element label) {
         if (label == null)
             return null;
         Element container = label.getParentElement();
@@ -40,10 +41,10 @@ public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
         return container;
     }
 
-    private boolean isValid(Element containerReferenceable) {
-        if (containerReferenceable == null)
+    private boolean isValid(Element referenceableContainer) {
+        if (referenceableContainer == null)
             return false;
-        String classes = containerReferenceable.getAttributeValue("class");
+        String classes = referenceableContainer.getAttributeValue("class");
         if (classes == null)
             return false;
         return classes.contains("referenceable");

@@ -2,8 +2,9 @@ package br.com.caelum.tubaina.parser.html.kindle;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.bibliography.Bibliography;
@@ -19,6 +20,7 @@ import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.io.TubainaKindleIO;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
+import br.com.caelum.tubaina.parser.html.referencereplacer.BibliographyReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ChapterAndSectionReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.CodeReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
@@ -55,11 +57,11 @@ public class KindleGenerator implements Generator {
             partCount++;
         }
         
-        bookContent = resolveReferencesOf(bookContent);
-        
         String htmlBibliography = generateHtmlBibliography(outputDir);
         
         bookContent.append(htmlBibliography);
+        
+        bookContent = resolveReferencesOf(bookContent);
         
         bookRoot.writeIndex(bookContent);
     }
@@ -72,12 +74,14 @@ public class KindleGenerator implements Generator {
     }
 
     private StringBuffer resolveReferencesOf(StringBuffer bookContent) {
-        ReferenceReplacer chapterAndSectionReferenceReplacer = new ChapterAndSectionReferenceReplacer();
-        ImageReferenceReplacer imageReferenceReplacer = new ImageReferenceReplacer();
-        CodeReferenceReplacer codeReferenceReplacer = new CodeReferenceReplacer();
+        List<ReferenceReplacer> replacers = new ArrayList<ReferenceReplacer>();
+        
+        replacers.add(new ChapterAndSectionReferenceReplacer());
+        replacers.add(new ImageReferenceReplacer());
+        replacers.add(new CodeReferenceReplacer());
+        replacers.add(new BibliographyReferenceReplacer());
 
-        ReferenceParser referenceParser = new ReferenceParser(Arrays.asList(
-                chapterAndSectionReferenceReplacer, imageReferenceReplacer, codeReferenceReplacer));
+        ReferenceParser referenceParser = new ReferenceParser(replacers);
 
         bookContent = new StringBuffer(referenceParser.replaceReferences(bookContent.toString()));
         return bookContent;
