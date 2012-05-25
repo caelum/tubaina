@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -16,6 +17,7 @@ import br.com.caelum.bibliography.Bibliography;
 import br.com.caelum.bibliography.BibliographyFactory;
 import br.com.caelum.bibliography.LatexBibliographyGenerator;
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -28,7 +30,7 @@ import br.com.caelum.tubaina.resources.ResourceManipulator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
-public class LatexGenerator implements Generator{
+public class LatexGenerator implements Generator {
 
 	private final Parser parser;
 
@@ -39,7 +41,7 @@ public class LatexGenerator implements Generator{
 	private final boolean noAnswer;
 
 	private final String latexOutputFileName;
-	
+
 	public LatexGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
 		this.templateDir = data.templateDir;
@@ -54,8 +56,8 @@ public class LatexGenerator implements Generator{
 		cfg.setDefaultEncoding("UTF-8");
 
 		PrintStream stream;
-        writeBibTex(directory);
-		
+		writeBibTex(directory);
+
 		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg);
 
 		// print the latex document to an archive
@@ -67,15 +69,14 @@ public class LatexGenerator implements Generator{
 		copyResources(directory, book);
 	}
 
-    private void writeBibTex(File directory) throws FileNotFoundException,
-            UnsupportedEncodingException {
-        File bibliographyFile = new File(directory, "bib.xml");
+	private void writeBibTex(File directory) throws FileNotFoundException, UnsupportedEncodingException {
+		File bibliographyFile = new File(directory, "bib.xml");
 		Bibliography bibliography = new BibliographyFactory().build(bibliographyFile);
 		String latexBibliography = new LatexBibliographyGenerator().generateTextOf(bibliography);
 		PrintStream stream = new PrintStream(new File(directory, "book.bib"), "UTF-8");
 		stream.append(latexBibliography);
 		stream.close();
-    }
+	}
 
 	private void copyResources(File directory, Book b) throws IOException {
 		// Dependencies (styles, logo)
@@ -89,14 +90,13 @@ public class LatexGenerator implements Generator{
 			}
 		});
 		for (File image : images) {
-			FileUtils.copyFileToDirectory(image, directory);			
+			FileUtils.copyFileToDirectory(image, directory);
 		}
 
-		boolean resourceCopyFailed = false;
-		
-		//Creating Answer Booklet
+
+		// Creating Answer Booklet
 		File answerFile = new File(directory, "answer.tex");
-		if (answerFile.exists()){
+		if (answerFile.exists()) {
 			LOG.warn("Answer File already exists. Deleting it");
 			answerFile.delete();
 		}
@@ -105,19 +105,33 @@ public class LatexGenerator implements Generator{
 			stream.println("\\chapter{\\answerBooklet}");
 			stream.close();
 		}
+		
+		List<Resource> resources = retrieveResources(b);
+		ResourceManipulator manipulator = new LatexResourceManipulator(directory, answerFile, parser, noAnswer);
+		copyResources(resources, manipulator);
+	}
+
+	private List<Resource> retrieveResources(Book b) {
+		List<Resource> resources = new ArrayList<Resource>();
 		for (Chapter c : b.getChapters()) {
-			
-			ResourceManipulator manipulator = new LatexResourceManipulator(directory, answerFile, parser, noAnswer);
-			
-			for (Resource r : c.getResources()) {
+			resources.addAll(c.getResources());
+		}
+		for (BookPart bp : b.getParts()) {
+			resources.addAll(bp.getResources());
+		}
+		return resources;
+	}
 
-				try {
-					r.copyTo(manipulator);
-				} catch (TubainaException e) {
-					resourceCopyFailed = true;
-				}
+	private void copyResources(List<Resource> resources, ResourceManipulator manipulator) {
+		boolean resourceCopyFailed = false;
+		for (Resource r : resources) {
 
+			try {
+				r.copyTo(manipulator);
+			} catch (TubainaException e) {
+				resourceCopyFailed = true;
 			}
+
 		}
 		if (resourceCopyFailed)
 			throw new TubainaException("Couldn't copy some resources. See the Logger for further information");
