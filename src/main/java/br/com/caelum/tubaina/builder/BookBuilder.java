@@ -58,7 +58,7 @@ public class BookBuilder {
         for (Reader reader: introductionReaders) {
             Scanner scanner = new Scanner(reader);
             scanner.useDelimiter("$$");
-            introductionChapters = parseChapters(scanner.next());
+            introductionChapters.addAll(parseChapters(scanner.next()));
         }
         return introductionChapters;
     }
