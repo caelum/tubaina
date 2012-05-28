@@ -35,6 +35,12 @@ public class BookBuilder {
 
     public Book build(boolean showNotes) {
         BookPartsBuilder bookPartsBuilder = new BookPartsBuilder();
+        List<Chapter> introductionChapters = parseIntroductionChapters();
+        parseBookChapters(bookPartsBuilder);
+        return new Book(name, bookPartsBuilder.build(), showNotes, introductionChapters);
+    }
+
+    private void parseBookChapters(BookPartsBuilder bookPartsBuilder) {
         for (Reader reader : readers) {
             LOG.info("Parsing chapter " + Chapter.getChaptersCount());
             Scanner scanner = new Scanner(reader);
@@ -45,7 +51,16 @@ public class BookBuilder {
                 bookPartsBuilder.addChaptersToLastAddedPart(parseChapters(text));
             }
         }
-        return new Book(name, bookPartsBuilder.build(), showNotes, new ArrayList<Chapter>());
+    }
+
+    private List<Chapter> parseIntroductionChapters() {
+        List<Chapter> introductionChapters = new ArrayList<Chapter>();
+        for (Reader reader: introductionReaders) {
+            Scanner scanner = new Scanner(reader);
+            scanner.useDelimiter("$$");
+            introductionChapters = parseChapters(scanner.next());
+        }
+        return introductionChapters;
     }
 
     private List<Chapter> parseChapters(String text) {

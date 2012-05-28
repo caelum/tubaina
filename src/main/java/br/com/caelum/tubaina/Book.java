@@ -39,4 +39,9 @@ public class Book {
 	public boolean isInstructorBook() {
 		return showNotes;
 	}
+	
+	public List<Chapter> getIntroductionChapters() {
+        return introductionChapters;
+    }
+	
 }

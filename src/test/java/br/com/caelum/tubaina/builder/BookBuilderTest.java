@@ -432,6 +432,10 @@ public class BookBuilderTest {
         List<Reader> chapterReaders = Arrays.asList((Reader) new StringReader(chapter));
         List<Reader> introductionReaders = Arrays.asList((Reader) new StringReader(preface));
         builder.addAllReaders(chapterReaders, introductionReaders);
+        
+        Book book = builder.build();
+        assertEquals(1, book.getIntroductionChapters().size());
+        assertEquals("preface", book.getIntroductionChapters().get(0).getTitle());
     }
     
     
