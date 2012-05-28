@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -73,10 +74,10 @@ public class SingleHtmlGeneratorTest {
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")));
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
 
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")));
+                + "Algum texto de introdução\n")), new ArrayList<Reader>());
 
         return builder.build();
     }
@@ -97,9 +98,9 @@ public class SingleHtmlGeneratorTest {
     public void shouldCreateADirectoryForEachChapterThatContainsImages() throws Exception {
         BookBuilder builder = new BookBuilder("Com Imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Um capítulo]\n"
-                + "Uma introdução com imagem: \n\n" + "[img baseJpgImage.jpg]")));
+                + "Uma introdução com imagem: \n\n" + "[img baseJpgImage.jpg]")), new ArrayList<Reader>());
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Outro capítulo]\n"
-                + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]")));
+                + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]")), new ArrayList<Reader>());
         Book imageBook = builder.build();
 
         generator.generate(imageBook, directory);
@@ -121,9 +122,9 @@ public class SingleHtmlGeneratorTest {
     public void shouldNotCreateADirectoryChapterThatDoesntContainAnyImages() throws Exception {
         BookBuilder builder = new BookBuilder("Com Imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Um capítulo]\n"
-                + "Uma introdução com imagem:\n")));
+                + "Uma introdução com imagem:\n")), new ArrayList<Reader>());
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Outro capítulo]\n"
-                + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]")));
+                + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]")), new ArrayList<Reader>());
         Book imageBook = builder.build();
 
         generator.generate(imageBook, directory);
@@ -139,7 +140,7 @@ public class SingleHtmlGeneratorTest {
     public void testGeneratorWithCorrectImages() throws IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]")), new ArrayList<Reader>());
         Book b = builder.build();
 
         generator.generate(b, directory);
@@ -156,7 +157,7 @@ public class SingleHtmlGeneratorTest {
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")), new ArrayList<Reader>());
 
         Book b = builder.build();
         try {
@@ -170,7 +171,7 @@ public class SingleHtmlGeneratorTest {
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img src/test/resources/someImage.gif]")));
+                + "[img src/test/resources/someImage.gif]")), new ArrayList<Reader>());
         Book b = builder.build();
         generator.generate(b, directory);
     }

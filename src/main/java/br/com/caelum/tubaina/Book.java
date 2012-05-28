@@ -11,10 +11,13 @@ public class Book {
 
 	private final boolean showNotes;
 
-	public Book(String name, List<BookPart> bookParts, boolean showNotes) {
+    private final List<Chapter> introductionChapters;
+	
+	public Book(String name, List<BookPart> bookParts, boolean showNotes, List<Chapter> introductionChapters) {
 	    this.parts = bookParts;
 		this.name = name;
 		this.showNotes = showNotes;
+        this.introductionChapters = introductionChapters;
 	}
 
 	public List<Chapter> getChapters() {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,9 +55,9 @@ public class FlatHtmlGeneratorTest {
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")));
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")));
+                + "Algum texto de introdução\n")), new ArrayList<Reader>());
         book = builder.build();
         temp = new File("tmp");
         temp.mkdir();
@@ -110,7 +111,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithCorrectImages() throws IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]")), new ArrayList<Reader>());
         Book b = builder.build();
 
         generator.generate(b, temp);
@@ -127,7 +128,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")), new ArrayList<Reader>());
 
         Book b = builder.build();
         try {
@@ -142,7 +143,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img src/test/resources/someImage.gif]")));
+                + "[img src/test/resources/someImage.gif]")), new ArrayList<Reader>());
         try {
             Book b = builder.build();
             generator.generate(b, temp);
@@ -156,7 +157,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("teste");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "alguma coisa\n[chapter qualquer um]outra coisa")));
+                + "alguma coisa\n[chapter qualquer um]outra coisa")), new ArrayList<Reader>());
         try {
             Book b = builder.build();
             generator.generate(b, temp);

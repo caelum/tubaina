@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,9 +49,9 @@ public class LatexGeneratorTest {
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")));
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")));
+                + "Algum texto de introdução\n")), new ArrayList<Reader>());
         book = builder.build();
         temp = new File("tmp");
         temp.mkdir();
@@ -93,7 +94,7 @@ public class LatexGeneratorTest {
     public void testGeneratorWithCorrectImages() throws IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]")), new ArrayList<Reader>());
         Book b = builder.build();
 
         generator.generate(b, temp);
@@ -113,7 +114,7 @@ public class LatexGeneratorTest {
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")));
+                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")), new ArrayList<Reader>());
 
         Book b = builder.build();
         try {
@@ -128,7 +129,7 @@ public class LatexGeneratorTest {
     public void testGeneratorWithNonExistantImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img src/test/resources/someImage.gif]")));
+                + "[img src/test/resources/someImage.gif]")), new ArrayList<Reader>());
         try {
             Book b = builder.build();
             generator.generate(b, temp);
@@ -149,7 +150,7 @@ public class LatexGeneratorTest {
         LatexGenerator customGenerator = new LatexGenerator(parser, data);
         BookBuilder builder = new BookBuilder("Do Instrutor");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter com notas]\n"
-                + "[note]uma nota para o instrutor[/note]")));
+                + "[note]uma nota para o instrutor[/note]")), new ArrayList<Reader>());
         Book b = builder.build(true);
         Assert.assertTrue(b.isInstructorBook());
         customGenerator.generate(b, temp);
@@ -165,7 +166,7 @@ public class LatexGeneratorTest {
     public void testGeneratorForStudentTextbook() throws IOException {
         BookBuilder builder = new BookBuilder("Do Aluno");
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter com notas]\n"
-                + "[note]uma nota para o instrutor[/note]")));
+                + "[note]uma nota para o instrutor[/note]")), new ArrayList<Reader>());
         Book b = builder.build(false);
         Assert.assertFalse(b.isInstructorBook());
         generator.generate(b, temp);

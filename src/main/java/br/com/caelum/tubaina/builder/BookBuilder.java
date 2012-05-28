@@ -17,15 +17,16 @@ public class BookBuilder {
 
     private final Logger LOG = Logger.getLogger(BookBuilder.class);
     private final String name;
-
     private final List<Reader> readers = new ArrayList<Reader>();
+    private final List<Reader> introductionReaders = new ArrayList<Reader>();
 
     public BookBuilder(String name) {
         this.name = name;
     }
 
-    public void addAllReaders(List<Reader> readers) {
-        this.readers.addAll(readers);
+    public void addAllReaders(List<Reader> chapterReaders, List<Reader> introductionReaders) {
+        this.readers.addAll(chapterReaders);
+        this.introductionReaders.addAll(introductionReaders);
     }
 
     public Book build() {
@@ -44,7 +45,7 @@ public class BookBuilder {
                 bookPartsBuilder.addChaptersToLastAddedPart(parseChapters(text));
             }
         }
-        return new Book(name, bookPartsBuilder.build(), showNotes);
+        return new Book(name, bookPartsBuilder.build(), showNotes, new ArrayList<Chapter>());
     }
 
     private List<Chapter> parseChapters(String text) {

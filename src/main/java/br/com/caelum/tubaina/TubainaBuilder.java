@@ -47,10 +47,15 @@ public class TubainaBuilder {
 	}
 
 	public void build() throws IOException {
+	    List<Reader> introductionReaders = new ArrayList<Reader>();
 		ResourceLocator.initialize(inputDir);
 		List<Reader> readers = getAfcsFrom(inputDir);
+		File introductionChapterDirs = new File(inputDir, "introduction");
+		if (introductionChapterDirs.exists()) {
+		    introductionReaders = getAfcsFrom(introductionChapterDirs);
+		}
 		BookBuilder builder = new BookBuilder(bookName);
-		builder.addAllReaders(readers);
+		builder.addAllReaders(readers, introductionReaders);
 
 		Book b = null;
 		try {

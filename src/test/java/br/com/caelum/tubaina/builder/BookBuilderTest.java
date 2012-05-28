@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,10 +51,10 @@ public class BookBuilderTest {
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")));
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
 
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")));
+                + "Algum texto de introdução\n")), new ArrayList<Reader>());
         Book book = builder.build();
         Assert.assertEquals("livro", book.getName());
 
@@ -153,7 +154,7 @@ public class BookBuilderTest {
 
     private List<Chapter> getChapters(final String string) {
         BookBuilder builder = new BookBuilder("livro");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(string)));
+        builder.addAllReaders(Arrays.asList((Reader) new StringReader(string)), new ArrayList<Reader>());
         Book b = builder.build();
         List<Chapter> chapters = b.getChapters();
         return chapters;
@@ -390,7 +391,7 @@ public class BookBuilderTest {
         BookBuilder builder = new BookBuilder("livro");
         String content = "[part parte um]\n" + "[chapter capitulo um]\n"
                 + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(content)));
+        builder.addAllReaders(Arrays.asList((Reader) new StringReader(content)), new ArrayList<Reader>());
         Book b = builder.build();
         BookPart bookPart = b.getParts().get(0);
         Chapter chapter = bookPart.getChapters().get(0);
@@ -408,7 +409,7 @@ public class BookBuilderTest {
         String chapter1 = "[part parte um]\n" + "[chapter capitulo um]\n"
                 + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(chapter0),
-                (Reader) new StringReader(chapter1)));
+                (Reader) new StringReader(chapter1)), new ArrayList<Reader>());
         Book b = builder.build();
         BookPart bookPart = b.getParts().get(1);
         Chapter chapter = bookPart.getChapters().get(0);
@@ -420,5 +421,19 @@ public class BookBuilderTest {
 
         assertEquals(false, b.getParts().get(0).isPrintable());
     }
+    
+    @Test
+    public void testBookWithIntroductionChapters() throws Exception {
+        BookBuilder builder = new BookBuilder("livro");
+        String chapter = "[chapter chatper zero]\n" +
+        		"Some text";
+        String preface = "[chapter preface]\n" +
+        		"Some preface text";
+        List<Reader> chapterReaders = Arrays.asList((Reader) new StringReader(chapter));
+        List<Reader> introductionReaders = Arrays.asList((Reader) new StringReader(preface));
+        builder.addAllReaders(chapterReaders, introductionReaders);
+    }
+    
+    
 
 }

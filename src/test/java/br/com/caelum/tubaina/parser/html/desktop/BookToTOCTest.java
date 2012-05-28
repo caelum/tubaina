@@ -77,7 +77,7 @@ public class BookToTOCTest {
 
 	private Book createBook(final String bookText) {
 		BookBuilder builder = new BookBuilder("Title");
-		builder.addAllReaders(Arrays.asList((Reader) new StringReader(bookText)));
+		builder.addAllReaders(Arrays.asList((Reader) new StringReader(bookText)), new ArrayList<Reader>());
 		Book b = builder.build();
 		return b;
 	}

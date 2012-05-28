@@ -16,9 +16,9 @@ public class BookPart {
     private Chunk introductionChunk;
     private final List<Resource> resources;
 
-    public BookPart(String title, boolean printableType, String introduction,
+    public BookPart(String title, boolean printable, String introduction,
             IntroductionChunk introductionChunk, List<Resource> resources) {
-        printable = printableType;
+        this.printable = printable;
         this.introductionText = introduction;
         this.introductionChunk = introductionChunk;
         this.resources = resources;
