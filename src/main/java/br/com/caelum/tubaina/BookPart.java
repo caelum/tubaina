@@ -43,7 +43,7 @@ public class BookPart {
     }
 
     public String getIntroduction(Parser p) {
-        return introductionChunk.getContent(p);
+        return introductionChunk == null ? "" : introductionChunk.getContent(p);
     }
 
     public String getIntroductionText() {
