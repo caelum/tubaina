@@ -41,8 +41,6 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 
 	public void copyImage(File srcImage, String attribs) {
 		Integer scale = new ImageTag().getScale(attribs);
-		if (scale == null)
-		    scale = 100;
 		
 		if (srcImage.exists()) {
 			File destinationFile = new File(this.imageDestinationPath, FilenameUtils.getName(srcImage.getPath()));
@@ -56,7 +54,7 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 					if (Utilities.getImageWidth(srcImage) > PAGE_WIDTH) {
 						scale = 1;
 					}
-					Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (double) scale/100);
+					Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, ((double) scale)/100);
 					srcImage = destinationFile;
 		
 					Utilities.getImageWithLogo(srcImage, stream, Utilities.getFormatName(srcImage), logo);

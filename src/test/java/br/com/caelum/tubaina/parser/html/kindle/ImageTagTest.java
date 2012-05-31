@@ -25,14 +25,14 @@ public class ImageTagTest {
 	public void labelShouldBeParsed() throws Exception {
 		String result = tag.parse("image.png", "label=important");
 		Assert.assertEquals(
-				"<img src=\"$$RELATIVE$$/image.png\" id=\"important\" alt=\"image.png\" />", result);
+				"<img src=\"$$RELATIVE$$/image.png\" id=\"important\" width='100%' alt=\"image.png\" />", result);
 	}
 	
 	@Test
 	public void testImageTagWithoutBounds() {
 		String result = tag.parse("imagem.png", "\"Imagem de alguma coisa\"");
 		Assert.assertEquals(
-				"<img src=\"$$RELATIVE$$/imagem.png\" alt=\"Imagem de alguma coisa\" />", result);
+				"<img src=\"$$RELATIVE$$/imagem.png\" width='100%' alt=\"Imagem de alguma coisa\" />", result);
 	}
 
 	@Test

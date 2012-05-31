@@ -39,16 +39,16 @@ public class ImageTagTemplate {
 		return output;
 	}
 
-	public Integer getScale(final String string) {
-		if (string == null) {
-			return null;
+	public Integer getScale(final String options) {
+		if (options == null) {
+			return 100;
 		}
 		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
-		Matcher sMatcher = horizontalScale.matcher(string);
+		Matcher sMatcher = horizontalScale.matcher(options);
 
 		if (sMatcher.find()) {
 			return Integer.parseInt(sMatcher.group(1));
 		}
-		return null;
+		return 100;
 	}
 }
