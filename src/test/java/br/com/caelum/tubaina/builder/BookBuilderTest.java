@@ -442,4 +442,20 @@ public class BookBuilderTest {
         assertEquals("about", book.getIntroductionChapters().get(1).getTitle());
     }
 
+    @Test
+    public void testBookWithPartsWithIllustrations() throws Exception {
+        BookBuilder builder = new BookBuilder("livro");
+        String content = "[part \"parte um\" illustration=resources/image.png]\n" + "[chapter capitulo um]\n"
+                + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
+        builder.addAllReaders(Arrays.asList((Reader) new StringReader(content)),
+                new ArrayList<Reader>());
+        Book b = builder.build();
+        BookPart bookPart = b.getParts().get(0);
+        Chapter chapter = bookPart.getChapters().get(0);
+        assertEquals("capitulo um", chapter.getTitle());
+        assertEquals("secao um", chapter.getSections().get(0).getTitle());
+
+        assertEquals("parte um", bookPart.getTitle());
+        assertEquals(true, bookPart.isPrintable());
+    }
 }

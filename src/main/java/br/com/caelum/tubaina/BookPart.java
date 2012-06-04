@@ -15,12 +15,14 @@ public class BookPart {
     private String introductionText;
     private Chunk introductionChunk;
     private final List<Resource> resources;
+    private final String illustrationPath;
 
     public BookPart(String title, boolean printable, String introduction,
-            IntroductionChunk introductionChunk, List<Resource> resources) {
+            IntroductionChunk introductionChunk, String illustrationPath, List<Resource> resources) {
         this.printable = printable;
         this.introductionText = introduction;
         this.introductionChunk = introductionChunk;
+        this.illustrationPath = illustrationPath;
         this.resources = resources;
         this.chapters = new ArrayList<Chapter>();
         this.title = title;
