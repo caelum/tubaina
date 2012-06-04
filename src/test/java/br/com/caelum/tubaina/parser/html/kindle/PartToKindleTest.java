@@ -52,7 +52,7 @@ public class PartToKindleTest {
     public void testGeneratePartWithChapters() {
         Chapter chapter = createChapter("chapter title", "introduction",
                 "[section section one] section content");
-        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom("[part parte 1]")
+        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom("[part \"parte 1\"]")
                 .addChaptersToLastAddedPart(Arrays.asList(chapter)).build();
         String generatedContent = partToKindle.generateKindlePart(bookParts.get(0),
                 new TubainaHtmlDir(null, null, new KindleResourceManipulatorFactory()), 1)

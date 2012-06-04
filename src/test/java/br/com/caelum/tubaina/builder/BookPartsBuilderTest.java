@@ -14,8 +14,8 @@ public class BookPartsBuilderTest {
 
     @Test
     public void shouldBuildBookParts() throws Exception {
-        String partOneText = "[part part one]";
-        String partTwoText = "[part part two]";
+        String partOneText = "[part \"part one\"]";
+        String partTwoText = "[part \"part two\"]";
         Chapter first = new ChapterBuilder("first", "introduction",
                 "[section test]\nchpater 1 text").build();
         Chapter second = new ChapterBuilder("second", "introduction",
@@ -39,11 +39,11 @@ public class BookPartsBuilderTest {
 
     @Test
     public void shouldBookPartsWithIntro() throws Exception {
-        String partOneText = "[part part one]\n introduction text";
+        String partOneText = "[part \"part one\"]\n introduction text";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section test]\nchpater 1 text").build();
+                "[section \"test\"]\nchpater 1 text").build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section test]\nchpater 2 text").build();
+                "[section \"test\"]\nchpater 2 text").build();
 
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first, second)).build();

@@ -65,9 +65,10 @@ public class BookPartsBuilder {
     }
 
     private String extractPartBookTitle(String text) {
-        Matcher chapterMatcher = bookPartPattern.matcher(text);
-        chapterMatcher.find();
-        return chapterMatcher.group(1).trim();
+        Pattern titlePattern = Pattern.compile("(?i)(?s)(?m)^\\[part\\s+\"(.*?)\"\\].*?");
+        Matcher titleMatcher = titlePattern.matcher(text);
+        titleMatcher.find();
+        return titleMatcher.group(1).trim();
     }
 
     private boolean containsPartTag(String text) {

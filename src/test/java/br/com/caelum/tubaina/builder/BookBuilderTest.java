@@ -391,7 +391,7 @@ public class BookBuilderTest {
     @Test
     public void testBookWithMultipleParts() throws Exception {
         BookBuilder builder = new BookBuilder("livro");
-        String content = "[part parte um]\n" + "[chapter capitulo um]\n"
+        String content = "[part \"parte um\"]\n" + "[chapter capitulo um]\n"
                 + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(content)),
                 new ArrayList<Reader>());
@@ -409,7 +409,7 @@ public class BookBuilderTest {
     public void testBookWithChapterOutsideParts() throws Exception {
         BookBuilder builder = new BookBuilder("livro");
         String chapter0 = "[chapter capitulo zero]";
-        String chapter1 = "[part parte um]\n" + "[chapter capitulo um]\n"
+        String chapter1 = "[part \"parte um\"]\n" + "[chapter capitulo um]\n"
                 + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(chapter0),
                 (Reader) new StringReader(chapter1)), new ArrayList<Reader>());

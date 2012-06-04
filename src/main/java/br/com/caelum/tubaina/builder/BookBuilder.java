@@ -19,9 +19,11 @@ public class BookBuilder {
     private final String name;
     private final List<Reader> readers = new ArrayList<Reader>();
     private final List<Reader> introductionReaders = new ArrayList<Reader>();
+    private BookPartsBuilder bookPartsBuilder;
 
     public BookBuilder(String name) {
         this.name = name;
+        this.bookPartsBuilder = new BookPartsBuilder();
     }
 
     public void addAllReaders(List<Reader> chapterReaders, List<Reader> introductionReaders) {
@@ -34,13 +36,12 @@ public class BookBuilder {
     }
 
     public Book build(boolean showNotes) {
-        BookPartsBuilder bookPartsBuilder = new BookPartsBuilder();
         List<Chapter> introductionChapters = parseIntroductionChapters();
-        parseBookChapters(bookPartsBuilder);
+        parseBookChapters();
         return new Book(name, bookPartsBuilder.build(), showNotes, introductionChapters);
     }
 
-    private void parseBookChapters(BookPartsBuilder bookPartsBuilder) {
+    private void parseBookChapters() {
         for (Reader reader : readers) {
             LOG.info("Parsing chapter " + Chapter.getChaptersCount());
             Scanner scanner = new Scanner(reader);
