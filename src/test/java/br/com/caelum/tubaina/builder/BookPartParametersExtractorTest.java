@@ -37,4 +37,18 @@ public class BookPartParametersExtractorTest {
         assertFalse(extractor.containsPartTag(content));
     }
 
+    @Test
+    public void shouldExtractIllustrationPath() throws Exception {
+        String content = "[part \"parte um\" illustration=resources/image.png]\n" + "[chapter capitulo um]\n"
+                + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
+        assertTrue(extractor.containsIllustration(content));
+        assertEquals("resources/image.png", extractor.extractIllustrationPathFrom(content));
+    }
+    
+    @Test
+    public void shouldFindIllustrationPath() throws Exception {
+        String content = "[part \"parte um\" illustration=resources/image.png]\n" + "[chapter capitulo um]\n"
+                + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
+        assertTrue(extractor.containsIllustration(content));
+    }
 }

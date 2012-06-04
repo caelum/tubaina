@@ -36,6 +36,32 @@ public class BookPartsBuilderTest {
         assertEquals("second", partTwo.getChapters().get(0).getTitle());
         assertEquals("third", partTwo.getChapters().get(1).getTitle());
     }
+    
+    @Test
+    public void shouldBuildBookPartsWithIllustration() throws Exception {
+        String partOneText = "[part \"part one\" illustration=resources/image.png]";
+        String partTwoText = "[part \"part two\"]";
+        Chapter first = new ChapterBuilder("first", "introduction",
+                "[section test]\nchpater 1 text").build();
+        Chapter second = new ChapterBuilder("second", "introduction",
+                "[section test]\nchpater 2 text").build();
+        Chapter third = new ChapterBuilder("third", "introduction",
+                "[section test]\nchpater 3 text").build();
+        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
+                .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
+                .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
+        
+        BookPart partOne = bookParts.get(0);
+        BookPart partTwo = bookParts.get(1);
+        
+        assertEquals(2, bookParts.size());
+        assertEquals("part one", partOne.getTitle());
+        assertEquals("resources/image.png", partOne.getIllustrationPath());
+        assertEquals("part two", partTwo.getTitle());
+        assertEquals("first", partOne.getChapters().get(0).getTitle());
+        assertEquals("second", partTwo.getChapters().get(0).getTitle());
+        assertEquals("third", partTwo.getChapters().get(1).getTitle());
+    }
 
     @Test
     public void shouldBookPartsWithIntro() throws Exception {

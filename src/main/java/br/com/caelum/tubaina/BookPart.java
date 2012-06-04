@@ -55,4 +55,8 @@ public class BookPart {
     public List<Resource> getResources() {
         return resources;
     }
+    
+    public String getIllustrationPath() {
+        return illustrationPath;
+    }
 }

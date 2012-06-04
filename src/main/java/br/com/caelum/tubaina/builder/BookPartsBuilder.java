@@ -72,7 +72,7 @@ public class BookPartsBuilder {
     }
 
     private String extractIllustrationPath(String text) {
-        return "";
+        return extractor.extractIllustrationPathFrom(text);
     }
 
     private boolean containsPartTag(String text) {
