@@ -69,8 +69,8 @@ public class Utilities {
 		try {
 			BufferedImage src = ImageIO.read(srcImg);
 			double newRatio = (pageWidth * ratio) / src.getWidth();
-			int width = (int) (newRatio * src.getWidth());
-			int height = (int) (newRatio * src.getHeight());
+			int width = (int) Math.round(Math.ceil((newRatio * src.getWidth())));
+			int height = (int) Math.round(Math.ceil(newRatio * src.getHeight()));
 			BufferedImage dest = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 			Graphics2D graphics = dest.createGraphics();
