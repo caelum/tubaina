@@ -56,7 +56,7 @@ public class BookPartsBuilderTest {
         
         assertEquals(2, bookParts.size());
         assertEquals("part one", partOne.getTitle());
-        assertEquals("resources/image.png", partOne.getIllustrationPath());
+        assertEquals("image.png", partOne.getIllustrationPath());
         assertEquals("part two", partTwo.getTitle());
         assertEquals("first", partOne.getChapters().get(0).getTitle());
         assertEquals("second", partTwo.getChapters().get(0).getTitle());

@@ -1,11 +1,16 @@
 package br.com.caelum.tubaina;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.resources.ImageResource;
 import br.com.caelum.tubaina.resources.Resource;
+import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class BookPart {
 
@@ -22,8 +27,12 @@ public class BookPart {
         this.printable = printable;
         this.introductionText = introduction;
         this.introductionChunk = introductionChunk;
-        this.illustrationPath = illustrationPath;
+        this.illustrationPath = FilenameUtils.getName(illustrationPath);
         this.resources = resources;
+        if (!this.illustrationPath.isEmpty()) {
+            File imageFile = ResourceLocator.getInstance().getFile(illustrationPath);
+            resources.add(new ImageResource(imageFile, "100"));
+        }
         this.chapters = new ArrayList<Chapter>();
         this.title = title;
     }

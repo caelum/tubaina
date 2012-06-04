@@ -79,15 +79,25 @@
                }
 
 %BookPart
-\renewcommand{\part}[1]{
+%first argument: path to the illustration image (optional)
+%second argument: name of the part
+\renewcommand{\part}[2][nullimage]{
   \cleardoublepage
+
+  \ifbool{\isempty{#1}}{
+      \begin{figure}[H]\centering
+      \includegraphics{#1}
+      \end{figure}
+    }
+
   \refstepcounter{part}
-  \addcontentsline{toc}{part}{#1}
+  \addcontentsline{toc}{part}{#2}
   \thispagestyle{empty}
-  
-  {\Huge\bf \begin{center} Parte \thepart \end{center}}
+
+  {\Huge\bf \begin{center} Part \thepart \end{center}}
   \vspace{5cm}
-  {\Huge\bf \begin{center} #1 \end{center}}
+  {\Huge\bf \begin{center} #2 \end{center}}
+
 }
 
 \newcommand{\answerHead}[1]{

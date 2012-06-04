@@ -2,7 +2,7 @@
 
 <#list book.parts as part>
     <#if part.printable>
-		\part{${part.title}}
+		\part[${part.illustrationPath}]{${part.title}}
 		${part.getIntroduction(parser)}
     </#if>
     <#list part.chapters as chapter>
