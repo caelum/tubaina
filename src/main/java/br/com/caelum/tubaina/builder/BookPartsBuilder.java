@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.builder;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
+import br.com.caelum.tubaina.resources.ImageResource;
 import br.com.caelum.tubaina.resources.Resource;
 
 public class BookPartsBuilder {
@@ -29,10 +31,13 @@ public class BookPartsBuilder {
     public BookPartsBuilder addPartFrom(String text) {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);
+            List<Resource> partResources = new ArrayList<Resource>();
 
             String introductionText = extractIntroduction(text);
             String illustrationPath = extractIllustrationPath(text);
-            List<Resource> partResources = new ArrayList<Resource>();
+            if (!illustrationPath.isEmpty()) {
+                partResources.add(new ImageResource(new File(illustrationPath), "100"));
+            }
             IntroductionChunk introChunk = new IntroductionChunk(new ChunkSplitter(partResources,
                     "all").splitChunks(introductionText));
 
