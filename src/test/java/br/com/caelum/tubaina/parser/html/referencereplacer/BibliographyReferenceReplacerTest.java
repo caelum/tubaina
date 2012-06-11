@@ -1,4 +1,4 @@
-package br.com.caelum.tubaina.parser.html.kindle.referencereplacer;
+package br.com.caelum.tubaina.parser.html.referencereplacer;
 
 import static org.junit.Assert.assertEquals;
 
