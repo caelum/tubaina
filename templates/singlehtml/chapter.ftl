@@ -1,15 +1,15 @@
 		<div class="chapter referenceable">
-			<div class="chapterHeader">Chapter ${chapter.chapterNumber}</div>
+			<div class="chapterHeader">Capítulo<span>${chapter.chapterNumber}</span></div>
 			<h1 class="referenceableTitle">${chapter.title}</h1>
 	
 			<div class="section">
 	    		${chapter.getIntroduction(parser)}
 	    	</div>
 	    	
+	    	<#assign sectionCount = 1>
 	    	<#list chapter.sections as section>
 		    	<div class="section referenceable">
-					<div class="sectionHeader">Section ${section.sectionNumber}</div>
-					<h2 class="referenceableTitle">${section.title}</h2>
+					<h2 class="referenceableTitle">${chapter.chapterNumber}.${sectionCount} - ${section.title}</h2>
 				   	
 				   	<#list section.chunks as chunk>
 				    	${chunk.getContent(parser)!""}
@@ -17,6 +17,7 @@
 					
 					<br/>
 				</div>
+				<#assign sectionCount = sectionCount + 1>
 		   	</#list>
 	    	
 		</div>	

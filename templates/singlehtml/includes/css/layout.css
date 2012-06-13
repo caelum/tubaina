@@ -10,30 +10,27 @@ h1 { /* chapter */
 	position: relative;
 	}
 
-h1:before {
+.chapterHeader {
 	border-bottom: 1px solid black;
-	content: 'Capítulo';
-	display: block;
 	font-size: 14px;
 	font-weight: normal;
 	margin-bottom: 50px;
-	padding-right: 62px;
+	padding-right: 10px;
 	text-align: right;
 	text-transform: uppercase;
 	}
-	h1:after {
+	.chapterHeader span {
 		background: black;
 		color: white;
-		counter-increment:section;
-		content: counter(section);
 		font-size: 38px;
 		font-weight: bold;
 		padding: 3px 6px 0 8px;
-		position: absolute;
-		top: -31px;
-		right: 0;
+		position: relative;
+		top: 1px;
+		right: -10px;
 		text-align: center;
 	}
+
 
 .newchapter {
 	counter-reset:subsection;
@@ -45,10 +42,7 @@ h2 { /* section */
 	counter-increment: subsection;
 	font-size: 17pt;
 	padding: 2px 0 0 6px;
-	}
-	h2:before {
-		content: counter(section) "." counter(subsection) " - ";
-	}
+}
 
 h3 { /* title */
 	font-weight: bolder;
