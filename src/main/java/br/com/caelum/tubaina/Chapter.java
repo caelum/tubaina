@@ -7,7 +7,7 @@ import br.com.caelum.tubaina.resources.Resource;
 
 public class Chapter {
 
-	private static int COUNT = 1;
+	private static int COUNT = 0;
 	
 	private String title;
 
