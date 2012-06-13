@@ -59,13 +59,14 @@ public class SingleHtmlGenerator implements Generator {
 	}
 
 	private StringBuffer generateChapter(Book book, Chapter chapter) {
-		StringBuffer chapterContent = new ChapterToString(parser, cfg, null).generateSingleHtmlChapter(book, chapter);
-		for (Section section : chapter.getSections()) {
-			if (section.getTitle() != null) { // intro
-				StringBuffer sectionContent = new SectionToString(parser, cfg, null).generateSingleHtmlSection(section);
-				chapterContent.append(sectionContent);
-			}
-		}
+	    StringBuffer sectionsContent = new StringBuffer();
+	    for (Section section : chapter.getSections()) {
+	        if (section.getTitle() != null) { // intro
+	            StringBuffer sectionContent = new SectionToString(parser, cfg, null).generateSingleHtmlSection(section);
+	            sectionsContent.append(sectionContent);
+	        }
+	    }
+	    StringBuffer chapterContent = new SingleHtmlChapterGenerator(parser, cfg).generateSingleHtmlChapter(book, chapter, sectionsContent.toString());
 		return fixPaths(chapter, chapterContent);
 	}
 

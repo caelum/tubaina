@@ -43,15 +43,6 @@ public class ChapterToString {
 		return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
 	}
 	
-	public StringBuffer generateSingleHtmlChapter(Book book, Chapter chapter) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("book", book);
-		map.put("chapter", chapter);
-		map.put("parser", parser);
-		map.put("sanitizer", new HtmlSanitizer());
-		return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
-	}
-	
 	public StringBuffer generateFlatChapterHead(final Book b, final Chapter c, final int index, final int currentDir) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("book", b);
