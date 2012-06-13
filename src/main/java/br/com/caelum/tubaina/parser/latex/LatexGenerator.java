@@ -82,7 +82,7 @@ public class LatexGenerator implements Generator {
 		// Dependencies (styles, logo)
 		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/tubaina.sty"), directory);
 		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/xcolor.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/joseplain.bst"), directory);
+		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/bibliography-style.bst"), directory);
 		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/mintedx.sty"), directory);
 		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
 			public boolean accept(File dir, String name) {
