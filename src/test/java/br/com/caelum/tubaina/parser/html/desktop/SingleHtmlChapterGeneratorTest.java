@@ -41,9 +41,9 @@ public class SingleHtmlChapterGeneratorTest {
         Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
                 + "\n[section segunda] conteudo da segunda");
         
-        String string = singleHtmlChapterGenerator.generateSingleHtmlChapter(new BookBuilder("some name").build(), c, "").toString();
+        String string = singleHtmlChapterGenerator.generateSingleHtmlChapter(new BookBuilder("some name").build(), c).toString();
         
-        Assert.assertEquals(1, countOccurrences(string, "<div class=\"chapter\">"));
+        Assert.assertEquals(1, countOccurrences(string, "<div class=\"chapter referenceable\">"));
     }
     
     private int countOccurrences(final String text, final String substring) {

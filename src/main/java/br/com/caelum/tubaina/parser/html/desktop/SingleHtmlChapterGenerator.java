@@ -21,11 +21,10 @@ public class SingleHtmlChapterGenerator {
         this.cfg = cfg;
     }
     
-    public StringBuffer generateSingleHtmlChapter(Book book, Chapter chapter, String sectionsContent) {
+    public StringBuffer generateSingleHtmlChapter(Book book, Chapter chapter) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("book", book);
         map.put("chapter", chapter);
-        map.put("sectionsContent", sectionsContent);
         map.put("parser", parser);
         map.put("sanitizer", new HtmlSanitizer());
         return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");

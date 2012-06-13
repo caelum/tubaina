@@ -2,12 +2,13 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
-import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.io.HtmlResourceManipulatorFactory;
@@ -15,6 +16,12 @@ import br.com.caelum.tubaina.io.ResourceManipulatorFactory;
 import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
 import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.html.referencereplacer.BibliographyReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.ChapterAndSectionReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.CodeReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceParser;
+import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceReplacer;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.Utilities;
 import freemarker.ext.beans.BeansWrapper;
@@ -47,10 +54,27 @@ public class SingleHtmlGenerator implements Generator {
 						.writeResources(c.getResources());
 			}
 		}
+		
+		bookContent = resolveReferencesOf(bookContent);
+		
 		bookContent.append(generateFooter());
 
 		bookRoot.writeIndex(bookContent);
 	}
+	
+    private StringBuffer resolveReferencesOf(StringBuffer bookContent) {
+        List<ReferenceReplacer> replacers = new ArrayList<ReferenceReplacer>();
+        
+        replacers.add(new ChapterAndSectionReferenceReplacer());
+        replacers.add(new ImageReferenceReplacer());
+        replacers.add(new CodeReferenceReplacer());
+        replacers.add(new BibliographyReferenceReplacer());
+
+        ReferenceParser referenceParser = new ReferenceParser(replacers);
+
+        bookContent = new StringBuffer(referenceParser.replaceReferences(bookContent.toString()));
+        return bookContent;
+    }
 	
 	private StringBuffer generateHeader(Book book) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -59,14 +83,7 @@ public class SingleHtmlGenerator implements Generator {
 	}
 
 	private StringBuffer generateChapter(Book book, Chapter chapter) {
-	    StringBuffer sectionsContent = new StringBuffer();
-	    for (Section section : chapter.getSections()) {
-	        if (section.getTitle() != null) { // intro
-	            StringBuffer sectionContent = new SectionToString(parser, cfg, null).generateSingleHtmlSection(section);
-	            sectionsContent.append(sectionContent);
-	        }
-	    }
-	    StringBuffer chapterContent = new SingleHtmlChapterGenerator(parser, cfg).generateSingleHtmlChapter(book, chapter, sectionsContent.toString());
+	    StringBuffer chapterContent = new SingleHtmlChapterGenerator(parser, cfg).generateSingleHtmlChapter(book, chapter);
 		return fixPaths(chapter, chapterContent);
 	}
 
