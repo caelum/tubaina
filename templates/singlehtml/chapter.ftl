@@ -1,5 +1,10 @@
-		<div class='chapter'>
+		<div class="chapter">
 			<h1>${chapter.title}</h1>
 	
-	    	${chapter.getIntroduction(parser)}
+			<div class="section">
+	    		${chapter.getIntroduction(parser)}
+	    	</div>
+	    	
+	    	${sectionsContent}
+	    	
 		</div>	

@@ -43,7 +43,7 @@ public class SingleHtmlChapterGeneratorTest {
         
         String string = singleHtmlChapterGenerator.generateSingleHtmlChapter(new BookBuilder("some name").build(), c, "").toString();
         
-        Assert.assertEquals(1, countOccurrences(string, "<div class='chapter'>"));
+        Assert.assertEquals(1, countOccurrences(string, "<div class=\"chapter\">"));
     }
     
     private int countOccurrences(final String text, final String substring) {

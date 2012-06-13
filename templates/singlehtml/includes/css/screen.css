@@ -1,5 +1,5 @@
 html {
-	background: #e3e9ff;
+	background: #fdfdfd;
 }
 
 .page {
@@ -9,10 +9,6 @@ html {
 	-moz-box-shadow: 0 0 6px #aaa;
 	-webkit-box-shadow: 0 0 6px #aaa;
 	box-shadow: 0 0 6px #aaa;
-}
-
-#tubaina {
-	display: none;
 }
 
 #progressbar {

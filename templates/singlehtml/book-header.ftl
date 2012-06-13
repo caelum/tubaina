@@ -29,15 +29,6 @@
 	
 	<script type="text/javascript" src="includes/js/jquery-1.6.1.min.js"></script>
 	<script type="text/javascript" src="includes/js/tubaina.js"></script>
-	<script>
-	window.onload = function() {
-		Tubaina.init({
-			title: '${booktitle}',
-			footer: 'Capítulo {chapterNumber} - {chapter} - {section} - Página {page}',
-			debug: true
-		});
-	}
-	</script>
 </head>
 <body>
 
