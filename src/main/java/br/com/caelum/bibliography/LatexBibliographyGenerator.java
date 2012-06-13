@@ -5,6 +5,8 @@ public class LatexBibliographyGenerator implements BibliographyGenerator {
     public String generateTextOf(Bibliography bibliography) {
         StringBuffer result = new StringBuffer();
 
+        escapeInvalidChars(bibliography);
+        
         for (BibliographyEntry entry : bibliography.getEntries()) {
             result.append("@" + entry.type + "{");
             result.append(entry.label + ",\n");
@@ -18,6 +20,13 @@ public class LatexBibliographyGenerator implements BibliographyGenerator {
         }
 
         return result.toString();
+    }
+
+    private void escapeInvalidChars(Bibliography bibliography) {
+        for (BibliographyEntry entry : bibliography.getEntries()) {
+            entry.howPublished = entry.howPublished.replaceAll("\\_", "\\\\_");
+            entry.title = entry.title.replaceAll("\\_", "\\\\_");
+        }
     }
 
     private void addField(StringBuffer result, String key, String value) {
