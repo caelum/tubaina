@@ -3,6 +3,7 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class CodeTag implements Tag {
@@ -12,6 +13,11 @@ public class CodeTag implements Tag {
 	public static final String END = "\n</pre>";
 
 	public String parse(String content, String options) {
+	    Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+	    if (labelMatcher.matches()) {
+	        throw new TubainaException("Image labels are not yet supported for html output");
+	    }
+	    
 		String preOptions = classAssembler(options);
 
 		return START_HEADER + preOptions + CLOSE_HEADER + content + END;

@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.desktop.CodeTag;
+import br.com.caelum.tubaina.TubainaException;
 
 
 public class CodeTagTest {
@@ -77,4 +77,13 @@ public class CodeTagTest {
 		Assert.assertEquals("<pre class=\"code text\" data-highlight=\"2\">\n" 
 				+ noParticularLanguage + "\n</pre>", output);
 	}
+	
+	@Test
+    public void shouldThrowExpectionWhenTagContainsLabel() {
+        try {
+            new CodeTag().parse("", "label=somelabel");
+            Assert.fail("should throw excpetion");
+        } catch (TubainaException e) {
+        }
+    }
 }
