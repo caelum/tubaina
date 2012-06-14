@@ -2,9 +2,7 @@
 			<div class="chapterHeader">Capítulo<span>${chapter.chapterNumber}</span></div>
 			<h1 class="referenceableTitle">${chapter.title}</h1>
 	
-			<div class="section">
-	    		${chapter.getIntroduction(parser)}
-	    	</div>
+    		${chapter.getIntroduction(parser)}
 	    	
 	    	<#assign sectionCount = 1>
 	    	<#list chapter.sections as section>

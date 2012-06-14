@@ -16,12 +16,10 @@ import br.com.caelum.tubaina.io.ResourceManipulatorFactory;
 import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.io.TubainaHtmlIO;
 import br.com.caelum.tubaina.parser.Parser;
-import br.com.caelum.tubaina.parser.html.referencereplacer.BibliographyReferenceReplacer;
-import br.com.caelum.tubaina.parser.html.referencereplacer.ChapterAndSectionReferenceReplacer;
-import br.com.caelum.tubaina.parser.html.referencereplacer.CodeReferenceReplacer;
-import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceParser;
 import br.com.caelum.tubaina.parser.html.referencereplacer.ReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.SingleHtmlChapterReferenceReplacer;
+import br.com.caelum.tubaina.parser.html.referencereplacer.SingleHtmlSectionReferenceReplacer;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.Utilities;
 import freemarker.ext.beans.BeansWrapper;
@@ -65,10 +63,8 @@ public class SingleHtmlGenerator implements Generator {
     private StringBuffer resolveReferencesOf(StringBuffer bookContent) {
         List<ReferenceReplacer> replacers = new ArrayList<ReferenceReplacer>();
         
-        replacers.add(new ChapterAndSectionReferenceReplacer());
-        replacers.add(new ImageReferenceReplacer());
-        replacers.add(new CodeReferenceReplacer());
-        replacers.add(new BibliographyReferenceReplacer());
+        replacers.add(new SingleHtmlSectionReferenceReplacer());
+        replacers.add(new SingleHtmlChapterReferenceReplacer());
 
         ReferenceParser referenceParser = new ReferenceParser(replacers);
 
