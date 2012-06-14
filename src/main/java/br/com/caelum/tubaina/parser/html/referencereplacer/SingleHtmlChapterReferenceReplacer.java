@@ -12,10 +12,10 @@ public class SingleHtmlChapterReferenceReplacer extends AbstractReferenceReplace
         if (label.getName().equals("a") && labelParentDiv.getFirstElementByClass("chapterHeader") != null) {
             Element chapterHeader = labelParentDiv.getFirstElementByClass("chapterHeader");
             List<Element> spans = chapterHeader.getAllElements("span");
-            if (spans.isEmpty())
-                return text;
-            String chapterNumber = spans.get(0).getContent().toString();
-            return chapterNumber;
+            if (!spans.isEmpty()) {
+                String chapterNumber = spans.get(0).getContent().toString();
+                return chapterNumber;
+            }
         }
         return text;
     }

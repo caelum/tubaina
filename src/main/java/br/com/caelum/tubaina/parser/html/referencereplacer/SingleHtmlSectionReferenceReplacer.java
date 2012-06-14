@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.parser.html.referencereplacer;
 
+import java.util.List;
+
 import net.htmlparser.jericho.Element;
 
 public class SingleHtmlSectionReferenceReplacer extends AbstractReferenceReplacer {
@@ -9,8 +11,11 @@ public class SingleHtmlSectionReferenceReplacer extends AbstractReferenceReplace
         if (label.getName().equals("a")
                 && labelParentDiv.getFirstElementByClass("chapterHeader") == null) {
             Element title = labelParentDiv.getFirstElementByClass("referenceableTitle");
-            String number = title.getTextExtractor().toString().split("-")[0].trim();
-            text = number;
+            List<Element> spans = title.getAllElements("span");
+            if (!spans.isEmpty()) {
+                String sectionNumber = spans.get(0).getContent().toString();
+                text = sectionNumber;
+            }
         }
         return text;
     }
