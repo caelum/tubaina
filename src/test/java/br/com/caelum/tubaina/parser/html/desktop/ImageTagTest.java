@@ -5,7 +5,7 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.desktop.ImageTag;
+import br.com.caelum.tubaina.TubainaException;
 
 public class ImageTagTest {
 
@@ -23,13 +23,6 @@ public class ImageTagTest {
 				"<img src=\"$$RELATIVE$$/imagem.png\" alt=\"Imagem de alguma coisa\" />", result);
 	}
 
-	@Test
-	public void labelShouldBeParsed() throws Exception {
-		String result = tag.parse("image.png", "label=important");
-		Assert.assertEquals(
-				"<img src=\"$$RELATIVE$$/image.png\" id=\"important\" alt=\"image.png\" />", result);
-	}
-	
 	@Test
 	public void testImageTagWithoutBounds() {
 		String result = tag.parse("imagem.png", "\"Imagem de alguma coisa\"");
@@ -63,6 +56,15 @@ public class ImageTagTest {
 		String result = tag.parse("some/path/imagem.png", "w=50");
 		Assert.assertEquals(
 				"<img src=\"$$RELATIVE$$/imagem.png\" alt=\"imagem.png\" />", result);
+	}
+	
+	@Test
+	public void shouldThrowExpectionWhenTagContainsLabel() {
+	    try {
+	        tag.parse("some/path/imagem.png", "label=somelabel");
+	        Assert.fail("should throw excpetion");
+        } catch (TubainaException e) {
+        }
 	}
 	
 }
