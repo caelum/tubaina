@@ -81,6 +81,7 @@ public class HtmlSanitizer {
 	}
 
 	public String sanitize(String text) {
+		if(text == null) return "";
 		final StringBuilder sane = new StringBuilder();
 		for (int i = 0; i < text.length(); i++) {
 			char current = text.charAt(i);
