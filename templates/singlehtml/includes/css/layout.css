@@ -1,20 +1,10 @@
-@font-face {
-	font-family: iABCRegular;
-	src: url('./fonts/iabc-7-webfont.ttf'), url('./fonts/iabc-7-webfont.eot');
-}
-
-@font-face {
-	font-family: iABCRegular;
-	font-style: italic;
-	src: url('./fonts/iabci-7-webfont.ttf'), url('./fonts/iabci-7-webfont.eot');
-	font-family: 'iABCRegular';
-}
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900);
 
 body {
 	font-size: 1.313em;
 	line-height: 1.524em;
-	font-family: 'iABCRegular',Georgia,serif;
-	font-weight: normal;
+	font-family: 'Merriweather',Georgia,serif;
+	font-weight: 300;
 	font-style: normal;
 	position: relative;
 }
@@ -25,26 +15,15 @@ h1 { /* chapter */
 	}
 
 .chapterHeader {
-	border-bottom: 1px solid black;
 	font-size: 14px;
 	font-weight: normal;
 	margin-bottom: 50px;
 	padding-right: 10px;
-	text-align: right;
-	text-transform: uppercase;
+	text-align: left;
+	font-variant:small-caps;
 	}
 	.chapterHeader span {
-		background: black;
-		color: white;
-		font-size: 38px;
-		font-weight: bold;
-		padding: 3px 6px 0 8px;
-		position: relative;
-		top: 1px;
-		right: -10px;
-		text-align: center;
 	}
-
 
 .newchapter {
 	counter-reset:subsection;
