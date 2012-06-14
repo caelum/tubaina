@@ -1,7 +1,21 @@
+@font-face {
+	font-family: iABCRegular;
+	src: url('./fonts/iabc-7-webfont.ttf'), url('./fonts/iabc-7-webfont.eot');
+}
+
+@font-face {
+	font-family: iABCRegular;
+	font-style: italic;
+	src: url('./fonts/iabci-7-webfont.ttf'), url('./fonts/iabci-7-webfont.eot');
+	font-family: 'iABCRegular';
+}
+
 body {
-	counter-reset:section;
-	font-family: Helvetica;
-	font-size: 12pt;
+	font-size: 1.313em;
+	line-height: 1.524em;
+	font-family: 'iABCRegular',Georgia,serif;
+	font-weight: normal;
+	font-style: normal;
 	position: relative;
 }
 
