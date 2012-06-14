@@ -24,8 +24,10 @@ public class LatexBibliographyGenerator implements BibliographyGenerator {
 
     private void escapeInvalidChars(Bibliography bibliography) {
         for (BibliographyEntry entry : bibliography.getEntries()) {
-            entry.howPublished = entry.howPublished.replaceAll("\\_", "\\\\_");
-            entry.title = entry.title.replaceAll("\\_", "\\\\_");
+            if (entry.howPublished != null)
+                entry.howPublished = entry.howPublished.replaceAll("\\_", "\\\\_");
+            if (entry.title != null)
+                entry.title = entry.title.replaceAll("\\_", "\\\\_");
         }
     }
 
