@@ -19,7 +19,7 @@ import freemarker.template.Configuration;
 public class SingleHtmlChapterGeneratorTest {
     
     private Chapter createChapter(final String introduction, final String chapterText) {
-        return new ChapterBuilder("Title", introduction, chapterText, 1).build();
+        return new ChapterBuilder("Title", introduction, chapterText, 0).build();
     }
     
     @Test

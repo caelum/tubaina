@@ -18,12 +18,15 @@ public class Chapter {
 	
 	private int chapterNumber;
 
-	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber) {
+    private final boolean introductionChapter;
+
+	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
 		this.title = title;
 		this.sections = sections;
 		this.resources = resources;
 		this.introduction = introduction;
         this.chapterNumber = chapterNumber;
+        this.introductionChapter = introductionChapter;
 	}
 
 	public List<Section> getSections() {
@@ -44,5 +47,9 @@ public class Chapter {
 	
 	public int getChapterNumber() {
         return chapterNumber;
+    }
+	
+	public boolean isIntroductionChapter() {
+        return introductionChapter;
     }
 }

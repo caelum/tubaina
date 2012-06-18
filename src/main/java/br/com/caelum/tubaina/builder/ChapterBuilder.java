@@ -12,56 +12,67 @@ import br.com.caelum.tubaina.resources.Resource;
 
 public class ChapterBuilder {
 
-	private final String title;
+    private final String title;
 
-	private final String content;
+    private final String content;
 
-	private final Matcher matcher;
+    private final Matcher matcher;
 
-	private final String introduction;
+    private final String introduction;
 
     private final int chapterNumber;
-    
-    private static int LAST_CHAPTER = 0; 
 
-	public ChapterBuilder(String title, String introduction, String content, int chapterNumber) {
-		this.title = title;
-		this.content = content;
-		this.introduction = introduction;
+    private static int LAST_CHAPTER = 0;
+
+    private final boolean introductionChapter;
+
+    public ChapterBuilder(String title, String introduction, String content, int chapterNumber,
+            boolean introductionChapter) {
+        this.title = title;
+        this.content = content;
+        this.introduction = introduction;
         this.chapterNumber = chapterNumber;
-		Pattern pattern = Pattern.compile("(?i)(?s)(?m)^\\[section(.*?)\\](.*?)(\n\\[section|\\z)");
-		this.matcher = pattern.matcher(content);
-		LAST_CHAPTER = chapterNumber;
-	}
+        this.introductionChapter = introductionChapter;
+        Pattern pattern = Pattern.compile("(?i)(?s)(?m)^\\[section(.*?)\\](.*?)(\n\\[section|\\z)");
+        this.matcher = pattern.matcher(content);
+        if (!introductionChapter)
+            LAST_CHAPTER = chapterNumber;
+    }
 
-	public Chapter build() {
+    public ChapterBuilder(String title, String introduction, String content, int chapterNumber) {
+        this(title, introduction, content, chapterNumber, false);
+    }
 
-		List<Section> sections = new ArrayList<Section>();
-		List<Resource> resources = new ArrayList<Resource>();
-		if (content != null && content.trim().length() > 0) {
+    public Chapter build() {
 
-			Integer offset = 0;
+        List<Section> sections = new ArrayList<Section>();
+        List<Resource> resources = new ArrayList<Resource>();
+        if (content != null && content.trim().length() > 0) {
 
-			while (matcher.find(offset)) {
-				String sectionTitle = matcher.group(1);
-				if (sectionTitle != null) {
-					sectionTitle = sectionTitle.trim();
-				}
-				String sectionContent = matcher.group(2);
-				if (sectionTitle != null || sectionContent.trim().length() > 0) {
-					Section section = new SectionBuilder(sectionTitle, sectionContent, resources).build();
-					sections.add(section);
-				}
-				offset = matcher.end(2);
-			}
-		}
+            Integer offset = 0;
 
-		IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all").splitChunks(introduction));
+            while (matcher.find(offset)) {
+                String sectionTitle = matcher.group(1);
+                if (sectionTitle != null) {
+                    sectionTitle = sectionTitle.trim();
+                }
+                String sectionContent = matcher.group(2);
+                if (sectionTitle != null || sectionContent.trim().length() > 0) {
+                    Section section = new SectionBuilder(sectionTitle, sectionContent, resources)
+                            .build();
+                    sections.add(section);
+                }
+                offset = matcher.end(2);
+            }
+        }
 
-		return new Chapter(title, intro, sections, resources, chapterNumber);
-	}
-	
-	public static int getChaptersCount() {
+        IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all")
+                .splitChunks(introduction));
+
+        return new Chapter(title, intro, sections, resources, chapterNumber, introductionChapter);
+    }
+
+    public static int getChaptersCount() {
         return LAST_CHAPTER;
     }
 

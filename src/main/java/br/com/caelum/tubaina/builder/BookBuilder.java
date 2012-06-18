@@ -51,7 +51,7 @@ public class BookBuilder {
             if (scanner.hasNext()) {
                 String text = scanner.next();
                 bookPartsBuilder.addPartFrom(text);
-                bookPartsBuilder.addChaptersToLastAddedPart(parseChapters(text));
+                bookPartsBuilder.addChaptersToLastAddedPart(parseChapters(text, false));
             }
         }
     }
@@ -61,12 +61,12 @@ public class BookBuilder {
         for (Reader reader: introductionReaders) {
             Scanner scanner = new Scanner(reader);
             scanner.useDelimiter("$$");
-            introductionChapters.addAll(parseChapters(scanner.next()));
+            introductionChapters.addAll(parseChapters(scanner.next(), true));
         }
         return introductionChapters;
     }
 
-    private List<Chapter> parseChapters(String text) {
+    private List<Chapter> parseChapters(String text, boolean introductionChapter) {
         Pattern chapterPattern = Pattern
                 .compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
         Matcher chapterMatcher = chapterPattern.matcher(text);
@@ -84,9 +84,10 @@ public class BookBuilder {
 
             content = content.substring(introduction.length());
 
-            Chapter chapter = new ChapterBuilder(title, introduction, content, chapterNumber).build();
+            Chapter chapter = new ChapterBuilder(title, introduction, content, chapterNumber, introductionChapter).build();
             chapters.add(chapter);
-            chapterNumber++;
+            if (!introductionChapter)
+                chapterNumber++;
         }
 
         // TODO : Refactoring
