@@ -44,6 +44,8 @@ public class KindleGenerator implements Generator {
 
     public void generate(Book book, File outputDir) throws IOException {
         StringBuffer bookContent = generateHeader(book);
+        StringBuffer introductionChaptersContent = generateIntroductionParts(book);
+        bookContent.append(introductionChaptersContent);
 
         ResourceManipulatorFactory kindleResourceManipulatorFactory = new KindleResourceManipulatorFactory();
 
@@ -57,26 +59,33 @@ public class KindleGenerator implements Generator {
             if (part.isPrintable())
                 partCount++;
         }
-        
+
+
         String htmlBibliography = generateHtmlBibliography(outputDir);
-        
+
         bookContent.append(htmlBibliography);
-        
+
         bookContent = resolveReferencesOf(bookContent);
-        
+
         bookRoot.writeIndex(bookContent);
+    }
+
+    private StringBuffer generateIntroductionParts(Book book) {
+        return new IntroductionChaptersToKindle(parser, freeMarkerConfig)
+                .generateIntroductionChapters(book.getIntroductionChapters());
     }
 
     private String generateHtmlBibliography(File outputDir) {
         File bibliographyFile = new File(outputDir, "bib.xml");
         Bibliography bibliography = new BibliographyFactory().build(bibliographyFile);
-        String htmlBibliography = new HtmlBibliographyGenerator(freeMarkerConfig).generateTextOf(bibliography);
+        String htmlBibliography = new HtmlBibliographyGenerator(freeMarkerConfig)
+                .generateTextOf(bibliography);
         return htmlBibliography;
     }
 
     private StringBuffer resolveReferencesOf(StringBuffer bookContent) {
         List<ReferenceReplacer> replacers = new ArrayList<ReferenceReplacer>();
-        
+
         replacers.add(new ChapterAndSectionReferenceReplacer());
         replacers.add(new ImageReferenceReplacer());
         replacers.add(new CodeReferenceReplacer());
@@ -88,8 +97,10 @@ public class KindleGenerator implements Generator {
         return bookContent;
     }
 
-    private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot, int partCount) {
-        return new PartToKindle(parser, freeMarkerConfig).generateKindlePart(part, bookRoot, partCount);
+    private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot,
+            int partCount) {
+        return new PartToKindle(parser, freeMarkerConfig).generateKindlePart(part, bookRoot,
+                partCount);
     }
 
     private StringBuffer generateHeader(Book book) {
