@@ -6,8 +6,13 @@ import net.htmlparser.jericho.Element;
 import net.htmlparser.jericho.OutputDocument;
 import net.htmlparser.jericho.Source;
 
-public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
+import org.apache.log4j.Logger;
 
+public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
+    private final Logger LOG = Logger.getLogger(CodeReferenceReplacer.class);
+
+    protected abstract String extractTextToReplaceReference(Element labelParentDiv, Element label);
+    
     public String replace(String htmlContent) {
         Source source = new Source(htmlContent);
         source.fullSequentialParse();
@@ -18,8 +23,9 @@ public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
             Element label = source.getElementById(labelId);
 
             Element div = findLabelContainer(label);
-            if (!isValid(div)) {
+            if (!isValidDiv(div)) {
                 outputDocument.replace(reference, reference.toString().replace("*", "?"));
+                LOG.warn("Could not resolve label: " + labelId);
                 continue;
             }
 
@@ -28,8 +34,6 @@ public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
         }
         return outputDocument.toString();
     }
-
-    protected abstract String extractTextToReplaceReference(Element labelParentDiv, Element label);
 
     private Element findLabelContainer(Element label) {
         if (label == null)
@@ -41,7 +45,7 @@ public abstract class AbstractReferenceReplacer implements ReferenceReplacer {
         return container;
     }
 
-    private boolean isValid(Element referenceableContainer) {
+    private boolean isValidDiv(Element referenceableContainer) {
         if (referenceableContainer == null)
             return false;
         String classes = referenceableContainer.getAttributeValue("class");

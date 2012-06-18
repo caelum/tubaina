@@ -4,8 +4,11 @@ import java.util.List;
 
 import net.htmlparser.jericho.Element;
 
-public class CodeReferenceReplacer extends AbstractReferenceReplacer {
+import org.apache.log4j.Logger;
 
+public class CodeReferenceReplacer extends AbstractReferenceReplacer {
+    private final Logger LOG = Logger.getLogger(CodeReferenceReplacer.class);
+    
     @Override
     protected String extractTextToReplaceReference(Element containerDiv, Element label) {
         String text = "*";
@@ -13,9 +16,13 @@ public class CodeReferenceReplacer extends AbstractReferenceReplacer {
 
             Element title = containerDiv.getFirstElementByClass("referenceableTitle");
 
-            while (title.getStartTag().getName() != "h2") {
+            while (title != null && title.getStartTag().getName() != "h2") {
                 containerDiv = containerDiv.getParentElement();
                 title = containerDiv.getFirstElementByClass("referenceableTitle");
+            }
+            if (title == null) {
+                LOG.warn("Could not resolve label: " + label.getAttributeValue("id"));
+                return "*";
             }
             List<Element> codes = containerDiv.getAllElements("pre");
             int codePosition = codes.indexOf(label) + 1;
