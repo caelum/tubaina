@@ -20,12 +20,18 @@ public class ChapterBuilder {
 
 	private final String introduction;
 
-	public ChapterBuilder(String title, String introduction, String content) {
+    private final int chapterNumber;
+    
+    private static int LAST_CHAPTER = 0; 
+
+	public ChapterBuilder(String title, String introduction, String content, int chapterNumber) {
 		this.title = title;
 		this.content = content;
 		this.introduction = introduction;
+        this.chapterNumber = chapterNumber;
 		Pattern pattern = Pattern.compile("(?i)(?s)(?m)^\\[section(.*?)\\](.*?)(\n\\[section|\\z)");
 		this.matcher = pattern.matcher(content);
+		LAST_CHAPTER = chapterNumber;
 	}
 
 	public Chapter build() {
@@ -52,7 +58,11 @@ public class ChapterBuilder {
 
 		IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all").splitChunks(introduction));
 
-		return new Chapter(title, intro, sections, resources);
+		return new Chapter(title, intro, sections, resources, chapterNumber);
 	}
+	
+	public static int getChaptersCount() {
+        return LAST_CHAPTER;
+    }
 
 }

@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 
 import org.apache.log4j.Logger;
 
-import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.chunk.TodoChunk;
 
 public class TodoReplacer extends PatternReplacer {
@@ -19,7 +19,7 @@ public class TodoReplacer extends PatternReplacer {
 	@Override
 	public Chunk createChunk(Matcher matcher) {
 		String string = matcher.group(1);
-		LOG.warn("TODO from chapter " + Chapter.getChaptersCount() + ": " + string);
+		LOG.warn("TODO from chapter " + ChapterBuilder.getChaptersCount() + ": " + string);
 		return new TodoChunk(string);
 	}
 

@@ -5,23 +5,30 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class BookPartsBuilderTest {
+    
+    @Before
+    public void setUp() {
+        ResourceLocator.initialize(".");
+    }
 
     @Test
     public void shouldBuildBookParts() throws Exception {
         String partOneText = "[part \"part one\"]";
         String partTwoText = "[part \"part two\"]";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section test]\nchpater 1 text").build();
+                "[section test]\nchpater 1 text", 1).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section test]\nchpater 2 text").build();
+                "[section test]\nchpater 2 text", 2).build();
         Chapter third = new ChapterBuilder("third", "introduction",
-                "[section test]\nchpater 3 text").build();
+                "[section test]\nchpater 3 text", 3).build();
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
@@ -42,11 +49,11 @@ public class BookPartsBuilderTest {
         String partOneText = "[part \"part one\" illustration=resources/image.png]";
         String partTwoText = "[part \"part two\"]";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section test]\nchpater 1 text").build();
+                "[section test]\nchpater 1 text", 1).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section test]\nchpater 2 text").build();
+                "[section test]\nchpater 2 text", 2).build();
         Chapter third = new ChapterBuilder("third", "introduction",
-                "[section test]\nchpater 3 text").build();
+                "[section test]\nchpater 3 text", 3).build();
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
@@ -64,17 +71,18 @@ public class BookPartsBuilderTest {
     }
 
     @Test
-    public void shouldBookPartsWithIntro() throws Exception {
+    public void shouldBuildBookPartsWithIntro() throws Exception {
         String partOneText = "[part \"part one\"]\n introduction text";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section \"test\"]\nchpater 1 text").build();
+                "[section \"test\"]\nchpater 1 text", 1).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section \"test\"]\nchpater 2 text").build();
+                "[section \"test\"]\nchpater 2 text", 2).build();
 
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first, second)).build();
         assertEquals("introduction text", bookParts.get(0).getIntroductionText());
-
+        assertEquals("first", bookParts.get(0).getChapters().get(0).getTitle());
+        assertEquals(1, bookParts.get(0).getChapters().get(0).getChapterNumber());
     }
     
 }

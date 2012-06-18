@@ -40,7 +40,7 @@ public class PartToKindleTest {
     }
 
     private Chapter createChapter(String title, String introduction, String content) {
-        return new ChapterBuilder(title, introduction, content).build();
+        return new ChapterBuilder(title, introduction, content, 1).build();
     }
 
     private int countOccurrences(String text, String substring) {

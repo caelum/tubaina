@@ -5,9 +5,9 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.builder.ChunksMakerBuilder;
 import br.com.caelum.tubaina.chunk.ItemChunk;
@@ -62,14 +62,14 @@ public class ItemReplacer implements Replacer {
 		}
 
 		if (chunkStart < 0) { // if item was not found
-			throw new TubainaException("There is no item inside a list tag on chapter " + Chapter.getChaptersCount());
+			throw new TubainaException("There is no item inside a list tag on chapter " + ChapterBuilder.getChaptersCount());
 			// chunks.add(new ParagraphChunk(text));
 			// return "";
 		}
 		String textBefore = text.substring(0, chunkStart - 1).trim();
 		if (textBefore.length() > 0) {
 			throw new TubainaException("There is some inside a list tag, but outside an item on chapter "
-					+ Chapter.getChaptersCount());
+					+ ChapterBuilder.getChaptersCount());
 			// chunks.add(new ParagraphChunk(textBefore));
 		}
 

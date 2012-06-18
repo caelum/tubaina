@@ -7,7 +7,6 @@ import br.com.caelum.tubaina.resources.Resource;
 
 public class Chapter {
 
-	private static int COUNT = 0;
 	
 	private String title;
 
@@ -19,13 +18,12 @@ public class Chapter {
 	
 	private int chapterNumber;
 
-	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources) {
+	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber) {
 		this.title = title;
 		this.sections = sections;
 		this.resources = resources;
 		this.introduction = introduction;
-		chapterNumber = COUNT;
-		COUNT++;
+        this.chapterNumber = chapterNumber;
 	}
 
 	public List<Section> getSections() {
@@ -42,10 +40,6 @@ public class Chapter {
 	
 	public String getIntroduction(Parser p){
 		return this.introduction.getContent(p);
-	}
-	
-	public static int getChaptersCount() {
-		return COUNT;
 	}
 	
 	public int getChapterNumber() {

@@ -3,7 +3,6 @@ package br.com.caelum.tubaina.builder;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.replacer.Replacer;
@@ -24,7 +23,7 @@ public class ChunksMaker {
 				}
 			}
 			if (!accepted)
-				throw new TubainaException("There is a syntax error on chapter "+ Chapter.getChaptersCount() +
+				throw new TubainaException("There is a syntax error on chapter "+ ChapterBuilder.getChaptersCount() +
 					": Probably, there is some text inside an exercise tag, but outside a question tag, or " +
 					"an unnacceptable tag at some place.");
 		}

@@ -50,11 +50,12 @@ public class KindleGenerator implements Generator {
         TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory)
                 .createTubainaDir(outputDir, book);
 
-        int partCount = 0;
+        int partCount = 1;
         for (BookPart part : book.getParts()) {
             StringBuffer partContent = generatePart(book, part, bookRoot, partCount);
             bookContent.append(partContent);
-            partCount++;
+            if (part.isPrintable())
+                partCount++;
         }
         
         String htmlBibliography = generateHtmlBibliography(outputDir);

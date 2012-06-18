@@ -20,10 +20,12 @@ public class BookBuilder {
     private final List<Reader> readers = new ArrayList<Reader>();
     private final List<Reader> introductionReaders = new ArrayList<Reader>();
     private BookPartsBuilder bookPartsBuilder;
+    private int chapterNumber;
 
     public BookBuilder(String name) {
         this.name = name;
         this.bookPartsBuilder = new BookPartsBuilder();
+        this.chapterNumber = 1;
     }
 
     public void addAllReaders(List<Reader> chapterReaders, List<Reader> introductionReaders) {
@@ -43,7 +45,7 @@ public class BookBuilder {
 
     private void parseBookChapters() {
         for (Reader reader : readers) {
-            LOG.info("Parsing chapter " + Chapter.getChaptersCount());
+            LOG.info("Parsing chapter " + chapterNumber);
             Scanner scanner = new Scanner(reader);
             scanner.useDelimiter("$$");
             if (scanner.hasNext()) {
@@ -82,9 +84,9 @@ public class BookBuilder {
 
             content = content.substring(introduction.length());
 
-            Chapter chapter = new ChapterBuilder(title, introduction, content).build();
+            Chapter chapter = new ChapterBuilder(title, introduction, content, chapterNumber).build();
             chapters.add(chapter);
-
+            chapterNumber++;
         }
 
         // TODO : Refactoring

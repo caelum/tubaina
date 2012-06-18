@@ -42,7 +42,7 @@ public class ChapterToStringTest {
 	}
 
 	private Chapter createChapter(final String introduction, final String chapterText) {
-		return new ChapterBuilder("Title", introduction, chapterText).build();
+		return new ChapterBuilder("Title", introduction, chapterText, 0).build();
 	}
 
 	private int countOccurrences(final String text, final String substring) {
