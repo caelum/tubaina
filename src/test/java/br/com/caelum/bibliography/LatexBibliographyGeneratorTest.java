@@ -42,6 +42,18 @@ public class LatexBibliographyGeneratorTest {
     }
     
     @Test
+    public void shouldGenerateBibWithoutAField() throws Exception {
+
+        Bibliography bibliography = new BibliographyFactory().build(new File(
+                "src/test/resources/bibliography/miscwithoutyear.xml"));
+
+        String expectedBib = new Scanner(new File(
+                "src/test/resources/bibliography/miscwithoutyear.bib")).useDelimiter("$$").next();
+
+        assertEquals(expectedBib, latexBibGenerator.generateTextOf(bibliography));
+    }
+    
+    @Test
     public void shouldGenerateBibliographyWithEmptyHowPublished() throws Exception {
         BibliographyEntry entry = new BibliographyEntry("author", "title", "1999", null, "article", "label");
         Bibliography bibliography = new Bibliography(Arrays.asList(entry));
@@ -54,4 +66,6 @@ public class LatexBibliographyGeneratorTest {
         Bibliography bibliography = new Bibliography(Arrays.asList(entry));
         latexBibGenerator.generateTextOf(bibliography);
     }
+    
+    
 }

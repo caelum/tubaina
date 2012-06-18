@@ -13,4 +13,11 @@ public class HtmlSanitizerTest {
 		String output = new HtmlSanitizer().sanitize(input);
 		Assert.assertEquals("&amp;&amp;&amp;&amp;", output);
 	}
+
+	@Test
+	public void sanitizingNullStringShouldReturnEmptyText() throws Exception {
+		String input = null;
+		String output = new HtmlSanitizer().sanitize(input);
+		Assert.assertEquals("", output);
+	}
 }
