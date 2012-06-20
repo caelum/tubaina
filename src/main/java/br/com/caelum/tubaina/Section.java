@@ -2,6 +2,8 @@ package br.com.caelum.tubaina;
 
 import java.util.List;
 
+import br.com.caelum.tubaina.util.TitleSlug;
+
 public class Section {
 
 	private static int COUNT = 1;
@@ -12,8 +14,11 @@ public class Section {
 	
 	private int sectionNumber;
 
+    private String titleSlug;
+
 	public Section(String title, List<Chunk> chunks) {
 		this.title = title;
+		this.titleSlug = new TitleSlug(title).toString();
 		this.chunks = chunks;
 		this.sectionNumber = COUNT;
 		COUNT++;
@@ -33,6 +38,10 @@ public class Section {
 	
 	public int getSectionNumber() {
         return sectionNumber;
+    }
+	
+	public String getTitleSlug() {
+        return titleSlug;
     }
 	
 }

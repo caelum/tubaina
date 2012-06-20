@@ -250,23 +250,16 @@ public class Utilities {
 	}
 
 	public static String toDirectoryName(final Integer num, String title) {
-		// The pattern must accept any char except for digits or numbers
 
-		Pattern pattern = Pattern.compile("(?i)(?s)(\\W)+");
-
-		title = title.toLowerCase();
-
-		title = Utilities.removeAccents(title);
-
-		Matcher matcher = pattern.matcher(title);
-		title = matcher.replaceAll("-");
-
-		title = title.replaceFirst("-$", "");
-		title = title.replaceFirst("^-", "");
+		title = titleSlug(title);
 
 		if (num != null) {
 			return String.format("%02d-%s", num, title);
 		}
 		return title;
 	}
+
+    public static String titleSlug(String title) {
+        return new TitleSlug(title).toString();
+    }
 }

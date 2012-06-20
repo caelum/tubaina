@@ -53,4 +53,12 @@ public class UtilitiesTest {
 		Assert.assertEquals("05-c-que-e-java", Utilities.toDirectoryName(5, "Ç  %  que\t é Java?"));
 		Assert.assertEquals("08-c-que-e-java", Utilities.toDirectoryName(8, " $  Ç  %  que\t é Java?"));
 	}
+	
+	@Test
+    public void shouldCreateTitleSlug() throws Exception {
+	    Assert.assertEquals("o-que-e-java", Utilities.titleSlug("O que é Java?"));
+	    Assert.assertEquals("o-que-e-java", Utilities.titleSlug("O    que\t é Java?"));
+	    Assert.assertEquals("c-que-e-java", Utilities.titleSlug("Ç  %  que\t é Java?"));
+	    Assert.assertEquals("c-que-e-java", Utilities.titleSlug(" $  Ç  %  que\t é Java?"));
+    }
 }
