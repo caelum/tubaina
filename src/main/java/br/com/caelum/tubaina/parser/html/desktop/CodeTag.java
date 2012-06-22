@@ -15,7 +15,7 @@ public class CodeTag implements Tag {
 	public String parse(String content, String options) {
 	    Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
 	    if (labelMatcher.matches()) {
-	        throw new TubainaException("Image labels are not yet supported for html output");
+	        throw new TubainaException("Code labels are not supported for html output yet");
 	    }
 	    
 		String preOptions = classAssembler(options);

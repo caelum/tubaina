@@ -10,8 +10,12 @@ public class HtmlCodeHighlighter {
         this.commandExecutor = commandExecutor;
     }
 
-    public String highlight(String code) {
-        return commandExecutor.execute("pygmentize", code);
+    public String highlight(String code, String language, boolean numbered) {
+        String options = "";
+        if (numbered)
+            options = "-P lineos=inline ";
+        String command = "pygmentize " + options + "-f html -l " + language;
+        return commandExecutor.execute(command, code);
     }
 
 }
