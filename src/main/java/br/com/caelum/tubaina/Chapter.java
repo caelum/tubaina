@@ -4,9 +4,9 @@ import java.util.List;
 
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.Resource;
+import br.com.caelum.tubaina.util.TitleSlug;
 
 public class Chapter {
-
 	
 	private String title;
 
@@ -20,6 +20,8 @@ public class Chapter {
 
     private final boolean introductionChapter;
 
+    private String titleSlug;
+
 	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
 		this.title = title;
 		this.sections = sections;
@@ -27,6 +29,7 @@ public class Chapter {
 		this.introduction = introduction;
         this.chapterNumber = chapterNumber;
         this.introductionChapter = introductionChapter;
+        this.titleSlug = new TitleSlug(title).toString();
 	}
 
 	public List<Section> getSections() {
@@ -51,5 +54,9 @@ public class Chapter {
 	
 	public boolean isIntroductionChapter() {
         return introductionChapter;
+    }
+	
+	public String getTitleSlug() {
+        return titleSlug;
     }
 }
