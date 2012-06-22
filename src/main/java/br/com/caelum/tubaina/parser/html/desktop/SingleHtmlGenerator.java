@@ -40,6 +40,8 @@ public class SingleHtmlGenerator implements Generator {
 	public void generate(Book book, File outputDir) throws IOException {
 		StringBuffer bookContent = generateHeader(book);
 		
+		bookContent.append(new SingleHtmlTOCGenerator(book, cfg).generateTOC());
+		
 		ResourceManipulatorFactory htmlResourceManipulatorFactory = new HtmlResourceManipulatorFactory();
 		
 		TubainaHtmlDir bookRoot = new TubainaHtmlIO(templateDir, htmlResourceManipulatorFactory).createTubainaDir(outputDir, book);
