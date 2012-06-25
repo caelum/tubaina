@@ -14,7 +14,7 @@ public class HtmlSyntaxHighlighter {
         String options = "";
         if (numbered)
             options = "-P lineos=inline ";
-        String command = "pygmentize " + options + "-f html -l " + language;
+        String command = "pygmentize -O encoding=ISO-8859-1 -O outencoding=UTF-8 " + options + "-f html -l " + language;
         return commandExecutor.execute(command, code);
     }
 
