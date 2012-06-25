@@ -97,6 +97,7 @@ public class SingleHtmlGenerator implements Generator {
 	private void configureFreemarker() {
 		cfg = new Configuration();
 		try {
+		    cfg.setDefaultEncoding("UTF-8");
 			cfg.setDirectoryForTemplateLoading(templateDir);
 		} catch (IOException e) {
 			throw new TubainaException("Couldn't load freemarker template for Single HTML mode", e);
