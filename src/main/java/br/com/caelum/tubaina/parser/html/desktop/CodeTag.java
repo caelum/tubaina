@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
@@ -28,6 +29,8 @@ public class CodeTag implements Tag {
 	    List<Integer> highlights = detectHighlights(options);
 	    boolean numbered = options.contains("#");
 	    Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+	    SimpleIndentator simpleIndentator = new SimpleIndentator();
+        String indentedCode = simpleIndentator.indent(content);
 	    
 	    if (!highlights.isEmpty()) {
 	        throw new TubainaException("Code highlights are not supported for html output yet");
@@ -36,7 +39,7 @@ public class CodeTag implements Tag {
 	        throw new TubainaException("Code labels are not supported for html output yet");
 	    }
 	    
-	    String code = htmlCodeHighlighter.highlight(content, language, numbered);
+	    String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered);
 	    
 		return START + code + END;
 	}

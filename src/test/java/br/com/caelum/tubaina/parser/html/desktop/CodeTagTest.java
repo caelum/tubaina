@@ -16,8 +16,10 @@ public class CodeTagTest {
 
     @Before
     public void setUp() {
-        code = "public static void main(String[] args) {\n" + "	String name = \"Gabriel\";\n"
-                + "	System.out.println(\"Hello, \" + name);\n" + "}";
+        code = "public static void main(String[] args) {\n" +
+        		"    String name = \"Gabriel\";\n" +
+        		"    System.out.println(\"Hello, \" + name);\n" +
+        		"}";
     }
 
     @Test
