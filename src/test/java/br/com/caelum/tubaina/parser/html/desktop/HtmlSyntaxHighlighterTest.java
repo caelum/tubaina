@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class HtmlCodeHighlighterTest {
+public class HtmlSyntaxHighlighterTest {
 
     private String sampleCode;
 
@@ -22,7 +22,7 @@ public class HtmlCodeHighlighterTest {
     public void shouldCallPygmentsWithJavaLexer() throws Exception {
         CommandExecutor executor = mock(CommandExecutor.class);
         String code = "public class Foo {\n" + "public int Bar(){\n" + "return 0;\n" + "}\n" + "}";
-        HtmlCodeHighlighter highlighter = new HtmlCodeHighlighter(executor);
+        HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
         highlighter.highlight(code, "java", false);
         verify(executor).execute(eq("pygmentize -f html -l java"), eq(sampleCode));
     }
@@ -30,7 +30,7 @@ public class HtmlCodeHighlighterTest {
     @Test
     public void shouldCallPygmentsWithNumberedLinesOption() throws Exception {
         CommandExecutor executor = mock(CommandExecutor.class);
-        HtmlCodeHighlighter highlighter = new HtmlCodeHighlighter(executor);
+        HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
         highlighter.highlight(sampleCode, "java", true);
         verify(executor).execute(eq("pygmentize -P lineos=inline -f html -l java"), eq(sampleCode));
     }

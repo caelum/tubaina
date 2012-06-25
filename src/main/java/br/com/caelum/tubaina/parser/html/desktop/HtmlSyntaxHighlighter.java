@@ -2,11 +2,11 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class HtmlCodeHighlighter {
+public class HtmlSyntaxHighlighter {
 
     private final CommandExecutor commandExecutor;
 
-    public HtmlCodeHighlighter(CommandExecutor commandExecutor) {
+    public HtmlSyntaxHighlighter(CommandExecutor commandExecutor) {
         this.commandExecutor = commandExecutor;
     }
 

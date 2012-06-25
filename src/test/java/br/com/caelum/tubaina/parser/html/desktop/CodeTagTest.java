@@ -23,7 +23,7 @@ public class CodeTagTest {
     @Test
     public void plainJavaCode() throws Exception {
         String options = "java";
-        HtmlCodeHighlighter htmlCodeHighlighter = mock(HtmlCodeHighlighter.class);
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         CodeTag codeTag = new CodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false));
@@ -32,7 +32,7 @@ public class CodeTagTest {
     @Test
     public void javaCodeWithNumberedLines() throws Exception {
         String options = "java #";
-        HtmlCodeHighlighter htmlCodeHighlighter = mock(HtmlCodeHighlighter.class);
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         CodeTag codeTag = new CodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true));
@@ -42,7 +42,7 @@ public class CodeTagTest {
     public void plainRubyCode() throws Exception {
         String options = "ruby";
         String rubyCode = "@name = \"Gabriel\"\n" + "puts \"Hello, \" + name";
-        HtmlCodeHighlighter htmlCodeHighlighter = mock(HtmlCodeHighlighter.class);
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         CodeTag codeTag = new CodeTag(htmlCodeHighlighter);
         codeTag.parse(rubyCode, options);
         verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false));
@@ -53,7 +53,7 @@ public class CodeTagTest {
         String options = "";
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
-        HtmlCodeHighlighter htmlCodeHighlighter = mock(HtmlCodeHighlighter.class);
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         CodeTag codeTag = new CodeTag(htmlCodeHighlighter);
         String output = codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
@@ -64,7 +64,7 @@ public class CodeTagTest {
         String options = "#";
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
-        HtmlCodeHighlighter htmlCodeHighlighter = mock(HtmlCodeHighlighter.class);
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         CodeTag codeTag = new CodeTag(htmlCodeHighlighter);
         String output = codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true));

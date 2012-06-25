@@ -13,13 +13,13 @@ public class CodeTag implements Tag {
 
 	public static final String START = "<div>";
 	public static final String END = "\n</div>";
-    private HtmlCodeHighlighter htmlCodeHighlighter;
+    private HtmlSyntaxHighlighter htmlCodeHighlighter;
     
     public CodeTag() {
-        this.htmlCodeHighlighter = new HtmlCodeHighlighter(new CommandExecutor());
+        this.htmlCodeHighlighter = new HtmlSyntaxHighlighter(new CommandExecutor());
     }
     
-    public CodeTag(HtmlCodeHighlighter htmlCodeHighlighter) {
+    public CodeTag(HtmlSyntaxHighlighter htmlCodeHighlighter) {
         this.htmlCodeHighlighter = htmlCodeHighlighter;
     }
 
