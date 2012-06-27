@@ -28,7 +28,7 @@ public class ChapterToKindleTest {
         cfg.setObjectWrapper(new BeansWrapper());
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
-                "/kindle.properties"), false);
+                "/kindle.properties"), false, true);
         chapterToString = new ChapterToKindle(parser, cfg);
     }
 

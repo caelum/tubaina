@@ -15,8 +15,6 @@ import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.SectionBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
-import br.com.caelum.tubaina.parser.html.desktop.SectionToString;
 import br.com.caelum.tubaina.resources.Resource;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
@@ -30,7 +28,7 @@ public class SectionToStringTest {
 		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
 		cfg.setObjectWrapper(new BeansWrapper());
 
-		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
+		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false, true);
 		ArrayList<String> dirTree = new ArrayList<String>();
 		dirTree.add("livro");
 		dirTree.add("livro/01-capitulo");

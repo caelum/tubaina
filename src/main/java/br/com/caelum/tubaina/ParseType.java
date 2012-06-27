@@ -31,7 +31,7 @@ public enum ParseType {
 	HTMLFLAT {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer);
+			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer, showNotes);
 		}
 
 		@Override
@@ -43,7 +43,7 @@ public enum ParseType {
 
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer);
+			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer, showNotes);
 		}
 
 		@Override

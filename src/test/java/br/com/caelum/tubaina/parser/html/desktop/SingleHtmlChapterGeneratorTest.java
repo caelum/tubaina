@@ -28,7 +28,7 @@ public class SingleHtmlChapterGeneratorTest {
         cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "singlehtml/"));
         cfg.setObjectWrapper(new BeansWrapper());
 
-        Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false);
+        Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false, true);
 
         ArrayList<String> dirTree = new ArrayList<String>();
         dirTree.add("livro");

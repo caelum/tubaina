@@ -20,7 +20,7 @@ public class HtmlParserTest {
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
 		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-		this.parser = new HtmlParser(tags, false);
+		this.parser = new HtmlParser(tags, false, true);
 	}
 
 	@Test

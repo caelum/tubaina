@@ -17,9 +17,12 @@ public class HtmlParser implements Parser {
 
     private final boolean noAnswer;
 
-    public HtmlParser(List<Tag> tags, boolean noAnswer) {
+    private final boolean showNotes;
+
+    public HtmlParser(List<Tag> tags, boolean noAnswer, boolean showNotes) {
         this.tags = tags;
         this.noAnswer = noAnswer;
+        this.showNotes = showNotes;
     }
 
     public String parse(String string) {
@@ -90,7 +93,9 @@ public class HtmlParser implements Parser {
     }
 
     public String parseNote(String text, String title) {
-        return new NoteTag().parse(text, title);
+        if (showNotes)
+            return new NoteTag().parse(text, title);
+        return "";
     }
 
     public String parseItem(String text) {

@@ -29,7 +29,7 @@ public class IntroductionChaptersToKindleTest {
         cfg.setObjectWrapper(new BeansWrapper());
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
-                "/html.properties"), false);
+                "/html.properties"), false, true);
         introductionChaptersToKindle = new IntroductionChaptersToKindle(parser, cfg);
     }
 

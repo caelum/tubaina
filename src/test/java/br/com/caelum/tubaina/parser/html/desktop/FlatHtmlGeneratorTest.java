@@ -41,7 +41,7 @@ public class FlatHtmlGeneratorTest {
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
         List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-        HtmlParser parser = new HtmlParser(tags, false);
+        HtmlParser parser = new HtmlParser(tags, false, true);
 
         File path = new File("src/test/resources");
         ResourceLocator.initialize(path);
