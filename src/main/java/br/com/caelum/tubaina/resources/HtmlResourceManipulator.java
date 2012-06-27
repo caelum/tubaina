@@ -42,6 +42,7 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 	public void copyAndScaleImage(File srcImage, String attribs) {
 		Double scale = new Double(new ImageTag().getScale(attribs));
 		boolean shouldResize = new ImageTag().shouldResize(attribs);
+		boolean tooBig = false;
 		
 		if (srcImage.exists()) {
 			File destinationFile = new File(this.imageDestinationPath, FilenameUtils.getName(srcImage.getPath()));
@@ -53,9 +54,11 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 					ImageOutputStream stream = new FileImageOutputStream(destinationFile);
 					
 					if (Utilities.getImageWidth(srcImage) > PAGE_WIDTH) {
+					    LOG.warn("Image: '" + srcImage.getPath() + "' is too big for the page");
 						scale = 100.0;
+						tooBig = true;
 					}
-					if (shouldResize) {
+					if (shouldResize || tooBig) {
 					    Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (scale)/100.0);
 					}
 					srcImage = destinationFile;
