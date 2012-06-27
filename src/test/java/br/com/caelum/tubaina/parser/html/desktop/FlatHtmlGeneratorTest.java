@@ -54,7 +54,8 @@ public class FlatHtmlGeneratorTest {
         builder.addAllReaders(Arrays.asList((Reader) new StringReader(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")),
+                new ArrayList<Reader>());
         builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
                 + "Algum texto de introdução\n")), new ArrayList<Reader>());
         book = builder.build();
@@ -69,7 +70,7 @@ public class FlatHtmlGeneratorTest {
     }
 
     @Test
-    public void testGenerator() throws IOException {
+    public void shouldCreateDirectoriesAndCopyFiles() throws Exception {
         generator.generate(book, temp);
 
         File livro = new File(temp, "livro/");
@@ -84,6 +85,13 @@ public class FlatHtmlGeneratorTest {
         Assert.assertTrue(FileUtilities.contentEquals(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR,
                 "html/includes"), html, new NotFileFilter(new NameFileFilter(new String[] { "CVS",
                 ".svn" }))));
+    }
+
+    @Test
+    public void shouldCreateDirectoriesForChapters() throws Exception {
+        generator.generate(book, temp);
+        File livro = new File(temp, "livro/");
+        File index = new File(livro, "index.html");
 
         // Diretories and indexes for chapters should exist
         File cap1 = new File(livro, "o-que-e-java");
@@ -94,6 +102,15 @@ public class FlatHtmlGeneratorTest {
         Assert.assertTrue(cap2.exists());
         index = new File(cap2, "index.html");
         Assert.assertTrue(index.exists());
+    }
+
+    @Test
+    public void shouldNotCreateDirectoriesForSections() throws IOException {
+        generator.generate(book, temp);
+
+        File livro = new File(temp, "livro/");
+        File index = new File(livro, "index.html");
+        File cap1 = new File(livro, "o-que-e-java");
 
         // Diretories and indexes for sections should not exist
         File sec1 = new File(cap1, "primeira-secao");
