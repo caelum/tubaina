@@ -4,14 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
-import org.junit.Test;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
-import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
@@ -50,42 +46,5 @@ public class ChapterToStringTest {
 		return tokens.length - 1;
 	}
 
-	@Test
-	public void testGenerateChapterWithSections() {
-		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
-				+ "\n[section segunda] conteudo da segunda");
-
-		String string = chapterToString.generateChapter(new BookBuilder("meu-livro").build(), c, 1, 1).toString();
-
-		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
-		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira/\""));
-		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda/\""));
-		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
-	}
-
-	// TODO Este teste não faz mais sentido algum. Modificar.
-	@Test
-	public void testGenerateChapterWithIntroduction() {
-		Chapter c = createChapter("conteudo da secao vazia", "");
-		String string = chapterToString.generateChapter(new BookBuilder("meu-livro").build(), c, 2, 1).toString();
-
-		Assert.assertEquals(0, countOccurrences(string, sectionIdentifier));
-		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">2<"));
-	}
-	
-	@Test
-	public void testGenerateFlatChapterWithSections() {
-		Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
-				+ "\n[section segunda] conteudo da segunda");
-
-		String head = chapterToString.generateFlatChapterHead(new BookBuilder("").build(), c, 1, 1).toString();
-		String tail = chapterToString.generateFlatChapterTail(new BookBuilder("").build(), c, 1, 1).toString();
-		String string = head + tail;
-
-		Assert.assertEquals(2, countOccurrences(string, sectionIdentifier));
-		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/01-primeira\""));
-		Assert.assertEquals(1, countOccurrences(string, "href=\"../../livro/01-capitulo/02-segunda\""));
-		Assert.assertEquals(1, countOccurrences(string, "<span class=\"chapterNumber\">1<"));
-	}
 	
 }

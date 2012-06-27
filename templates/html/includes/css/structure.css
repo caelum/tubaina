@@ -1,0 +1,35 @@
+.page, #tubaina {
+	height: 1190px;
+	margin: 30px auto;
+	position: relative;
+	max-width: 794px;
+    width: 100%;
+	}
+	.page:nth-child(odd) {
+		padding-left: 80px;
+		padding-right: 30px;
+	}
+.page .header {
+	height: 20px;
+	margin-bottom: 30px;
+}
+.page .footer {
+	height: 20px;
+	margin-top: 30px;	
+}
+.page .content {
+	height: 1090px;
+	padding: 0 5px;
+	position: relative;
+}
+
+@media print {
+	.page {
+		margin: auto;
+		padding-bottom: 0;		
+	}
+}
+
+#book {
+	 /* -moz-transform: scale(0.2); */
+}

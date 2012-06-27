@@ -1,0 +1,181 @@
+@import url(http://fonts.googleapis.com/css?family=Merriweather:400,300,700,900);
+
+body {
+	font-size: 20px;
+	line-height: 1.524em;
+	font-family: 'Merriweather',Georgia,serif;
+	font-weight: 300;
+	font-style: normal;
+    color: #111;
+	position: relative;
+}
+
+h1 { /* chapter */
+    line-height: 1.1em;
+	font-size: 32pt;
+	position: relative;
+	margin: 0.5em 0 1em 0;
+	}
+
+.chapterHeader {
+	font-size: 14px;
+	font-weight: normal;
+	padding-right: 10px;
+	text-align: left;
+	font-variant:small-caps;
+	margin-top:15em;
+	}
+	.chapterHeader span {
+	}
+
+.newchapter {
+	counter-reset:subsection;
+}
+
+h2 { /* section */
+    line-height: 1.1em;
+	font-size: 17pt;
+	padding: 2px 0 0 6px;
+	font-variant: small-caps;
+	}
+	h2 span {
+		margin-right: 1.5em;
+	}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.sectionLike {
+    float: right;
+}
+
+h3 { /* title */
+	font-weight: bolder;
+	margin-bottom: 1em;
+}
+	
+q {
+	display: block;
+	font-style: italic;
+	text-align: right;
+	}
+	q:after {
+		content: "-- " attr(cite);
+		display: block;
+		text-align: right;
+	}
+
+p {
+	text-align: left;
+	text-indent: 25px;
+}
+
+img {
+	display: block;
+	margin: 10px auto;
+}
+
+.note {
+	display: none;
+}
+
+.box {
+	border: 1px solid black;
+	padding:30px;
+	display: block;
+	margin-bottom: 17px;
+	}
+	.box h4 {
+		margin-bottom: 20px;
+	}
+	.box p {
+		text-indent: 0;
+		}
+		.box p:last-child {
+			margin-bottom: 2px;
+		}
+
+h2 {
+	line-height: 1.1em;
+	}
+	.newquestion {
+		counter-increment: question;
+		text-indent: 0;
+		}
+		.newquestion:before {
+			content: counter(question) ") ";
+		}
+
+.page, .page .content {
+	overflow: hidden;
+}
+.header {
+	font-size: 10pt;
+	}
+	.page.newchapter .header {
+		visibility: hidden;
+	}
+.footer {
+	font-size: 10pt;
+	text-align: left;
+	}
+	.page:nth-child(2n+1) .footer {
+		text-align: right;
+	}
+.blank .header, .blank .footer {
+	visibility: hidden;
+}
+
+/** INDEX **/
+#index {
+
+	}
+	#index .content p {
+		border-bottom: 1px dotted black;
+		clear: both;
+		height: 15px;
+		margin: 0;
+		position: relative;
+		text-indent: 0;
+		width: 100%;
+	}
+	#index .content p.chapter {
+		font-weight: bold;
+		margin-top: 20px;
+		}
+	#index .content p a {
+		background: white;
+		color: black;
+		float: left;
+		padding: 2px 10px 2px 2px;
+		text-decoration: none;
+		z-index: 10;
+	}
+	#index .content p span {
+		background: white;
+		float: right;
+		padding-left: 10px;
+		text-indent: 0;
+	}
+	#index .content p:after {
+		clear: both;
+	}
+
+/** menu direito **/
+#menu-direito-wrapper {
+    float: right;
+    margin-right: 150px;
+    }
+    #menu-direito-wrapper .menu-fixed {
+        position: fixed;
+    }
+    
+.toc li {
+    list-style: none;
+}
+
+.highlight span {
+    line-height: 1.2em;
+    font-size: 19px;
+}

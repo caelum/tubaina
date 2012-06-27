@@ -43,44 +43,6 @@ public class ChapterToString {
 		return new FreemarkerProcessor(cfg).process(map, "chapter.ftl");
 	}
 	
-	public StringBuffer generateFlatChapterHead(final Book b, final Chapter c, final int index, final int currentDir) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("book", b);
-		map.put("chapter", c);
-		map.put("curchap", index);
-		map.put("curdir", currentDir);
-		map.put("parser", parser);
-		map.put("dirTree", dirTree);
-		map.put("sanitizer", new HtmlSanitizer());
-		map.put("previous", dirTree.get(currentDir - 1));
-		if (currentDir + c.getSections().size() + 1 < dirTree.size()) {
-			map.put("next", dirTree.get(currentDir + c.getSections().size() + 1));	
-		} else {
-			map.put("next", "");
-		}
-
-		return new FreemarkerProcessor(cfg).process(map, "chapter-flat-head.ftl");
-	}
-	
-	public StringBuffer generateFlatChapterTail(final Book b, final Chapter c, final int index, final int currentDir) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("book", b);
-		map.put("chapter", c);
-		map.put("curchap", index);
-		map.put("curdir", currentDir);
-		map.put("parser", parser);
-		map.put("dirTree", dirTree);
-		map.put("sanitizer", new HtmlSanitizer());
-		map.put("previous", dirTree.get(currentDir - 1));
-		if (currentDir + c.getSections().size() + 1 < dirTree.size()) {
-			map.put("next", dirTree.get(currentDir + c.getSections().size() + 1));	
-		} else {
-			map.put("next", "");
-		}
-
-		return new FreemarkerProcessor(cfg).process(map, "chapter-flat-tail.ftl");
-	}
-	
 	public StringBuffer generateKindleHtmlChapter(Book book, Chapter chapter, StringBuffer allSectionsContent) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("book", book);

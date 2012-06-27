@@ -57,27 +57,11 @@ public class FlatHtmlGenerator implements Generator {
         int currentDir = 1;
         for (Chapter chapter : book.getChapters()) {
             int curdir = currentDir++;
-            StringBuffer chHead = new ChapterToString(parser, cfg, dirTree)
-                    .generateFlatChapterHead(book, chapter, chapterIndex, curdir);
-            StringBuffer chFullText = new StringBuffer().append(chHead);
-
-            int sectionIndex = 1;
-            for (Section section : chapter.getSections()) {
-                if (section.isIntro()) {
-                    toc = new SectionToString(parser, cfg, dirTree).generateFlatSection(book,
-                            chapter.getTitle(), chapterIndex, section, sectionIndex, currentDir);
-                    chFullText.append(toc);
-                    currentDir++;
-                    sectionIndex++;
-                }
-            }
-
-            StringBuffer chTail = new ChapterToString(parser, cfg, dirTree)
-                    .generateFlatChapterTail(book, chapter, chapterIndex, curdir);
-            chFullText.append(chTail);
+            StringBuffer chapterText = new ChapterToString(parser, cfg, dirTree).generateChapter(
+                    book, chapter, chapterIndex, curdir);
 
             bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeIndex(
-                    fixPaths(chFullText)).writeResources(chapter.getResources());
+                    fixPaths(chapterText)).writeResources(chapter.getResources());
 
             chapterIndex++;
         }

@@ -1,42 +1,34 @@
 <#assign relative = '.'>
 <#include "header.ftl">
 
-	<div class="docInfo">
-		<!-- Something you'd like people to see on the frontpage of your document, -->
-		<!-- right above the Table of Contents. Information such as copyrights and -->
-		<!-- other important stuff...-->
-	</div>
-		
-		<div class="contentBox">
-
-			<h1 class="bookName">
-				${name}
-			</h1>
-			<hr />
-						
-			<#assign curdir = 1>
-			<#list chapters as chapter>
-				<#assign chapdir = dirTree[curdir]>
-				<#assign curdir = curdir + 1>
-				<h2 class="indexChapter"><a href="../${chapdir}">Chapter ${chapter_index + 1} - ${chapter.title}</a></h2>
-				
-				<#assign sectionIndex = 1>
-				<#list chapter.sections as section>
-					<#assign title = section.title!"" >
-					<#if title != "">
-						<#assign secdir = dirTree[curdir]>
-						<#assign curdir = curdir + 1>
-						<h3 class="indexSection"><a href="../${secdir}">${chapter_index + 1}.${sectionIndex} - ${title}</a></h3>
-						<#assign sectionIndex = sectionIndex + 1>
-					</#if>
-				</#list>
-			</#list>
-			<h2 class="indexChapter"><a href="index/">Index</a></h2>
-													
-			<hr/>
-													
-		</div><!-- contentBox -->
-	
-		Version: ${textbookVersion}
+<div id="tubaina">
+    <div class="toc">
+        <#assign chapterCount = 1>
+        <ul>
+        <#assign curdir = 1>
+        <#list chapters as chapter>
+            <#assign chapdir = dirTree[curdir]>
+            <#assign curdir = curdir + 1>
+            <li>
+                <a href="${chapter.titleSlug}/index.html">
+                    ${chapterCount} - ${sanitizer.sanitize(chapter.getTitle())}
+                </a>
+            </li>
+            <#assign sectionCount = 1>
+            <ul>
+                <#list chapter.sections as section>
+                    <li>
+                        <a href="${chapter.titleSlug}/index.html#${chapter.chapterNumber}-${sectionCount}-${section.titleSlug}">
+                            ${chapterCount}.${sectionCount} - ${sanitizer.sanitize(section.getTitle())}
+                        </a>
+                    </li>
+                    <#assign sectionCount = sectionCount + 1>
+                </#list>
+            </ul>
+            <#assign chapterCount = chapterCount + 1>
+        </#list>
+        </ul>
+    </div>
+</div>
 
 <#include "footer.ftl">
