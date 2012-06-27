@@ -72,7 +72,6 @@ public class Utilities {
 			int width = (int) Math.round(Math.ceil((newRatio * src.getWidth())));
 			int height = (int) Math.round(Math.ceil(newRatio * src.getHeight()));
 			BufferedImage dest = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-			System.out.println(width);
 
 			Graphics2D graphics = dest.createGraphics();
 			graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
