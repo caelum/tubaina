@@ -44,4 +44,8 @@ public class Section {
         return titleSlug;
     }
 	
+	public boolean isIntro() {
+	    return title == null;
+	}
+	
 }
