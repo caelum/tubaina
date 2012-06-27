@@ -10,7 +10,7 @@
             <#assign chapdir = dirTree[curdir]>
             <#assign curdir = curdir + 1>
             <li>
-                <a href="${chapter.titleSlug}/index.html">
+                <a class="indexChapter" href="${chapter.titleSlug}/index.html">
                     ${chapterCount} - ${sanitizer.sanitize(chapter.getTitle())}
                 </a>
             </li>
@@ -18,7 +18,7 @@
             <ul>
                 <#list chapter.sections as section>
                     <li>
-                        <a href="${chapter.titleSlug}/index.html#${chapter.chapterNumber}-${sectionCount}-${section.titleSlug}">
+                        <a class="indexSection" href="${chapter.titleSlug}/index.html#${chapter.chapterNumber}-${sectionCount}-${section.titleSlug}">
                             ${chapterCount}.${sectionCount} - ${sanitizer.sanitize(section.getTitle())}
                         </a>
                     </li>
