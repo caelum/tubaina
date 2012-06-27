@@ -22,7 +22,7 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 
 	private static final Logger LOG = Logger.getLogger(HtmlResourceManipulator.class);
 
-	private static final int PAGE_WIDTH = 700;
+	private static final int PAGE_WIDTH = 684;
 
 	private final Map<String, Integer> indexes;
 
@@ -39,8 +39,9 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 		// need to copy them.
 	}
 
-	public void copyImage(File srcImage, String attribs) {
-		Integer scale = new ImageTag().getScale(attribs);
+	public void copyAndScaleImage(File srcImage, String attribs) {
+		Double scale = new Double(new ImageTag().getScale(attribs));
+		boolean shouldResize = new ImageTag().shouldResize(attribs);
 		
 		if (srcImage.exists()) {
 			File destinationFile = new File(this.imageDestinationPath, FilenameUtils.getName(srcImage.getPath()));
@@ -52,9 +53,11 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 					ImageOutputStream stream = new FileImageOutputStream(destinationFile);
 					
 					if (Utilities.getImageWidth(srcImage) > PAGE_WIDTH) {
-						scale = 1;
+						scale = 100.0;
 					}
-					Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, ((double) scale)/100);
+					if (shouldResize) {
+					    Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (scale)/100.0);
+					}
 					srcImage = destinationFile;
 		
 					Utilities.getImageWithLogo(srcImage, stream, Utilities.getFormatName(srcImage), logo);

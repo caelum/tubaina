@@ -13,7 +13,7 @@ public class ImageResource implements Resource {
 	}
 
 	public void copyTo(ResourceManipulator manipulator) {
-		manipulator.copyImage(img, scale);
+		manipulator.copyAndScaleImage(img, scale);
 	}
 
 }

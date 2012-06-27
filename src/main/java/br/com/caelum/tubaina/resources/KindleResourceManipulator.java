@@ -30,7 +30,7 @@ public class KindleResourceManipulator implements ResourceManipulator {
         // need to copy them.
     }
 
-    public void copyImage(File srcImage, String attribs) {
+    public void copyAndScaleImage(File srcImage, String attribs) {
         if (srcImage.exists()) {
             File destinationFile = new File(this.imageDestinationPath, FilenameUtils
                     .getName(srcImage.getPath()));

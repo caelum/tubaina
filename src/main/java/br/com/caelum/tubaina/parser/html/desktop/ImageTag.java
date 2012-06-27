@@ -24,4 +24,8 @@ public class ImageTag implements Tag {
 	public Integer getScale(final String string) {
 		return template.getScale(string);
 	}
+	
+	public boolean shouldResize(final String options) {
+	    return template.shouldScale(options);
+	}
 }

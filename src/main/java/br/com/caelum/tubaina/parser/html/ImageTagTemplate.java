@@ -51,4 +51,14 @@ public class ImageTagTemplate {
 		}
 		return 100;
 	}
+	
+	public boolean shouldScale(final String options) {
+	    if (options == null) {
+	        return false;
+	    }
+        Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
+        Matcher sMatcher = horizontalScale.matcher(options);
+        
+        return sMatcher.matches();
+	}
 }

@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.parser.Parser;
@@ -25,7 +26,7 @@ public class LatexResourceManipulator implements ResourceManipulator {
 
 	private static final Logger LOG = Logger.getLogger(LatexResourceManipulator.class);
 
-	private static final int PAGE_WIDTH = 500;
+	private static final int PAGE_WIDTH = TubainaBuilder.getMaximumWidth();
 
 	private final Parser parser;
 
@@ -38,7 +39,7 @@ public class LatexResourceManipulator implements ResourceManipulator {
 		this.noAnswer = noAnswer;
 	}
 
-	public void copyImage(File srcImage, String scale) {
+	public void copyAndScaleImage(File srcImage, String scale) {
 		Integer width = new ImageTag().getScale(scale);
 		if (srcImage.exists()) {
 			File destinationPath = new File(this.imagePath, FilenameUtils.getName(srcImage.getPath()));
