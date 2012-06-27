@@ -26,7 +26,6 @@ import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
-import br.com.caelum.tubaina.util.Utilities;
 
 public class FlatHtmlGeneratorTest {
 
@@ -166,15 +165,5 @@ public class FlatHtmlGeneratorTest {
             System.out.println(t.getMessage());
             // OK
         }
-    }
-
-    @Test
-    public void testToDirectoryName() {
-        // TODO Testar mais && Mudar de classe
-        Assert.assertEquals("01-o-que-e-java", Utilities.toDirectoryName(1, "O que é Java?"));
-        Assert.assertEquals("10-o-que-e-java", Utilities.toDirectoryName(10, "O    que\t é Java?"));
-        Assert.assertEquals("05-c-que-e-java", Utilities.toDirectoryName(5, "Ç  %  que\t é Java?"));
-        Assert.assertEquals("08-c-que-e-java",
-                Utilities.toDirectoryName(8, " $  Ç  %  que\t é Java?"));
     }
 }
