@@ -61,8 +61,8 @@ public class Chapter {
         return titleSlug;
     }
 	
-	public String getShortTitle() {
-	    return new TitleShortener().shortenTitle(title);
+	public String getShortTitle(int maxLength) {
+	    return new TitleShortener(maxLength).shortenTitle(title);
 	}
 	
 }
