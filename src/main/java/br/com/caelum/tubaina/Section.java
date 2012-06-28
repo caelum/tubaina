@@ -2,6 +2,7 @@ package br.com.caelum.tubaina;
 
 import java.util.List;
 
+import br.com.caelum.tubaina.util.TitleShortener;
 import br.com.caelum.tubaina.util.TitleSlug;
 
 public class Section {
@@ -47,5 +48,9 @@ public class Section {
 	public boolean isIntro() {
 	    return title == null;
 	}
+	
+	public String getShortTitle() {
+	    return new TitleShortener().shortenTitle(title);
+    }
 	
 }

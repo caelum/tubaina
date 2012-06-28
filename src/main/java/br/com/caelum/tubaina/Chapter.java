@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.Resource;
+import br.com.caelum.tubaina.util.TitleShortener;
 import br.com.caelum.tubaina.util.TitleSlug;
 
 public class Chapter {
@@ -59,4 +60,9 @@ public class Chapter {
 	public String getTitleSlug() {
         return titleSlug;
     }
+	
+	public String getShortTitle() {
+	    return new TitleShortener().shortenTitle(title);
+	}
+	
 }
