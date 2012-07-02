@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
 import freemarker.template.Configuration;
@@ -27,9 +28,10 @@ public class IndexToString {
 		return new FreemarkerProcessor(cfg).process(map, "index.ftl");
 	}
 	
-	public StringBuffer createFlatIndex(final Map<String, Integer> indexes) {
+	public StringBuffer createFlatIndex(final Map<String, Integer> indexes, Book book) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dirTree", dirTree);
+		map.put("book", book);
 		map.put("indexes", indexes);
 		map.put("sanitizer", new HtmlSanitizer());
 		return new FreemarkerProcessor(cfg).process(map, "index-flat.ftl");

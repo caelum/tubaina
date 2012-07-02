@@ -72,7 +72,7 @@ public class FlatHtmlGenerator implements Generator {
 
         // TODO: this won't work
         Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
-        StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes);
+        StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes, book);
         bookRoot.cd("index").writeIndex(index);
     }
 
