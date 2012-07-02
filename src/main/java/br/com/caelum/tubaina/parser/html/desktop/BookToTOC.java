@@ -14,7 +14,7 @@ public class BookToTOC {
 
 	public StringBuffer generateTOC(final Book b, final Configuration cfg, final List<String> dirTree) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("name", b.getName());
+		map.put("book", b);
 		map.put("chapters", b.getChapters());
 		map.put("dirTree", dirTree);
 		map.put("textbookVersion", new VersionGenerator().generate());
