@@ -5,6 +5,7 @@ import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.chunk.CodeChunk;
+import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.util.Utilities;
 
 public class CodeReplacer extends AbstractReplacer {
@@ -15,8 +16,9 @@ public class CodeReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-		int maxLineLength = Utilities.maxLineLength(content) - Utilities.getMinIndent(content); 
-		if(maxLineLength >TubainaBuilder.getCodeLength())
+	    SimpleIndentator indentator = new SimpleIndentator();
+		int maxLineLength = Utilities.maxLineLength(indentator.indent(content)) - Utilities.getMinIndent(indentator.indent(content)); 
+		if (maxLineLength > TubainaBuilder.getCodeLength())
 			throw new TubainaException ("Chapter " + ChapterBuilder.getChaptersCount() + 
 										"  -  Code has " + maxLineLength + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
 		return new CodeChunk(content, options);

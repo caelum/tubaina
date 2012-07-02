@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.ParseType;
+import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 
@@ -53,5 +55,35 @@ public class CodeReplacerTest {
 		replacer.execute(original, chunks);
 		Assert.assertEquals(1, chunks.size());
 		Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
+	}
+
+	@Test
+    public void shouldThrowExeptionWhenMaxCodeWidthIsExceeded() throws Exception {
+	    TubainaBuilder builder = new TubainaBuilder(ParseType.LATEX);
+        builder.codeLength(10);
+	    String original = "[code java]12345678901[/code]";
+        Assert.assertTrue(replacer.accepts(original));
+        try {
+            replacer.execute(original, chunks);
+            Assert.fail("should throw exception");
+        } catch (TubainaException e) {
+        } finally {
+            builder.codeLength(10000);
+        }
+    }
+	
+	@Test
+	public void shouldThrowExeptionWithCodeWithTabs() throws Exception {
+	    TubainaBuilder builder = new TubainaBuilder(ParseType.LATEX);
+        builder.codeLength(10);
+	    String original = "[code java]5\t678901[/code]";
+	    Assert.assertTrue(replacer.accepts(original));
+	    try {
+	        replacer.execute(original, chunks);
+	        Assert.fail("should throw exception");
+	    } catch (TubainaException e) {
+	    } finally {
+	        builder.codeLength(10000);
+	    }
 	}
 }
