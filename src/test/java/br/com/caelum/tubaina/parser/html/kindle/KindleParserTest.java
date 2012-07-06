@@ -162,21 +162,21 @@ public class KindleParserTest {
     @Test
     public void testBoxTagWithoutInnerTags() {
         String result = parser.parseBox("ola mundo", "Titulo do Box");
-        Assert.assertEquals("<hr/><h4>Titulo do Box</h4>\nola mundo<hr/>", result);
+        Assert.assertEquals("<hr/><b>Titulo do Box</b>\nola mundo<hr/>", result);
     }
 
     @Test
     public void testBoxTagWithInnerTags() {
         // Should not parse. BoxTag just create the box structure
         String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-        Assert.assertEquals("<hr/><h4>Titulo do Box</h4>\n__ola__ **mundo**<hr/>", result);
+        Assert.assertEquals("<hr/><b>Titulo do Box</b>\n__ola__ **mundo**<hr/>", result);
     }
 
     @Test
     public void testBoxTagWithInnerTagsOnTitle() {
         // Should not parse. BoxTag just creates the box structure
         String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-        Assert.assertEquals("<hr/><h4>Titulo **do Box**</h4>\nola mundo<hr/>", result);
+        Assert.assertEquals("<hr/><b>Titulo **do Box**</b>\nola mundo<hr/>", result);
     }
 
     @Test

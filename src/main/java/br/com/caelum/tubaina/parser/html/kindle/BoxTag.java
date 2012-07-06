@@ -5,8 +5,8 @@ import br.com.caelum.tubaina.parser.Tag;
 public class BoxTag implements Tag {
 
 	public String parse(String content, String title) {
-		return "<hr/><h4>" + title.trim() 
-				+ "</h4>\n" + content.trim() + "<hr/>";
+		return "<hr/><b>" + title.trim() 
+				+ "</b>\n" + content.trim() + "<hr/>";
 	}
 
 }
