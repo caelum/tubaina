@@ -62,13 +62,13 @@ public class KindleParserTest {
     @Test
     public void testInlineCodeTagInline() {
         String result = parser.parse("ola %%mundo%%");
-        Assert.assertEquals("ola <pre>mundo</pre>", result);
+        Assert.assertEquals("ola <code>mundo</code>", result);
     }
 
     @Test
     public void testInlineCodeTagMultiline() {
         String result = parser.parse("ola %%mu\nndo%%");
-        Assert.assertEquals("ola <pre>mu\nndo</pre>", result);
+        Assert.assertEquals("ola <code>mu\nndo</code>", result);
     }
 
     // Test for inline Ruby code with inheritance symbol (::)
@@ -77,7 +77,7 @@ public class KindleParserTest {
         String result = parser
                 .parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
         Assert.assertEquals(
-                "ola <pre>mundo &#58;&#58; superclasse</pre> texto <pre>mais codigo &#58;&#58; superclasse</pre>",
+                "ola <code>mundo &#58;&#58; superclasse</code> texto <code>mais codigo &#58;&#58; superclasse</code>",
                 result);
     }
 
@@ -85,7 +85,7 @@ public class KindleParserTest {
     public void testParagraphTagWithInnerTagsInline() {
         String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");
         Assert.assertEquals(
-                "<p><strong>Ola</strong> <em>mundo</em>. <pre>Tchau</pre> <strong><em><u>mundo</u></em></strong>.</p>",
+                "<p><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</p>",
                 result);
     }
 
