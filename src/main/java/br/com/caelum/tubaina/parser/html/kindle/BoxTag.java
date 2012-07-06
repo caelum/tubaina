@@ -4,9 +4,14 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class BoxTag implements Tag {
 
-	public String parse(String content, String title) {
-		return "<hr/><b>" + title.trim() 
-				+ "</b>\n" + content.trim() + "<hr/>";
-	}
+    static final String END = "</tr></td></table>";
+    static final String TITLE_END = "</b><br />\n";
+    static final String TITLE_BEGIN = "<b>";
+    static final String BEGIN = "<table><tr><td>";
+
+    public String parse(String content, String title) {
+        return BEGIN + TITLE_BEGIN + title.trim() + TITLE_END + content.trim()
+                + END;
+    }
 
 }

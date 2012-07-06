@@ -162,21 +162,24 @@ public class KindleParserTest {
     @Test
     public void testBoxTagWithoutInnerTags() {
         String result = parser.parseBox("ola mundo", "Titulo do Box");
-        Assert.assertEquals("<hr/><b>Titulo do Box</b>\nola mundo<hr/>", result);
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
+                + "ola mundo" + BoxTag.END, result);
     }
 
     @Test
     public void testBoxTagWithInnerTags() {
         // Should not parse. BoxTag just create the box structure
         String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-        Assert.assertEquals("<hr/><b>Titulo do Box</b>\n__ola__ **mundo**<hr/>", result);
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
+                + "__ola__ **mundo**" + BoxTag.END, result);
     }
 
     @Test
     public void testBoxTagWithInnerTagsOnTitle() {
         // Should not parse. BoxTag just creates the box structure
         String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-        Assert.assertEquals("<hr/><b>Titulo **do Box**</b>\nola mundo<hr/>", result);
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo **do Box**"
+                + BoxTag.TITLE_END + "ola mundo" + BoxTag.END, result);
     }
 
     @Test
@@ -234,8 +237,8 @@ public class KindleParserTest {
         List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
         Assert.assertEquals(3, chunks.size());
         Assert.assertEquals("<li>Refactoring, Martin Fowler</li>", chunks.get(0).getContent(parser));
-        Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>",
-                chunks.get(1).getContent(parser));
+        Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>", chunks.get(1).getContent(
+                parser));
         Assert.assertEquals("<li>Design Patterns, Erich Gamma et al</li>", chunks.get(2)
                 .getContent(parser));
     }
