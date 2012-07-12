@@ -10,7 +10,7 @@ public class XmlTagTest {
 
 	@Test(expected=TubainaException.class)
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
-		new XmlTag(new SimpleIndentator()).parse("<an xml>", "");
+		new XmlTag(new SimpleIndentator(4)).parse("<an xml>", "");
 	}
 	
 }

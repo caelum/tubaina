@@ -12,7 +12,6 @@ import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.CodeChunk;
-import br.com.caelum.tubaina.parser.SimpleIndentator;
 
 public class CodeReplacerTest {
 
@@ -76,7 +75,7 @@ public class CodeReplacerTest {
 	@Test
 	public void shouldThrowExeptionWithCodeWithTabs() throws Exception {
 	    TubainaBuilder builder = new TubainaBuilder(ParseType.LATEX);
-	    String tabReplacement = SimpleIndentator.TAB_REPLACEMENT;
+	    String tabReplacement = "    ";
         builder.codeLength(6 + tabReplacement.length());
 	    String original = "[code java]5\t678901[/code]";
 	    Assert.assertTrue(replacer.accepts(original));

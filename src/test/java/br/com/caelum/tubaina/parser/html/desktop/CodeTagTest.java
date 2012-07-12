@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.HtmlCodeTag;
+import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
 
 public class CodeTagTest {
 
@@ -16,7 +16,7 @@ public class CodeTagTest {
                 "    String name = \"Gabriel\";\n" +
                 "    System.out.println(\"Hello, \" + name);\n" +
                 "}";
-        HtmlCodeTag htmlCodeTag = mock(HtmlCodeTag.class);
+        HtmlAndKindleCodeTag htmlCodeTag = mock(HtmlAndKindleCodeTag.class);
         CodeTag codeTag = new CodeTag(htmlCodeTag);
         codeTag.parse(code, "java");
         verify(htmlCodeTag).parse(eq(code), eq("java"));

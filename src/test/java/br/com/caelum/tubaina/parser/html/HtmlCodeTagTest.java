@@ -27,7 +27,7 @@ public class HtmlCodeTagTest {
     public void plainJavaCode() throws Exception {
         String options = "java";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
-        HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false));
     }
@@ -36,7 +36,7 @@ public class HtmlCodeTagTest {
     public void javaCodeWithNumberedLines() throws Exception {
         String options = "java #";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
-        HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true));
     }
@@ -46,7 +46,7 @@ public class HtmlCodeTagTest {
         String options = "ruby";
         String rubyCode = "@name = \"Gabriel\"\n" + "puts \"Hello, \" + name";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
-        HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(rubyCode, options);
         verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false));
     }
@@ -57,7 +57,7 @@ public class HtmlCodeTagTest {
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
-        HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
     }
@@ -68,7 +68,7 @@ public class HtmlCodeTagTest {
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
-        HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true));
     }
@@ -76,7 +76,7 @@ public class HtmlCodeTagTest {
     @Test
     public void shouldThrowExpectionWhenTagContainsLabel() {
         try {
-            new HtmlCodeTag().parse("", "label=somelabel");
+            new HtmlAndKindleCodeTag().parse("", "label=somelabel");
             Assert.fail("should throw excpetion");
         } catch (TubainaException e) {
         }
@@ -85,7 +85,7 @@ public class HtmlCodeTagTest {
     @Test
     public void shouldThrowExpectionWhenOptionsContainsHighlight() {
         try {
-            new HtmlCodeTag().parse("", "h=1");
+            new HtmlAndKindleCodeTag().parse("", "h=1");
             Assert.fail("should throw excpetion");
         } catch (TubainaException e) {
         }

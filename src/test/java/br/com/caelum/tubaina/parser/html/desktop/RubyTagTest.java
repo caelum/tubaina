@@ -10,7 +10,7 @@ public class RubyTagTest {
 	
 	@Test(expected=TubainaException.class)
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
-		RubyTag rubyTag = new RubyTag(new SimpleIndentator());
+		RubyTag rubyTag = new RubyTag(new SimpleIndentator(4));
 		String code = "# this is a ruby comment";
 		rubyTag.parse(code, "");
 	}

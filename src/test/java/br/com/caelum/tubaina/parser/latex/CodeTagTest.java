@@ -16,7 +16,7 @@ public class CodeTagTest {
 				"texto=valor\n" +
 				"texto:valor\n" +
 				"texto valor";
-		String output = new CodeTag(new SimpleIndentator()).parse(string, options);
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string, options);
 		Assert.assertEquals(CodeTag.BEGIN + "{properties}\n" +
 				"blablah blah\n" +
 				"#algum comentario\n" +
@@ -33,7 +33,7 @@ public class CodeTagTest {
 				"texto\\:valor:valor\n" +
 				"texto\\ valor valor\n" +
 				"a b\\#fake comentario";
-		String output = new CodeTag(new SimpleIndentator()).parse(string, options);
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string, options);
 		Assert.assertEquals(CodeTag.BEGIN + "{properties}\n" +
 				"blablah blah\n" +
 				"#algum comentario\n" +
@@ -48,7 +48,7 @@ public class CodeTagTest {
 	public void languageCodeTagIsReturnedInsideMintedEnvironment() throws Exception {
 		String string = "public static void main(String[] args) {";
 		String options = "java";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "{java}\n" +
 							string + 
 							CodeTag.END, output);
@@ -58,7 +58,7 @@ public class CodeTagTest {
 	public void languageCodeTagShouldInsertLineNumbersWhenOptionContainsSharp(){
 		String string = "public static void main(String[] args) {";
 		String options = "java #";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{java}\n" +
 							string + 
 							CodeTag.END, output);
@@ -68,7 +68,7 @@ public class CodeTagTest {
 	public void languageCodeTagShouldUnderstandLineNumbersEvenWhenNoLanguageIsSelected(){
 		String string = "def some: \"bizarre code\" in: unknownLanguage";
 		String options = "#";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{text}\n" +
 				string + 
 				CodeTag.END, output);
@@ -78,7 +78,7 @@ public class CodeTagTest {
 	public void languageCodeTagShouldUnderstandLineNumbersAndHighlightsWhenNoLanguageIsSelected(){
 		String string = "def some: \"bizarre code\" \nin: unknownLanguage";
 		String options = "# h=1,2";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt, h=1,2]{text}\n" +
 				string + 
 				CodeTag.END, output);
@@ -88,7 +88,7 @@ public class CodeTagTest {
 	public void languageCodeTagShouldUnderstandLineNumbersAndCSharpLanguage(){
 		String string = "public class SomeClass {";
 		String options = "C# #";
-		String output = new CodeTag(new SimpleIndentator()).parse(string , options );
+		String output = new CodeTag(new SimpleIndentator(4)).parse(string , options );
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{C#}\n" +
 				string + 
 				CodeTag.END, output);
@@ -99,7 +99,7 @@ public class CodeTagTest {
         String options = "label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        String output = new CodeTag(new SimpleIndentator(4)).parse(code, options);
         Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n" + CodeTag.BEGIN
                 + "{text}\n" + code + CodeTag.END,
                 output);
@@ -111,7 +111,7 @@ public class CodeTagTest {
         String options = "java label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        String output = new CodeTag(new SimpleIndentator(4)).parse(code, options);
         Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n" + CodeTag.BEGIN
                 + "{java}\n" + code + CodeTag.END, output);
 
@@ -122,7 +122,7 @@ public class CodeTagTest {
         String options = "filename=src/Main.java";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        String output = new CodeTag(new SimpleIndentator(4)).parse(code, options);
         Assert.assertEquals("\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{text}\n"
                 + code
                 + CodeTag.END, output);
@@ -134,7 +134,7 @@ public class CodeTagTest {
         String options = "java filename=src/Main.java";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        String output = new CodeTag(new SimpleIndentator(4)).parse(code, options);
         Assert.assertEquals("\\tubainaCodeFileName{src/Main.java}\n" + CodeTag.BEGIN + "{java}\n"
                 + code + CodeTag.END, output);
     }
@@ -144,7 +144,7 @@ public class CodeTagTest {
         String options = "java filename=src/Main2.java label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = new CodeTag(new SimpleIndentator()).parse(code, options);
+        String output = new CodeTag(new SimpleIndentator(4)).parse(code, options);
         Assert.assertEquals("\\tubainaCodeLabel{javacode1}\n"
                 + "\\tubainaCodeFileName{src/Main2.java}\n" + CodeTag.BEGIN + "{java}\n"
                 + code + CodeTag.END, output);

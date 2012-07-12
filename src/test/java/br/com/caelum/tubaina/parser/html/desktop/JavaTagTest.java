@@ -10,7 +10,7 @@ public class JavaTagTest {
 
 	@Test(expected=TubainaException.class)
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
-		JavaTag tag = new JavaTag(new SimpleIndentator());
+		JavaTag tag = new JavaTag(new SimpleIndentator(4));
 		tag.parse("class", "#");
 	}
 

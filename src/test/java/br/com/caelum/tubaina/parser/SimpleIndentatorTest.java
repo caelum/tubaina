@@ -10,7 +10,7 @@ public class SimpleIndentatorTest {
 	@Test
 	public void testIndentatorOnlySpacesSingleLine() {
 		String test = "   blah";
-		String result = new SimpleIndentator().indent(test);
+		String result = new SimpleIndentator(4).indent(test);
 		Assert.assertEquals("blah", result);
 	}
 	
@@ -18,29 +18,29 @@ public class SimpleIndentatorTest {
 	public void testIndentatorOnlySpacesMultiLine() {
 		String test = 
 				"   blah\n" +
-				"     bleh\n" +
-				"       blih\n" +
-				"     bloh\n" +
+				"       bleh\n" +
+				"           blih\n" +
+				"       bloh\n" +
 				"   bluh";
-		String result = new SimpleIndentator().indent(test);
+		String result = new SimpleIndentator(4).indent(test);
 		Assert.assertEquals(
 				"blah\n" +
-				"  bleh\n" +
-				"    blih\n" +
-				"  bloh\n" +
+				"    bleh\n" +
+				"        blih\n" +
+				"    bloh\n" +
 				"bluh", result);
 	}
 	
 	@Test
 	public void testIndentatorWithTabsMultiLine() {
-	    String tabReplacement = SimpleIndentator.TAB_REPLACEMENT;
+	    String tabReplacement = "    ";
 		String test = 
 				"	blah\n" +
 				"		bleh\n" +
 				"			blih\n" +
 				"		bloh\n" +
 				"	bluh";
-		String result = new SimpleIndentator().indent(test);
+		String result = new SimpleIndentator(4).indent(test);
         Assert.assertEquals(
 				"blah\n" +
 		        tabReplacement + "bleh\n" +

@@ -16,7 +16,8 @@ public class CodeReplacer extends AbstractReplacer {
 
 	@Override
 	public Chunk createChunk(String options, String content) {
-	    SimpleIndentator indentator = new SimpleIndentator();
+	    //TODO: use the real tab size, it may be different depending of which parseType is being used
+	    SimpleIndentator indentator = new SimpleIndentator(4);
 		int maxLineLength = Utilities.maxLineLength(indentator.indent(content)) - Utilities.getMinIndent(indentator.indent(content)); 
 		if (maxLineLength > TubainaBuilder.getCodeLength())
 			throw new TubainaException ("Chapter " + ChapterBuilder.getChaptersCount() + 

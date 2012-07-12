@@ -46,7 +46,7 @@ public class HtmlParser implements Parser {
     }
 
     public String parseJava(String text, String options) {
-        String string = new JavaTag(new SimpleIndentator())
+        String string = new JavaTag(new SimpleIndentator(4))
                 .parse(text, options);
         return string;
     }
@@ -72,7 +72,7 @@ public class HtmlParser implements Parser {
 
     public String parseXml(String text, String options) {
         text = this.sanitizer.sanitize(text);
-        String string = new XmlTag(new SimpleIndentator()).parse(text, options);
+        String string = new XmlTag(new SimpleIndentator(4)).parse(text, options);
         return string;
     }
 
@@ -130,7 +130,7 @@ public class HtmlParser implements Parser {
     }
 
     public String parseRuby(String content, String options) {
-        return new RubyTag(new SimpleIndentator()).parse(content, options);
+        return new RubyTag(new SimpleIndentator(4)).parse(content, options);
     }
 
     public String parseParagraphInsideItem(String text) {

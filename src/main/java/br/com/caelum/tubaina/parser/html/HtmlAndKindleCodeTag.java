@@ -11,17 +11,17 @@ import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class HtmlCodeTag implements Tag {
+public class HtmlAndKindleCodeTag implements Tag {
 
     public static final String START = "<div>";
     public static final String END = "\n</div>";
     private HtmlSyntaxHighlighter htmlCodeHighlighter;
     
-    public HtmlCodeTag() {
+    public HtmlAndKindleCodeTag() {
         this.htmlCodeHighlighter = new HtmlSyntaxHighlighter(new CommandExecutor());
     }
     
-    public HtmlCodeTag(HtmlSyntaxHighlighter htmlCodeHighlighter) {
+    public HtmlAndKindleCodeTag(HtmlSyntaxHighlighter htmlCodeHighlighter) {
         this.htmlCodeHighlighter = htmlCodeHighlighter;
     }
 
@@ -30,7 +30,7 @@ public class HtmlCodeTag implements Tag {
         List<Integer> highlights = detectHighlights(options);
         boolean numbered = options.contains("#");
         Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
-        SimpleIndentator simpleIndentator = new SimpleIndentator();
+        SimpleIndentator simpleIndentator = new SimpleIndentator(2);
         String indentedCode = simpleIndentator.indent(content);
         
         if (!highlights.isEmpty()) {

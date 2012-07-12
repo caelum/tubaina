@@ -25,7 +25,7 @@ public class GistTagTest {
 		String options = "417835";
 		String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
 
-		String output = new GistTag(new SimpleIndentator(), retriever).parse(
+		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
 				"", options);
 
 		Assert.assertEquals(CodeTag.BEGIN + "{text}\n" + gistedCode
@@ -50,7 +50,7 @@ public class GistTagTest {
 
 		GistResultRetriever retriever = new GistResultRetriever(connector);
 
-		String output = new GistTag(new SimpleIndentator(), retriever).parse(
+		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
 				"", options);
 		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{text}\n"
 				+ gistedCode + CodeTag.END, output);

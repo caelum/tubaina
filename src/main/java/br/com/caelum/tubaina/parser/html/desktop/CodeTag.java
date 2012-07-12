@@ -1,17 +1,17 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.HtmlCodeTag;
+import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
 
 public class CodeTag implements Tag {
 
-    private HtmlCodeTag htmlCodeTag;
+    private HtmlAndKindleCodeTag htmlCodeTag;
 
     public CodeTag() {
-        htmlCodeTag = new HtmlCodeTag();
+        htmlCodeTag = new HtmlAndKindleCodeTag();
     }
     
-    public CodeTag(HtmlCodeTag htmlCodeTag) {
+    public CodeTag(HtmlAndKindleCodeTag htmlCodeTag) {
         this.htmlCodeTag = htmlCodeTag;
     }
 

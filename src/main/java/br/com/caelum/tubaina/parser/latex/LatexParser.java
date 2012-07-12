@@ -52,7 +52,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseJava(String text, String options) {
-        String string = new JavaTag(new SimpleIndentator())
+        String string = new JavaTag(new SimpleIndentator(4))
                 .parse(text, options);
         return string;
     }
@@ -63,7 +63,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseCode(String text, String options) {
-        String string = new CodeTag(new SimpleIndentator())
+        String string = new CodeTag(new SimpleIndentator(4))
                 .parse(text, options);
         return string + VSPACE;
     }
@@ -72,7 +72,7 @@ public class LatexParser implements Parser {
     	
     	GistResultRetriever retriever = new GistResultRetriever(new GistConnector(
 				new JsonToGistResultConverter(), new GistRequest()));
-    	SimpleIndentator ident = new SimpleIndentator();
+    	SimpleIndentator ident = new SimpleIndentator(4);
     	
 		String string = new GistTag(ident, retriever).parse(null, options);
         return string + VSPACE;
@@ -84,7 +84,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseXml(String text, String options) {
-        return new XmlTag(new SimpleIndentator()).parse(text, options)
+        return new XmlTag(new SimpleIndentator(4)).parse(text, options)
                 + VSPACE;
     }
 
@@ -138,7 +138,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseRuby(String content, String options) {
-        String result = new RubyTag(new SimpleIndentator()).parse(content,
+        String result = new RubyTag(new SimpleIndentator(4)).parse(content,
                 options);
         return result + VSPACE;
     }
