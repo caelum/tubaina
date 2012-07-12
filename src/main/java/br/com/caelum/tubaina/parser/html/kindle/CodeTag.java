@@ -1,29 +1,22 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.html.HtmlCodeTag;
 
 public class CodeTag implements Tag {
 
+    private final HtmlCodeTag htmlCodeTag;
+    
+    public CodeTag() {
+        this.htmlCodeTag = new HtmlCodeTag();
+    }
+
+    public CodeTag(HtmlCodeTag htmlCodeTag) {
+        this.htmlCodeTag = htmlCodeTag;
+    }
+
     public String parse(String content, String options) {
-    	
-    	SimpleIndentator simpleIndentator = new SimpleIndentator();
-        String indentedCode = simpleIndentator.indent(content);
-
-        StringBuilder parsedLabel = new StringBuilder();
-        parsedLabel.append(matchLabel(options));
-        
-        return "<pre id=\"" + parsedLabel + "\">\n"
-                + indentedCode + "\n</pre>";
+        return htmlCodeTag.parse(content, options);
     }
 
-    private String matchLabel(String options) {
-        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
-        if(labelMatcher.find())
-        	return labelMatcher.group(1);
-        return "";
-    }
 }

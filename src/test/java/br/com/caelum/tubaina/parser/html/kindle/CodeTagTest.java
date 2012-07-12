@@ -1,32 +1,26 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import junit.framework.Assert;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
-import org.junit.Before;
 import org.junit.Test;
+
+import br.com.caelum.tubaina.parser.html.HtmlCodeTag;
+import br.com.caelum.tubaina.parser.html.kindle.CodeTag;
 
 
 public class CodeTagTest {
 	
-	private String code;
-
-	@Before
-	public void setUp() {
-		code =  "public static void main(String[] args) {\n" +
-				"	String name = \"Gabriel\";\n" +
-				"	System.out.println(\"Hello, \" + name);\n" +
-				"}";
-		code = code.replaceAll(" ", "&nbsp;");
-		code = code.replaceAll("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
-	}
 	@Test
-	public void labelShouldBeShown() throws Exception {
-		String options="label=bizarre-code";
-		String noParticularLanguage = "Some text explaining some new bizarre\n" +
-				"syntax in a very code alike way";
-		noParticularLanguage = noParticularLanguage.replaceAll(" ", "&nbsp;");
-		String output = new CodeTag().parse(noParticularLanguage, options);
-		Assert.assertEquals("<pre id=\"bizarre-code\">\n" 
-				+ noParticularLanguage + "\n</pre>", output);
-	}
+    public void shouldCallHtmlCodeTag() {
+        String code = "public static void main(String[] args) {\n" +
+                "    String name = \"Gabriel\";\n" +
+                "    System.out.println(\"Hello, \" + name);\n" +
+                "}";
+        HtmlCodeTag htmlCodeTag = mock(HtmlCodeTag.class);
+        CodeTag codeTag = new CodeTag(htmlCodeTag);
+        codeTag.parse(code, "java");
+        verify(htmlCodeTag).parse(eq(code), eq("java"));
+    }
 }
