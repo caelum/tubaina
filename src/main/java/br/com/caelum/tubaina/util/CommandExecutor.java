@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import br.com.caelum.tubaina.TubainaException;
 
 public class CommandExecutor {
+    
+    private final Logger LOG = Logger.getLogger(CommandExecutor.class);
 
     public String execute(String command, String input) {
         Process proc;
         try {
+            LOG.info("Executing: " + command);
             proc = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
             throw new TubainaException("Could not execute command: "+command, e);

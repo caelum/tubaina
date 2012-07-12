@@ -32,7 +32,7 @@ public class HtmlSyntaxHighlighterTest {
         CommandExecutor executor = mock(CommandExecutor.class);
         HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
         highlighter.highlight(sampleCode, "java", true);
-        verify(executor).execute(eq("pygmentize -O encoding=ISO-8859-1,outencoding=UTF-8 -P lineos=inline -f html -l java"), eq(sampleCode));
+        verify(executor).execute(eq("pygmentize -O encoding=ISO-8859-1,outencoding=UTF-8,linenos=inline -f html -l java"), eq(sampleCode));
     }
 
 }
