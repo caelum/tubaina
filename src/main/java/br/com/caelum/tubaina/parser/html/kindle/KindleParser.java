@@ -62,7 +62,6 @@ public class KindleParser implements Parser {
     }
 
     public String parseCode(String text, String options) {
-        text = this.sanitizer.sanitize(text);
         return new CodeTag().parse(text, options);
     }
 
