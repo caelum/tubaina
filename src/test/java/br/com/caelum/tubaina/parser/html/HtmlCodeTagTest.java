@@ -58,7 +58,7 @@ public class HtmlCodeTagTest {
                 + "syntax in a very code alike way";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
-        String output = codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
     }
 
@@ -69,7 +69,7 @@ public class HtmlCodeTagTest {
                 + "syntax in a very code alike way";
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlCodeTag codeTag = new HtmlCodeTag(htmlCodeHighlighter);
-        String output = codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true));
     }
 
