@@ -4,8 +4,10 @@ import br.com.caelum.tubaina.util.Utilities;
 
 public class SimpleIndentator implements Indentator {
 
-	public String indent(String string) {
-		string = string.replaceAll("\t", "    ");
+	public static final String TAB_REPLACEMENT = "  ";
+
+    public String indent(String string) {
+		string = string.replaceAll("\t", TAB_REPLACEMENT);
 		int spaces = Utilities.getMinIndent(string);
 		string = removeSpaces(string, spaces);
 		return string.trim();

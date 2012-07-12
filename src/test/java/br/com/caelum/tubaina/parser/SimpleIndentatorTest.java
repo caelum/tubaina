@@ -33,6 +33,7 @@ public class SimpleIndentatorTest {
 	
 	@Test
 	public void testIndentatorWithTabsMultiLine() {
+	    String tabReplacement = SimpleIndentator.TAB_REPLACEMENT;
 		String test = 
 				"	blah\n" +
 				"		bleh\n" +
@@ -40,11 +41,11 @@ public class SimpleIndentatorTest {
 				"		bloh\n" +
 				"	bluh";
 		String result = new SimpleIndentator().indent(test);
-		Assert.assertEquals(
+        Assert.assertEquals(
 				"blah\n" +
-				"    bleh\n" +
-				"        blih\n" +
-				"    bloh\n" +
+		        tabReplacement + "bleh\n" +
+				tabReplacement + tabReplacement  + "blih\n" +
+				tabReplacement + "bloh\n" +
 				"bluh", result);
 	}
 }
