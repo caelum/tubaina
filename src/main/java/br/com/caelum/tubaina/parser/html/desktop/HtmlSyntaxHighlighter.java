@@ -6,21 +6,23 @@ public class HtmlSyntaxHighlighter {
 
     private final CommandExecutor commandExecutor;
     private boolean allLinesNumbered;
-    
+
     public HtmlSyntaxHighlighter(CommandExecutor commandExecutor) {
         this.commandExecutor = commandExecutor;
     }
 
     public HtmlSyntaxHighlighter(CommandExecutor commandExecutor, boolean allLinesNumbered) {
         this(commandExecutor);
-        this.allLinesNumbered = allLinesNumbered; 
+        this.allLinesNumbered = allLinesNumbered;
     }
 
     public String highlight(String code, String language, boolean numbered) {
         String options = "";
         if (numbered || allLinesNumbered)
             options = ",linenos=inline";
-        String command = "pygmentize -O encoding=ISO-8859-1,outencoding=UTF-8" + options + " -f html -l " + language;
+        String encoding = System.getProperty("file.encoding");
+        String command = "pygmentize -O encoding=" + encoding + ",outencoding=UTF-8" + options
+                + " -f html -l " + language;
         return commandExecutor.execute(command, code);
     }
 
