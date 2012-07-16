@@ -13,14 +13,15 @@ import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class HtmlAndKindleCodeTag implements Tag {
 
-    public static final String START = "<div>";
+    public static final String BEGIN_START = "<div";
+    public static final String BEGIN_END = ">";
     public static final String END = "\n</div>";
     private HtmlSyntaxHighlighter htmlCodeHighlighter;
-    
+
     public HtmlAndKindleCodeTag() {
         this.htmlCodeHighlighter = new HtmlSyntaxHighlighter(new CommandExecutor());
     }
-    
+
     public HtmlAndKindleCodeTag(HtmlSyntaxHighlighter htmlCodeHighlighter) {
         this.htmlCodeHighlighter = htmlCodeHighlighter;
     }
@@ -29,31 +30,34 @@ public class HtmlAndKindleCodeTag implements Tag {
         String language = detectLanguage(options);
         List<Integer> highlights = detectHighlights(options);
         boolean numbered = options.contains("#");
-        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
         SimpleIndentator simpleIndentator = new SimpleIndentator(2);
         String indentedCode = simpleIndentator.indent(content);
-        
+        String label = matchLabel(options);
+
         if (!highlights.isEmpty()) {
             throw new TubainaException("Code highlights are not supported for html output yet");
         }
-        if (labelMatcher.matches()) {
-            throw new TubainaException("Code labels are not supported for html output yet");
-        }
-        
+
         String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered);
-        
-        return START + code + END;
+        String result = "";
+        if (!label.isEmpty()) {
+            result = BEGIN_START + "id='" + label + "'" + BEGIN_END + code + END;
+        } else {
+            result = BEGIN_START + BEGIN_END + code + END;
+        }
+        return result;
     }
-    
+
     private String detectLanguage(String options) {
         if (options != null) {
             String languageCandidate = options.trim().split(" ")[0];
-            if (!languageCandidate.contains("#") && !languageCandidate.startsWith("h=") && !languageCandidate.isEmpty())
+            if (!languageCandidate.contains("#") && !languageCandidate.startsWith("h=")
+                    && !languageCandidate.startsWith("label=") && !languageCandidate.isEmpty())
                 return languageCandidate;
         }
         return "text";
     }
-    
+
     private List<Integer> detectHighlights(String options) {
         ArrayList<Integer> lines = new ArrayList<Integer>();
         Pattern pattern = Pattern.compile("h=([\\d+,]+)");
@@ -66,5 +70,12 @@ public class HtmlAndKindleCodeTag implements Tag {
         }
         return lines;
     }
-    
+
+    private String matchLabel(String options) {
+        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+        if (labelMatcher.find())
+            return labelMatcher.group(1);
+        return "";
+    }
+
 }

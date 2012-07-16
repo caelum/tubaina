@@ -72,16 +72,17 @@ public class HtmlAndKindleCodeTagTest {
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true));
     }
-
-    @Test
-    public void shouldThrowExpectionWhenTagContainsLabel() {
-        try {
-            new HtmlAndKindleCodeTag().parse("", "label=somelabel");
-            Assert.fail("should throw excpetion");
-        } catch (TubainaException e) {
-        }
-    }
     
+    @Test
+    public void shouldNotConsiderLabelAsLanguage() throws Exception {
+        String options = "label=world";
+        String noParticularLanguage = "Some code";
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
+        codeTag.parse(noParticularLanguage, options);
+        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
+    }
+
     @Test
     public void shouldThrowExpectionWhenOptionsContainsHighlight() {
         try {
