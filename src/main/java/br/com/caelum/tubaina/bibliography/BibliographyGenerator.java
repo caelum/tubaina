@@ -1,4 +1,4 @@
-package br.com.caelum.bibliography;
+package br.com.caelum.tubaina.bibliography;
 
 public interface BibliographyGenerator {
 

@@ -13,14 +13,14 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import br.com.caelum.bibliography.Bibliography;
-import br.com.caelum.bibliography.BibliographyFactory;
-import br.com.caelum.bibliography.LatexBibliographyGenerator;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyFactory;
+import br.com.caelum.tubaina.bibliography.LatexBibliographyGenerator;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.resources.AnswerResource;

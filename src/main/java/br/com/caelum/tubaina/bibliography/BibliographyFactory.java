@@ -1,6 +1,7 @@
-package br.com.caelum.bibliography;
+package br.com.caelum.tubaina.bibliography;
 
 import java.io.File;
+
 
 import com.thoughtworks.xstream.XStream;
 

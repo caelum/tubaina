@@ -13,7 +13,8 @@ public class RegexTag implements Tag {
 	}
 
 	public String parse(String string, String empty) {
-		return regex.matcher(string).replaceAll(replacement);
+		String out = regex.matcher(string).replaceAll(replacement);
+        return out;
 	}
 
 	@Override

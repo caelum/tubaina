@@ -9,6 +9,11 @@ import java.util.Scanner;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyEntry;
+import br.com.caelum.tubaina.bibliography.BibliographyFactory;
+import br.com.caelum.tubaina.bibliography.LatexBibliographyGenerator;
+
 public class LatexBibliographyGeneratorTest {
 
     private LatexBibliographyGenerator latexBibGenerator;

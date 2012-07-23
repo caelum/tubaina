@@ -4,7 +4,7 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class BoxTag implements Tag {
 
-    static final String BEGIN = "<hr /><td>";
+    static final String BEGIN = "<hr />";
     static final String END = "<hr />";
     static final String TITLE_BEGIN = "<b>";
     static final String TITLE_END = "</b>\n";

@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.com.caelum.bibliography.Bibliography;
-import br.com.caelum.bibliography.BibliographyFactory;
-import br.com.caelum.bibliography.HtmlBibliographyGenerator;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyFactory;
+import br.com.caelum.tubaina.bibliography.HtmlBibliographyGenerator;
 import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
 import br.com.caelum.tubaina.io.ResourceManipulatorFactory;
 import br.com.caelum.tubaina.io.TubainaHtmlDir;

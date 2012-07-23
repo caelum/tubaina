@@ -8,6 +8,9 @@ import java.util.Scanner;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyFactory;
+import br.com.caelum.tubaina.bibliography.HtmlBibliographyGenerator;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 

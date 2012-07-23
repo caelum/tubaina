@@ -1,4 +1,4 @@
-package br.com.caelum.bibliography;
+package br.com.caelum.tubaina.bibliography;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

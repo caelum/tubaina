@@ -6,6 +6,9 @@ import java.io.File;
 
 import org.junit.Test;
 
+import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyEntry;
+
 import com.thoughtworks.xstream.XStream;
 
 public class BibliographyTest {
