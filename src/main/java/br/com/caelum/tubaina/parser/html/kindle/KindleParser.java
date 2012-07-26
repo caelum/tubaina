@@ -36,7 +36,7 @@ public class KindleParser implements Parser {
 
     public String parseBox(String text, String options) {
         String title = this.sanitizer.sanitize(options);
-        return new BoxTag().parse(text, title);
+        return new BoxTag().parse(text, parse(title));
 
     }
 

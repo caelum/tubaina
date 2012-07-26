@@ -176,9 +176,8 @@ public class KindleParserTest {
 
     @Test
     public void testBoxTagWithInnerTagsOnTitle() {
-        // Should not parse. BoxTag just creates the box structure
         String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo **do Box**"
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo <strong>do Box</strong>"
                 + BoxTag.TITLE_END + "ola mundo" + BoxTag.END, result);
     }
 

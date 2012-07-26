@@ -165,9 +165,8 @@ public class HtmlParserTest {
 	
 	@Test
 	public void testBoxTagWithInnerTagsOnTitle() {
-		//Should not parse. BoxTag just creates the box structure
 		String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-		Assert.assertEquals("<div class=\"box\"><h4>Titulo **do Box**</h4>\nola mundo</div>", result);
+		Assert.assertEquals("<div class=\"box\"><h4>Titulo <strong>do Box</strong></h4>\nola mundo</div>", result);
 	}
 	
 	@Test
