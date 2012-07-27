@@ -44,9 +44,9 @@ public class LatexGenerator implements Generator {
 
 	public LatexGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.templateDir = data.templateDir;
-		this.noAnswer = data.noAnswer;
-		this.latexOutputFileName = data.outputFileName + ".tex";
+		this.templateDir = data.getTemplateDir();
+		this.noAnswer = data.isNoAnswer();
+		this.latexOutputFileName = data.getOutputFileName() + ".tex";
 	}
 
 	public void generate(Book book, File directory) throws IOException {

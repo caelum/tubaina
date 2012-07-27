@@ -33,7 +33,7 @@ public class SingleHtmlGenerator implements Generator {
 
 	public SingleHtmlGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
-		this.templateDir = new File(data.templateDir, "singlehtml/");
+		this.templateDir = new File(data.getTemplateDir(), "singlehtml/");
 		configureFreemarker();
 	}
 

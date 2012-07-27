@@ -9,7 +9,7 @@ import br.com.caelum.tubaina.parser.html.desktop.Generator;
 public class GeneratorFactory {
 
 	public Generator generatorFor(ParseType parseType, TubainaBuilderData data) throws IOException {
-		Parser parser = parseType.getParser(new RegexConfigurator(), data.noAnswer, data.showNotes);
+		Parser parser = parseType.getParser(new RegexConfigurator(), data.isNoAnswer(), data.isShowNotes());
 		return parseType.getGenerator(parser, data);
 
 	}

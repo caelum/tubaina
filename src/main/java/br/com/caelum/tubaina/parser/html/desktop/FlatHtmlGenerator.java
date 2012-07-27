@@ -38,8 +38,8 @@ public class FlatHtmlGenerator implements Generator {
 
     public FlatHtmlGenerator(final Parser parser, TubainaBuilderData data) {
         this.parser = parser;
-        this.shouldValidateXHTML = data.strictXhtml;
-        this.templateDir = new File(data.templateDir, "html/");
+        this.shouldValidateXHTML = data.isStrictXhtml();
+        this.templateDir = new File(data.getTemplateDir(), "html/");
         configureFreemarker();
     }
 
