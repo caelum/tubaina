@@ -42,6 +42,8 @@ public class TubainaBuilder {
 
 	private TubainaBuilderData data = new TubainaBuilderData(false, DEFAULT_TEMPLATE_DIR, false, false, "book");
 
+    private List<String> ifdefs;
+
 	public TubainaBuilder(ParseType type) {
 		this.parseType = type;
 	}
@@ -153,6 +155,11 @@ public class TubainaBuilder {
 		maximumImageWidth = width;
 		return this;
 	}
+	
+	public TubainaBuilder withIfdefs(List<String> ifdefs) {
+	    this.ifdefs = ifdefs;
+	    return this;
+	}
 
 	public static Integer getCodeLength() {
 		return codeLength;
@@ -161,4 +168,5 @@ public class TubainaBuilder {
 	public static Integer getMaximumWidth() {
 		return maximumImageWidth;
 	}
+
 }

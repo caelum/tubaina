@@ -16,7 +16,7 @@ public class Tubaina {
 	public static final Logger LOG = Logger.getLogger(Tubaina.class);
 
 	public static void main(String... args) throws IOException {
-		CommandLineParser parser = new PosixParser();
+		CommandLineParser commandLineParser = new PosixParser();
 
 		Options options = registerOptions();
 
@@ -24,8 +24,8 @@ public class Tubaina {
 
 		try {
 			LOG.debug("Parsing arguments " + Arrays.toString(args));
-			CommandLine cmd = parser.parse(options, args);
-			tubainaBuilder = parseOptions(cmd, options);
+			CommandLine commandLine = commandLineParser.parse(options, args);
+			tubainaBuilder = parseOptions(commandLine, options);
 		} catch (ParseException e) {
 			System.err.println("Parsing failed.  Reason: " + e.getMessage());
 			printUsage(options);

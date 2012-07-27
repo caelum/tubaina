@@ -1,6 +1,8 @@
 package br.com.caelum.tubaina;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Option;
@@ -160,7 +162,25 @@ public enum TubainaOption {
 						.withDescription(getDescription())
 						.create(getShortName());
 		}
-	};
+	},
+	IFDEFS('d', "ifdef", "Defines boolean variables avaiable to freemarker templates") {
+        @Override
+        public void configure(TubainaBuilder builder, CommandLine cmd) {
+            String[] optionValues = cmd.getOptionValues(getShortName());
+            List<String> ifdefs = Arrays.asList(optionValues);
+            builder.withIfdefs(ifdefs);
+        }
+        @Override
+        @SuppressWarnings("static-access")
+        public Option buildOption() {
+            return OptionBuilder
+                        .withArgName("ifdef")
+                        .withLongOpt(getLongName())
+                        .hasArgs()
+                        .withDescription(getDescription())
+                        .create(getShortName());
+        }
+    };
 	
 	private final String longName;
 	private final char shortName;
