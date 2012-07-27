@@ -30,10 +30,12 @@ public class SingleHtmlGenerator implements Generator {
 	private final Parser parser;
 	private final File templateDir;
 	private Configuration cfg;
+    private List<String> ifdefs;
 
 	public SingleHtmlGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
 		this.templateDir = new File(data.getTemplateDir(), "singlehtml/");
+		this.ifdefs = data.getIfdefs();
 		configureFreemarker();
 	}
 
@@ -49,7 +51,7 @@ public class SingleHtmlGenerator implements Generator {
 		for (Chapter c : book.getChapters()) {
 			StringBuffer chapterContent = generateChapter(book, c);
 			bookContent.append(chapterContent);
-			if(!c.getResources().isEmpty()) {
+			if (!c.getResources().isEmpty()) {
 				bookRoot.cd(Utilities.toDirectoryName(null, c.getTitle()))
 						.writeResources(c.getResources());
 			}
@@ -81,7 +83,7 @@ public class SingleHtmlGenerator implements Generator {
 	}
 
 	private StringBuffer generateChapter(Book book, Chapter chapter) {
-	    StringBuffer chapterContent = new SingleHtmlChapterGenerator(parser, cfg).generateSingleHtmlChapter(book, chapter);
+	    StringBuffer chapterContent = new SingleHtmlChapterGenerator(parser, cfg, ifdefs).generateSingleHtmlChapter(book, chapter);
 		return fixPaths(chapter, chapterContent);
 	}
 

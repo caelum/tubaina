@@ -18,9 +18,12 @@ public class PartToKindle {
 
     private final Configuration cfg;
 
-    public PartToKindle(final Parser parser, final Configuration cfg) {
+    private final List<String> ifdefs;
+
+    public PartToKindle(final Parser parser, final Configuration cfg, List<String> ifdefs) {
         this.parser = parser;
         this.cfg = cfg;
+        this.ifdefs = ifdefs;
     }
 
     public StringBuffer generateKindlePart(BookPart part, TubainaHtmlDir bookRootDir, int partNumber) {
@@ -39,6 +42,9 @@ public class PartToKindle {
         bookRootDir.cd(Utilities.toDirectoryName(null, part.getTitle())).writeResources(
                 part.getResources());
         Map<String, Object> map = new HashMap<String, Object>();
+        for (String string : ifdefs) {
+            map.put(string, true);
+        }
         map.put("part", part);
         map.put("parser", parser);
         map.put("partNumber", partNumber);

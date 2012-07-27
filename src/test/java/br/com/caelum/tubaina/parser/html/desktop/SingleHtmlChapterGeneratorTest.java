@@ -36,7 +36,7 @@ public class SingleHtmlChapterGeneratorTest {
         dirTree.add("livro/01-capitulo/01-primeira");
         dirTree.add("livro/01-capitulo/02-segunda");
 
-        SingleHtmlChapterGenerator singleHtmlChapterGenerator = new SingleHtmlChapterGenerator(parser, cfg);
+        SingleHtmlChapterGenerator singleHtmlChapterGenerator = new SingleHtmlChapterGenerator(parser, cfg, new ArrayList<String>());
         
         Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
                 + "\n[section segunda] conteudo da segunda");

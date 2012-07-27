@@ -35,10 +35,12 @@ public class KindleGenerator implements Generator {
     private final Parser parser;
     private final File templateDir;
     private Configuration freeMarkerConfig;
+    private List<String> ifdefs;
 
     public KindleGenerator(Parser parser, TubainaBuilderData data) {
         this.parser = parser;
         this.templateDir = new File(data.getTemplateDir(), "kindle/");
+        this.ifdefs = data.getIfdefs();
         configureFreemarker();
     }
 
@@ -99,7 +101,7 @@ public class KindleGenerator implements Generator {
 
     private StringBuffer generatePart(Book book, BookPart part, TubainaHtmlDir bookRoot,
             int partCount) {
-        return new PartToKindle(parser, freeMarkerConfig).generateKindlePart(part, bookRoot,
+        return new PartToKindle(parser, freeMarkerConfig, ifdefs).generateKindlePart(part, bookRoot,
                 partCount);
     }
 

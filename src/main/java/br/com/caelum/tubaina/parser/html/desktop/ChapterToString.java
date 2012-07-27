@@ -19,14 +19,20 @@ public class ChapterToString {
 
 	private final List<String> dirTree;
 
-	public ChapterToString(final Parser parser, final Configuration cfg, final List<String> dirTree) {
+    private final List<String> ifdefs;
+
+	public ChapterToString(final Parser parser, final Configuration cfg, final List<String> dirTree, List<String> ifdefs) {
 		this.parser = parser;
 		this.cfg = cfg;
 		this.dirTree = dirTree;
+        this.ifdefs = ifdefs;
 	}
 
 	public StringBuffer generateChapter(final Book b, final Chapter c, final int index, final int currentDir) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		for (String ifdef : ifdefs) {
+            map.put(ifdef, true);
+        }
 		map.put("book", b);
 		map.put("chapter", c);
 		map.put("curchap", index);

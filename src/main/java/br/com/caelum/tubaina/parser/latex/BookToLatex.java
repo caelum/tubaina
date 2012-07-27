@@ -1,6 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Book;
@@ -17,8 +18,11 @@ public class BookToLatex {
 		this.parser = parser;
 	}
 
-	public StringBuffer generateLatex(final Book book, final Configuration cfg) {
+	public StringBuffer generateLatex(final Book book, final Configuration cfg, List<String> ifdefs) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		for (String string : ifdefs) {
+            map.put(string, true);
+        }
 		map.put("book", book);
 		map.put("parser", parser);
 		map.put("textbookVersion", new VersionGenerator().generate());

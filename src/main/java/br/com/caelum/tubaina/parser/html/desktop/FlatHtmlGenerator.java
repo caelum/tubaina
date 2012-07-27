@@ -36,10 +36,13 @@ public class FlatHtmlGenerator implements Generator {
 
     private Configuration cfg;
 
+    private List<String> ifdefs;
+
     public FlatHtmlGenerator(final Parser parser, TubainaBuilderData data) {
         this.parser = parser;
         this.shouldValidateXHTML = data.isStrictXhtml();
         this.templateDir = new File(data.getTemplateDir(), "html/");
+        this.ifdefs = data.getIfdefs();
         configureFreemarker();
     }
 
@@ -57,7 +60,7 @@ public class FlatHtmlGenerator implements Generator {
         int currentDir = 1;
         for (Chapter chapter : book.getChapters()) {
             int curdir = currentDir++;
-            StringBuffer chapterText = new ChapterToString(parser, cfg, dirTree).generateChapter(
+            StringBuffer chapterText = new ChapterToString(parser, cfg, dirTree, ifdefs).generateChapter(
                     book, chapter, chapterIndex, curdir);
 
             bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeIndex(

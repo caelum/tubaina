@@ -42,11 +42,14 @@ public class LatexGenerator implements Generator {
 
 	private final String latexOutputFileName;
 
+    private List<String> ifdefs;
+
 	public LatexGenerator(Parser parser, TubainaBuilderData data) {
 		this.parser = parser;
 		this.templateDir = data.getTemplateDir();
 		this.noAnswer = data.isNoAnswer();
 		this.latexOutputFileName = data.getOutputFileName() + ".tex";
+		this.ifdefs = data.getIfdefs();
 	}
 
 	public void generate(Book book, File directory) throws IOException {
@@ -58,7 +61,7 @@ public class LatexGenerator implements Generator {
 		PrintStream stream;
 		writeBibTex(directory);
 
-		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg);
+		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg, ifdefs);
 
 		// print the latex document to an archive
 		File fileBook = new File(directory, latexOutputFileName);

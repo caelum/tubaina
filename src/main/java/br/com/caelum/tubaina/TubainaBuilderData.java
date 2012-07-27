@@ -1,6 +1,7 @@
 package br.com.caelum.tubaina;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TubainaBuilderData {
@@ -13,6 +14,7 @@ public class TubainaBuilderData {
 
 	public TubainaBuilderData(boolean strictXhtml, File templateDir, boolean showNotes, boolean noAnswer,
 			String outputFileName) {
+	    this.ifdefs = new ArrayList<String>();
 		this.strictXhtml = strictXhtml;
 		this.templateDir = templateDir;
 		this.showNotes = showNotes;

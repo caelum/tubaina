@@ -33,7 +33,7 @@ public class ChapterToStringTest {
 		dirTree.add("livro/01-capitulo/01-primeira");
 		dirTree.add("livro/01-capitulo/02-segunda");
 
-		chapterToString = new ChapterToString(parser, cfg, dirTree);
+		chapterToString = new ChapterToString(parser, cfg, dirTree, new ArrayList<String>());
 		sectionIdentifier = "class=\"indexSection\"";
 	}
 

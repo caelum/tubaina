@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PartToKindleTest {
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
                 "/kindle.properties"), false, true);
 
-        partToKindle = new PartToKindle(parser, cfg);
+        partToKindle = new PartToKindle(parser, cfg, new ArrayList<String>());
     }
 
     private Chapter createChapter(String title, String introduction, String content) {
