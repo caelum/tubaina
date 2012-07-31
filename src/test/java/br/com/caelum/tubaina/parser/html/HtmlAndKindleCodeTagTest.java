@@ -3,12 +3,10 @@ package br.com.caelum.tubaina.parser.html;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
 
 public class HtmlAndKindleCodeTagTest {
@@ -83,12 +81,4 @@ public class HtmlAndKindleCodeTagTest {
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
     }
 
-    @Test
-    public void shouldThrowExpectionWhenOptionsContainsHighlight() {
-        try {
-            new HtmlAndKindleCodeTag().parse("", "h=1");
-            Assert.fail("should throw excpetion");
-        } catch (TubainaException e) {
-        }
-    }
 }
