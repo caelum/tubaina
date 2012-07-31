@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import br.com.caelum.tubaina.TubainaException;
+import org.apache.log4j.Logger;
+
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
@@ -17,6 +18,7 @@ public class HtmlAndKindleCodeTag implements Tag {
     public static final String BEGIN_END = ">";
     public static final String END = "\n</div>";
     private HtmlSyntaxHighlighter htmlCodeHighlighter;
+    private static final Logger LOG = Logger.getLogger(HtmlAndKindleCodeTag.class);
 
     public HtmlAndKindleCodeTag() {
         this.htmlCodeHighlighter = new HtmlSyntaxHighlighter(new CommandExecutor());
@@ -35,7 +37,7 @@ public class HtmlAndKindleCodeTag implements Tag {
         String label = matchLabel(options);
 
         if (!highlights.isEmpty()) {
-            throw new TubainaException("Code highlights are not supported for html output yet");
+            LOG.warn("Code highlights are not supported for html output yet");
         }
 
         String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered);
