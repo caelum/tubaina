@@ -163,7 +163,7 @@ public enum TubainaOption {
 						.create(getShortName());
 		}
 	},
-	IFDEFS('d', "ifdef", "Defines boolean variables avaiable to freemarker templates") {
+	IFDEFS('e', "ifdef", "Defines boolean variables avaiable to freemarker templates") {
         @Override
         public void configure(TubainaBuilder builder, CommandLine cmd) {
             String[] optionValues = cmd.getOptionValues(getShortName());
