@@ -15,7 +15,7 @@ public class ImageTag implements Tag {
 
 		output = output + "\\includegraphics";
 
-		Pattern label = Pattern.compile("(?s)(?i)label=(\\w+)?");
+		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)?");
 		Matcher labelMatcher = label.matcher(options);
 
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
