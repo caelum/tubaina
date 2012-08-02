@@ -19,7 +19,7 @@ public class ImageChunk implements Chunk {
 	}		
 
 	public String getContent(Parser p) {
-		return p.parseImage(this.path,this.options + "[" + width + "," + dpi + "]");
+		return p.parseImage(this.path,this.options + " [" + width + "," + dpi + "]");
 	}
 
 }
