@@ -14,7 +14,7 @@ import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class HtmlAndKindleCodeTag implements Tag {
 
-    public static final String BEGIN_START = "<div";
+    public static final String BEGIN_START = "<div ";
     public static final String BEGIN_END = ">";
     public static final String END = "\n</div>";
     private HtmlSyntaxHighlighter htmlCodeHighlighter;
