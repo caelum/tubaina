@@ -15,7 +15,7 @@ public class ImageTagTemplate {
 		String output = "<img src=\"" + RELATIVEPATH + imgsrc + "\" ";
 		String width = "";
 
-		Pattern label = Pattern.compile("(?s)(?i)label=(\\w+)%?");
+		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)%?");
 		Matcher labelMatcher = label.matcher(options);
 		
 		if (labelMatcher.find()) {
