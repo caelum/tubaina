@@ -9,6 +9,11 @@ Tubaina is a textbook generator which receives a simple markup language syntax a
 Changelog
 ---------
 
+* August 07, 2012 A lot of bugs fixeda and new features added since last update of this changelog, here are some of them:
+    * it's possible to define boolean variables (as possible with C ifdef) to be avaiable at ftl templates with the option -e <var1> <var2>...
+    * added support to html output (-kindle option) focused to build ebooks such as .epub of .mobi.
+    * a book may be splitted in multiple parts simply by adding [part <title>] tag at the beggining of a chapter.
+    * a new tag to render code published at [gist](https://gist.github.com/): [gist <gist-id>]
 * September 15, 2011 Dropped support for one section per page, HTML. Instead, the -html option will generate an experimental one-page textbook (in which we're working :) ).
 * April 28, 2011 Support to syntax highlighting using Pygments (in many many languages).
 * October 24, 2010 Discontinuation of Maven as a build tool. Gradle is the new choice.
