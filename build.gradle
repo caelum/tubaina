@@ -46,3 +46,7 @@ dependencies {
 	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.0'
 	compile files(fileTree(dir:"$projectDir/lib" as File, includes: ['*.jar']))
 }
+
+task wrapper(type:Wrapper) {
+	gradleVersion='0.9'
+}
