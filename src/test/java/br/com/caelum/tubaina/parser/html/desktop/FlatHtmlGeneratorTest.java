@@ -2,9 +2,6 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,13 +48,12 @@ public class FlatHtmlGeneratorTest {
         generator = new FlatHtmlGenerator(parser, data);
 
         BookBuilder builder = new BookBuilder("livro");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(
-                "[chapter     O que é java?   ]\n" + "texto da seção\n"
-                        + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")),
-                new ArrayList<Reader>());
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")), new ArrayList<Reader>());
+        String content = "[chapter     O que é java?   ]\n" + "texto da seção\n"
+                + "[section Primeira seção]\n" + "texto da prim seção\n"
+                + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
+        builder.addReaderFromString(content);
+        builder.addReaderFromString("[chapter Introdução]\n"
+                + "Algum texto de introdução\n");
         book = builder.build();
         temp = new File("tmp");
         temp.mkdir();
@@ -126,8 +122,8 @@ public class FlatHtmlGeneratorTest {
     @Test
     public void testGeneratorWithCorrectImages() throws IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]")), new ArrayList<Reader>());
+        builder.addReaderFromString("[chapter qualquer um]\n"
+                + "[img baseJpgImage.jpg]");
         Book b = builder.build();
 
         generator.generate(b, temp);
@@ -143,8 +139,9 @@ public class FlatHtmlGeneratorTest {
     @Test
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]")), new ArrayList<Reader>());
+        String content = "[chapter qualquer um]\n"
+                + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]";
+        builder.addReaderFromString(content);
 
         Book b = builder.build();
         try {
@@ -158,8 +155,9 @@ public class FlatHtmlGeneratorTest {
     @Test
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("Com imagens");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "[img src/test/resources/someImage.gif]")), new ArrayList<Reader>());
+        String chapterContent = "[chapter qualquer um]\n"
+                + "[img src/test/resources/someImage.gif]";
+        builder.addReaderFromString(chapterContent);
         try {
             Book b = builder.build();
             generator.generate(b, temp);
@@ -172,8 +170,9 @@ public class FlatHtmlGeneratorTest {
     @Test
     public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
         BookBuilder builder = new BookBuilder("teste");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter qualquer um]\n"
-                + "alguma coisa\n[chapter qualquer um]outra coisa")), new ArrayList<Reader>());
+        String fileContent = "[chapter qualquer um]\n"
+                + "alguma coisa\n[chapter qualquer um]outra coisa";
+        builder.addReaderFromString(fileContent);
         try {
             Book b = builder.build();
             generator.generate(b, temp);

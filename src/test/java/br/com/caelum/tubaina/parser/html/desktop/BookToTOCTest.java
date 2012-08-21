@@ -2,8 +2,6 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,9 +38,8 @@ public class BookToTOCTest {
     @Test
     public void testGenerateBookWithoutSections() {
         BookBuilder builder = new BookBuilder("Title");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(
-                "[chapter primeiro] um conteúdo"), (Reader) new StringReader(
-                "[chapter segundo] um conteúdo")), new ArrayList<Reader>());
+        List<String> chapters = Arrays.asList("[chapter primeiro] um conteúdo", "[chapter segundo] um conteúdo");
+        builder.addReaderFromStrings(chapters);
         Book b = builder.build();
         BookToTOC generator = new BookToTOC();
         List<String> dirTree = new ArrayList<String>();
@@ -59,10 +56,9 @@ public class BookToTOCTest {
     @Test
     public void testGenerateBookWithSections() {
         BookBuilder builder = new BookBuilder("Title");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(
-                "[chapter unico] um conteúdo \n" +
+        builder.addReaderFromString("[chapter unico] um conteúdo \n" +
                 "[section uma] lalala \n" +
-                "[section duas] lalala \n")), new ArrayList<Reader>());
+                "[section duas] lalala \n");
         Book b = builder.build();
         BookToTOC generator = new BookToTOC();
         
@@ -84,8 +80,7 @@ public class BookToTOCTest {
 
     private Book createBook(final String bookText) {
         BookBuilder builder = new BookBuilder("Title");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(bookText)),
-                new ArrayList<Reader>());
+        builder.addReaderFromString(bookText);
         Book b = builder.build();
         return b;
     }

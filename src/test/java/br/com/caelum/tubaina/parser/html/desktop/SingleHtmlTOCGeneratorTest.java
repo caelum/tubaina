@@ -4,10 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,12 +42,12 @@ public class SingleHtmlTOCGeneratorTest {
 
     private Book createBook() {
         BookBuilder builder = new BookBuilder("title");
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader(
+        builder.addReaderFromString(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"
-                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n")), new ArrayList<Reader>());
-        builder.addAllReaders(Arrays.asList((Reader) new StringReader("[chapter Introdução]\n"
-                + "Algum texto de introdução\n")), new ArrayList<Reader>());
+                        + "[section Segunda seção]\n" + "texto da segunda seção\n\n");
+        builder.addReaderFromString("[chapter Introdução]\n"
+                + "Algum texto de introdução\n");
         Book build = builder.build();
         return build;
     }

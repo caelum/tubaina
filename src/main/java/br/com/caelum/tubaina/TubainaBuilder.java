@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,15 +47,15 @@ public class TubainaBuilder {
     }
 
     public void build() throws IOException {
-        List<Reader> introductionReaders = new ArrayList<Reader>();
+        List<AfcFile> introductionAfcFiles = new ArrayList<AfcFile>();
         ResourceLocator.initialize(inputDir);
-        List<Reader> readers = getAfcsFrom(inputDir);
+        List<AfcFile> afcFiles = getAfcsFrom(inputDir);
         File introductionChapterDirs = new File(inputDir, "introduction");
         if (introductionChapterDirs.exists()) {
-            introductionReaders = getAfcsFrom(introductionChapterDirs);
+            introductionAfcFiles = getAfcsFrom(introductionChapterDirs);
         }
         BookBuilder builder = new BookBuilder(bookName);
-        builder.addAllReaders(readers, introductionReaders);
+        builder.addAllReaders(afcFiles, introductionAfcFiles);
 
         Book b = null;
         try {
@@ -87,16 +86,17 @@ public class TubainaBuilder {
         }
     }
 
-    static List<Reader> getAfcsFrom(final File file) throws UnsupportedEncodingException,
+    static List<AfcFile> getAfcsFrom(final File file) throws UnsupportedEncodingException,
             FileNotFoundException {
-        List<Reader> readers = new ArrayList<Reader>();
+        List<AfcFile> afcFiles = new ArrayList<AfcFile>();
         List<String> files = new ArrayList<String>();
         Collections.addAll(files, file.list(new SuffixFileFilter(".afc")));
         Collections.sort(files);
-        for (String s : files) {
-            readers.add(new InputStreamReader(new FileInputStream(new File(file, s)), "UTF-8"));
+        for (String fileName : files) {
+            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(file, fileName)), "UTF-8");
+            afcFiles.add(new AfcFile(reader, fileName));
         }
-        return readers;
+        return afcFiles;
     }
 
     public TubainaBuilder inputDir(File inputDir) {

@@ -1,7 +1,8 @@
 package br.com.caelum.tubaina.builder;
 
-import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -9,6 +10,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaException;
@@ -17,8 +19,8 @@ public class BookBuilder {
 
     private final Logger LOG = Logger.getLogger(BookBuilder.class);
     private final String name;
-    private final List<Reader> readers = new ArrayList<Reader>();
-    private final List<Reader> introductionReaders = new ArrayList<Reader>();
+    private final List<AfcFile> readers = new ArrayList<AfcFile>();
+    private final List<AfcFile> introductionReaders = new ArrayList<AfcFile>();
     private BookPartsBuilder bookPartsBuilder;
     private int chapterNumber;
 
@@ -28,9 +30,26 @@ public class BookBuilder {
         this.chapterNumber = 1;
     }
 
-    public void addAllReaders(List<Reader> chapterReaders, List<Reader> introductionReaders) {
+    public void addAllReaders(List<AfcFile> chapterReaders, List<AfcFile> introductionReaders) {
         this.readers.addAll(chapterReaders);
         this.introductionReaders.addAll(introductionReaders);
+    }
+    
+    public void addReaderFromString(String fileContent) {
+        addAllReaders(Arrays.asList((AfcFile) new AfcFile(new StringReader(fileContent), "file from string")), 
+                new ArrayList<AfcFile>());
+    }
+    
+    public void addReaderFromStrings(List<String> chaptersContent) {
+        for (String content : chaptersContent) {
+            addReaderFromString(content);
+        }
+    }
+    
+    public void addAllReadersOfNonNumberedFromStrings(List<String> introductionChapters) {
+        for (String content : introductionChapters) {
+            this.introductionReaders.add(new AfcFile(new StringReader(content), "intro chapter from string"));
+        }
     }
 
     public Book build() {
@@ -44,9 +63,9 @@ public class BookBuilder {
     }
 
     private void parseBookChapters() {
-        for (Reader reader : readers) {
-            LOG.info("Parsing chapter " + chapterNumber);
-            Scanner scanner = new Scanner(reader);
+        for (AfcFile afcFile : readers) {
+            LOG.info("Parsing chapter " + chapterNumber + " - " + afcFile.getFileName());
+            Scanner scanner = new Scanner(afcFile.getReader());
             scanner.useDelimiter("$$");
             if (scanner.hasNext()) {
                 String text = scanner.next();
@@ -58,8 +77,8 @@ public class BookBuilder {
 
     private List<Chapter> parseIntroductionChapters() {
         List<Chapter> introductionChapters = new ArrayList<Chapter>();
-        for (Reader reader: introductionReaders) {
-            Scanner scanner = new Scanner(reader);
+        for (AfcFile afcFile: introductionReaders) {
+            Scanner scanner = new Scanner(afcFile.getReader());
             scanner.useDelimiter("$$");
             introductionChapters.addAll(parseChapters(scanner.next(), true));
         }
@@ -107,5 +126,7 @@ public class BookBuilder {
             introduction = introductionMatcher.group(1);
         return introduction;
     }
+
+
 
 }
