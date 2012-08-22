@@ -12,9 +12,6 @@
 %CodeChunk
 \newcommand{\codechunk}[1]{{\ttfamily {\small #1}}}
 
-%Code and XMl and Java
-\newcommand{\code}[1]{{\small \noindent \ttfamily #1}}
-
 %Quotation
 \newcommand{\chapterquote}[2]{
   \begin{flushright}
@@ -31,7 +28,23 @@
 \newcommand{\email}[2]{\href{mailto:#1@#2}{#1 em #2}}
 
 %Unimportant section
-\newcommand{\sectiontitle}[1]{\section*{#1}}
+\newcommand{\sectiontitle}[1]{
+  \ifhmode\par\fi
+  \removelastskip
+  \vskip 3ex\goodbreak
+  \vbox{%
+    \hrule height 1pt depth 0pt width \hsize
+    \hbox to \hsize{%
+      \begin{tabular}{p{\hsize}}
+        \advance \hsize by -4.2mm
+        \rowcolor{verylightgray}
+        \parindent=0pt
+        \vspace*{-2mm}
+        \bfseries\large #1
+      \end{tabular}
+    }}\nobreak
+  \vskip 2mm\nobreak
+}
 
 %Tag
 \newcommand{\anchor}[1]{\glossary{#1}}
@@ -42,17 +55,14 @@
 	\setlength{\parskip}{1.7ex plus 0.5ex minus 0.2ex}
 }
 
-%Box
+%NewBox
 \newenvironment{tubainabox}[1]
                {\begin{flushright}
                    \begin{minipage}{16cm}
-                     \begin{tabular}{p{15.6cm}}
-                       \rowcolor{lightgray}
-                       \hline
-                       #1 \hfill \\
-                       \hline
-                     \end{tabular}
-                     \\
+                       \begin{tabular}{p{15.6cm}}
+                         #1
+                         \rowcolor{boxhead}
+                       \end{tabular}
                }
                {\end{minipage}
                    \\[1em]
@@ -61,65 +71,42 @@
                }
 
 %Box
-\newenvironment{tubainanote}
-               {\begin{flushright}
-                   \begin{minipage}{16cm}
-                     \begin{tabular}{p{15.6cm}}
-                       \rowcolor{lightgray}
-                       \hline
-                       \instructornotelabel \hfill \\
-                       \hline
-                     \end{tabular}
-                     \\
-               }
-               {\end{minipage}
-                   \\[1em]
-                   \rule{16cm}{0.5pt}
-                 \end{flushright}
-               }
-
-%BookPart
-%first argument: path to the illustration image (optional)
-%second argument: name of the part
-\renewcommand{\part}[2][nullimage]{
-  \cleardoublepage
-
-  \ifbool{\isempty{#1}}{
-      \begin{figure}[H]\centering
-      \includegraphics{#1}
-      \end{figure}
+\newcommand{\boxtag}[2]{
+  \begin{flushright}
+    \parbox{16cm}{
+      \begin{tabular}{p{15.6cm}}
+        \hline
+        \rowcolor{lightgray}
+        #1 \\
+        \hline
+      \end{tabular}
+      \\[-1em]
+      #2 \\[-1ex]
+      \rule{16cm}{0.5pt}
     }
-
-  \refstepcounter{part}
-  \addcontentsline{toc}{part}{#2}
-  \thispagestyle{empty}
-
-  {\Huge\bf \begin{center} Part \thepart \end{center}}
-  \vspace{5cm}
-  {\Huge\bf \begin{center} #2 \end{center}}
-
+  \end{flushright}
 }
 
 \newcommand{\answerHead}[1]{
-	\subsubsection*{#1\ -\ Exercises}
+	\subsubsection*{#1\ -\ Exerc\'{i}cios}
 }
 
-\newcommand{\instructornotelabel}{
-	Instructor's Note
+\newcommand{\instructornote}{
+	Nota para o instrutor
 }
 
 \newcommand{\answerBooklet}{
-	Exercises' Answers
+	Respostas dos Exerc\'{i}cios
 }
 
 %Code listing label to be referenced
 \newcommand{\tubainaCodeLabel}[1]{
-	\refstepcounter{codecounter}Listing \value{chapter}.{\thecodecounter}\label{#1}:
+  \refstepcounter{codecounter}Listagem {\thecodecounter}\label{#1}:
 }
 
 %Filename for a piece of code
 \newcommand{\tubainaCodeFileName}[1]{
-	\begin{center}\textbf{File: #1}\end{center}
+	\\\\ \hspace*{1.0cm} \textbf{Arquivo: #1} 
 }
 
 \paragraphSpacer
@@ -127,7 +114,6 @@
 \sloppy 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Reduced Caption
 \newcommand{\reducedcaption}[1]{
 
  \vspace*{1mm}
@@ -136,9 +122,8 @@
  \end{minipage}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Colouring the Java Code in Latex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{color}
 %Java2TeX style definitions
@@ -170,6 +155,11 @@
 \newcommand{\texattrib}{\color[rgb]{.000,.000,.498}}
 \newcommand{\textag}{\color[rgb]{.000,.000,.498}}
 
+%Tubaina other colors
+%by Ceci
+\definecolor{boxhead}{gray}{0.8}
+\definecolor{verylightgray}{gray}{0.95}
+
 %%----------------------------------------------------------------------------
 %% Algumas alteracoes sobre o tipo book.cls que prefiro.
 %% Flavio Keidi Miyazawa.
@@ -179,7 +169,9 @@
 %%
 %% Ultima atualizacao: 15/08/1997
 %%
-
+%%----------------------------------------------------------------------------
+%%
+%%
 
 %%----------------------------------------------------------------------------
 %%  (keidi)
@@ -213,6 +205,8 @@
        {\@latex@warning{Empty `thebibliography' environment}}%
       \endlist}
 
+
+
 %%----------------------------------------------------------------------------
 %%  (keidi)
 %% 
@@ -220,10 +214,7 @@
 %% com a excecao que este nao coloca em uppercase no mkboth.
 %% Flavio Keidi Miyazawa
 %%
-\newcommand\myname{Caelum Objects Tubaina}
-
-%%----------------------------------------------------------------------------
-%% These commands set the style for the Table of Contents
+\newcommand\myname{Caelum.com.br}
 
 \renewcommand\tableofcontents{%
     \if@twocolumn
@@ -304,6 +295,11 @@
                 \parskip\z@ \@plus .3\p@\relax
                 \let\item\@idxitem}
                {\if@restonecol\onecolumn\else\clearpage\fi}
+
+
+
+
+
 
 
 
@@ -389,19 +385,12 @@
 \fi
 }
 %%----------------------------------------------------------------------------
-%%   (Caelum)
-%%
-%% Removing the page number from the first page of each chapter
-%% * npn stands for no page numbering
-
-\renewcommand{\npnchapter}[1]{\thispagestyle{empty}\chapter{#1}}
-
 
 
 %%----------------------------------------------------------------------------
 %%  (keidi)
-%%  Mudando o (Sumario) (padrao no [brazil/babel]) para (�ndice) e 
-%%          o (�ndice) para (�ndice Remissivo)
+%%  Mudando o (Sumario) (padrao no [brazil/babel]) para (indice) e 
+%%          o (indice) para (indice Remissivo)
 %%
 \addto\captionsbrazil{%
 \def\indexname{\'Indice Remissivo}%
@@ -409,6 +398,18 @@
 }%
 
 
+%%----------------------------------------------------------------------------
+%%  (keidi)
+%%  O trecho abaixo eh para que a pagina vazia antes da abertura do capitulo
+%%  seja realmente uma pagina vazia, sem estilo nenhum, i.e., sem running heads,...
+%%
+
+%\renewcommand\chapter{\if@openright\clearemptydoublepage\else\clearpage\fi
+%                    \thispagestyle{plain}%
+%                    \global\@topnum\z@
+%                    \@afterindentfalse
+%                    \secdef\@chapter\@schapter}
+                    
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%Section%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \makeatletter
 \def\section{\@ifstar\unnumberedsection\numberedsection}
@@ -431,7 +432,7 @@
         \rowcolor{lightgray}
         \parindent=0pt
         \vspace*{-2mm}
-        \bfseries\Large\thesection - #2
+        \bfseries\Large\thesection\ -\ #2
       \end{tabular}
 %      \psboxit{box 1 .8 .8 setrgbcolor fill}{%
 %        \vbox{%
@@ -491,6 +492,8 @@
   \ignorespaces
   }
 \makeatother
+
+
 
 % Ruby2TeX definitions
 % by Luiz Real

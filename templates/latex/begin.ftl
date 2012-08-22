@@ -1,17 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-%%                  Caelum ObjectsTubaina
+%%                  Caelum Tubaina
 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[a4paper, 11pt, oneside]{book}
+\documentclass[a4paper, 11pt, twoside]{book}
 
-%% For portuguese compatibility
-\usepackage[brazil]{babel}
-\usepackage[utf8]{inputenc}
+%% Escrevendo em portugues:
+\usepackage[brazil]{babel}	
+\usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{float}
 \usepackage[scaled]{helvet}
 \renewcommand*\familydefault{\sfdefault}
+%\usepackage[bitstream-charter]{mathdesign}
 \usepackage{indentfirst}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,24 +24,34 @@
 \usepackage{makeidx}
 \usepackage{enumerate}
 \usepackage{fancyhdr}
-\usepackage{mintedx}
 \usepackage{pstcol}
 \usepackage{colortbl}
+\usepackage{mintedx}
 \usepackage{url}
+\usepackage{tubaina}
 \usepackage{rotating}
 \usepackage{multirow}
-\usepackage{colortbl}
 \usepackage[table]{xcolor}
-
-\usepackage{tubaina}
 
 %This has to be the last package declared, for some reason
 \usepackage[pdftex]{hyperref}
 
-\definecolor{boxhead}{gray}{0.8}
+%% Unused packages
+
+%\usepackage{multicol}
+%\usepackage{floatflt}
+%\usepackage{lscape}
+%\usepackage{latexsym}
+%\usepackage{amscd}
+%\usepackage{amsfonts}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage{amsthm}
+%\usepackage{pslatex}
 
 %%%%%%%PAGE SETUP%%%%%%%%%%%%%
-\oddsidemargin    -6mm
+\oddsidemargin     -6mm
+\evensidemargin   -19mm
 \textwidth        180mm
 \topmargin        -10mm
 \textheight       250mm
@@ -54,31 +66,24 @@
 \begin{document}
 \usemintedstyle{eclipse}
 
-
 \normalfont
 
-\thispagestyle{empty}
-
-<#include "cover.ftl">
-\newpage
-
-\newpage
 \pagestyle{plain}
 \pagenumbering{roman}
 \setcounter{page}{1} 
 
 \tableofcontents
 
-\centerline{\bf Version: ${textbookVersion}}
-
+\centerline{\bf Versão: ${textbookVersion}}
 \newpage
 
-\newsavebox{\logotubaina}
-\sbox{\logotubaina}{\includegraphics[totalheight=1em]{tubaina.png}}
+\newsavebox{\logocaelum}
+\sbox{\logocaelum}{\includegraphics[totalheight=1em]{tubaina.png}}
 \pagestyle{fancy}
 \fancyhf{}
 
-\lhead{\footnotesize{\usebox{\logotubaina}\hspace{2mm}Caelum Objects Tubaina -- ${book.name}}}
+\lhead{\footnotesize{\usebox{\logocaelum}\hspace{2mm}Caelum -- http://www.caelum.com.br }}
+\rhead{\footnotesize{${book.name}}}
 
 %\rhead{\nouppercase{\bfseries\rightmark}}
 %\lhead{\nouppercase{\bfseries\leftmark}}
@@ -86,12 +91,11 @@
 \renewcommand{\chaptermark}[1]{\markboth{\@chapapp\ \thechapter\ -\ #1}{}}
 \makeatother
 \renewcommand{\sectionmark}[1]{\markright{\ #1}{}}
-\rfoot{\footnotesize\nouppercase{\leftmark\ - \rightmark\ - Page \thepage}}
+\rfoot{\footnotesize\nouppercase{\leftmark\ - \rightmark\ - Página \thepage}}
 
 
 
 \pagenumbering{arabic}
 \setcounter{page}{1}
-
 %code listings counter
 \newcounter{codecounter}
