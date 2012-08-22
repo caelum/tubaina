@@ -68,6 +68,9 @@
 
 \normalfont
 
+<#include "cover.ftl">
+\newpage
+
 \pagestyle{plain}
 \pagenumbering{roman}
 \setcounter{page}{1} 
