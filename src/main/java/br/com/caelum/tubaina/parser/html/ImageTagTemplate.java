@@ -20,13 +20,15 @@ public class ImageTagTemplate {
 		
 		if (labelMatcher.find()) {
 			output = output + "id=\"" + labelMatcher.group(1) + "\" ";
+		} else {
+		    output = output + "id=\"" + imgsrc + "\" ";
 		}
 		
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
 		Matcher descriptionMatcher = description.matcher(options);
 		
 		if (shouldUseHTMLWidth && getScale(options) != null) {
-		    width = "width='" +getScale(options) + "%' "; 
+		    width = "width='" + getScale(options) + "%' "; 
 		}
 		
 		// The image is resized when copied
