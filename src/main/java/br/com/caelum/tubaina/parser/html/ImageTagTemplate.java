@@ -38,6 +38,10 @@ public class ImageTagTemplate {
 		
 		return output;
 	}
+	
+	public String parse(final String path, final String options) {
+	    return parse(path, options, false);
+	}
 
 	public Integer getScale(final String options) {
 		if (options == null) {

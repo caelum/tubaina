@@ -1,4 +1,4 @@
-package br.com.caelum.tubaina.parser.html.desktop;
+package br.com.caelum.tubaina.parser.html;
 
 import junit.framework.Assert;
 
@@ -6,14 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.parser.html.ImageTagTemplate;
 
-public class ImageTagTest {
+public class ImageTagTemplateTest {
 
-	private ImageTag tag;
+	private ImageTagTemplate tag;
 
 	@Before
 	public void setUp() {
-		tag = new ImageTag();
+		tag = new ImageTagTemplate();
 	}
 
 	@Test
