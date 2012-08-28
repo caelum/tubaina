@@ -5,9 +5,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.html.ImageTagTemplate;
-
 public class ImageTagTemplateTest {
 
 	private ImageTagTemplate tag;
@@ -60,12 +57,10 @@ public class ImageTagTemplateTest {
 	}
 	
 	@Test
-	public void shouldThrowExpectionWhenTagContainsLabel() {
-	    try {
-	        tag.parse("some/path/imagem.png", "label=somelabel");
-	        Assert.fail("should throw excpetion");
-        } catch (TubainaException e) {
-        }
-	}
+    public void shouldUseHtmlWidth() throws Exception {
+	    String result = tag.parse("imagem.png", "w=50", true);
+	    Assert.assertEquals(
+                "<img src=\"$$RELATIVE$$/imagem.png\" width='50%' alt=\"imagem.png\" />", result);
+    }
 	
 }
