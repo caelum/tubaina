@@ -45,4 +45,12 @@ public class ImageReplacerTest {
 		Assert.assertFalse(replacer.accepts(image));
 		replacer.execute(image, chunks);
 	}
+	
+	@Test
+	public void shouldWorkCorrectlyWIthBracketsInDescription() {
+	    String image = "[img src/test/resources/baseJpgImage.jpg \"description with brackets []\"] text";
+	    Assert.assertTrue(replacer.accepts(image));
+	    String execute = replacer.execute(image, chunks);
+	    Assert.assertEquals(" text", execute);
+	}
 }

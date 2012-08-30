@@ -17,7 +17,7 @@ public class ImageReplacer extends PatternReplacer {
 	private final List<Resource> resources;
 
 	public ImageReplacer(List<Resource> resources) {
-		super("(?s)(?i)\\A\\s*\\[img \\s*(\\S+?)(?:\\s+(.*?)\\s*)?\\]");
+		super("(?s)(?i)\\A\\s*\\[img \\s*(\\S+?)(?:\\s+(.*?)\\s*)?(?:\".*\")?\\]");
 		this.resources = resources;
 
 	}
