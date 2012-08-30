@@ -54,7 +54,7 @@ public class ResourceLocator {
 		try {
 			return Image.getInstance(rootDir + File.separator + path);
 		} catch (IOException e) {
-			throw new TubainaException("Image not existant", e);
+			throw new TubainaException("Image " + path + " not existant", e);
 		} catch (NullPointerException e) {
 			throw new TubainaException(path + " is not a valid image");
 		} catch (BadElementException e) {
