@@ -15,7 +15,7 @@ public class CommandExecutor {
     public String execute(String command, String input) {
         Process proc;
         try {
-            LOG.info("Executing: " + command);
+            LOG.debug("Executing: " + command);
             proc = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
             throw new TubainaException("Could not execute command: "+command, e);
