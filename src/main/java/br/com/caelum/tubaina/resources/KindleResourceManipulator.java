@@ -38,7 +38,7 @@ public class KindleResourceManipulator implements ResourceManipulator {
 
                 try {
                     FileUtils.copyFileToDirectory(srcImage, this.imageDestinationPath);
-                    LOG.info("copying image: " + srcImage.getPath());
+                    LOG.debug("copying image: " + srcImage.getPath());
 
                 } catch (IOException e) {
                     LOG.warn("Error while copying " + srcImage.getPath() + ":\n" + "\t\t"
