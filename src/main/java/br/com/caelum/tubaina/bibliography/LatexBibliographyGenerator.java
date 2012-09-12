@@ -13,9 +13,9 @@ public class LatexBibliographyGenerator implements BibliographyGenerator {
 			addField(result, "author", entry.author);
 			addField(result, "title", entry.title);
 			addField(result, "year", entry.year);
+			addField(result, "journal", entry.getJournal());
 			addField(result, "howPublished", "\\url{" + entry.howPublished + "}");
-			if (entry.publisher != null)
-				addField(result, "publisher", entry.publisher);
+			addField(result, "publisher", entry.publisher);
 			result.append("}\n");
 		}
 

@@ -1,6 +1,8 @@
 package br.com.caelum.bibliography;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.util.Arrays;
@@ -60,17 +62,34 @@ public class LatexBibliographyGeneratorTest {
     
     @Test
     public void shouldGenerateBibliographyWithEmptyHowPublished() throws Exception {
-        BibliographyEntry entry = new BibliographyEntry("author", "title", "1999", null, "article", "label");
+        BibliographyEntry entry = new BibliographyEntry("author", "title", "1999", null, "article", "label", null);
+        Bibliography bibliography = new Bibliography(Arrays.asList(entry));
+    }
+    
+    @Test
+    public void shouldGenerateBibliographyWithEmptyHowAuthor() throws Exception {
+        BibliographyEntry entry = new BibliographyEntry(null, "title", "1999", null, "article", "label", null);
         Bibliography bibliography = new Bibliography(Arrays.asList(entry));
         latexBibGenerator.generateTextOf(bibliography);
     }
     
     @Test
-    public void shouldGenerateBibliographyWithEmptyHowAuthor() throws Exception {
-        BibliographyEntry entry = new BibliographyEntry(null, "title", "1999", null, "article", "label");
+    public void shouldAcceptJournalWhenIsArticle() throws Exception {
+        BibliographyEntry entry = new BibliographyEntry("joao", "title", "1999", null, "article", "label", "international conference");
         Bibliography bibliography = new Bibliography(Arrays.asList(entry));
-        latexBibGenerator.generateTextOf(bibliography);
+        String bib = latexBibGenerator.generateTextOf(bibliography);
+        assertTrue(bib.contains("journal = {international conference}"));
     }
+    
+    @Test
+    public void shouldNotAppearJournalWhenEmpty() throws Exception {
+        BibliographyEntry entry = new BibliographyEntry("joao", "title", "1999", null, "article", "label", null);
+        Bibliography bibliography = new Bibliography(Arrays.asList(entry));
+        String bib = latexBibGenerator.generateTextOf(bibliography);
+        assertFalse(bib.contains("journal ="));
+    }
+    
+    
     
     
 }

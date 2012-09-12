@@ -11,15 +11,17 @@ public class BibliographyEntry {
     public String type;
     public String label;
     public String publisher;
+    private final String journal;
 
     public BibliographyEntry(String author, String title, String year, String howPublished,
-            String type, String label) {
+            String type, String label, String journal) {
         this.author = author;
         this.title = title;
         this.year = year;
         this.howPublished = howPublished;
         this.type = type;
         this.label = label;
+        this.journal = journal;
     }
 
     @Override
@@ -28,6 +30,10 @@ public class BibliographyEntry {
     }
     
     //We still need these getters to use bibliography.ftl
+    
+    public String getJournal() {
+        return journal;
+    }
 
     public String getAuthor() {
         return author;

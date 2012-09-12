@@ -1,14 +1,15 @@
 package br.com.caelum.bibliography;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.util.Scanner;
+import java.util.Arrays;
 
 import org.junit.Test;
 
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.bibliography.Bibliography;
+import br.com.caelum.tubaina.bibliography.BibliographyEntry;
 import br.com.caelum.tubaina.bibliography.BibliographyFactory;
 import br.com.caelum.tubaina.bibliography.HtmlBibliographyGenerator;
 import freemarker.ext.beans.BeansWrapper;
@@ -25,10 +26,23 @@ public class HtmlBibliographyGeneratorTest {
         cfg.setObjectWrapper(new BeansWrapper());
         HtmlBibliographyGenerator htmlBibGenerator = new HtmlBibliographyGenerator(cfg);
 
-        String expectedBib = new Scanner(new File("src/test/resources/bibliography/bib.html"))
-                .useDelimiter("$$").next();
-
-        assertEquals(expectedBib, htmlBibGenerator.generateTextOf(bibliography));
+        String html = htmlBibGenerator.generateTextOf(bibliography);
+        assertTrue(html.contains("Jose da silva"));
+        assertTrue(html.contains("Livro legal"));
+        assertTrue(html.contains("2012"));
+    }
+    
+    @Test
+    public void shouldGenerateHtmlWithJournal() throws Exception {
+        BibliographyEntry bibliographyEntry = new BibliographyEntry("autor", "titulo", "2012", "", "article", "ref", "some journal");
+        Bibliography bibliography = new Bibliography(Arrays.asList(bibliographyEntry));
+        Configuration cfg = new Configuration();
+        cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "kindle"));
+        cfg.setObjectWrapper(new BeansWrapper());
+        HtmlBibliographyGenerator htmlBibGenerator = new HtmlBibliographyGenerator(cfg);
+        
+        String html = htmlBibGenerator.generateTextOf(bibliography);
+        assertTrue(html.contains("some journal"));
     }
     
 }
