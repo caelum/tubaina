@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.builder.BookBuilder;
@@ -93,7 +94,7 @@ public class TubainaBuilder {
         Collections.addAll(files, file.list(new SuffixFileFilter(".afc")));
         Collections.sort(files);
         for (String fileName : files) {
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(new File(file, fileName)), "UTF-8");
+            InputStreamReader reader = new InputStreamReader(new BOMInputStream(new FileInputStream(new File(file, fileName))), "UTF-8");
             afcFiles.add(new AfcFile(reader, fileName));
         }
         return afcFiles;
