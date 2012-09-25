@@ -16,7 +16,7 @@ public class HtmlAndKindleCodeTag implements Tag {
 
     public static final String BEGIN_START = "<pre ";
     public static final String BEGIN_END = ">";
-    public static final String END = "\n</pre>";
+    public static final String END = "</pre>";
     private HtmlSyntaxHighlighter htmlCodeHighlighter;
     private static final Logger LOG = Logger.getLogger(HtmlAndKindleCodeTag.class);
 
