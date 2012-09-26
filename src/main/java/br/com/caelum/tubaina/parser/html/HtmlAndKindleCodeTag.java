@@ -35,12 +35,9 @@ public class HtmlAndKindleCodeTag implements Tag {
         SimpleIndentator simpleIndentator = new SimpleIndentator(2);
         String indentedCode = simpleIndentator.indent(content);
         String label = matchLabel(options);
-
-        if (!highlights.isEmpty()) {
-            LOG.warn("Code highlights are not supported for html output yet");
-        }
-
-        String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered);
+        
+        String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered, highlights);
+        
         String result = "";
         if (!label.isEmpty()) {
             result = BEGIN_START + "id='" + label + "'" + BEGIN_END + code + END;

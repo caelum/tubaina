@@ -4,6 +4,10 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +16,7 @@ import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
 public class HtmlAndKindleCodeTagTest {
 
     private String code;
+    private List<Integer> emptyList;
 
     @Before
     public void setUp() {
@@ -19,6 +24,7 @@ public class HtmlAndKindleCodeTagTest {
         		"    String name = \"Gabriel\";\n" +
         		"    System.out.println(\"Hello, \" + name);\n" +
         		"}";
+        emptyList = Collections.emptyList();
     }
 
     @Test
@@ -27,7 +33,7 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
-        verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false));
+        verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false), eq(emptyList));
     }
 
     @Test
@@ -36,7 +42,7 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
-        verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true));
+        verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true), eq(emptyList));
     }
 
     @Test
@@ -46,7 +52,7 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(rubyCode, options);
-        verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false));
+        verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false), eq(emptyList));
     }
 
     @Test
@@ -57,7 +63,7 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
-        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
+        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
     }
 
     @Test
@@ -68,7 +74,7 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
-        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true));
+        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true), eq(emptyList));
     }
     
     @Test
@@ -78,7 +84,17 @@ public class HtmlAndKindleCodeTagTest {
         HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
-        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false));
+        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
+    }
+    
+    @Test
+    public void shouldConsiderLineHighlightOption() throws Exception {
+        String options = "h=1,2";
+        String noParticularLanguage = "Some code";
+        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
+        codeTag.parse(noParticularLanguage, options);
+        verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(Arrays.asList(1,2)));
     }
 
 }

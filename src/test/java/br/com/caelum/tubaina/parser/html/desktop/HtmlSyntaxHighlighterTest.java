@@ -4,6 +4,9 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,6 +42,22 @@ public class HtmlSyntaxHighlighterTest {
         verify(executor).execute(
                 eq("pygmentize -O encoding=" + encoding
                         + ",outencoding=UTF-8,linenos=inline -f html -l java"), eq(sampleCode));
+    }
+    
+    @Test
+    public void shouldCallPygmentsWithHlLines() throws Exception {
+        CommandExecutor executor = mock(CommandExecutor.class);
+        HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
+        
+        List<Integer> lines = Arrays.asList(1, 2, 5);
+        
+        highlighter.highlight(sampleCode, "java", false, lines);
+        
+        String encoding = System.getProperty("file.encoding");
+        
+        verify(executor).execute(
+                eq("pygmentize -O encoding=" + encoding
+                        + ",outencoding=UTF-8,hl_lines='1 2 5 ' -f html -l java"), eq(sampleCode));
     }
 
 }
