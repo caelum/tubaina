@@ -150,13 +150,13 @@ public class KindleParserTest {
     @Test
     public void testTitleTagInline() {
         String result = parser.parse("[title ola mundo]");
-        Assert.assertEquals("<h3>ola mundo</h3>", result);
+        Assert.assertEquals("<h4>ola mundo</h4>", result);
     }
 
     @Test
     public void testTitleTagInlineWithInnerTags() {
         String result = parser.parse("[title ola **mu__n__do**]");
-        Assert.assertEquals("<h3>ola <strong>mu<u>n</u>do</strong></h3>", result);
+        Assert.assertEquals("<h4>ola <strong>mu<u>n</u>do</strong></h4>", result);
     }
 
     @Test
