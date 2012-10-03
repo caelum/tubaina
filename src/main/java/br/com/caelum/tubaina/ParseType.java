@@ -1,9 +1,11 @@
 package br.com.caelum.tubaina;
 
 import java.io.IOException;
+import java.util.List;
 
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
@@ -12,13 +14,16 @@ import br.com.caelum.tubaina.parser.html.kindle.KindleGenerator;
 import br.com.caelum.tubaina.parser.html.kindle.KindleParser;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
+import br.com.caelum.tubaina.parser.latex.LinkTag;
 
 public enum ParseType {
 
 	LATEX {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new LatexParser(conf.read("/regex.properties", "/latex.properties"), showNotes, noAnswer);
+			List<Tag> tags = conf.read("/regex.properties", "/latex.properties");
+			tags.add(new LinkTag("\\\\href{$1}{$1}$2"));
+            return new LatexParser(tags, showNotes, noAnswer);
 		}
 
 		@Override
