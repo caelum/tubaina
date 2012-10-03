@@ -28,9 +28,9 @@ public class HtmlSyntaxHighlighterTest {
         HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
         highlighter.highlight(code, "java", false);
         String encoding = System.getProperty("file.encoding");
-        verify(executor).execute(
-                eq("pygmentize -O encoding=" + encoding + ",outencoding=UTF-8 -f html -l java"),
-                eq(sampleCode));
+        List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
+                + ",outencoding=UTF-8", "-f", "html", "-l", "java");
+        verify(executor).execute(eq(arguments), eq(sampleCode));
     }
 
     @Test
@@ -39,25 +39,26 @@ public class HtmlSyntaxHighlighterTest {
         HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
         highlighter.highlight(sampleCode, "java", true);
         String encoding = System.getProperty("file.encoding");
-        verify(executor).execute(
-                eq("pygmentize -O encoding=" + encoding
-                        + ",outencoding=UTF-8,linenos=inline -f html -l java"), eq(sampleCode));
+        List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
+                + ",outencoding=UTF-8,linenos=inline", "-f", "html", "-l", "java");
+        verify(executor).execute(eq(arguments), eq(sampleCode));
     }
-    
+
     @Test
     public void shouldCallPygmentsWithHlLines() throws Exception {
         CommandExecutor executor = mock(CommandExecutor.class);
         HtmlSyntaxHighlighter highlighter = new HtmlSyntaxHighlighter(executor);
-        
+
         List<Integer> lines = Arrays.asList(1, 2, 5);
-        
+
         highlighter.highlight(sampleCode, "java", false, lines);
-        
+
         String encoding = System.getProperty("file.encoding");
-        
-        verify(executor).execute(
-                eq("pygmentize -O encoding=" + encoding
-                        + ",outencoding=UTF-8,hl_lines='1 2 5 ' -f html -l java"), eq(sampleCode));
+
+        List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
+                + ",outencoding=UTF-8,hl_lines=1 2 5", "-f", "html", "-l", "java");
+
+        verify(executor).execute(eq(arguments), eq(sampleCode));
     }
 
 }

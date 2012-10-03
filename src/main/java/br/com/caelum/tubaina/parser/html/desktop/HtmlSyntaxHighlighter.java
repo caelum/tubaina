@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,19 +28,28 @@ public class HtmlSyntaxHighlighter {
         addLineHighlightOption(lines, options);
         
         String encoding = System.getProperty("file.encoding");
-        String command = "pygmentize -O encoding=" + encoding + ",outencoding=UTF-8" + options
-                + " -f html -l " + language;
-        return commandExecutor.execute(command, code);
+        
+        ArrayList<String> commands = new ArrayList<String>();
+        commands.add("pygmentize");
+        commands.add("-O");
+        commands.add("encoding=" + encoding + ",outencoding=UTF-8" + options);
+        commands.add("-f");
+        commands.add("html");
+        commands.add("-l");
+        commands.add(language);
+        
+        return commandExecutor.execute(commands, code);
     }
 
     private void addLineHighlightOption(List<Integer> lines, StringBuilder options) {
         if (!lines.isEmpty()) {
-            options.append(",hl_lines='");
+            options.append(",hl_lines=");
             for (Integer line : lines) {
                 options.append(line.toString());
                 options.append(" ");
             }
-            options.append("'");
+            options.deleteCharAt(options.length() - 1);
+            options.append("");
         }
     }
 
