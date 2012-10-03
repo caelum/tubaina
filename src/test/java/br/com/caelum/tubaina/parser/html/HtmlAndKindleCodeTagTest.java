@@ -96,5 +96,5 @@ public class HtmlAndKindleCodeTagTest {
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(Arrays.asList(1,2)));
     }
-
+    
 }
