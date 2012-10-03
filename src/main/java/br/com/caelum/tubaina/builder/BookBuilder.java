@@ -88,7 +88,7 @@ public class BookBuilder {
 
     private List<Chapter> parseChapters(String text, boolean introductionChapter) {  //[chapter nome do capi label="blablabla"]
         Pattern chapterPattern = Pattern
-                .compile("(?i)(?s)(?m)^\\[chapter(.*?)(label=\".*?\")?\\](.*?)(\n\\[chapter|\\z)");
+                .compile("(?i)(?s)(?m)^\\[chapter(.*?)(?:label=\"(.*?)\")?\\](.*?)(\n\\[chapter|\\z)");
         Matcher chapterMatcher = chapterPattern.matcher(text);
 
         List<Chapter> chapters = new ArrayList<Chapter>();

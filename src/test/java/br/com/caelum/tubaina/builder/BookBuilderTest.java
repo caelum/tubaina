@@ -462,6 +462,7 @@ public class BookBuilderTest {
         BookPart bookPart = b.getParts().get(0);
         Chapter chapter = bookPart.getChapters().get(0);
         assertEquals("capitulo um", chapter.getTitle());
+        assertEquals("label of this chapter", chapter.getLabel());
     }
     
 }
