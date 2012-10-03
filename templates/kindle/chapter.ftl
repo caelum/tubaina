@@ -1,5 +1,6 @@
 	<div class='referenceable'>
 		<h2 class='referenceableTitle'>${chapter.chapterNumber} - ${sanitizer.sanitize(chapter.title)}</h2>
+		<a id="${chapter.label}" class='label'></a>
 
 		${chapter.getIntroduction(parser)}
     	

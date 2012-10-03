@@ -6,7 +6,8 @@
     <div class="chapter referenceable">
         <div class="chapterHeader">Cap&iacute;tulo<span>${chapter.chapterNumber}</span></div>
         <h1 class="referenceableTitle">${sanitizer.sanitize(chapter.title)}</h1>
-
+		<a id="${chapter.label}" class='label'></a>
+		
         ${chapter.getIntroduction(parser)}
         
         <#assign sectionCount = 1>

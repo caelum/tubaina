@@ -2,6 +2,7 @@
 
 <#list book.chapters as chapter>
 \chapter{${parser.parse(chapter.title)}}
+\label{${chapter.label}}
 ${chapter.getIntroduction(parser)}
 	<#list chapter.sections as section>
 \section{${parser.parse(section.title!"")}}			
