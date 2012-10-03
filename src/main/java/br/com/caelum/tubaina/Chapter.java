@@ -23,8 +23,11 @@ public class Chapter {
 
     private String titleSlug;
 
-	public Chapter(String title, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
+    private final String label;
+
+	public Chapter(String title, String label, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
 		this.title = title;
+        this.label = label;
 		this.sections = sections;
 		this.resources = resources;
 		this.introduction = introduction;
@@ -65,4 +68,7 @@ public class Chapter {
 	    return new TitleShortener(maxLength).shortenTitle(title);
 	}
 	
+	public String getLabel() {
+        return label;
+    }
 }

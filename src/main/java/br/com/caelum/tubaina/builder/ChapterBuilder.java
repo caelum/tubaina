@@ -26,9 +26,12 @@ public class ChapterBuilder {
 
     private final boolean introductionChapter;
 
-    public ChapterBuilder(String title, String introduction, String content, int chapterNumber,
+    private final String label;
+
+    public ChapterBuilder(String title, String label, String introduction, String content, int chapterNumber,
             boolean introductionChapter) {
         this.title = title;
+        this.label = label;
         this.content = content;
         this.introduction = introduction;
         this.chapterNumber = chapterNumber;
@@ -40,7 +43,7 @@ public class ChapterBuilder {
     }
 
     public ChapterBuilder(String title, String introduction, String content, int chapterNumber) {
-        this(title, introduction, content, chapterNumber, false);
+        this(title, "", introduction, content, chapterNumber, false);
     }
 
     public Chapter build() {
@@ -69,7 +72,7 @@ public class ChapterBuilder {
         IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all")
                 .splitChunks(introduction));
 
-        return new Chapter(title, intro, sections, resources, chapterNumber, introductionChapter);
+        return new Chapter(title, label, intro, sections, resources, chapterNumber, introductionChapter);
     }
 
     public static int getChaptersCount() {

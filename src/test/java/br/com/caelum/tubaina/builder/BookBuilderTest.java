@@ -451,4 +451,17 @@ public class BookBuilderTest {
         assertEquals("parte um", bookPart.getTitle());
         assertEquals(true, bookPart.isPrintable());
     }
+    
+    @Test
+    public void testBookWithChapterWithLabel() throws Exception {
+        BookBuilder builder = new BookBuilder("livro");
+        String content = "[chapter capitulo um label=\"label of this chapter\"]\n"
+                + "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
+        builder.addReaderFromString(content);
+        Book b = builder.build();
+        BookPart bookPart = b.getParts().get(0);
+        Chapter chapter = bookPart.getChapters().get(0);
+        assertEquals("capitulo um", chapter.getTitle());
+    }
+    
 }

@@ -14,6 +14,7 @@ import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.util.TitleSlug;
 
 public class BookBuilder {
 
@@ -85,9 +86,9 @@ public class BookBuilder {
         return introductionChapters;
     }
 
-    private List<Chapter> parseChapters(String text, boolean introductionChapter) {
+    private List<Chapter> parseChapters(String text, boolean introductionChapter) {  //[chapter nome do capi label="blablabla"]
         Pattern chapterPattern = Pattern
-                .compile("(?i)(?s)(?m)^\\[chapter(.*?)\\](.*?)(\n\\[chapter|\\z)");
+                .compile("(?i)(?s)(?m)^\\[chapter(.*?)(label=\".*?\")?\\](.*?)(\n\\[chapter|\\z)");
         Matcher chapterMatcher = chapterPattern.matcher(text);
 
         List<Chapter> chapters = new ArrayList<Chapter>();
@@ -96,14 +97,15 @@ public class BookBuilder {
 
         while (chapterMatcher.find(offset)) {
             String title = chapterMatcher.group(1).trim();
-            String content = chapterMatcher.group(2);
-            offset = chapterMatcher.end(2);
+            String label = chapterMatcher.group(2) == null ? new TitleSlug(title).toString() : chapterMatcher.group(2);
+            String content = chapterMatcher.group(3);
+            offset = chapterMatcher.end(3);
 
             String introduction = extractIntroduction(content);
 
             content = content.substring(introduction.length());
 
-            Chapter chapter = new ChapterBuilder(title, introduction, content, chapterNumber, introductionChapter).build();
+            Chapter chapter = new ChapterBuilder(title, label, introduction, content, chapterNumber, introductionChapter).build();
             chapters.add(chapter);
             if (!introductionChapter)
                 chapterNumber++;

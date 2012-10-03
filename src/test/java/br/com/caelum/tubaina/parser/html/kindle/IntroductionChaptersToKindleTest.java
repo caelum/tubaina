@@ -35,7 +35,7 @@ public class IntroductionChaptersToKindleTest {
 
     @Test
     public void shouldGenerateIntroductionChapters() throws Exception {
-        Chapter preface = new ChapterBuilder("preface", "preface text", "", 0, true).build();
+        Chapter preface = new ChapterBuilder("preface", "label",  "preface text", "", 0, true).build();
         String introductionChapters = introductionChaptersToKindle.generateIntroductionChapters(
                 Arrays.asList(preface)).toString();
         assertTrue(introductionChapters.contains("<h2>preface</h2>"));
