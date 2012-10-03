@@ -11,6 +11,7 @@ public class TubainaBuilderData {
 	private boolean noAnswer;
 	private String outputFileName;
     private List<String> ifdefs;
+    private String linkParameter;
 
 	public TubainaBuilderData(boolean strictXhtml, File templateDir, boolean showNotes, boolean noAnswer,
 			String outputFileName) {
@@ -20,6 +21,7 @@ public class TubainaBuilderData {
 		this.showNotes = showNotes;
 		this.noAnswer = noAnswer;
 		this.outputFileName = outputFileName;
+		this.linkParameter = "";
     }
 
     public boolean isStrictXhtml() {
@@ -68,6 +70,15 @@ public class TubainaBuilderData {
 
     public void setIfdefs(List<String> ifdefs) {
         this.ifdefs = ifdefs;
+    }
+
+    public String getLinkParameter() {
+        return linkParameter;
+    }
+    
+    public void setLinkParameter(String linkParameter) {
+        this.linkParameter = linkParameter;
+        
     }
 	
 	

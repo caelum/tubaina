@@ -168,4 +168,8 @@ public class TubainaBuilder {
         return maximumImageWidth;
     }
 
+    public void withLinkParameter(String linkParameter) {
+        this.data.setLinkParameter(linkParameter);
+    }
+
 }

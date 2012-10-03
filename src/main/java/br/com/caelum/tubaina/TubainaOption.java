@@ -180,6 +180,22 @@ public enum TubainaOption {
                         .withDescription(getDescription())
                         .create(getShortName());
         }
+    },
+    LINK_PARAMETER('l', "linkparameter", "Define a parameter to be appendend to every link") {
+        @Override
+        public void configure(TubainaBuilder builder, CommandLine cmd) {
+            builder.withLinkParameter(cmd.getOptionValue(getShortName()));
+        }
+        @Override
+        @SuppressWarnings("static-access")
+        public Option buildOption() {
+            return OptionBuilder
+                    .withArgName("linkparameter")
+                    .withLongOpt(getLongName())
+                    .hasArgs()
+                    .withDescription(getDescription())
+                    .create(getShortName());
+        }
     };
 	
 	private final String longName;
