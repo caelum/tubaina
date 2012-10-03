@@ -11,15 +11,17 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.latex.LinkTag;
 
 public class HtmlParserTest {
 
 	private HtmlParser parser;
-
+	
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
 		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+		tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
 		this.parser = new HtmlParser(tags, false, true);
 	}
 

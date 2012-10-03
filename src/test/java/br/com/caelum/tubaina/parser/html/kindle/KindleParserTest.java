@@ -11,6 +11,7 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.latex.LinkTag;
 
 public class KindleParserTest {
 
@@ -20,6 +21,7 @@ public class KindleParserTest {
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
         List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
+        tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
         this.parser = new KindleParser(tags, false, true);
     }
 

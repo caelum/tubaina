@@ -36,7 +36,9 @@ public enum ParseType {
 	HTMLFLAT {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer, showNotes);
+		    List<Tag> tags = conf.read("/regex.properties", "/html.properties");
+		    tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
+            return new HtmlParser(tags, noAnswer, showNotes);
 		}
 
 		@Override
@@ -45,10 +47,11 @@ public enum ParseType {
 		}
 	},
 	HTML {
-
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new HtmlParser(conf.read("/regex.properties", "/html.properties"), noAnswer, showNotes);
+		    List<Tag> tags = conf.read("/regex.properties", "/html.properties");
+		    tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
+            return new HtmlParser(tags, noAnswer, showNotes);
 		}
 
 		@Override
@@ -58,10 +61,11 @@ public enum ParseType {
 	},
 
 	KINDLE {
-
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes) throws IOException {
-			return new KindleParser(conf.read("/regex.properties", "/kindle.properties"), noAnswer, showNotes);
+			List<Tag> tags = conf.read("/regex.properties", "/kindle.properties");
+			tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
+            return new KindleParser(tags, noAnswer, showNotes);
 		}
 
 		@Override
