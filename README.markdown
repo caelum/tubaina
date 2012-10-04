@@ -32,7 +32,7 @@ project you'll need to have Gradle installed (instructions to be found at: http:
 In order to build the distribution version do:
 
     > cd path/to/tubaina
-    > gradle clean zip
+    > gradle clean build zip
 
-This will run the tests and, among other stuff, build a *\*.zip* file with Tubaina's jar and all necessary libraries under `build/distributions`
+This will run the tests and, among other stuff, build a *.zip file with Tubaina's jar and all necessary libraries under `build/distributions`
 
