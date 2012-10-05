@@ -15,9 +15,9 @@ public class SyntaxHighlighter {
     public static final String HTML_OUTPUT = "html";
     public static final String LATEX_OUTPUT = "latex";
 
-    public SyntaxHighlighter(CommandExecutor commandExecutor, String output) {
+    public SyntaxHighlighter(CommandExecutor commandExecutor, String outputType) {
         this.commandExecutor = commandExecutor;
-        this.output = output;
+        this.output = outputType;
     }
 
     public SyntaxHighlighter(CommandExecutor commandExecutor, String output, boolean allLinesNumbered) {
@@ -27,8 +27,9 @@ public class SyntaxHighlighter {
 
     public String highlight(String code, String language, boolean numbered, List<Integer> lines) {
         StringBuilder options = new StringBuilder();
-        if (numbered || allLinesNumbered)
-            options.append(",linenos=inline");
+        if (numbered || allLinesNumbered) { // for kindle output all lines are numbered
+            appendLineNumberingOption(options);
+        }
         
         addLineHighlightOption(lines, options);
         
@@ -44,6 +45,15 @@ public class SyntaxHighlighter {
         commands.add(language);
         
         return commandExecutor.execute(commands, code);
+    }
+
+    private void appendLineNumberingOption(StringBuilder options) {
+        if (output.equals(HTML_OUTPUT)) {
+            options.append(",linenos=inline");
+        } else {
+            options.append(",linenos=yes");
+        }
+        
     }
 
     private void addLineHighlightOption(List<Integer> lines, StringBuilder options) {
