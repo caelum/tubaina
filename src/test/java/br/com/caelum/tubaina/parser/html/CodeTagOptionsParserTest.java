@@ -18,5 +18,37 @@ public class CodeTagOptionsParserTest {
         assertEquals(4, lines.size());
         assertEquals(expected, lines);
     }
+    
+    @Test
+    public void shouldParseLanguage() {
+        CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+        String options = "java h=1,2,3,4";
+        String language = codeTagOptionsParser.parseLanguage(options);
+        assertEquals("java", language);
+    }
+    
+    @Test
+    public void shouldParseLabel() {
+        CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+        String options = "java label=javacode h=1,2,3,4";
+        String label = codeTagOptionsParser.parseLabel(options);
+        assertEquals("javacode", label);
+    }
+    
+    @Test
+    public void shouldParseCSharp() {
+        CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+        String options = "C# #";
+        String label = codeTagOptionsParser.parseLanguage(options);
+        assertEquals("C#", label);
+    }
+    
+    @Test
+    public void shouldParseFileName() {
+        CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+        String options = "filename=src/Main.java";
+        String label = codeTagOptionsParser.parseFileName(options);
+        assertEquals("src/Main.java", label);
+    }
 
 }

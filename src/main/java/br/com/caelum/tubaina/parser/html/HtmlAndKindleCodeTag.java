@@ -1,14 +1,12 @@
 package br.com.caelum.tubaina.parser.html;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
+import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class HtmlAndKindleCodeTag implements Tag {
@@ -16,14 +14,17 @@ public class HtmlAndKindleCodeTag implements Tag {
     public static final String BEGIN_START = "<pre ";
     public static final String BEGIN_END = ">";
     public static final String END = "</pre>";
-    private HtmlSyntaxHighlighter htmlCodeHighlighter;
+    private SyntaxHighlighter htmlCodeHighlighter;
     private static final Logger LOG = Logger.getLogger(HtmlAndKindleCodeTag.class);
+    private CodeTagOptionsParser codeTagOptionsParser;
 
     public HtmlAndKindleCodeTag() {
-        this.htmlCodeHighlighter = new HtmlSyntaxHighlighter(new CommandExecutor());
+        codeTagOptionsParser = new CodeTagOptionsParser();
+        this.htmlCodeHighlighter = new SyntaxHighlighter(new CommandExecutor(), SyntaxHighlighter.HTML_OUTPUT);
     }
 
-    public HtmlAndKindleCodeTag(HtmlSyntaxHighlighter htmlCodeHighlighter) {
+    public HtmlAndKindleCodeTag(SyntaxHighlighter htmlCodeHighlighter) {
+        codeTagOptionsParser = new CodeTagOptionsParser();
         this.htmlCodeHighlighter = htmlCodeHighlighter;
     }
 
@@ -47,24 +48,15 @@ public class HtmlAndKindleCodeTag implements Tag {
     }
 
     private String detectLanguage(String options) {
-        if (options != null) {
-            String languageCandidate = options.trim().split(" ")[0];
-            if (!languageCandidate.contains("#") && !languageCandidate.startsWith("h=")
-                    && !languageCandidate.startsWith("label=") && !languageCandidate.isEmpty())
-                return languageCandidate;
-        }
-        return "text";
+        return codeTagOptionsParser.parseLanguage(options);
     }
 
     private List<Integer> detectHighlights(String options) {
-        return new CodeTagOptionsParser().parseHighlights(options);
+        return codeTagOptionsParser.parseHighlights(options);
     }
 
     private String matchLabel(String options) {
-        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
-        if (labelMatcher.find())
-            return labelMatcher.group(1);
-        return "";
+        return codeTagOptionsParser.parseLabel(options);
     }
 
 }

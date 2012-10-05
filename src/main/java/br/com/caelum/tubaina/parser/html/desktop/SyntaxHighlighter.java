@@ -6,17 +6,22 @@ import java.util.List;
 
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class HtmlSyntaxHighlighter {
+public class SyntaxHighlighter {
 
     private final CommandExecutor commandExecutor;
     private boolean allLinesNumbered;
+    private String output;
+    
+    public static final String HTML_OUTPUT = "html";
+    public static final String LATEX_OUTPUT = "latex";
 
-    public HtmlSyntaxHighlighter(CommandExecutor commandExecutor) {
+    public SyntaxHighlighter(CommandExecutor commandExecutor, String output) {
         this.commandExecutor = commandExecutor;
+        this.output = output;
     }
 
-    public HtmlSyntaxHighlighter(CommandExecutor commandExecutor, boolean allLinesNumbered) {
-        this(commandExecutor);
+    public SyntaxHighlighter(CommandExecutor commandExecutor, String output, boolean allLinesNumbered) {
+        this(commandExecutor, output);
         this.allLinesNumbered = allLinesNumbered;
     }
 
@@ -34,7 +39,7 @@ public class HtmlSyntaxHighlighter {
         commands.add("-O");
         commands.add("encoding=" + encoding + ",outencoding=UTF-8" + options);
         commands.add("-f");
-        commands.add("html");
+        commands.add(output);
         commands.add("-l");
         commands.add(language);
         

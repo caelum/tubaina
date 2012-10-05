@@ -20,5 +20,32 @@ public class CodeTagOptionsParser {
         return lines;
     }
 
-    
+    public String parseLanguage(String options) {
+        if (options != null) {
+            String languageCandidate = options.trim().split(" ")[0];
+            if (!languageCandidate.equals("#") && !languageCandidate.startsWith("h=")
+                    && !languageCandidate.startsWith("label=") && !languageCandidate.isEmpty()
+                    && !languageCandidate.contains("filename="))
+                return languageCandidate;
+        }
+        return "text";
+    }
+
+    public String parseLabel(String options) {
+        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+        if (labelMatcher.find()) {
+            return labelMatcher.group(1);
+        }
+        return "";
+    }
+
+    public String parseFileName(String options) {
+        String filename = "";
+        Matcher filenameMatcher = Pattern.compile("filename=(\\S+)").matcher(options);
+        if (filenameMatcher.find()) {
+            filename = filenameMatcher.group(1);
+        }
+        return filename;
+    }
+
 }

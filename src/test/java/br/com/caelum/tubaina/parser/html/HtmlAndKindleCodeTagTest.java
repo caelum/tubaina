@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.desktop.HtmlSyntaxHighlighter;
+import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 
 public class HtmlAndKindleCodeTagTest {
 
@@ -30,7 +30,7 @@ public class HtmlAndKindleCodeTagTest {
     @Test
     public void plainJavaCode() throws Exception {
         String options = "java";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false), eq(emptyList));
@@ -39,7 +39,7 @@ public class HtmlAndKindleCodeTagTest {
     @Test
     public void javaCodeWithNumberedLines() throws Exception {
         String options = "java #";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(code, options);
         verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true), eq(emptyList));
@@ -49,7 +49,7 @@ public class HtmlAndKindleCodeTagTest {
     public void plainRubyCode() throws Exception {
         String options = "ruby";
         String rubyCode = "@name = \"Gabriel\"\n" + "puts \"Hello, \" + name";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(rubyCode, options);
         verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false), eq(emptyList));
@@ -60,7 +60,7 @@ public class HtmlAndKindleCodeTagTest {
         String options = "";
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
@@ -71,7 +71,7 @@ public class HtmlAndKindleCodeTagTest {
         String options = "#";
         String noParticularLanguage = "Some text explaining some new bizarre\n"
                 + "syntax in a very code alike way";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true), eq(emptyList));
@@ -81,7 +81,7 @@ public class HtmlAndKindleCodeTagTest {
     public void shouldNotConsiderLabelAsLanguage() throws Exception {
         String options = "label=world";
         String noParticularLanguage = "Some code";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
@@ -91,7 +91,7 @@ public class HtmlAndKindleCodeTagTest {
     public void shouldConsiderLineHighlightOption() throws Exception {
         String options = "h=1,2";
         String noParticularLanguage = "Some code";
-        HtmlSyntaxHighlighter htmlCodeHighlighter = mock(HtmlSyntaxHighlighter.class);
+        SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
         codeTag.parse(noParticularLanguage, options);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(Arrays.asList(1,2)));
