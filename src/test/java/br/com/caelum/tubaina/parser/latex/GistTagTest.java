@@ -31,7 +31,7 @@ public class GistTagTest {
 		
 		assertPygmentsRan(output);
 		assertTrue(output.contains("javascript"));
-		assertTrue(output.contains("funcion"));
+		assertTrue(output.contains("function"));
 	}
 
 	@Test
