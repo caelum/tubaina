@@ -1,11 +1,11 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Scanner;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.gists.GistConnector;
@@ -23,13 +23,15 @@ public class GistTagTest {
 						new GistRequest()));
 
 		String options = "417835";
-		String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
+		@SuppressWarnings("unused") //code to be retrieved, we can only assert parts of it
+        String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
 
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
 				"", options);
-
-		Assert.assertEquals(CodeTag.BEGIN + "{text}\n" + gistedCode
-				+ CodeTag.END, output);
+		
+		assertPygmentsRan(output);
+		assertTrue(output.contains("javascript"));
+		assertTrue(output.contains("funcion"));
 	}
 
 	@Test
@@ -52,8 +54,14 @@ public class GistTagTest {
 
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
 				"", options);
-		Assert.assertEquals(CodeTag.BEGIN + "[linenos, numbersep=5pt]{text}\n"
-				+ gistedCode + CodeTag.END, output);
+		
+		assertPygmentsRan(output);
+		assertTrue(output.contains("GivenCode"));
 	}
+	
+	private void assertPygmentsRan(String output) {
+        assertTrue(output.contains("\\begin{Verbatim}[commandchars="));
+        assertTrue(output.contains("\\end{Verbatim}"));
+    }
 
 }
