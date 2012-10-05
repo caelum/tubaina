@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -83,19 +84,7 @@ public class LatexGenerator implements Generator {
 
 	private void copyResources(File directory, Book b) throws IOException {
 		// Dependencies (styles, logo)
-		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/tubaina.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/xcolor.sty"), directory);
-		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/bibliography-style.bst"), directory);
-		FileUtils.copyFileToDirectory(new File(this.templateDir, "latex/mintedx.sty"), directory);
-		File[] images = new File(templateDir, "latex").listFiles(new FilenameFilter() {
-			public boolean accept(File dir, String name) {
-				return name.contains(".png") || name.contains(".bib") || name.endsWith(".jpeg");
-			}
-		});
-		for (File image : images) {
-			FileUtils.copyFileToDirectory(image, directory);
-		}
-
+		copyFileWithExtenstion(directory, Arrays.asList(".png", ".jpeg", ".bib", ".sty", ".bst"));
 
 		// Creating Answer Booklet
 		File answerFile = new File(directory, "answer.tex");
@@ -113,6 +102,19 @@ public class LatexGenerator implements Generator {
 		ResourceManipulator manipulator = new LatexResourceManipulator(directory, answerFile, parser, noAnswer);
 		copyResources(resources, manipulator);
 	}
+
+    private void copyFileWithExtenstion(File directory, List<String> extenstions) throws IOException {
+        for (final String extension : extenstions) {
+            File[] files = new File(templateDir, "latex").listFiles(new FilenameFilter() {
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(extension);
+                }
+            });
+            for (File file : files) {
+                FileUtils.copyFileToDirectory(file, directory);
+            }
+        }
+    }
 
 	private List<Resource> retrieveResources(Book b) {
 		List<Resource> resources = new ArrayList<Resource>();
