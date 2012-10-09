@@ -39,6 +39,10 @@ public class SyntaxHighlighter {
         commands.add("pygmentize");
         commands.add("-O");
         commands.add("encoding=" + encoding + ",outencoding=UTF-8" + options);
+        if (output.equals(LATEX_OUTPUT)) {
+            commands.add("-P");
+            commands.add("verboptions=numbersep=5pt");
+        }
         commands.add("-f");
         commands.add(output);
         commands.add("-l");

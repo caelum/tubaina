@@ -68,7 +68,7 @@ public class SyntaxHighlighterTest {
         highlighter.highlight(sampleCode, "java", false);
         String encoding = System.getProperty("file.encoding");
         List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
-                + ",outencoding=UTF-8", "-f", "latex", "-l", "java");
+                + ",outencoding=UTF-8", "-P", "verboptions=numbersep=5pt", "-f", "latex", "-l", "java");
         verify(executor).execute(eq(arguments), eq(sampleCode));
     }
 
