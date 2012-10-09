@@ -50,5 +50,13 @@ public class CodeTagOptionsParserTest {
         String label = codeTagOptionsParser.parseFileName(options);
         assertEquals("src/Main.java", label);
     }
+    
+    @Test
+    public void shouldParseJavascriptLang() {
+        CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+        String options = "javascript";
+        String lang = codeTagOptionsParser.parseLanguage(options);
+        assertEquals("javascript", lang);
+    }
 
 }
