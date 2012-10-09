@@ -14,18 +14,28 @@ public class SyntaxHighlighter {
     
     public static final String HTML_OUTPUT = "html";
     public static final String LATEX_OUTPUT = "latex";
+    
+    private CodeCache codeCache;
 
-    public SyntaxHighlighter(CommandExecutor commandExecutor, String outputType) {
+    public SyntaxHighlighter(CommandExecutor commandExecutor, String outputType, boolean allLinesNumbered, CodeCache codeCache) {
         this.commandExecutor = commandExecutor;
         this.output = outputType;
-    }
-
-    public SyntaxHighlighter(CommandExecutor commandExecutor, String output, boolean allLinesNumbered) {
-        this(commandExecutor, output);
         this.allLinesNumbered = allLinesNumbered;
+        this.codeCache = codeCache;
     }
 
     public String highlight(String code, String language, boolean numbered, List<Integer> lines) {
+        if (codeCache.exists(code)) {
+            return codeCache.find(code);
+        }
+        ArrayList<String> commandWithArgs = buildCommand(language, numbered, lines);
+        String codeHighlighted = commandExecutor.execute(commandWithArgs, code);
+        
+        codeCache.write(code, codeHighlighted);
+        return codeHighlighted;
+    }
+
+    private ArrayList<String> buildCommand(String language, boolean numbered, List<Integer> lines) {
         StringBuilder options = new StringBuilder();
         if (numbered || allLinesNumbered) { // for kindle output all lines are numbered
             appendLineNumberingOption(options);
@@ -47,8 +57,7 @@ public class SyntaxHighlighter {
         commands.add(output);
         commands.add("-l");
         commands.add(language);
-        
-        return commandExecutor.execute(commands, code);
+        return commands;
     }
 
     private void appendLineNumberingOption(StringBuilder options) {

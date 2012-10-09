@@ -21,7 +21,7 @@ public class CodeTag implements Tag {
     public CodeTag(Indentator indentator, SyntaxHighlighter syntaxHighlighter) {
         this.indentator = indentator;
         this.syntaxHighlighter = syntaxHighlighter;
-        codeTagOptionsParser = new CodeTagOptionsParser();
+        this.codeTagOptionsParser = new CodeTagOptionsParser();
     }
 
     public String parse(String code, String options) {

@@ -2,6 +2,7 @@ package br.com.caelum.tubaina.parser.html.kindle;
 
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
+import br.com.caelum.tubaina.parser.html.desktop.CodeCache;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
@@ -11,7 +12,7 @@ public class CodeTag implements Tag {
 
     public CodeTag() {
         this.htmlCodeTag = new HtmlAndKindleCodeTag(new SyntaxHighlighter(new CommandExecutor(),
-                SyntaxHighlighter.HTML_OUTPUT, true));
+                SyntaxHighlighter.HTML_OUTPUT, true, new CodeCache(SyntaxHighlighter.HTML_OUTPUT)));
     }
 
     public CodeTag(HtmlAndKindleCodeTag htmlCodeTag) {
