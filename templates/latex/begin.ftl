@@ -8,7 +8,7 @@
 
 %% Escrevendo em portugues:
 \usepackage[brazil]{babel}	
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{float}
 \usepackage[scaled]{helvet}
