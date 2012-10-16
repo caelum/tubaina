@@ -43,12 +43,10 @@ public class SyntaxHighlighter {
         
         addLineHighlightOption(lines, options);
         
-        String encoding = System.getProperty("file.encoding");
-        
         ArrayList<String> commands = new ArrayList<String>();
         commands.add("pygmentize");
         commands.add("-O");
-        commands.add("encoding=" + encoding + ",outencoding=UTF-8" + options);
+        commands.add("encoding=UTF-8,outencoding=UTF-8" + options);
         if (output.equals(LATEX_OUTPUT)) {
             commands.add("-P");
             commands.add("verboptions=numbersep=5pt");
