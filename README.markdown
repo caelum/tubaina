@@ -1,4 +1,4 @@
-Caelum Tubaina
+Caelum Tubaina [![Build Status](https://secure.travis-ci.org/caelum/tubaina.png)](http://travis-ci.org/caelum/tubaina)
 ==============
 
 Summary
