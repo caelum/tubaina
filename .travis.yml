@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - oraclejdk7
+  - openjdk6
+before_install:
+  - sudo apt-get install python-setuptools
+  - sudo easy_install pygments
+script: "gradle -q test build"
+notifications:
+    email:
+        recipients:
+            - chico.sokol@gmail.com
+        on_success: change
+        on_failure: always
