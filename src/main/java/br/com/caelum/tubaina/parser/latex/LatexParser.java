@@ -9,8 +9,9 @@ import br.com.caelum.tubaina.gists.JsonToGistResultConverter;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.CodeCache;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class LatexParser implements Parser {
@@ -22,14 +23,20 @@ public class LatexParser implements Parser {
 
     private boolean showNotes;
     private final boolean noAnswer;
+    private SyntaxHighlighter syntaxHighlighter;
+    private CodeCache codeCache;
 
     public LatexParser(List<Tag> tags, boolean showNotes, boolean noAnswer) {
+        codeCache = new CodeCache(CodeOutputType.LATEX);
+        syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, codeCache);
         this.tags = tags;
         this.showNotes = showNotes;
         this.noAnswer = noAnswer;
     }
 
     public LatexParser(List<Tag> tags) {
+        codeCache = new CodeCache(CodeOutputType.LATEX);
+        syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, codeCache);
         this.tags = tags;
         this.showNotes = false;
         this.noAnswer = false;
@@ -66,7 +73,7 @@ public class LatexParser implements Parser {
     }
 
     public String parseCode(String text, String options) {
-        String string = new CodeTag(new SimpleIndentator(4), new SyntaxHighlighter(new CommandExecutor(), SyntaxHighlighter.LATEX_OUTPUT, false, new CodeCache(SyntaxHighlighter.LATEX_OUTPUT)))
+        String string = new CodeTag(new SimpleIndentator(4), syntaxHighlighter)
                 .parse(text, options);
         return string + VSPACE;
     }

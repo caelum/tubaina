@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class SyntaxHighlighter {
 
     private final CommandExecutor commandExecutor;
     private boolean allLinesNumbered;
-    private String output;
+    private CodeOutputType output;
     
     public static final String HTML_OUTPUT = "html";
     public static final String LATEX_OUTPUT = "latex";
     
     private CodeCache codeCache;
 
-    public SyntaxHighlighter(CommandExecutor commandExecutor, String outputType, boolean allLinesNumbered, CodeCache codeCache) {
+    public SyntaxHighlighter(CommandExecutor commandExecutor, CodeOutputType outputType, boolean allLinesNumbered, CodeCache codeCache) {
         this.commandExecutor = commandExecutor;
         this.output = outputType;
         this.allLinesNumbered = allLinesNumbered;
@@ -49,19 +51,19 @@ public class SyntaxHighlighter {
         commands.add("pygmentize");
         commands.add("-O");
         commands.add("encoding=" + encoding + ",outencoding=UTF-8" + options);
-        if (output.equals(LATEX_OUTPUT)) {
+        if (output.equals(CodeOutputType.LATEX)) {
             commands.add("-P");
             commands.add("verboptions=numbersep=5pt");
         }
         commands.add("-f");
-        commands.add(output);
+        commands.add(output.pygmentsFormatterName());
         commands.add("-l");
         commands.add(language);
         return commands;
     }
 
     private void appendLineNumberingOption(StringBuilder options) {
-        if (output.equals(HTML_OUTPUT)) {
+        if (output.equals(CodeOutputType.HTML) || output.equals(CodeOutputType.KINDLE_HTML)) {
             options.append(",linenos=inline");
         } else {
             options.append(",linenos=yes");

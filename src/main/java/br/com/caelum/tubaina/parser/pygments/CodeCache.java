@@ -1,4 +1,4 @@
-package br.com.caelum.tubaina.parser.html.desktop;
+package br.com.caelum.tubaina.parser.pygments;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,13 +10,15 @@ import java.util.Scanner;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
+
 public class CodeCache {
 
-    private String output;
+    private CodeOutputType output;
     private String tempDir;
     public static final Logger LOG = Logger.getLogger(CodeCache.class);
 
-    public CodeCache(String output) {
+    public CodeCache(CodeOutputType output) {
         this.output = output;
         this.tempDir = System.getProperty("java.io.tmpdir");
     }

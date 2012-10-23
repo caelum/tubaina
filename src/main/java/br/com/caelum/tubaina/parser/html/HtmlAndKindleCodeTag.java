@@ -6,9 +6,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.CodeCache;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
-import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class HtmlAndKindleCodeTag implements Tag {
 
@@ -18,12 +16,6 @@ public class HtmlAndKindleCodeTag implements Tag {
     private SyntaxHighlighter htmlCodeHighlighter;
     private static final Logger LOG = Logger.getLogger(HtmlAndKindleCodeTag.class);
     private CodeTagOptionsParser codeTagOptionsParser;
-
-    public HtmlAndKindleCodeTag() {
-        codeTagOptionsParser = new CodeTagOptionsParser();
-        this.htmlCodeHighlighter = new SyntaxHighlighter(new CommandExecutor(), 
-                SyntaxHighlighter.HTML_OUTPUT, false, new CodeCache(SyntaxHighlighter.HTML_OUTPUT));
-    }
 
     public HtmlAndKindleCodeTag(SyntaxHighlighter htmlCodeHighlighter) {
         codeTagOptionsParser = new CodeTagOptionsParser();

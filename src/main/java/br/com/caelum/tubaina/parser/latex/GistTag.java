@@ -4,8 +4,9 @@ import br.com.caelum.tubaina.gists.GistResult;
 import br.com.caelum.tubaina.gists.GistResultRetriever;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.desktop.CodeCache;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class GistTag implements Tag {
@@ -14,7 +15,7 @@ public class GistTag implements Tag {
     private GistResultRetriever retriever;
 
     public GistTag(Indentator i, GistResultRetriever retriever) {
-        this.code = new CodeTag(i, new SyntaxHighlighter(new CommandExecutor(), SyntaxHighlighter.LATEX_OUTPUT, false, new CodeCache(SyntaxHighlighter.LATEX_OUTPUT)));
+        this.code = new CodeTag(i, new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, new CodeCache(CodeOutputType.LATEX)));
         this.retriever = retriever;
     }
 

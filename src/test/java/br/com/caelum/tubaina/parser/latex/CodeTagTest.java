@@ -7,8 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.parser.SimpleIndentator;
-import br.com.caelum.tubaina.parser.html.desktop.CodeCache;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class CodeTagTest {
@@ -18,7 +19,7 @@ public class CodeTagTest {
     @Before
     public void setUp() {
         this.codeTag = new CodeTag(new SimpleIndentator(4), new SyntaxHighlighter(
-                new CommandExecutor(), SyntaxHighlighter.LATEX_OUTPUT, false, new CodeCache(SyntaxHighlighter.LATEX_OUTPUT)));
+                new CommandExecutor(), CodeOutputType.LATEX, false, new CodeCache(CodeOutputType.LATEX)));
     }
 
     @Test

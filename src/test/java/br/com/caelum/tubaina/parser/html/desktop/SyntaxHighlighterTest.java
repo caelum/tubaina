@@ -10,6 +10,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
 public class SyntaxHighlighterTest {
@@ -24,7 +26,7 @@ public class SyntaxHighlighterTest {
         this.sampleCode = "public class Foo {\n" + "public int Bar(){\n" + "return 0;\n" + "}\n" + "}";
         this.executor = mock(CommandExecutor.class);
         this.codeCache = mock(CodeCache.class);
-        this.highlighter = new SyntaxHighlighter(executor, SyntaxHighlighter.HTML_OUTPUT, false, codeCache);
+        this.highlighter = new SyntaxHighlighter(executor, CodeOutputType.HTML, false, codeCache);
     }
 
     @Test
@@ -63,7 +65,7 @@ public class SyntaxHighlighterTest {
     
     @Test
     public void shouldCallPygmentsWithLatexOutput() throws Exception {
-        this.highlighter = new SyntaxHighlighter(executor, SyntaxHighlighter.LATEX_OUTPUT, false, codeCache);
+        this.highlighter = new SyntaxHighlighter(executor, CodeOutputType.LATEX, false, codeCache);
         highlighter.highlight(sampleCode, "java", false);
         String encoding = System.getProperty("file.encoding");
         List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
