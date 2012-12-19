@@ -12,7 +12,7 @@ public class CodeTag implements Tag {
 
     public CodeTag() {
         SyntaxHighlighter syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(),
-                CodeOutputType.KINDLE_HTML, true, new CodeCache(CodeOutputType.HTML));
+                CodeOutputType.KINDLE_HTML, false, new CodeCache(CodeOutputType.HTML));
         htmlCodeTag = new HtmlAndKindleCodeTag(syntaxHighlighter);
     }
     
