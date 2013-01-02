@@ -33,10 +33,9 @@ public class SingleHtmlTOCGeneratorTest {
         
         SingleHtmlTOCGenerator tocGenerator = new SingleHtmlTOCGenerator(build, cfg);
         String toc = tocGenerator.generateTOC().toString();
-        
-        assertTrue(toc.contains("O que é java"));
-        assertTrue(toc.contains("Primeira seção"));
-        assertTrue(toc.contains("Segunda seção"));
+        assertTrue(toc.contains("O que &eacute; java"));
+        assertTrue(toc.contains("Primeira se&ccedil;&atilde;o"));
+        assertTrue(toc.contains("Segunda se&ccedil;&atilde;o"));
     }
 
 

@@ -1,6 +1,6 @@
 		<div class="chapter referenceable">
-			<div class="chapterHeader">Capítulo<span>${chapter.chapterNumber}</span></div>
-			<h1 class="referenceableTitle">${chapter.title}</h1>
+			<div class="chapterHeader">Cap&iacute;tulo<span>${chapter.chapterNumber}</span></div>
+			<h1 class="referenceableTitle">${sanitizer.sanitize(chapter.title)}</h1>
 	
     		${chapter.getIntroduction(parser)}
 	    	
