@@ -5,7 +5,7 @@ jdk:
 before_install:
   - sudo apt-get install python-setuptools
   - sudo easy_install pygments
-script: "gradle -q test build"
+script: "gradle test build"
 notifications:
     email:
         recipients:
