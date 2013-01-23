@@ -27,7 +27,9 @@ public class TubainaHtmlIO {
 		File bookRoot = new File(outputFolder, bookName);
 		try {
 			File templateIncludes = new File(templateDir, "includes/");
-			if (!templateIncludes.exists()) throw new TubainaException("why?");
+			if (!templateIncludes.exists()) {
+			    throw new TubainaException("Could not find includes dir at: " + templateIncludes.getAbsolutePath() + ".");
+			}
 			NotFileFilter excludingVersionControlFiles = new NotFileFilter(new NameFileFilter(Arrays.asList("CVS", ".svn", ".git")));
 			FileUtilities.copyDirectoryToDirectory(templateIncludes, bookRoot, excludingVersionControlFiles);
 		} catch (IOException e) {
