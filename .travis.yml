@@ -1,7 +1,7 @@
 language: java
 jdk:
   - oraclejdk7
-  - openjdk6
+#  - openjdk6
 before_install:
   - sudo apt-get install python-setuptools
   - sudo easy_install pygments==1.5
