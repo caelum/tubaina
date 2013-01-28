@@ -78,13 +78,6 @@ public class BookToTOCTest {
         Assert.assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-2-duas\""));
     }
 
-    private Book createBook(final String bookText) {
-        BookBuilder builder = new BookBuilder("Title");
-        builder.addReaderFromString(bookText);
-        Book b = builder.build();
-        return b;
-    }
-
     private int countOccurrences(final String text, final String substring) {
         String[] tokens = text.split(substring);
         return tokens.length - 1;

@@ -2,8 +2,6 @@ package br.com.caelum.tubaina.parser.html;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
@@ -14,7 +12,6 @@ public class HtmlAndKindleCodeTag implements Tag {
     public static final String BEGIN_END = ">";
     public static final String END = "</pre>";
     private SyntaxHighlighter htmlCodeHighlighter;
-    private static final Logger LOG = Logger.getLogger(HtmlAndKindleCodeTag.class);
     private CodeTagOptionsParser codeTagOptionsParser;
 
     public HtmlAndKindleCodeTag(SyntaxHighlighter htmlCodeHighlighter) {

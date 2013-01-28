@@ -174,7 +174,6 @@ public class LatexGeneratorTest {
                 containsText(texFile, "uma nota para o instrutor"));
     }
 
-    @SuppressWarnings("unchecked")
     private boolean containsText(File texFile, String text) throws IOException {
         List<String> lines = FileUtils.readLines(texFile);
         boolean containsText = false;

@@ -45,6 +45,7 @@ public class HtmlParser implements Parser {
         return new ImageTag().parse(text, options);
     }
 
+    @Deprecated
     public String parseJava(String text, String options) {
         String string = new JavaTag(new SimpleIndentator(4))
                 .parse(text, options);
@@ -70,6 +71,7 @@ public class HtmlParser implements Parser {
         return new ListTag().parse(text, options);
     }
 
+    @Deprecated
     public String parseXml(String text, String options) {
         text = this.sanitizer.sanitize(text);
         String string = new XmlTag(new SimpleIndentator(4)).parse(text, options);
@@ -129,6 +131,7 @@ public class HtmlParser implements Parser {
         return new CenteredParagraphTag().parse(content, null);
     }
 
+    @Deprecated
     public String parseRuby(String content, String options) {
         return new RubyTag(new SimpleIndentator(4)).parse(content, options);
     }

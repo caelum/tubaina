@@ -36,7 +36,6 @@ public class GistTagTest {
 
 	@Test
 	public void gistedCodeIsParsedWithLineNumbers() throws Exception {
-		String gistedCode = "GivenCode";
 		String options = "417835 #";
 		long gistId = 417835;
 

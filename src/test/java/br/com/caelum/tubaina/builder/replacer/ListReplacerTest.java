@@ -37,7 +37,8 @@ public class ListReplacerTest {
 		Assert.assertEquals(ListChunk.class, chunks.get(0).getClass());
 	}
 
-	@Test
+	@SuppressWarnings("unchecked")
+    @Test
 	public void testCreateSublistsProperly() throws Exception {
 		String list = "[list number]\n" + "   * primeiro item number\n" + "   [list roman]\n"
 				+ "     *primeiro item roman\n" + "     [list letter]\n" + "        *primeiro item letter\n"

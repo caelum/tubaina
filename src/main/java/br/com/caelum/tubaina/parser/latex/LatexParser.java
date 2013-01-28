@@ -61,6 +61,7 @@ public class LatexParser implements Parser {
         return new ImageTag().parse(text, options);
     }
 
+    @Deprecated
     public String parseJava(String text, String options) {
         String string = new JavaTag(new SimpleIndentator(4))
                 .parse(text, options);
@@ -93,6 +94,7 @@ public class LatexParser implements Parser {
         return string;
     }
 
+    @Deprecated
     public String parseXml(String text, String options) {
         return new XmlTag(new SimpleIndentator(4)).parse(text, options)
                 + VSPACE;
@@ -147,6 +149,7 @@ public class LatexParser implements Parser {
         return new CenteredParagraphTag().parse(content, null);
     }
 
+    @Deprecated
     public String parseRuby(String content, String options) {
         String result = new RubyTag(new SimpleIndentator(4)).parse(content,
                 options);
