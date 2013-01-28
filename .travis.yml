@@ -5,7 +5,7 @@ jdk:
 before_install:
   - sudo apt-get install python-setuptools
   - sudo easy_install pygments==1.5
-script: "gradle --stacktrace test build"
+script: "gradle --full-stacktrace test build"
 notifications:
     email:
         recipients:
