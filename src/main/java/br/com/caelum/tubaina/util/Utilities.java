@@ -258,6 +258,9 @@ public class Utilities {
 		}
 		return title;
 	}
+	public static String toDirectoryName(String title) {
+	    return toDirectoryName(null, title);
+	}
 
     public static String titleSlug(String title) {
         return new TitleSlug(title).toString();

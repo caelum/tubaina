@@ -20,23 +20,26 @@ public class IntroductionChaptersToKindle {
 
     private final TubainaHtmlDir bookRoot;
 
+    static final String RESOURCES_PATH = "introduction-chapters-resources";
+
     public IntroductionChaptersToKindle(Parser parser, Configuration cfg, TubainaHtmlDir bookRoot) {
         this.parser = parser;
         this.cfg = cfg;
         this.bookRoot = bookRoot;
     }
     
-    public StringBuffer generateIntroductionChapters(List<Chapter> chapters) {
+    public String generateIntroductionChapters(List<Chapter> chapters) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("parser", parser);
         map.put("sanitizer", new HtmlSanitizer());
         map.put("chapters", chapters);
         for (Chapter chapter : chapters) {
-            bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeResources(
+            bookRoot.cd(Utilities.toDirectoryName(RESOURCES_PATH)).writeResources(
                     chapter.getResources());
         }
         StringBuffer processedContent = new FreemarkerProcessor(cfg).process(map, "introductionChapters.ftl");
-        return processedContent;
+        String content = processedContent.toString().replace("$$RELATIVE$$", RESOURCES_PATH);
+        return content;
     }
     
 }

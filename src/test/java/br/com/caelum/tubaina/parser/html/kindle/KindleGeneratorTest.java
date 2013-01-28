@@ -171,7 +171,7 @@ public class KindleGeneratorTest {
         Book b = builder.build();
 
         generator.generate(b, tempDir);
-        File introDir = new File(tempDir, "intro");
+        File introDir = new File(tempDir, IntroductionChaptersToKindle.RESOURCES_PATH);
         File copied = new File(introDir, imageName);
 
         Assert.assertTrue(copied.exists());

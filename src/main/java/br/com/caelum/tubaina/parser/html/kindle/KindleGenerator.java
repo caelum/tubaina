@@ -51,7 +51,7 @@ public class KindleGenerator implements Generator {
         
         StringBuffer bookContent = generateHeader(book);
         
-        StringBuffer introductionChaptersContent = generateIntroductionParts(book, bookRoot);
+        String introductionChaptersContent = generateIntroductionParts(book, bookRoot);
         bookContent.append(introductionChaptersContent);
 
         int partCount = 1;
@@ -68,7 +68,7 @@ public class KindleGenerator implements Generator {
         bookRoot.writeIndex(bookContent);
     }
 
-    private StringBuffer generateIntroductionParts(Book book, TubainaHtmlDir bookRoot) {
+    private String generateIntroductionParts(Book book, TubainaHtmlDir bookRoot) {
         return new IntroductionChaptersToKindle(parser, freeMarkerConfig, bookRoot)
                 .generateIntroductionChapters(book.getIntroductionChapters());
     }
