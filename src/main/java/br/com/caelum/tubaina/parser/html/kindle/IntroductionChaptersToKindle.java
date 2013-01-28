@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.io.TubainaHtmlDir;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.template.FreemarkerProcessor;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Utilities;
 import freemarker.template.Configuration;
 
 public class IntroductionChaptersToKindle {
@@ -16,9 +18,12 @@ public class IntroductionChaptersToKindle {
 
     private final Configuration cfg;
 
-    public IntroductionChaptersToKindle(Parser parser, Configuration cfg) {
+    private final TubainaHtmlDir bookRoot;
+
+    public IntroductionChaptersToKindle(Parser parser, Configuration cfg, TubainaHtmlDir bookRoot) {
         this.parser = parser;
         this.cfg = cfg;
+        this.bookRoot = bookRoot;
     }
     
     public StringBuffer generateIntroductionChapters(List<Chapter> chapters) {
@@ -26,6 +31,10 @@ public class IntroductionChaptersToKindle {
         map.put("parser", parser);
         map.put("sanitizer", new HtmlSanitizer());
         map.put("chapters", chapters);
+        for (Chapter chapter : chapters) {
+            bookRoot.cd(Utilities.toDirectoryName(null, chapter.getTitle())).writeResources(
+                    chapter.getResources());
+        }
         StringBuffer processedContent = new FreemarkerProcessor(cfg).process(map, "introductionChapters.ftl");
         return processedContent;
     }

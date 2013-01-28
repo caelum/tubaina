@@ -7,7 +7,6 @@ import java.util.Arrays;
 import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 
-import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.util.FileUtilities;
 
@@ -21,7 +20,7 @@ public class TubainaKindleIO {
         this.resourceManipulatorFactory = resourceManipulatorFactory;
     }
 
-    public TubainaHtmlDir createTubainaDir(File bookRoot, Book book) {
+    public TubainaHtmlDir createTubainaDir(File bookRoot) {
         try {
             File templateIncludes = new File(templateDir, "includes/");
             if (!templateIncludes.exists()) {

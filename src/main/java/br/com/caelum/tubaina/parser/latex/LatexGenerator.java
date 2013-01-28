@@ -7,7 +7,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.Book;
-import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -117,13 +115,7 @@ public class LatexGenerator implements Generator {
     }
 
 	private List<Resource> retrieveResources(Book b) {
-		List<Resource> resources = new ArrayList<Resource>();
-		for (Chapter c : b.getChapters()) {
-			resources.addAll(c.getResources());
-		}
-		for (BookPart bp : b.getParts()) {
-			resources.addAll(bp.getResources());
-		}
+		List<Resource> resources = b.getResources();
 		return resources;
 	}
 

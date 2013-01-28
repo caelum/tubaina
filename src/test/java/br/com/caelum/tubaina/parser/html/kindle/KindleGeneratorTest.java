@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
@@ -27,7 +30,7 @@ import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class KindleGeneratorTest {
     private KindleGenerator generator;
-    private File directory;
+    private File tempDir;
 
     @Before
     public void setUp() throws IOException {
@@ -43,23 +46,23 @@ public class KindleGeneratorTest {
 
         generator = new KindleGenerator(parser, data);
 
-        directory = new File("tmp");
-        directory.mkdir();
+        tempDir = new File("tmp");
+        tempDir.mkdir();
 
     }
 
     @After
     public void deleteTempFiles() throws IOException {
-        FileUtils.deleteDirectory(directory);
+        FileUtils.deleteDirectory(tempDir);
     }
 
     @Test
     public void shouldCreateAppropriateDirectoryStructure() throws Exception {
         Book book = createsSimpleBookWithTitle("livro");
 
-        generator.generate(book, directory);
+        generator.generate(book, tempDir);
 
-        File includes = new File(directory, "includes/");
+        File includes = new File(tempDir, "includes/");
 
         assertTrue("should contain includes directory", includes.exists());
     }
@@ -82,9 +85,9 @@ public class KindleGeneratorTest {
     public void shouldCreateTheBookFile() throws Exception {
         Book book = createsSimpleBookWithTitle("livro");
 
-        generator.generate(book, directory);
+        generator.generate(book, tempDir);
 
-        File theBookItself = new File(directory, "index.html");
+        File theBookItself = new File(tempDir, "index.html");
 
         assertTrue("should create the index.html containing the whole book", theBookItself.exists());
     }
@@ -98,11 +101,11 @@ public class KindleGeneratorTest {
                 + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]");
         Book imageBook = builder.build();
 
-        generator.generate(imageBook, directory);
+        generator.generate(imageBook, tempDir);
 
-        File firstChapter = new File(directory, "um-capitulo/");
+        File firstChapter = new File(tempDir, "um-capitulo/");
         File firstChaptersImage = new File(firstChapter, "baseJpgImage.jpg");
-        File secondChapter = new File(directory, "outro-capitulo/");
+        File secondChapter = new File(tempDir, "outro-capitulo/");
         File secondChaptersImage = new File(secondChapter, "basePngImage.png");
 
         assertTrue(firstChapter.exists());
@@ -120,9 +123,9 @@ public class KindleGeneratorTest {
                 + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]");
         Book imageBook = builder.build();
 
-        generator.generate(imageBook, directory);
+        generator.generate(imageBook, tempDir);
 
-        File firstChapter = new File(directory, "um-capitulo/");
+        File firstChapter = new File(tempDir, "um-capitulo/");
 
         assertFalse(firstChapter.exists());
     }
@@ -134,9 +137,9 @@ public class KindleGeneratorTest {
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
 
-        generator.generate(b, directory);
+        generator.generate(b, tempDir);
         // testar se a imagem foi copiada pro diretorio images
-        File chapterDir = new File(directory, "qualquer-um/");
+        File chapterDir = new File(tempDir, "qualquer-um/");
         Assert.assertTrue(chapterDir.exists());
 
         Assert.assertEquals(1, chapterDir.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
@@ -152,10 +155,26 @@ public class KindleGeneratorTest {
 
         Book b = builder.build();
         try {
-            generator.generate(b, directory);
+            generator.generate(b, tempDir);
         } catch (TubainaException e) {
             Assert.fail("Should not complain if one uses twice the same image");
         }
+    }
+    
+    @Test
+    public void shouldCopyImagesFromIntroduction() throws IOException {
+        BookBuilder builder = new BookBuilder("With images in intro");
+        List<AfcFile> chapterReaders = new ArrayList<AfcFile>();
+        String imageName = "introImage.jpg";
+        List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img " + imageName + "]"), "file from string"));
+        builder.addAllReaders(chapterReaders, introductionReaders);
+        Book b = builder.build();
+
+        generator.generate(b, tempDir);
+        File introDir = new File(tempDir, "intro");
+        File copied = new File(introDir, imageName);
+
+        Assert.assertTrue(copied.exists());
     }
 
     @Test(expected = TubainaException.class)
@@ -164,6 +183,6 @@ public class KindleGeneratorTest {
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img src/test/resources/someImage.gif]");
         Book b = builder.build();
-        generator.generate(b, directory);
+        generator.generate(b, tempDir);
     }
 }

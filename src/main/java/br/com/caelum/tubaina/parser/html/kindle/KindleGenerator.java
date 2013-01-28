@@ -45,14 +45,14 @@ public class KindleGenerator implements Generator {
     }
 
     public void generate(Book book, File outputDir) throws IOException {
-        StringBuffer bookContent = generateHeader(book);
-        StringBuffer introductionChaptersContent = generateIntroductionParts(book);
-        bookContent.append(introductionChaptersContent);
-
         ResourceManipulatorFactory kindleResourceManipulatorFactory = new KindleResourceManipulatorFactory();
-
         TubainaHtmlDir bookRoot = new TubainaKindleIO(templateDir, kindleResourceManipulatorFactory)
-                .createTubainaDir(outputDir, book);
+                .createTubainaDir(outputDir);
+        
+        StringBuffer bookContent = generateHeader(book);
+        
+        StringBuffer introductionChaptersContent = generateIntroductionParts(book, bookRoot);
+        bookContent.append(introductionChaptersContent);
 
         int partCount = 1;
         for (BookPart part : book.getParts()) {
@@ -62,18 +62,14 @@ public class KindleGenerator implements Generator {
                 partCount++;
         }
 
-
         String htmlBibliography = generateHtmlBibliography(outputDir);
-
         bookContent.append(htmlBibliography);
-
         bookContent = resolveReferencesOf(bookContent);
-
         bookRoot.writeIndex(bookContent);
     }
 
-    private StringBuffer generateIntroductionParts(Book book) {
-        return new IntroductionChaptersToKindle(parser, freeMarkerConfig)
+    private StringBuffer generateIntroductionParts(Book book, TubainaHtmlDir bookRoot) {
+        return new IntroductionChaptersToKindle(parser, freeMarkerConfig, bookRoot)
                 .generateIntroductionChapters(book.getIntroductionChapters());
     }
 

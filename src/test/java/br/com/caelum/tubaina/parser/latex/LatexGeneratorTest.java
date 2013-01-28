@@ -3,6 +3,9 @@ package br.com.caelum.tubaina.parser.latex;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -11,6 +14,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
@@ -172,6 +176,21 @@ public class LatexGeneratorTest {
                 containsText(texFile, "INSTRUCTOR TEXTBOOK"));
         Assert.assertFalse("Should not display the note",
                 containsText(texFile, "uma nota para o instrutor"));
+    }
+    
+    @Test
+    public void shouldCopyImagesFromIntroduction() throws IOException {
+        BookBuilder builder = new BookBuilder("With images in intro");
+        List<AfcFile> chapterReaders = new ArrayList<AfcFile>();
+        String imagePath = "introImage.jpg";
+        List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img " + imagePath + "]"), "file from string"));
+        builder.addAllReaders(chapterReaders, introductionReaders);
+        Book b = builder.build();
+
+        generator.generate(b, temp);
+        File copied = new File(temp, imagePath);
+
+        Assert.assertTrue(copied.exists());
     }
 
     private boolean containsText(File texFile, String text) throws IOException {

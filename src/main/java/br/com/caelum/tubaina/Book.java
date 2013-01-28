@@ -3,6 +3,8 @@ package br.com.caelum.tubaina;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.caelum.tubaina.resources.Resource;
+
 public class Book {
 
 	private List<BookPart> parts;
@@ -42,6 +44,20 @@ public class Book {
 	
 	public List<Chapter> getIntroductionChapters() {
         return introductionChapters;
+    }
+
+    public List<Resource> getResources() {
+        List<Resource> resources = new ArrayList<Resource>();
+        for (Chapter c : this.getChapters()) {
+            resources.addAll(c.getResources());
+        }
+        for (Chapter c : this.getIntroductionChapters()) {
+            resources.addAll(c.getResources());
+        }
+        for (BookPart bp : this.getParts()) {
+            resources.addAll(bp.getResources());
+        }
+        return resources;
     }
 	
 }
