@@ -61,12 +61,6 @@ public class LatexBibliographyGeneratorTest {
     }
     
     @Test
-    public void shouldGenerateBibliographyWithEmptyHowPublished() throws Exception {
-        BibliographyEntry entry = new BibliographyEntry("author", "title", "1999", null, "article", "label", null);
-        Bibliography bibliography = new Bibliography(Arrays.asList(entry));
-    }
-    
-    @Test
     public void shouldGenerateBibliographyWithEmptyHowAuthor() throws Exception {
         BibliographyEntry entry = new BibliographyEntry(null, "title", "1999", null, "article", "label", null);
         Bibliography bibliography = new Bibliography(Arrays.asList(entry));
