@@ -65,8 +65,7 @@ public class TubainaBuilder {
             if (dontCare) {
                 LOG.warn(e);
             } else {
-                e.printStackTrace();
-                System.exit(-1);
+                throw e;
             }
         }
 
