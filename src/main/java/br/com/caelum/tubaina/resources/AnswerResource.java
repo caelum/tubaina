@@ -8,9 +8,9 @@ public class AnswerResource implements Resource {
 
 	public AnswerResource(AnswerChunk chunk) {
 		this.chunk = chunk;
-		
 	}
 
+	@Override
 	public void copyTo(ResourceManipulator manipulator) {
 		manipulator.copyAnswer(chunk);
 	}
