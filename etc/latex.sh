@@ -6,7 +6,7 @@ if [ "$HAS_ANSWER" -eq "0" ]; then
     touch "$(dirname $1)"/answer.tex;
 fi
 
-cp -R ~/.tubaina/pythonenv .
+#cp -R ~/.tubaina/pythonenv . #needed only if you don't have pygments installed globally
 
 echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
 bibtex book
