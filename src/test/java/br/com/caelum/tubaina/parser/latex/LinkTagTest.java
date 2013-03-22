@@ -27,14 +27,14 @@ public class LinkTagTest {
     
     @Test
     public void testLinkWithParentheses() {
-        String result = linkTag.parse("(http://www.caelum.com.br/)", null);
+        String result = linkTag.parse(chunk);
         Assert.assertEquals("(\\href{http://www.caelum.com.br/}{http://www.caelum.com.br/})", result);
     }
 
     @Test
     public void shouldReplaceTwoLinks() {
         String content = "http://caelum.com.br/ rest of the text http://caelum.com.br/ another";
-        String result = linkTag.parse(content, null);
+        String result = linkTag.parse(chunk);
         assertEquals("\\href{http://caelum.com.br/}{http://caelum.com.br/} " +
         		"rest of the text \\href{http://caelum.com.br/}" +
         		"{http://caelum.com.br/} another", result);
@@ -61,22 +61,22 @@ public class LinkTagTest {
     @Test
     public void shouldReplaceLinkWhenItsBeforeEndOfLine() throws Exception {
         String text = "Então visite http://www.xcubelabs.com/the-android-story.php e http://www.theverge.com/2011/12/7/2585779/android-history\n";
-        text = linkTag.parse(text, null);
+        text = linkTag.parse(chunk);
         assertEquals("Então visite \\href{http://www.xcubelabs.com/the-android-story.php}{http://www.xcubelabs.com/the-android-story.php} e \\href{http://www.theverge.com/2011/12/7/2585779/android-history}{http://www.theverge.com/2011/12/7/2585779/android-history}\n", text);
     }
 
     private void testLink(String link) {
-        String result = linkTag.parse(link, null);
+        String result = linkTag.parse(chunk);
         Assert.assertEquals("\\href{" + link + "}{" + link + "}", result);
     }
     
     private void testHttpAndHttps(String textBefore, String link, String textAfter) {
         String http = textBefore + "http://" + link + textAfter;
-        String text = linkTag.parse(http, null);
+        String text = linkTag.parse(chunk);
         assertEquals(textBefore + "\\href{http://" + link + "}{http://" + link + "}" + textAfter, text);
 
         String https = textBefore + "https://" + link + textAfter;
-        text = linkTag.parse(https, null);
+        text = linkTag.parse(chunk);
         assertEquals(textBefore + "\\href{https://" + link + "}{https://" + link + "}" + textAfter, text);
     }
 

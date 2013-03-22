@@ -54,7 +54,7 @@ public class BookPart {
     }
 
     public String getIntroduction(Parser p) {
-        return introductionChunk == null ? "" : introductionChunk.getContent(p);
+        return introductionChunk == null ? "" : introductionChunk.asString();
     }
 
     public String getIntroductionText() {

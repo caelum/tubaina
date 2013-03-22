@@ -7,7 +7,7 @@ public class ParagraphTagTest {
 
 	@Test
 	public void testParagraphTag(){
-		String result = new ParagraphTag().parse("qualquer texto", null);
+		String result = new ParagraphTag().parse(chunk);
 		Assert.assertEquals(result, "<p>qualquer texto</p>");
 	}
 	

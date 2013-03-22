@@ -9,7 +9,7 @@ public class TableColumnTagTest {
 	@Test
 	public void testTableColumnTag() {
 		TableColumnTag tag = new TableColumnTag();
-		String result = tag.parse("texto da coluna", null);
+		String result = tag.parse(chunk);
 		Assert.assertEquals("texto da coluna& ", result);
 	}
 

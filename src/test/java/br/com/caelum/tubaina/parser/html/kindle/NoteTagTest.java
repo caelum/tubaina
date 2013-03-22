@@ -7,7 +7,7 @@ public class NoteTagTest {
 
     @Test
     public void testNoteTag() {
-        String result = new NoteTag().parse("qualquer texto de nota", null);
+        String result = new NoteTag().parse(chunk);
         String begin = "---------------------------<br />";
         String end = "<br />---------------------------";
         Assert.assertEquals(result, begin + "qualquer texto de nota" + end);

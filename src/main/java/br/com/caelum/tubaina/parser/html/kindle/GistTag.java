@@ -1,10 +1,12 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import br.com.caelum.tubaina.chunk.GistChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class GistTag implements Tag{
+public class GistTag implements Tag<GistChunk> {
 
-	public String parse(String string, String options) {
+	@Override
+	public String parse(GistChunk chunk) {
 		// TODO - Support gist at HTML
 		return "";
 	}

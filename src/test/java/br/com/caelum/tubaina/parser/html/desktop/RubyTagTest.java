@@ -12,6 +12,6 @@ public class RubyTagTest {
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
 		RubyTag rubyTag = new RubyTag(new SimpleIndentator(4));
 		String code = "# this is a ruby comment";
-		rubyTag.parse(code, "");
+		rubyTag.parse(chunk);
 	}
 }

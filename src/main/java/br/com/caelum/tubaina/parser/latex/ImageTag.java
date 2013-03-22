@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
@@ -13,11 +14,8 @@ public class ImageTag implements Tag {
 	
 	private final Parser parser;
 
-	public ImageTag(Parser parser) {
-		this.parser = parser;
-	}
-	
-	public String parse(final String path, final String options) {
+	@Override
+	public String parse(Chunk chunk) {
 		String output = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
 
 		output = output + "\\includegraphics";

@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import br.com.caelum.tubaina.chunk.CodeChunk;
+import br.com.caelum.tubaina.chunk.GistChunk;
 import br.com.caelum.tubaina.gists.GistResult;
 import br.com.caelum.tubaina.gists.GistResultRetriever;
 import br.com.caelum.tubaina.parser.Indentator;
@@ -9,7 +11,7 @@ import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class GistTag implements Tag {
+public class GistTag implements Tag<GistChunk> {
 
     private CodeTag code;
     private GistResultRetriever retriever;
@@ -19,8 +21,10 @@ public class GistTag implements Tag {
         this.retriever = retriever;
     }
 
-    public String parse(String string, String options) {
-        String codeOptions = options.contains("#") ? " #" : "";
+    @Override
+	public String parse(GistChunk chunk) {
+        String options = chunk.getOptions();
+		String codeOptions = options.contains("#") ? " #" : "";
         
         long gistId = Long.parseLong(options.replaceAll("\\D", ""));
         
@@ -29,7 +33,8 @@ public class GistTag implements Tag {
         String content = result.getContent();
         String language = result.getLanguage();
         
-        return code.parse(content, language + codeOptions);
+        CodeChunk codeChunk = new CodeChunk(content, language + codeOptions);
+		return code.parse(codeChunk);
     }
     
 }

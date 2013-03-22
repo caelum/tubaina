@@ -7,7 +7,7 @@ public class CenteredParagraphTagTest {
 	@Test
 	public void testCenteredParagraphTag() {
 		CenteredParagraphTag tag = new CenteredParagraphTag();
-		String result = tag.parse("texto centralizado", null);
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{center}texto centralizado\\end{center}",
 				result);
 	}

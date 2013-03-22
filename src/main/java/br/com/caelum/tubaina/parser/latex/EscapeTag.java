@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Tag;
 
@@ -7,7 +8,7 @@ public class EscapeTag implements Tag {
 
 	private StringBuilder text = new StringBuilder();
 
-	public String parse(String content, String options) {
+	public String parse(Chunk chunk) {
 		int posicaoAtual = escapaAteVerbatim(content, 0);
 		while (posicaoAtual < content.length()) {
 			int fimVerbatim = content.indexOf("[/verbatim]", posicaoAtual);

@@ -18,7 +18,7 @@ public class ImageTagTest {
     	Parser parser = ParseType.HTML.getParser(new RegexConfigurator(), false, false, "");
         ImageTag tag = new ImageTag(parser);
         try {
-            tag.parse("some/path/imagem.png", "label=somelabel");
+            tag.parse(chunk);
             Assert.fail("should throw excpetion");
         } catch (TubainaException e) {
         }

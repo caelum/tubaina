@@ -8,20 +8,20 @@ public class BoxTagTest {
 	@Test
 	public void testBox() {
 		BoxTag tag = new BoxTag();
-		String result = tag.parse("Texto do Box", "Titulo do Box");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{tubainabox}{Titulo do Box}\nTexto do Box\n\\end{tubainabox}", result);
 	}
 	
 	@Test
 	public void testBoxWithMultilineContent() {
 		BoxTag tag = new BoxTag();
-		String result = tag.parse("Texto do Box\n blablabla\n", "Titulo do Box");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{tubainabox}{Titulo do Box}\nTexto do Box\n blablabla\n\n\\end{tubainabox}", result);
 	}
 	
 	@Test
 	public void testChangeTitleToEmptyStringIfItsNull(){
-		String result = new BoxTag().parse("Text", null);
+		String result = new BoxTag().parse(chunk);
 		Assert.assertEquals("\\begin{tubainabox}{\\ }\nText\n\\end{tubainabox}", result);
 	}
 

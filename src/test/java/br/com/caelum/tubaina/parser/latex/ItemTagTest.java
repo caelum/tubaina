@@ -11,7 +11,7 @@ import br.com.caelum.tubaina.builder.ChunkSplitter;
 public class ItemTagTest {
 	@Test
 	public void testItem() {
-		String result = new ItemTag().parse("texto do item", null);
+		String result = new ItemTag().parse(chunk);
 		Assert.assertEquals("\n\\item{texto do item}\n", result);
 	}
 

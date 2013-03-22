@@ -1,6 +1,6 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.ImageTagTemplate;
 
@@ -12,7 +12,8 @@ public class ImageTag implements Tag {
 		template = new ImageTagTemplate(parser);
 	}
 	
-	public String parse(final String path ,final String options) {
+	@Override
+	public String parse(Chunk chunk) {
 		return template.parse(path, options, true);
 	}
 	

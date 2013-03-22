@@ -11,7 +11,7 @@ public class ParagraphChunk implements Chunk{
 		this.content = content;
 	}
 
-	public String getContent(Parser p) {
+	public String asString(Parser p) {
 		return p.parseParagraph(this.content);
 	}
 

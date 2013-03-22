@@ -3,6 +3,7 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
@@ -16,7 +17,7 @@ public class ImageTag implements Tag {
 		template = new ImageTagTemplate(parser);
 	}
 	
-	public String parse(final String path, final String options) {
+	public String parse(Chunk chunk) {
 	    Pattern label = Pattern.compile("(?s)(?i)label=(\\w+)?");
         Matcher labelMatcher = label.matcher(options);
         if (labelMatcher.matches()) {

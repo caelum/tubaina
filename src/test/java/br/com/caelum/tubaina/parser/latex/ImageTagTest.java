@@ -27,7 +27,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testFullImageTag() {
-		String result = tag.parse("imagem.png", "w=30 \"Imagem de alguma coisa\"");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=52.5mm]{imagem.png}\n" +
@@ -37,7 +37,7 @@ public class ImageTagTest {
 
 	@Test
 	public void labelAndNoCaption() throws Exception {
-		String result = tag.parse("image.png", "label=important");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
@@ -47,7 +47,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void labelNotInformed() throws Exception {
-		String result = tag.parse("image.png", "label=");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
@@ -57,7 +57,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void labelNotInformedFollowedByACaption() throws Exception {
-		String result = tag.parse("image.png", "label= \"a caption to the image\"");
+		String result = tag.parse(chunk);
 		assertEquals(
 		        BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
@@ -68,7 +68,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void labelAndCaption() throws Exception {
-		String result = tag.parse("image.png", "label=important \"a caption to the image\"");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
@@ -79,7 +79,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithoutBounds() {
-		String result = tag.parse("imagem.png", "\"Imagem de alguma coisa\"");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{imagem.png}\n" +
@@ -89,7 +89,7 @@ public class ImageTagTest {
 
 	@Test
 	public void testImageTagWithoutDesc() {
-		String result = tag.parse("imagem.png", "w=42");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
@@ -98,7 +98,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithPercentageSymbol() {
-		String result = tag.parse("imagem.png", "w=40%");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=70.0mm]{imagem.png}\n" +
@@ -107,7 +107,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithoutPercentageSymbol() {
-		String result = tag.parse("imagem.png", "w=40");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=70.0mm]{imagem.png}\n" +
@@ -116,7 +116,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithInvalidBounds() {
-		String result = tag.parse("imagem.png", "w=42");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
@@ -125,7 +125,7 @@ public class ImageTagTest {
 	
 	@Test
 	public void testImageTagWithPath() {
-		String result = tag.parse("some/path/imagem.png", "w=42");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{imagem.png}\n" +
@@ -135,7 +135,7 @@ public class ImageTagTest {
 	@Test
 	public void imageTagWithoutDefinedImageProportionShouldConstrainToPageWidthWhenImageIsTooBig() {
 		int tooLargeImageWidthInPixels = 2250;
-		String result = tag.parse("imagem.png", "[" + tooLargeImageWidthInPixels + "]");
+		String result = tag.parse(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{imagem.png}\n" +
@@ -144,7 +144,7 @@ public class ImageTagTest {
 	
 	@Test
     public void shouldParseLabelEvenWithStrangeChars() throws Exception {
-	    String result = tag.parse("image.png", "label=name-with-strange_chars");
+	    String result = tag.parse(chunk);
 	    assertEquals(
                 BEGIN +
                 "\\includegraphics[width=\\textwidth]{image.png}\n" +

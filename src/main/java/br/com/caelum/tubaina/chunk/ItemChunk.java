@@ -13,10 +13,10 @@ public class ItemChunk implements Chunk {
 		this.body = body;
 	}
 
-	public String getContent(Parser p) {
+	public String asString(Parser p) {
 		String content = "";
 		for (Chunk c : body) {
-			content += c.getContent(p);
+			content += c.asString();
 		}
 		return p.parseItem(content);
 	}

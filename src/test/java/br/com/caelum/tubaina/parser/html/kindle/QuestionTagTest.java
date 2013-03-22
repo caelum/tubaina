@@ -7,7 +7,7 @@ public class QuestionTagTest {
 
 	@Test
 	public void testQuestionTag() {
-		String result = new QuestionTag().parse("texto da questao", null);
+		String result = new QuestionTag().parse(chunk);
 		Assert.assertEquals("<li class=\"question\">texto da questao</li>", result);
 	}
 

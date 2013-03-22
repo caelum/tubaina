@@ -42,121 +42,142 @@ public class LatexParser implements Parser {
         this.noAnswer = false;
     }
 
-    public String parse(String string) {
+    @Override
+	public String parse(String string) {
         // TODO: remove eventual $1, $2 from the string so as not to be
         // interpreted
-        string = new EscapeTag().parse(string, null);
+        string = new EscapeTag().parse(chunk);
         for (Tag tag : tags) {
-            string = tag.parse(string, null);
+            string = tag.parse(chunk);
         }
         return string;
     }
 
-    public String parseBox(String text, String options) {
-        String string = new BoxTag().parse(text, parse(options));
+    @Override
+	public String parseBox(String text, String options) {
+        String string = new BoxTag().parse(chunk);
         return VSPACE + string + VSPACE;
     }
 
-    public String parseImage(String imagePath, String options) {
-        return new ImageTag(this).parse(imagePath, options);
+    @Override
+	public String parseImage(String text, String options) {
+        return new ImageTag().parse(chunk);
     }
 
-    @Deprecated
+    @Override
+	@Deprecated
     public String parseJava(String text, String options) {
         String string = new JavaTag(new SimpleIndentator(4))
-                .parse(text, options);
+                .parse(chunk);
         return string;
     }
 
-    public String parseParagraph(String text) {
+    @Override
+	public String parseParagraph(String text) {
         text = parse(text);
-        return new ParagraphTag().parse(text, null);
+        return new ParagraphTag().parse(chunk);
     }
 
-    public String parseCode(String text, String options) {
+    @Override
+	public String parseCode(String text, String options) {
         String string = new CodeTag(new SimpleIndentator(4), syntaxHighlighter)
-                .parse(text, options);
+                .parse(chunk);
         return string + VSPACE;
     }
 
-    public String parseGist(String options) {
+    @Override
+	public String parseGist(String options) {
     	
     	GistResultRetriever retriever = new GistResultRetriever(new GistConnector(
 				new JsonToGistResultConverter(), new GistRequest()));
     	SimpleIndentator ident = new SimpleIndentator(4);
     	
-		String string = new GistTag(ident, retriever).parse(null, options);
+		String string = new GistTag(ident, retriever).parse(chunk);
         return string + VSPACE;
     }
 
-    public String parseList(String text, String options) {
-        String string = new ListTag().parse(text, options);
+    @Override
+	public String parseList(String text, String options) {
+        String string = new ListTag().parse(chunk);
         return string;
     }
 
-    @Deprecated
+    @Override
+	@Deprecated
     public String parseXml(String text, String options) {
-        return new XmlTag(new SimpleIndentator(4)).parse(text, options)
+        return new XmlTag(new SimpleIndentator(4)).parse(chunk)
                 + VSPACE;
     }
 
-    public String parseExercise(String text, int id) {
-        return new ExerciseTag().parse(text, "" + id);
+    @Override
+	public String parseExercise(String text, int id) {
+        return new ExerciseTag().parse(chunk);
     }
 
-    public String parseAnswer(String text, int id) {
+    @Override
+	public String parseAnswer(String text, int id) {
         if (!noAnswer)
-            return new AnswerTag().parse(text, "" + id);
+            return new AnswerTag().parse(chunk);
         return "";
     }
 
-    public String parseQuestion(String text) {
-        return new QuestionTag().parse(text, null);
+    @Override
+	public String parseQuestion(String text) {
+        return new QuestionTag().parse(chunk);
     }
 
-    public String parseNote(String text, String title) {
+    @Override
+	public String parseNote(String text, String title) {
         if (this.showNotes)
-            return new NoteTag().parse(text, title);
+            return new NoteTag().parse(chunk);
         return "";
     }
 
-    public String parseItem(String text) {
-        return new ItemTag().parse(text, null);
+    @Override
+	public String parseItem(String text) {
+        return new ItemTag().parse(chunk);
     }
 
-    public String parseTodo(String text) {
-        return new TodoTag().parse(text, null);
+    @Override
+	public String parseTodo(String text) {
+        return new TodoTag().parse(chunk);
     }
 
-    public String parseIndex(String name) {
-        return new IndexTag().parse(name, null);
+    @Override
+	public String parseIndex(String name) {
+        return new IndexTag().parse(chunk);
     }
 
-    public String parseColumn(String text) {
-        return new TableColumnTag().parse(text, null);
+    @Override
+	public String parseColumn(String text) {
+        return new TableColumnTag().parse(chunk);
     }
 
-    public String parseRow(String text) {
-        return new TableRowTag().parse(text, null);
+    @Override
+	public String parseRow(String text) {
+        return new TableRowTag().parse(chunk);
     }
 
-    public String parseTable(String text, String title, boolean noborder,
+    @Override
+	public String parseTable(String text, String title, boolean noborder,
             int columns) {
-        return new TableTag(noborder, columns).parse(text, title);
+        return new TableTag(noborder, columns).parse(chunk);
     }
 
-    public String parseCenteredParagraph(String content) {
-        return new CenteredParagraphTag().parse(content, null);
+    @Override
+	public String parseCenteredParagraph(String content) {
+        return new CenteredParagraphTag().parse(chunk);
     }
 
-    @Deprecated
+    @Override
+	@Deprecated
     public String parseRuby(String content, String options) {
-        String result = new RubyTag(new SimpleIndentator(4)).parse(content,
-                options);
+        String result = new RubyTag(new SimpleIndentator(4)).parse(chunk);
         return result + VSPACE;
     }
 
-    public String parseParagraphInsideItem(String text) {
+    @Override
+	public String parseParagraphInsideItem(String text) {
         return parse(text);
     }
 }

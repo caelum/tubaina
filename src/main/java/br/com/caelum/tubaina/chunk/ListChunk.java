@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
-import br.com.caelum.tubaina.parser.Parser;
 
 public class ListChunk implements CompositeChunk {
 
@@ -17,10 +16,10 @@ public class ListChunk implements CompositeChunk {
 		this.type = type;
 	}
 
-	public String getContent(Parser p) {
+	public String asString() {
 		String content = "";
 		for (Chunk c : body) {
-			content += c.getContent(p);
+			content += c.asString();
 		}
 		return p.parseList(content, type);
 	}

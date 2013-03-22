@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
@@ -7,7 +8,7 @@ import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 
-public class CodeTag implements Tag {
+public class CodeTag implements Tag<CodeChunk> {
 
     private final HtmlAndKindleCodeTag htmlCodeTag;
 
@@ -21,8 +22,9 @@ public class CodeTag implements Tag {
         this.htmlCodeTag = htmlCodeTag;
     }
 
-    public String parse(String content, String options) {
-        return htmlCodeTag.parse(content, options);
+    @Override
+	public String parse(CodeChunk chunk) {
+        return htmlCodeTag.parse(chunk);
     }
 
 }

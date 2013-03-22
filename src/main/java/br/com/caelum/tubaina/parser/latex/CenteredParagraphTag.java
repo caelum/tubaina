@@ -1,11 +1,13 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class CenteredParagraphTag implements Tag {
+public class CenteredParagraphTag implements Tag<CenteredParagraphChunk> {
 
-	public String parse(String string, String options) {
-		return "\\begin{center}" + string + "\\end{center}";
+	@Override
+	public String parse(CenteredParagraphChunk chunk) {
+		return "\\begin{center}" + chunk.getContent() + "\\end{center}";
 	}
 
 }
