@@ -4,25 +4,19 @@ import java.util.List;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
-import br.com.caelum.tubaina.parser.Parser;
 
-public class ExerciseChunk implements CompositeChunk {
+public class ExerciseChunk extends CompositeChunk<ExerciseChunk> {
 
 	private static int COUNT = 1;
-	private List<Chunk> body;
 	private int id;
 
 	public ExerciseChunk(List<Chunk> body) {
-		this.body = body;
+		super(body);
 		this.id = COUNT++;
 	}
 
-	public String getContent(Parser p) {
-		String content = "";
-		for (Chunk c : body) {
-			content += c.getContent(p);
-		}
-		return p.parseExercise(content, id);
+	public int getId() {
+		return id;
 	}
 	
 	public static int getExerciseCount() {

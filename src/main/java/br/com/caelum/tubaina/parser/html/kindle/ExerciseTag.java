@@ -1,13 +1,15 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import br.com.caelum.tubaina.chunk.ExerciseChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.ExerciseTagTemplate;
 
-public class ExerciseTag implements Tag{
+public class ExerciseTag implements Tag<ExerciseChunk> {
 	private ExerciseTagTemplate template = new ExerciseTagTemplate();
 	
-	public String parse(String string, String options) {
-		return template.parse(string, options);
+	@Override
+	public String parse(ExerciseChunk chunk) {
+		return template.parse(chunk);
 	}
 
 }

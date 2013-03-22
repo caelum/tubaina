@@ -182,12 +182,10 @@ public class LatexParserTest {
                 + "* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
         List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
         Assert.assertEquals(3, chunks.size());
-        Assert.assertEquals("\n\\item{Refactoring, Martin Fowler}\n", chunks.get(0).getContent(
-                parser));
-        Assert.assertEquals("\n\\item{Effective Java, Joshua Bloch}\n", chunks.get(1).getContent(
-                parser));
+        Assert.assertEquals("\n\\item{Refactoring, Martin Fowler}\n", chunks.get(0).asString());
+        Assert.assertEquals("\n\\item{Effective Java, Joshua Bloch}\n", chunks.get(1).asString());
         Assert.assertEquals("\n\\item{Design Patterns, Erich Gamma et al}\n", chunks.get(2)
-                .getContent(parser));
+                .asString());
     }
 
     @Test

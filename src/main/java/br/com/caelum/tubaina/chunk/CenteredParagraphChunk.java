@@ -1,9 +1,8 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class CenteredParagraphChunk implements Chunk {
+public class CenteredParagraphChunk extends AbstractChunk<CenteredParagraphChunk> {
 
 	private final String content;
 
@@ -11,8 +10,7 @@ public class CenteredParagraphChunk implements Chunk {
 		this.content = content;
 	}
 
-	public String getContent(Parser p) {
-		return p.parseCenteredParagraph(content);
+	public String getContent() {
+		return content;
 	}
-
 }

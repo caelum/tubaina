@@ -10,7 +10,7 @@ public class ExerciseTagTest {
 	
 	@Test
 	public void testExerciseTag(){
-		String result = new ExerciseTag().parse("texto do exercicio", null);
+		String result = new ExerciseTag().parse(chunk);
 		Assert.assertEquals("<ol class=\"exercise\">texto do exercicio</ol>", result);
 	}
 

@@ -1,10 +1,11 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ListTag implements Tag {
 
-	public String parse(String content, String options) {
+	public String parse(Chunk chunk) {
 		String listHeader = "\\begin{enumerate}[";
 		if (options.contains("number"))
 			listHeader += "1)";

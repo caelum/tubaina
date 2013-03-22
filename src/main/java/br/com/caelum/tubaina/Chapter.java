@@ -49,7 +49,7 @@ public class Chapter {
 	}
 	
 	public String getIntroduction(Parser p){
-		return this.introduction.getContent(p);
+		return this.introduction.asString();
 	}
 	
 	public int getChapterNumber() {

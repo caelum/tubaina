@@ -32,7 +32,7 @@ public class HtmlAndKindleCodeTagTest {
         String options = "java";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(code, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(code), eq(options), eq(false), eq(emptyList));
     }
 
@@ -41,7 +41,7 @@ public class HtmlAndKindleCodeTagTest {
         String options = "java #";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(code, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(code), eq("java"), eq(true), eq(emptyList));
     }
 
@@ -51,7 +51,7 @@ public class HtmlAndKindleCodeTagTest {
         String rubyCode = "@name = \"Gabriel\"\n" + "puts \"Hello, \" + name";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(rubyCode, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(rubyCode), eq("ruby"), eq(false), eq(emptyList));
     }
 
@@ -62,7 +62,7 @@ public class HtmlAndKindleCodeTagTest {
                 + "syntax in a very code alike way";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
     }
 
@@ -73,7 +73,7 @@ public class HtmlAndKindleCodeTagTest {
                 + "syntax in a very code alike way";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(true), eq(emptyList));
     }
     
@@ -83,7 +83,7 @@ public class HtmlAndKindleCodeTagTest {
         String noParticularLanguage = "Some code";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(emptyList));
     }
     
@@ -93,7 +93,7 @@ public class HtmlAndKindleCodeTagTest {
         String noParticularLanguage = "Some code";
         SyntaxHighlighter htmlCodeHighlighter = mock(SyntaxHighlighter.class);
         HtmlAndKindleCodeTag codeTag = new HtmlAndKindleCodeTag(htmlCodeHighlighter);
-        codeTag.parse(noParticularLanguage, options);
+        codeTag.parse(chunk);
         verify(htmlCodeHighlighter).highlight(eq(noParticularLanguage), eq("text"), eq(false), eq(Arrays.asList(1,2)));
     }
     

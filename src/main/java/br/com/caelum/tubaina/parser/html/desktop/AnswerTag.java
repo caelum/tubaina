@@ -1,14 +1,16 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class AnswerTag implements Tag {
+public class AnswerTag implements Tag<AnswerChunk> {
 	private final String answerText = "Click here for the answer";
 	
-	public String parse(String string, String id) {
-		return "<a class=\"answer\" onclick=\"toogleAnswer('answer" + id + "');\">"
-		+ answerText + "</a><br /><div class=\"answer\" id=\"answer" + id
-		+ "\">" + string + "</div><br/>";
+	@Override
+	public String parse(AnswerChunk chunk) {
+		return "<a class=\"answer\" onclick=\"toogleAnswer('answer" + chunk.getId() + "');\">"
+		+ answerText + "</a><br /><div class=\"answer\" id=\"answer" + chunk.getId()
+		+ "\">" + chunk.getContent() + "</div><br/>";
 	}
 
 }

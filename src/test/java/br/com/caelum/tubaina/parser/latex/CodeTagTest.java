@@ -27,7 +27,7 @@ public class CodeTagTest {
         String options = "properties";
         String string = "blablah blah\n" + "#algum comentario\n" + "texto=valor\n"
                 + "texto:valor\n" + "texto valor";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -37,7 +37,7 @@ public class CodeTagTest {
         String options = "properties abc";
         String string = "blablah blah\n" + "#algum comentario\n" + "texto\\=valor=valor\n"
                 + "texto\\:valor:valor\n" + "texto\\ valor valor\n" + "a b\\#fake comentario";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -46,7 +46,7 @@ public class CodeTagTest {
     public void languageCodeTagShouldInsertLineNumbersWhenOptionContainsSharp() {
         String string = "public static void main(String[] args) {";
         String options = "java #";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -55,7 +55,7 @@ public class CodeTagTest {
     public void languageCodeTagShouldUnderstandLineNumbersEvenWhenNoLanguageIsSelected() {
         String string = "def some: \"bizarre code\" in: unknownLanguage";
         String options = "#";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -64,7 +64,7 @@ public class CodeTagTest {
     public void languageCodeTagShouldUnderstandLineNumbersAndHighlightsWhenNoLanguageIsSelected() {
         String string = "def some: \"bizarre code\" \nin: unknownLanguage";
         String options = "# h=1,2";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -73,7 +73,7 @@ public class CodeTagTest {
     public void languageCodeTagShouldUnderstandLineNumbersAndCSharpLanguage() {
         String string = "public class SomeClass {";
         String options = "c# #";
-        String output = codeTag.parse(string, options);
+        String output = codeTag.parse(chunk);
 
         assertPygmentsRan(output);
     }
@@ -83,7 +83,7 @@ public class CodeTagTest {
         String options = "label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertTrue(output.startsWith("\\tubainaCodeLabel{javacode1}"));
         assertPygmentsRan(output);
@@ -94,7 +94,7 @@ public class CodeTagTest {
         String options = "java label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertTrue(output.startsWith("\\tubainaCodeLabel{javacode1}"));
         assertPygmentsRan(output);
@@ -105,7 +105,7 @@ public class CodeTagTest {
         String options = "filename=src/Main.java";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertTrue(output.startsWith("\\tubainaCodeFileName{src/Main.java}\n"));
         assertPygmentsRan(output);
@@ -116,7 +116,7 @@ public class CodeTagTest {
         String options = "java filename=src/Main.java";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertTrue(output.startsWith("\\tubainaCodeFileName{src/Main.java}\n"));
         assertPygmentsRan(output);
@@ -127,7 +127,7 @@ public class CodeTagTest {
         String options = "java filename=src/Main2.java label=javacode1";
         String code = "class Main {\n" + "public static void main(String[] args) {\n"
                 + "System.out.println(\"Hello world\");\n" + "}\n}";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertTrue(output.startsWith("\\tubainaCodeLabel{javacode1}\n"));
         assertPygmentsRan(output);
@@ -137,7 +137,7 @@ public class CodeTagTest {
     public void javascriptLangBug() throws Exception {
         String options = "javascript";
         String code = "writeTotal(3.14159);";
-        String output = codeTag.parse(code, options);
+        String output = codeTag.parse(chunk);
 
         assertFalse(output.contains("javascript"));
         assertPygmentsRan(output);

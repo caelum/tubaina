@@ -27,7 +27,7 @@ public class GistTagTest {
         String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
 
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
-				"", options);
+				chunk);
 		
 		assertPygmentsRan(output);
 		assertTrue(output.contains("javascript"));
@@ -52,7 +52,7 @@ public class GistTagTest {
 		GistResultRetriever retriever = new GistResultRetriever(connector);
 
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
-				"", options);
+				chunk);
 		
 		assertPygmentsRan(output);
 		assertTrue(output.contains("GivenCode"));

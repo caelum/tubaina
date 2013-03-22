@@ -1,12 +1,15 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class AnswerTag implements Tag {
+public class AnswerTag implements Tag<AnswerChunk> {
  
-	public String parse(String string, String id) {
-		return "<div class=\"answer\" id=\"answer" + id
-		+ "\">" + string + "</div><br/>";
+	@Override
+	public String parse(AnswerChunk chunk) {
+		return "<div class=\"answer\" id=\"answer" + chunk.getId()
+		+ "\">" + chunk.getContent() + "</div><br/>";
 	}
 
 }

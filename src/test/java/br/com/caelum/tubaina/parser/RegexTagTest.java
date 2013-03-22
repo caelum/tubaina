@@ -7,7 +7,7 @@ public class RegexTagTest {
     
     protected String parseWithRegexps(String text) {
         for (Tag tag : regexTags) {
-            text = tag.parse(text, "");
+            text = tag.parse(chunk);
         }
         return text;
     }

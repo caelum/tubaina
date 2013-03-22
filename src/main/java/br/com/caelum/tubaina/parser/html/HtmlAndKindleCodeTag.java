@@ -2,11 +2,12 @@ package br.com.caelum.tubaina.parser.html;
 
 import java.util.List;
 
+import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 
-public class HtmlAndKindleCodeTag implements Tag {
+public class HtmlAndKindleCodeTag implements Tag<CodeChunk> {
 
     public static final String BEGIN_START = "<pre ";
     public static final String BEGIN_END = ">";
@@ -19,12 +20,14 @@ public class HtmlAndKindleCodeTag implements Tag {
         this.htmlCodeHighlighter = htmlCodeHighlighter;
     }
 
-    public String parse(String content, String options) {
-        String language = detectLanguage(options);
+    @Override
+	public String parse(CodeChunk chunk) {
+        String options = chunk.getOptions();
+		String language = detectLanguage(options);
         List<Integer> highlights = detectHighlights(options);
         boolean numbered = options.contains("#");
         SimpleIndentator simpleIndentator = new SimpleIndentator(2);
-        String indentedCode = simpleIndentator.indent(content);
+        String indentedCode = simpleIndentator.indent(chunk.getContent());
         String label = matchLabel(options);
         
         String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered, highlights);

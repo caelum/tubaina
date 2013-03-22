@@ -12,7 +12,7 @@ public class ImageTagTest {
     public void shouldThrowExpectionWhenTagContainsLabel() {
         ImageTag tag = new ImageTag();
         try {
-            tag.parse("some/path/imagem.png", "label=somelabel");
+            tag.parse(chunk);
             Assert.fail("should throw excpetion");
         } catch (TubainaException e) {
         }

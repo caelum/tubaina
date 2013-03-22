@@ -1,9 +1,8 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class CodeChunk implements Chunk {
+public class CodeChunk extends AbstractChunk<CodeChunk> {
 
 	private String content;
 	private final String options;
@@ -13,8 +12,11 @@ public class CodeChunk implements Chunk {
 		this.options = options;
 	}
 
-	public String getContent(Parser p) {
-		return p.parseCode(this.content, this.options);
+	public String getContent() {
+		return content;
 	}
-
+	
+	public String getOptions() {
+		return options;
+	}
 }

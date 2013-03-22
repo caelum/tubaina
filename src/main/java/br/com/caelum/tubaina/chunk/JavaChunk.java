@@ -14,7 +14,7 @@ public class JavaChunk implements Chunk {
 		this.options = options;
 	}
 
-	public String getContent(Parser p) {
+	public String asString(Parser p) {
 		return p.parseJava(content, options);
 	}
 

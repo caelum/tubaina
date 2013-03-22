@@ -10,28 +10,28 @@ public class ListTagTest {
 	@Test
 	public void testList() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("<ul>conteudo da lista</ul>", result);
 	}
 	
 	@Test
 	public void testListNumber() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "number");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("<ol>conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListLetter() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "letter");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListRoman() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "roman");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
 	}
 	

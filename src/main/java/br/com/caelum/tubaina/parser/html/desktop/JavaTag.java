@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -13,7 +14,7 @@ public class JavaTag implements Tag {
 		throw new TubainaException(MESSAGE);
 	}
 	
-	public String parse(String string, String opts) {
+	public String parse(Chunk chunk) {
 		throw new TubainaException(MESSAGE);
 	}
 

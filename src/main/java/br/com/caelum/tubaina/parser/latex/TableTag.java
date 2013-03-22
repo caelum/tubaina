@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Tag;
 
@@ -13,7 +14,7 @@ public class TableTag implements Tag {
 		this.columns = columns;
 	}
 
-	public String parse(String text, String title) {
+	public String parse(Chunk chunk) {
 		if (this.columns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
 		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";

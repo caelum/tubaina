@@ -10,7 +10,7 @@ public class IndexChunk implements Chunk{
 		this.name = name;
 		
 	}
-	public String getContent(Parser p) {
+	public String asString(Parser p) {
 		return p.parseIndex(name);
 	}
 

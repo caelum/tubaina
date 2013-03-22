@@ -32,9 +32,9 @@ public class ItemReplacerTest {
 		Assert.assertEquals(2, chunks.size());
 		Assert.assertEquals(ItemChunk.class, chunks.get(0).getClass());
 		Assert.assertEquals("quero que o codigo java abaixo não tenha itens" + "blah blah \n" + "/**\n"
-				+ " * texto qualquer\n\n" + " *outro comentario\n", chunks.get(0).getContent(parser));
+				+ " * texto qualquer\n\n" + " *outro comentario\n", chunks.get(0).asString());
 		Assert.assertEquals(ItemChunk.class, chunks.get(1).getClass());
-		Assert.assertEquals("mas que isso seja outro item", chunks.get(1).getContent(parser));
+		Assert.assertEquals("mas que isso seja outro item", chunks.get(1).asString());
 
 	}
 

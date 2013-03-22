@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
-import br.com.caelum.tubaina.parser.Parser;
 
 public class NoteChunk implements CompositeChunk {
 
@@ -17,14 +16,14 @@ public class NoteChunk implements CompositeChunk {
 		this.body = body;
 	}
 
-	public String getContent(Parser p) {
+	public String asString() {
 		String content =  "" + '\n';
 		for (Chunk c : body) {
-			content += c.getContent(p);
+			content += c.asString();
 		}
 		String fullTitle = "";
 		for (Chunk c : title) {
-			fullTitle += c.getContent(p);
+			fullTitle += c.asString();
 		}
 		return p.parseNote(content, fullTitle);
 	}

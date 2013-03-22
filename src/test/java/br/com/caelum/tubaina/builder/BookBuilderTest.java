@@ -65,12 +65,11 @@ public class BookBuilderTest {
         Assert.assertEquals(2, sections1.size());
 
         Assert.assertEquals("Primeira seção", sections1.get(0).getTitle());
-        Assert.assertEquals("texto da prim seção", sections1.get(0).getChunks().get(0).getContent(
-                parser));
+        Assert.assertEquals("texto da prim seção", sections1.get(0).getChunks().get(0).asString());
 
         Assert.assertEquals("Segunda seção", sections1.get(1).getTitle());
         Assert.assertEquals("texto da segunda seção", sections1.get(1).getChunks().get(0)
-                .getContent(parser));
+                .asString());
 
         Assert.assertEquals("Algum texto de introdução", chapters.get(1).getIntroduction(parser));
 
@@ -112,12 +111,11 @@ public class BookBuilderTest {
         Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction(parser));
 
         Assert.assertEquals("Primeira seção", sections.get(0).getTitle());
-        Assert.assertEquals("texto da prim seção", sections.get(0).getChunks().get(0).getContent(
-                parser));
+        Assert.assertEquals("texto da prim seção", sections.get(0).getChunks().get(0).asString());
 
         Assert.assertEquals("Segunda seção", sections.get(1).getTitle());
         Assert.assertEquals("texto da segunda seção", sections.get(1).getChunks().get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -132,12 +130,11 @@ public class BookBuilderTest {
         Assert.assertEquals(2, sections.size());
 
         Assert.assertEquals("Primeira seção", sections.get(0).getTitle());
-        Assert.assertEquals("texto da prim seção", sections.get(0).getChunks().get(0).getContent(
-                parser));
+        Assert.assertEquals("texto da prim seção", sections.get(0).getChunks().get(0).asString());
 
         Assert.assertEquals("Segunda seção", sections.get(1).getTitle());
         Assert.assertEquals("texto da segunda seção", sections.get(1).getChunks().get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test(
@@ -167,7 +164,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("Algum texto de parágrafo", chunks.get(0).getContent(parser));
+        Assert.assertEquals("Algum texto de parágrafo", chunks.get(0).asString());
     }
 
     @Test
@@ -181,8 +178,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(JavaChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("\npublic class AlgumCodigoJava\n{\n}\n", chunks.get(0).getContent(
-                parser));
+        Assert.assertEquals("\npublic class AlgumCodigoJava\n{\n}\n", chunks.get(0).asString());
     }
 
     @Test
@@ -195,7 +191,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(BoxChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("Algum corpo de texto", chunks.get(0).getContent(parser));
+        Assert.assertEquals("Algum corpo de texto", chunks.get(0).asString());
 
         Field field = BoxChunk.class.getDeclaredField("title");
         field.setAccessible(true);
@@ -215,7 +211,7 @@ public class BookBuilderTest {
 
         Assert.assertEquals(CodeChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("\nAlgum corpo de texto\nque é preformatado\n", chunks.get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -227,7 +223,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(GistChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("1940936", chunks.get(0).getContent(parser));
+        Assert.assertEquals("1940936", chunks.get(0).asString());
     }
 
     @Test
@@ -241,7 +237,7 @@ public class BookBuilderTest {
 
         Assert.assertEquals(RubyChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("\nAlgum corpo de texto\nque é preformatado\n", chunks.get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -254,7 +250,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(ImageChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("src/test/resources/baseJpgImage.jpg", chunks.get(0).getContent(parser));
+        Assert.assertEquals("src/test/resources/baseJpgImage.jpg", chunks.get(0).asString());
 
         Field field = ImageChunk.class.getDeclaredField("width");
         field.setAccessible(true);
@@ -280,7 +276,7 @@ public class BookBuilderTest {
 
         Assert.assertEquals(ListChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("uma listacom alguns itenspra ter certeza que funciona", chunks.get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -295,7 +291,7 @@ public class BookBuilderTest {
 
         Assert.assertEquals(TableChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("uma tabelacom várias colunase váriaslinhas também", chunks.get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -309,7 +305,7 @@ public class BookBuilderTest {
 
         Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("Algum texto centralizado\n\nCom várias linhas", chunks.get(0)
-                .getContent(parser));
+                .asString());
     }
 
     @Test
@@ -341,22 +337,22 @@ public class BookBuilderTest {
         // Primeiro Chunk
         Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
         Assert.assertEquals("Um chunk de Paragrafo normal\n" + "Com um monte de coisas escritas\n"
-                + "Em várias linhas", chunks.get(0).getContent(parser));
+                + "Em várias linhas", chunks.get(0).asString());
 
         // Segundo chunk
         Assert.assertEquals(JavaChunk.class, chunks.get(1).getClass());
         Assert.assertEquals("Agora um chunk com código java\n" + "Também multiline", chunks.get(1)
-                .getContent(parser).trim());
+                .asString().trim());
 
         // Terceiro Chunk
         Assert.assertEquals(ParagraphChunk.class, chunks.get(2).getClass());
         Assert.assertEquals("Mais algum texto que deveria ser chunk de parágrafo", chunks.get(2)
-                .getContent(parser));
+                .asString());
 
         // Quarto Chunk
         Assert.assertEquals(BoxChunk.class, chunks.get(3).getClass());
         Assert.assertEquals("Algo escrito dentro dele" + "Com pseudo-parágrafos", chunks.get(3)
-                .getContent(parser));
+                .asString());
 
         Field field = BoxChunk.class.getDeclaredField("title");
         field.setAccessible(true);
@@ -366,22 +362,22 @@ public class BookBuilderTest {
 
         // Quinto Chunk
         Assert.assertEquals(CodeChunk.class, chunks.get(4).getClass());
-        Assert.assertEquals(" Um monte de código genérico \n", chunks.get(4).getContent(parser));
+        Assert.assertEquals(" Um monte de código genérico \n", chunks.get(4).asString());
 
         // Sexto Chunk
         Assert.assertEquals(ListChunk.class, chunks.get(5).getClass());
         Assert.assertEquals("uma listacom alguns itenspra ter certeza que funciona", chunks.get(5)
-                .getContent(parser));
+                .asString());
 
         // Sétimo Chunk
         Assert.assertEquals(TableChunk.class, chunks.get(6).getClass());
         Assert.assertEquals("uma tabelacom várias colunase váriaslinhas também", chunks.get(6)
-                .getContent(parser));
+                .asString());
 
         // Oitavo Chunk
         Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(7).getClass());
         Assert.assertEquals("Algum texto centralizado\n\nCom várias linhas", chunks.get(7)
-                .getContent(parser));
+                .asString());
     }
 
     @Test

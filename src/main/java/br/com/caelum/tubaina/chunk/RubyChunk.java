@@ -13,7 +13,7 @@ public class RubyChunk implements Chunk {
 		this.options = options;
 	}
 
-	public String getContent(Parser p) {
+	public String asString(Parser p) {
 		return p.parseRuby(content, options);
 	}
 

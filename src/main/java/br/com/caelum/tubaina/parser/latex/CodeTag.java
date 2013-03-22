@@ -1,11 +1,14 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import com.google.inject.Inject;
+
+import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.CodeTagOptionsParser;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 
-public class CodeTag implements Tag {
+public class CodeTag implements Tag<CodeChunk> {
 
     private final Indentator indentator;
 
@@ -18,20 +21,23 @@ public class CodeTag implements Tag {
 
     private final SyntaxHighlighter syntaxHighlighter;
 
+    @Inject
     public CodeTag(Indentator indentator, SyntaxHighlighter syntaxHighlighter) {
         this.indentator = indentator;
         this.syntaxHighlighter = syntaxHighlighter;
         this.codeTagOptionsParser = new CodeTagOptionsParser();
     }
 
-    public String parse(String code, String options) {
+    @Override
+	public String parse(CodeChunk chunk) {
 
-        String chosenLanguage = codeTagOptionsParser.parseLanguage(options);
+        String options = chunk.getOptions();
+		String chosenLanguage = codeTagOptionsParser.parseLanguage(options);
         String latexFilename = latexFilenameFor(codeTagOptionsParser.parseFileName(options));
         String latexReference = latexLabelFor(codeTagOptionsParser.parseLabel(options));
         boolean numbered = options.contains(" #");
         
-        String indentedCode = this.indentator.indent(code);
+        String indentedCode = this.indentator.indent(chunk.getContent());
         
         String highlightedCode = syntaxHighlighter.highlight(indentedCode, chosenLanguage, numbered);
 

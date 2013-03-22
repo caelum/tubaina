@@ -8,7 +8,7 @@ public class BoxTagTest {
     @Test
     public void testBox() {
         BoxTag tag = new BoxTag();
-        String result = tag.parse("Texto do Box", "Titulo do Box");
+        String result = tag.parse(chunk);
         Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
                 + "Texto do Box" + BoxTag.END, result);
     }
@@ -16,7 +16,7 @@ public class BoxTagTest {
     @Test
     public void testBoxWithMultilineContent() {
         BoxTag tag = new BoxTag();
-        String result = tag.parse("Texto do Box\n blablabla\n", "Titulo do Box");
+        String result = tag.parse(chunk);
         Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box"
                 + BoxTag.TITLE_END + "Texto do Box\n blablabla" + BoxTag.END, result);
     }

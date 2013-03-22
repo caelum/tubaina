@@ -8,28 +8,28 @@ public class ListTagTest {
 	@Test
 	public void testList() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("\nconteudo da lista", "");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{itemize}\nconteudo da lista\\end{itemize}", result);
 	}
 	
 	@Test
 	public void testListNumber() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "number");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{enumerate}[1)]\nconteudo da lista\n\\end{enumerate}", result);
 	}
 	
 	@Test
 	public void testListLetter() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "letter");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{enumerate}[a)]\nconteudo da lista\n\\end{enumerate}", result);
 	}
 	
 	@Test
 	public void testListRoman() {
 		ListTag tag = new ListTag();
-		String result = tag.parse("conteudo da lista", "roman");
+		String result = tag.parse(chunk);
 		Assert.assertEquals("\\begin{enumerate}[I)]\nconteudo da lista\n\\end{enumerate}", result);
 	}
 	

@@ -1,10 +1,11 @@
 package br.com.caelum.tubaina.parser.html;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ListTagTemplate implements Tag {
 
-	public String parse(String content, String options) {
+	public String parse(Chunk chunk) {
 		if (options.contains("number"))
 			return "<ol>" + content + "</ol>";
 		if (options.contains("letter"))

@@ -1,6 +1,5 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -18,7 +17,7 @@ public class CodeTagTest {
                 "}";
         HtmlAndKindleCodeTag htmlCodeTag = mock(HtmlAndKindleCodeTag.class);
         CodeTag codeTag = new CodeTag(htmlCodeTag);
-        codeTag.parse(code, "java");
-        verify(htmlCodeTag).parse(eq(code), eq("java"));
+        codeTag.parse(chunk);
+        verify(htmlCodeTag).parse(chunk);
     }
 }

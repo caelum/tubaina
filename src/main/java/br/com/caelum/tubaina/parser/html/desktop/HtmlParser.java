@@ -30,110 +30,110 @@ public class HtmlParser implements Parser {
         // interpreted
 
         for (Tag tag : tags) {
-            string = tag.parse(string, null);
+            string = tag.parse(chunk);
         }
         return string;
     }
 
     public String parseBox(String text, String options) {
         String title = this.sanitizer.sanitize(options);
-        return new BoxTag().parse(text, parse(title));
+        return new BoxTag().parse(chunk);
 
     }
 
     public String parseImage(String text, String options) {
-        return new ImageTag().parse(text, options);
+        return new ImageTag().parse(chunk);
     }
 
     @Deprecated
     public String parseJava(String text, String options) {
         String string = new JavaTag(new SimpleIndentator(4))
-                .parse(text, options);
+                .parse(chunk);
         return string;
     }
 
     public String parseParagraph(String text) {
         String string = this.sanitizer.sanitize(text);
-        string = new ParagraphTag().parse(string, null);
+        string = new ParagraphTag().parse(chunk);
         string = this.parse(string);
         return string;
     }
 
     public String parseCode(String text, String options) {
-        return new CodeTag().parse(text, options);
+        return new CodeTag().parse(chunk);
     }
 
     public String parseGist(String options) {
-    	return new GistTag().parse(null, options);
+    	return new GistTag().parse(chunk);
     }
 
     public String parseList(String text, String options) {
-        return new ListTag().parse(text, options);
+        return new ListTag().parse(chunk);
     }
 
     @Deprecated
     public String parseXml(String text, String options) {
         text = this.sanitizer.sanitize(text);
-        String string = new XmlTag(new SimpleIndentator(4)).parse(text, options);
+        String string = new XmlTag(new SimpleIndentator(4)).parse(chunk);
         return string;
     }
 
     public String parseExercise(String text, int id) {
-        String string = new ExerciseTag().parse(text, "" + id);
+        String string = new ExerciseTag().parse(chunk);
         return string;
     }
 
     public String parseAnswer(String text, int id) {
         if (!noAnswer)
-            return new AnswerTag().parse(text, "" + id);
+            return new AnswerTag().parse(chunk);
         return "";
     }
 
     public String parseQuestion(String text) {
-        String string = new QuestionTag().parse(text, null);
+        String string = new QuestionTag().parse(chunk);
         return string;
     }
 
     public String parseNote(String text, String title) {
         if (showNotes)
-            return new NoteTag().parse(text, title);
+            return new NoteTag().parse(chunk);
         return "";
     }
 
     public String parseItem(String text) {
-        return new ItemTag().parse(text, null);
+        return new ItemTag().parse(chunk);
     }
 
     public String parseTodo(String text) {
-        return new TodoTag().parse(text, null);
+        return new TodoTag().parse(chunk);
     }
 
     public String parseIndex(String name) {
         name = this.sanitizer.sanitize(name);
-        return new IndexTag().parse(name, null);
+        return new IndexTag().parse(chunk);
     }
 
     public String parseColumn(String text) {
-        return new TableColumnTag().parse(text, null);
+        return new TableColumnTag().parse(chunk);
     }
 
     public String parseRow(String text) {
-        return new TableRowTag().parse(text, null);
+        return new TableRowTag().parse(chunk);
     }
 
     public String parseTable(String text, String title, boolean noborder,
             int columns) {
         title = this.sanitizer.sanitize(title);
-        return new TableTag(noborder).parse(text, title);
+        return new TableTag(noborder).parse(chunk);
     }
 
     public String parseCenteredParagraph(String content) {
-        return new CenteredParagraphTag().parse(content, null);
+        return new CenteredParagraphTag().parse(chunk);
     }
 
     @Deprecated
     public String parseRuby(String content, String options) {
-        return new RubyTag(new SimpleIndentator(4)).parse(content, options);
+        return new RubyTag(new SimpleIndentator(4)).parse(chunk);
     }
 
     public String parseParagraphInsideItem(String text) {

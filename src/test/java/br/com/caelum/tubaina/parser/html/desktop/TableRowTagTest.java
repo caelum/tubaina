@@ -11,7 +11,7 @@ public class TableRowTagTest {
 	@Test
 	public void testTableRow() {
 		TableRowTag tag = new TableRowTag();
-		String result = tag.parse("texto", null);
+		String result = tag.parse(chunk);
 		Assert.assertEquals("<tr>texto</tr>", result);
 	}
 }

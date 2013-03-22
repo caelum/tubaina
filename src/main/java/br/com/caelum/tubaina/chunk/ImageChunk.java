@@ -18,7 +18,8 @@ public class ImageChunk implements Chunk {
 		this.dpi = dpi;
 	}		
 
-	public String getContent(Parser p) {
+	@Override
+	public String asString(Parser p) {
 		return p.parseImage(this.path,this.options + " [" + width + "," + dpi + "]");
 	}
 

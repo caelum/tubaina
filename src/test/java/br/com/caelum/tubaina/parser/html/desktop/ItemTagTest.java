@@ -12,7 +12,7 @@ import br.com.caelum.tubaina.parser.html.desktop.ItemTag;
 public class ItemTagTest {
 	@Test
 	public void testItem() {
-		String result = new ItemTag().parse("texto do item", null);
+		String result = new ItemTag().parse(chunk);
 		Assert.assertEquals("<li>texto do item</li>", result);
 	}
 
