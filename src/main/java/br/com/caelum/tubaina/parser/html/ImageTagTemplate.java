@@ -20,35 +20,33 @@ public class ImageTagTemplate {
 
 	public String parse(final String path, final String options, boolean shouldUseHTMLWidth) {
 		String imgsrc = FilenameUtils.getName(path);
-		String output = "<img src=\"" + RELATIVEPATH + imgsrc + "\" ";
+		StringBuilder output = new StringBuilder("<img src=\"" + RELATIVEPATH + imgsrc + "\" ");
 
 		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)%?");
-		Matcher labelMatcher = label.matcher(options);
-		
-		if (labelMatcher.find()) {
-			output = output + "id=\"" + labelMatcher.group(1) + "\" ";
+		Matcher labelOptionMatcher = label.matcher(options);
+		if (labelOptionMatcher.find()) {
+			output.append("id=\"" + labelOptionMatcher.group(1) + "\" ");
 		} else {
-		    output = output + "id=\"" + imgsrc + "\" ";
+		    output.append("id=\"" + imgsrc + "\" ");
+		}
+		
+		if (shouldUseHTMLWidth && getScale(options) != null) {
+			output.append("width='" + getScale(options) + "%' ");
 		}
 		
 		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
 		Matcher descriptionMatcher = description.matcher(options);
-		
-		if (shouldUseHTMLWidth && getScale(options) != null) {
-		    output += "width='" + getScale(options) + "%' "; 
-		}
-		
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
 			String subtitle = descriptionMatcher.group(1);
-			output += "alt=\"" + subtitle + "\" />\n";
+			output.append(" alt=\"" + subtitle + "\" />");
 			subtitle = parser.parse(subtitle);
-			output += "<div><i>"+ subtitle +"</i></div><br><br>";
+			output.append("<div><i>"+ subtitle +"</i></div><br><br>");
 		} else {
-			output += "alt=\"" + imgsrc + "\" />";
+			output.append(" alt=\"" + imgsrc + "\" />");
 		}
 		
-		return output;
+		return output.toString();
 	}
 	
 	public String parse(final String path, final String options) {

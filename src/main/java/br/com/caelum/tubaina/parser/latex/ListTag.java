@@ -1,13 +1,14 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class ListTag implements Tag {
+public class ListTag implements Tag<ListChunk> {
 
 	@Override
-	public String parse(Chunk chunk) {
+	public String parse(ListChunk chunk) {
 		String listHeader = "\n\n\\begin{enumerate}[";
+		String options = chunk.getType();
 		if (options.contains("number"))
 			listHeader += "1)";
 		else if (options.contains("letter"))
@@ -16,10 +17,10 @@ public class ListTag implements Tag {
 			listHeader += "I)";
 		else {
 			//If type is invalid, we use itemize environment
-			return "\n\n\\begin{itemize}" + content + "\\end{itemize}";
+			return "\n\n\\begin{itemize}" + chunk.getContent() + "\\end{itemize}";
 		}
 		
-		return listHeader + "]\n" + content + "\n\\end{enumerate}";
+		return listHeader + "]\n" + chunk.getContent() + "\n\\end{enumerate}";
 	}
 
 }

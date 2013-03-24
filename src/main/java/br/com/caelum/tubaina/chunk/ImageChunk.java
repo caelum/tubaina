@@ -1,10 +1,9 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
 
-public class ImageChunk implements Chunk {
+public class ImageChunk extends AbstractChunk<ImageChunk> {
 
 	private final String options;
 	private final String path;
@@ -12,15 +11,25 @@ public class ImageChunk implements Chunk {
 	private final int dpi;
 
 	public ImageChunk(String path, String options, double width, int dpi) {
-		this.options = options;
 		this.path = path;
+		this.options = options;
 		this.width = width;
 		this.dpi = dpi;
 	}		
 
-	@Override
-	public String asString(Parser p) {
-		return p.parseImage(this.path,this.options + " [" + width + "," + dpi + "]");
+	public String getOptions() {
+		return options;
 	}
-
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public double getWidth() {
+		return width;
+	}
+	
+	public int getDpi() {
+		return dpi;
+	}
 }

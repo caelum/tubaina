@@ -1,9 +1,9 @@
 package br.com.caelum.tubaina.parser.html;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class TableTagTemplate implements Tag {
+public class TableTagTemplate implements Tag<TableChunk> {
 
 	private boolean noborder;
 	
@@ -11,14 +11,16 @@ public class TableTagTemplate implements Tag {
 		this.noborder = noborder;
 	}
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(TableChunk chunk) {
 		String result = "";
-		if (options != null && options.trim().length() > 0)
-			result += "<h3>" + options + "</h3>";
+		String title = chunk.getTitle();
+		if (title != null && !title.trim().isEmpty())
+			result += "<h3>" + title + "</h3>";
 		result += "<table";
 		if (!this.noborder)
 			result += " border=1";
-		result += ">" + string + "</table>";
+		result += ">" + chunk.getContent() + "</table>";
 		return result;
 	}
 

@@ -1,13 +1,14 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.IndexChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.IndexTagTemplate;
 
-public class IndexTag implements Tag {
+public class IndexTag implements Tag<IndexChunk> {
 	private IndexTagTemplate template = new IndexTagTemplate();
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(IndexChunk chunk) {
 		return template.parse(chunk);
 	}
 }

@@ -1,9 +1,8 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class RubyChunk implements Chunk {
+public class RubyChunk extends AbstractChunk<RubyChunk> {
 
 	private final String content;
 	private final String options;
@@ -13,8 +12,11 @@ public class RubyChunk implements Chunk {
 		this.options = options;
 	}
 
-	public String asString(Parser p) {
-		return p.parseRuby(content, options);
+	public String getContent() {
+		return content;
 	}
-
+	
+	public String getOptions() {
+		return options;
+	}
 }

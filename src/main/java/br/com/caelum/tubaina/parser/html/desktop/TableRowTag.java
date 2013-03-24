@@ -1,14 +1,15 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.TableRowTagTemplate;
 
-public class TableRowTag implements Tag {
+public class TableRowTag implements Tag<TableRowChunk> {
 
 	private TableRowTagTemplate template = new TableRowTagTemplate();
 	
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(TableRowChunk chunk) {
 		return template.parse(chunk);
 	}
 

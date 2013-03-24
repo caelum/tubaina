@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.FlatHtmlGenerator;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
@@ -21,7 +22,7 @@ public enum ParseType {
 	LATEX {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-			List<Tag> tags = conf.read("/regex.properties", "/latex.properties");
+			List<RegexTag> tags = conf.read("/regex.properties", "/latex.properties");
 			tags.add(new LinkTag("\\\\url{$1}$2"));
             return new LatexParser(tags, showNotes, noAnswer);
 		}
@@ -36,7 +37,7 @@ public enum ParseType {
 	HTMLFLAT {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-		    List<Tag> tags = conf.read("/regex.properties", "/html.properties");
+		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
 		    tags.add(new LinkTag("<a href=\"$1"+linkParameter+"\">$1</a>$2"));
             return new HtmlParser(tags, noAnswer, showNotes);
 		}
@@ -49,7 +50,7 @@ public enum ParseType {
 	HTML {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-		    List<Tag> tags = conf.read("/regex.properties", "/html.properties");
+		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
 		    tags.add(new LinkTag("<a href=\"$1"+linkParameter+"\">$1</a>$2"));
             return new HtmlParser(tags, noAnswer, showNotes);
 		}
@@ -63,7 +64,7 @@ public enum ParseType {
 	KINDLE {
 		@Override
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-			List<Tag> tags = conf.read("/regex.properties", "/kindle.properties");
+			List<RegexTag> tags = conf.read("/regex.properties", "/kindle.properties");
 			tags.add(new LinkTag("<a href=\"$1"+linkParameter+"\">$1</a>$2"));
             return new KindleParser(tags, noAnswer, showNotes);
 		}

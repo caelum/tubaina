@@ -2,9 +2,7 @@ package br.com.caelum.tubaina.parser;
 
 import java.util.regex.Pattern;
 
-import br.com.caelum.tubaina.Chunk;
-
-public class RegexTag implements Tag {
+public class RegexTag {
 	private String replacement;
 
 	private Pattern regex;
@@ -14,9 +12,8 @@ public class RegexTag implements Tag {
 		this.replacement = replacement;
 	}
 
-	public String parse(Chunk chunk) {
-		String out = regex.matcher(string).replaceAll(replacement);
-        return out;
+	public String parse(String string) {
+		return regex.matcher(string).replaceAll(replacement);
 	}
 
 	@Override

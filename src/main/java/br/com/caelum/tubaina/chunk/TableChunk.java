@@ -7,14 +7,13 @@ import java.util.regex.Pattern;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
 
-public class TableChunk implements CompositeChunk {
+public class TableChunk extends CompositeChunk<TableChunk> {
 
-	private final List<Chunk> rows;
 	private boolean noborder;
 	private String title;
 
-	public TableChunk(final String options, final List<Chunk> rows) {
-		this.rows = rows;
+	public TableChunk(String options, List<Chunk> rows) {
+		super(rows);
 		this.noborder = false;
 		this.title = "";
 		parseOptions(options);
@@ -33,17 +32,9 @@ public class TableChunk implements CompositeChunk {
 		}
 	}
 
-	public String asString() {
-		String content = "";
-		for (Chunk c : rows) {
-			content += c.asString();
-		}
-		return p.parseTable(content, title, noborder, this.getMaxNumberOfColumns());
-	}
-
 	public int getMaxNumberOfColumns() {
 		int maxColumns = 0;
-		for (Chunk chunk : rows) {
+		for (Chunk chunk : body) {
 			if (chunk.getClass().equals(TableRowChunk.class)) {
 				TableRowChunk row = (TableRowChunk) chunk;
 				int columns = row.getNumberOfColumns();
@@ -54,4 +45,11 @@ public class TableChunk implements CompositeChunk {
 		return maxColumns;
 	}
 
+	public boolean hasNoborder() {
+		return noborder;
+	}
+	
+	public String getTitle() {
+		return title;
+	}
 }

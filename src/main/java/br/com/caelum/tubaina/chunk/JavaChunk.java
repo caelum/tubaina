@@ -1,12 +1,10 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class JavaChunk implements Chunk {
+public class JavaChunk extends AbstractChunk<JavaChunk> {
 
 	private String content;
-
 	private final String options;
 
 	public JavaChunk(String options, String content) {
@@ -14,8 +12,11 @@ public class JavaChunk implements Chunk {
 		this.options = options;
 	}
 
-	public String asString(Parser p) {
-		return p.parseJava(content, options);
+	public String getContent() {
+		return content;
 	}
-
+	
+	public String getOptions() {
+		return options;
+	}
 }

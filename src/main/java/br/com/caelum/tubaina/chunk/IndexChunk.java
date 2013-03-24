@@ -1,17 +1,15 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class IndexChunk implements Chunk{
+public class IndexChunk extends AbstractChunk<IndexChunk>{
 
 	private final String name;
 	public IndexChunk(String name) {
 		this.name = name;
-		
-	}
-	public String asString(Parser p) {
-		return p.parseIndex(name);
 	}
 
+	public String getName() {
+		return name;
+	}
 }
