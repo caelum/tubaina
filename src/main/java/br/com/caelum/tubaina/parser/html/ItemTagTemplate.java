@@ -1,11 +1,12 @@
 package br.com.caelum.tubaina.parser.html;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class ItemTagTemplate implements Tag {
+public class ItemTagTemplate implements Tag<ItemChunk> {
 
-	public String parse(Chunk chunk) {
-		return "<li>" + string + "</li>";
+	@Override
+	public String parse(ItemChunk chunk) {
+		return "<li>" + chunk.getContent() + "</li>";
 	}
 }

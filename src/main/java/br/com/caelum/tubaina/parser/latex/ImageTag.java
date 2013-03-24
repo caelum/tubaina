@@ -5,62 +5,49 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class ImageTag implements Tag {
+public class ImageTag implements Tag<ImageChunk> {
 
-	public String parse(Chunk chunk) {
-		String output = "\\begin{figure}[H]\n\\begin{center}\n";
-
-		output = output + "\\includegraphics";
-
-		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)?");
-		Matcher labelMatcher = label.matcher(options);
-
-		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
-		Matcher descriptionMatcher = description.matcher(options);
+	@Override
+	public String parse(ImageChunk chunk) {
+		String options = chunk.getOptions();
+		double imageWidthInMilimeters = chunk.getWidth() * 25.4 / chunk.getDpi();
+		
+		StringBuilder output = new StringBuilder("\\begin{figure}[H]\n\\begin{center}\n");
+		output.append("\\includegraphics");
 		
 		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");
-		Matcher horizontalMatcher = horizontalScale.matcher(options);
-
-		Pattern actualWidth = Pattern.compile("(?s)(?i)\\[(.+?),(.+?)\\]");
-		Matcher actualWidthMatcher = actualWidth.matcher(options);
-
-		double widthInPixels = Double.MAX_VALUE;
-		int dpi = 72;
-		if (actualWidthMatcher.find()) {
-			widthInPixels = Double.parseDouble(actualWidthMatcher.group(1));
-			dpi = Integer.parseInt(actualWidthMatcher.group(2));
-		}
-
-		double widthInMilimeters = widthInPixels * 25.4 / dpi;
-		
-		if (horizontalMatcher.find()) {
-			output = output + "[width=" + TubainaBuilder.getMaximumWidth() * (Double.parseDouble(horizontalMatcher.group(1)) / 100) + "mm]";
-		} else if (widthInMilimeters > TubainaBuilder.getMaximumWidth()) {
-			output = output + "[width=\\textwidth]";
+		Matcher widthOptionMatcher = horizontalScale.matcher(options);
+		if (widthOptionMatcher.find()) {
+			output.append("[width=" + (TubainaBuilder.getMaximumWidth() * (Double.parseDouble(widthOptionMatcher.group(1)) / 100)) + "mm]");
+		} else if (imageWidthInMilimeters > TubainaBuilder.getMaximumWidth()) {
+			output.append("[width=\\textwidth]");
 		} else {
-			output = output + "[scale=1]";
+			output.append("[scale=1]");
 		}
 
-		String imgsrc = FilenameUtils.getName(path);
-		output = output + "{" + imgsrc + "}\n";
+		String imgsrc = FilenameUtils.getName(chunk.getPath());
+		output.append("{" + imgsrc + "}\n");
 		
+		Pattern description = Pattern.compile("(?s)(?i)\"(.+?)\"");
+		Matcher descriptionMatcher = description.matcher(options);
 		if (descriptionMatcher.find()) {
-			output = output + "\n\n\\caption{" + descriptionMatcher.group(1) + "}\n\n";
+			output.append("\n\n\\caption{" + descriptionMatcher.group(1) + "}\n\n");
 		}
 		
+		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)?");
+		Matcher labelMatcher = label.matcher(options);
 		if (labelMatcher.find()) {
 			String givenLabel = labelMatcher.group(1);
-			
-			output += "\\label{" + (givenLabel != null? givenLabel : imgsrc) + "}\n";
+			output.append("\\label{" + (givenLabel != null? givenLabel : imgsrc) + "}\n");
 		}
 
-		output = output + "\\end{center}\\end{figure}\n\n";
+		output.append("\\end{center}\\end{figure}\n\n");
 
-		return output;
+		return output.toString();
 	}
 
 	public Integer getScale(final String string) {

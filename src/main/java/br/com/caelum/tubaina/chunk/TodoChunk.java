@@ -1,9 +1,8 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class TodoChunk implements Chunk {
+public class TodoChunk extends AbstractChunk<TodoChunk> {
 
 	private String content;
 
@@ -11,8 +10,7 @@ public class TodoChunk implements Chunk {
 		this.content = content;
 	}
 
-	public String asString(Parser p) {
-		return p.parseTodo(this.content);
+	public String getContent() {
+		return content;
 	}
-
 }

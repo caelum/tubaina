@@ -7,7 +7,7 @@ import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class LinkTag implements Tag {
-    
+	
     private final String replace;
 
     public LinkTag(String replace) {

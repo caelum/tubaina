@@ -1,12 +1,13 @@
 package br.com.caelum.tubaina.parser.html;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class ParagraphTagTemplate implements Tag {
+public class ParagraphTagTemplate implements Tag<ParagraphChunk> {
 
-	public String parse(Chunk chunk) {
-		return "<p>" + string + "</p>";
+	@Override
+	public String parse(ParagraphChunk chunk) {
+		return "<p>" + chunk.getContent() + "</p>";
 	}
 
 }

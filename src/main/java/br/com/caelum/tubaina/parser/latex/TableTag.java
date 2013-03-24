@@ -1,10 +1,10 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class TableTag implements Tag {
+public class TableTag implements Tag<TableChunk> {
 
 	private final boolean noborder;
 	private final int columns;
@@ -14,10 +14,12 @@ public class TableTag implements Tag {
 		this.columns = columns;
 	}
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(TableChunk chunk) {
+		String title = chunk.getTitle();
 		if (this.columns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
-		String tag =  "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
+		String tag = "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
 		if (!noborder)
 			tag += "\\rowcolors[]{1}{gray!30}{gray!15}\n";
 		tag += "\\begin{tabularx}{";
@@ -26,7 +28,7 @@ public class TableTag implements Tag {
 		tag += "}\n";
 		if (!noborder)
 			tag += "\\hline\n";
-		tag += text;
+		tag += chunk.getContent();
 		if (!noborder)
 			tag += "\n\\hline";
 		tag += "\n\\end{tabularx}\n\\end{center}\n\\end{table}";

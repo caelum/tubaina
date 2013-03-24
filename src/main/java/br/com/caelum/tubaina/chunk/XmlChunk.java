@@ -1,9 +1,9 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class XmlChunk implements Chunk {
+public class XmlChunk extends AbstractChunk<XmlChunk> {
+
 	private String content;
 	private final String options;
 
@@ -12,7 +12,11 @@ public class XmlChunk implements Chunk {
 		this.content = content;
 	}
 
-	public String asString(Parser p) {
-		return p.parseXml(content, options);
+	public String getContent() {
+		return content;
+	}
+	
+	public String getOptions() {
+		return options;
 	}
 }

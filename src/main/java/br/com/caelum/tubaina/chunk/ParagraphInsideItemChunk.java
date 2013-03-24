@@ -1,9 +1,8 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.AbstractChunk;
 
-public class ParagraphInsideItemChunk implements Chunk {
+public class ParagraphInsideItemChunk extends AbstractChunk<ParagraphInsideItemChunk> {
     
     private final String content;
 
@@ -11,8 +10,7 @@ public class ParagraphInsideItemChunk implements Chunk {
         this.content = content;
     }
     
-    public String asString(Parser p) {
-        return p.parseParagraphInsideItem(content);
-    }
-
+    public String getContent() {
+		return content;
+	}
 }

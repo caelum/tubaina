@@ -5,25 +5,15 @@ import java.util.List;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
 
-public class TableRowChunk implements CompositeChunk {
-
-	private List<Chunk> cols;
+public class TableRowChunk extends CompositeChunk<TableRowChunk> {
 
 	public TableRowChunk(List<Chunk> cols) {
-		this.cols = cols;
-	}
-
-	public String asString() {
-		String content = "";
-		for (Chunk c : cols) {
-			content += c.asString();
-		}
-		return p.parseRow(content);
+		super(cols);
 	}
 
 	public int getNumberOfColumns() {
 		int columns = 0;
-		for (Chunk c : cols) {
+		for (Chunk c : body) {
 			if (c.getClass().equals(TableColumnChunk.class))
 				columns++;
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class CompositeChunk<T extends CompositeChunk<T>> extends AbstractChunk<T> {
 
-	private List<Chunk> body;
+	protected final List<Chunk> body;
 
 	public CompositeChunk(List<Chunk> body) {
 		this.body = body;

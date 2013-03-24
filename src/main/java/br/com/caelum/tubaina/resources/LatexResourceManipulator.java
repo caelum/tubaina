@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
-import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.latex.ImageTag;
 import br.com.caelum.tubaina.util.Utilities;
 
@@ -28,17 +27,15 @@ public class LatexResourceManipulator implements ResourceManipulator {
 
 	private static final int PAGE_WIDTH = TubainaBuilder.getMaximumWidth();
 
-	private final Parser parser;
-
 	private final boolean noAnswer;
 
-	public LatexResourceManipulator(File imagePath, File answerFile, Parser parser, boolean noAnswer) {
+	public LatexResourceManipulator(File imagePath, File answerFile, boolean noAnswer) {
 		this.imagePath = imagePath;
 		this.answerFile = answerFile;
-		this.parser = parser;
 		this.noAnswer = noAnswer;
 	}
 
+	@Override
 	public void copyAndScaleImage(File srcImage, String scale) {
 		Integer width = new ImageTag().getScale(scale);
 		if (srcImage.exists()) {
@@ -64,10 +61,11 @@ public class LatexResourceManipulator implements ResourceManipulator {
 
 	}
 
+	@Override
 	public void copyAnswer(AnswerChunk chunk) {
 		String answer = "\\begin{itemize}\n" + 
 				"\\item[\\ref{ans:" + chunk.getId() + "}.]{" + 
-				chunk.getRealContent(parser) + "}\n" +
+				chunk.getContent() + "}\n" +
 				"\\end{itemize}\n";
 
 		try {
@@ -83,6 +81,7 @@ public class LatexResourceManipulator implements ResourceManipulator {
 			throw new TubainaException("Invalid Encoding", e);
 		}
 	}
+	@Override
 	public void copyExercise(int id) {
 		String answer = "\\answerHead{\\ref{ex:"+id+"}}\n"; 
 		try {
@@ -98,6 +97,7 @@ public class LatexResourceManipulator implements ResourceManipulator {
 			throw new TubainaException("Invalid Encoding", e);
 		}		
 	}
+	@Override
 	public void copyIndex(String name, int dirNumber) {
 		// Latex makes index automaticaly
 	}

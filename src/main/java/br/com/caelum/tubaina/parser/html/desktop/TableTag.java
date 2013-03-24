@@ -1,10 +1,10 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.TableTagTemplate;
 
-public class TableTag implements Tag {
+public class TableTag implements Tag<TableChunk> {
 
 	private TableTagTemplate template;
 	
@@ -12,7 +12,8 @@ public class TableTag implements Tag {
 		 template = new TableTagTemplate(noborder);
 	}
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(TableChunk chunk) {
 		return template.parse(chunk);
 	}
 

@@ -5,17 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 
-import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.chunk.TodoChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class TodoTag implements Tag {
+public class TodoTag implements Tag<TodoChunk> {
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(TodoChunk chunk) {
 		try {
 			PrintStream stream = new PrintStream(new FileOutputStream(new File("todo.log"), true));
 			stream.println("<==========================================================>");
-			stream.println(string.trim());
+			stream.println(chunk.getContent().trim());
 		} catch (FileNotFoundException e) {
 			throw new TubainaException("File could not be read", e);
 		}

@@ -1,15 +1,16 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.NoteChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class NoteTag implements Tag {
+public class NoteTag implements Tag<NoteChunk> {
 
-	public String parse(Chunk chunk) {
+	@Override
+	public String parse(NoteChunk chunk) {
 		// The first \n is the title/content sepparator
 		
 		return "\\begin{tubainanote}\n" +
-					string + "\n" +
+					chunk.getContent() + "\n" +
 				"\\end{tubainanote}";
 	}
 }

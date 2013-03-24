@@ -1,14 +1,12 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.Tag;
 
-public class EscapeTag implements Tag {
+public class EscapeTag {
 
 	private StringBuilder text = new StringBuilder();
 
-	public String parse(Chunk chunk) {
+	public String parse(String content) {
 		int posicaoAtual = escapaAteVerbatim(content, 0);
 		while (posicaoAtual < content.length()) {
 			int fimVerbatim = content.indexOf("[/verbatim]", posicaoAtual);

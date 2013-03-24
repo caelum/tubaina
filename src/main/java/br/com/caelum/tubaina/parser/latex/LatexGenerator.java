@@ -97,7 +97,7 @@ public class LatexGenerator implements Generator {
 		}
 		
 		List<Resource> resources = retrieveResources(b);
-		ResourceManipulator manipulator = new LatexResourceManipulator(directory, answerFile, parser, noAnswer);
+		ResourceManipulator manipulator = new LatexResourceManipulator(directory, answerFile, noAnswer);
 		copyResources(resources, manipulator);
 	}
 

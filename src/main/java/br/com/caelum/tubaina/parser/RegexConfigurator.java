@@ -5,16 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-
 public class RegexConfigurator {
 
-	public List<Tag> read(String regexFile, String replaceFile) throws IOException {
+	public List<RegexTag> read(String regexFile, String replaceFile) throws IOException {
 		Properties regexP = new Properties();
 		regexP.load(RegexConfigurator.class.getResourceAsStream(regexFile));
 		Properties replaceP = new Properties();
 		replaceP.load(RegexConfigurator.class.getResourceAsStream(replaceFile));
 		
-		List<Tag> tags = new ArrayList<Tag>();
+		List<RegexTag> tags = new ArrayList<RegexTag>();
 		for (Object o : regexP.keySet()) {
 			String key = (String) o;
 			

@@ -5,20 +5,9 @@ import java.util.List;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
 
-public class TableColumnChunk implements CompositeChunk {
-
-	private List<Chunk> cell;
+public class TableColumnChunk extends CompositeChunk<TableColumnChunk> {
 
 	public TableColumnChunk(List<Chunk> cell) {
-		this.cell = cell;
+		super(cell);
 	}
-
-	public String asString() {
-		String content = "";
-		for (Chunk c : cell) {
-			content += c.asString();
-		}
-		return p.parseColumn(content);
-	}
-
 }

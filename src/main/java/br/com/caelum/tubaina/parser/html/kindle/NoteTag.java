@@ -1,12 +1,13 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.chunk.NoteChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-public class NoteTag implements Tag {
+public class NoteTag implements Tag<NoteChunk> {
 
-	public String parse(Chunk chunk) {
-		return "---------------------------<br />" + content.trim() + "<br />---------------------------";
+	@Override
+	public String parse(NoteChunk chunk) {
+		return "---------------------------<br />" + chunk.getContent().trim() + "<br />---------------------------";
 	}
 
 }
