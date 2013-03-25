@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
@@ -11,7 +13,6 @@ import br.com.caelum.tubaina.util.CommandExecutor;
 public class SyntaxHighlighter {
 
     private final CommandExecutor commandExecutor;
-    private boolean allLinesNumbered;
     private CodeOutputType output;
     
     public static final String HTML_OUTPUT = "html";
@@ -19,10 +20,10 @@ public class SyntaxHighlighter {
     
     private CodeCache codeCache;
 
-    public SyntaxHighlighter(CommandExecutor commandExecutor, CodeOutputType outputType, boolean allLinesNumbered, CodeCache codeCache) {
+    @Inject
+    public SyntaxHighlighter(CommandExecutor commandExecutor, CodeOutputType outputType, CodeCache codeCache) {
         this.commandExecutor = commandExecutor;
         this.output = outputType;
-        this.allLinesNumbered = allLinesNumbered;
         this.codeCache = codeCache;
     }
 
@@ -39,7 +40,7 @@ public class SyntaxHighlighter {
 
     private ArrayList<String> buildCommand(String language, boolean numbered, List<Integer> lines) {
         StringBuilder options = new StringBuilder();
-        if (numbered || allLinesNumbered) { // for kindle output all lines are numbered
+        if (numbered || output.equals(CodeOutputType.KINDLE_HTML)) { // for kindle output all lines are numbered
             appendLineNumberingOption(options);
         }
         

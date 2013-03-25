@@ -13,7 +13,7 @@ public class CommandExecutorTest {
     @Test
     public void shouldThrowExceptionWithInvalidCommand() throws Exception {
         try {
-            new CommandExecutor().execute("asdlkjaslkdhaskjdh", "");
+            new SimpleCommandExecutor().execute("asdlkjaslkdhaskjdh", "");
             fail();
         } catch (TubainaException e) {
         }
@@ -21,7 +21,7 @@ public class CommandExecutorTest {
     
     @Test
     public void shouldWorkWithValidCommands() throws Exception {
-        new CommandExecutor().execute("ls -l", "");
-        new CommandExecutor().execute(Arrays.asList("ls" ,"-l"), "");
+        new SimpleCommandExecutor().execute("ls -l", "");
+        new SimpleCommandExecutor().execute(Arrays.asList("ls" ,"-l"), "");
     }
 }

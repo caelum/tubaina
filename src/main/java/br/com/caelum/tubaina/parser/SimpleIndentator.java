@@ -6,6 +6,10 @@ public class SimpleIndentator implements Indentator {
 
 	private final String tabReplacement;
 	
+	public SimpleIndentator() {
+		this(4);
+	}
+	
 	public SimpleIndentator(int tabSize) {
 	    StringBuffer stringBuffer = new StringBuffer();
 	    for (int i = 0; i < tabSize; i++) {
@@ -14,7 +18,8 @@ public class SimpleIndentator implements Indentator {
 	    this.tabReplacement = stringBuffer.toString();
     }
 
-    public String indent(String string) {
+    @Override
+	public String indent(String string) {
 		string = string.replaceAll("\t", tabReplacement);
 		int spaces = Utilities.getMinIndent(string);
 		string = removeSpaces(string, spaces);

@@ -11,7 +11,7 @@ public class RegexConfiguratorTest {
 	public void testReadDefaultRegexFile() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
 		@SuppressWarnings("unused")
-		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+		List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
 		//TODO: Fazer esse teste! 
 	}
 }

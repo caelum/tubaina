@@ -10,7 +10,7 @@ public class TableTagTest {
 
 	@Test
 	public void testTable() {
-		TableTag tag = new TableTag(false, 2);
+		TableTag tag = new TableTag(false);
 		String result = tag.parse(chunk);
 		Assert.assertEquals(
 				"\\begin{table}[!h]\n" +
@@ -26,7 +26,7 @@ public class TableTagTest {
 
 	@Test
 	public void testTableWithTitle() {
-		TableTag tag = new TableTag(false, 2);
+		TableTag tag = new TableTag(false);
 		String result = tag.parse(chunk);
 		Assert.assertEquals(
 				"\\begin{table}[!h]\n" +
@@ -42,7 +42,7 @@ public class TableTagTest {
 
 	@Test
 	public void testTableWithoutBorder() {
-		TableTag tag = new TableTag(true, 2);
+		TableTag tag = new TableTag(true);
 		String result = tag.parse(chunk);
 		Assert.assertEquals(
 				"\\begin{table}[!h]\n" +
@@ -55,7 +55,7 @@ public class TableTagTest {
 
 	@Test
 	public void testTableWithTitleAndWithoutBorder() {
-		TableTag tag = new TableTag(true, 2);
+		TableTag tag = new TableTag(true);
 		String result = tag.parse(chunk);
 		Assert.assertEquals(
 				"\\begin{table}[!h]\n" +
@@ -68,7 +68,7 @@ public class TableTagTest {
 
 	@Test
 	public void testTableWithInvalidNumberOfColums() {
-		TableTag tag = new TableTag(true, 0);
+		TableTag tag = new TableTag(true);
 		try {
 			tag.parse(chunk);
 			Assert.fail("Should raise an exception");

@@ -7,23 +7,26 @@ import br.com.caelum.tubaina.parser.Tag;
 public class TableTag implements Tag<TableChunk> {
 
 	private final boolean noborder;
-	private final int columns;
 
-	public TableTag(boolean noborder, int columns) {
+	public TableTag() {
+		this(false);
+	}
+	
+	public TableTag(boolean noborder) {
 		this.noborder = noborder;
-		this.columns = columns;
 	}
 
 	@Override
 	public String parse(TableChunk chunk) {
 		String title = chunk.getTitle();
-		if (this.columns <= 0)
+		int numberOfColumns = chunk.getMaxNumberOfColumns();
+		if (numberOfColumns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
 		String tag = "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
 		if (!noborder)
 			tag += "\\rowcolors[]{1}{gray!30}{gray!15}\n";
 		tag += "\\begin{tabularx}{";
-		for (int i = 0; i < columns; i++)
+		for (int i = 0; i < numberOfColumns; i++)
 			tag += "X";
 		tag += "}\n";
 		if (!noborder)

@@ -6,15 +6,15 @@ import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
-import br.com.caelum.tubaina.util.CommandExecutor;
+import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
 public class CodeTag implements Tag<CodeChunk> {
 
     private final HtmlAndKindleCodeTag htmlCodeTag;
 
     public CodeTag() {
-        SyntaxHighlighter syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(),
-                CodeOutputType.KINDLE_HTML, true, new CodeCache(CodeOutputType.KINDLE_HTML));
+        SyntaxHighlighter syntaxHighlighter = new SyntaxHighlighter(new SimpleCommandExecutor(),
+                CodeOutputType.KINDLE_HTML, new CodeCache(CodeOutputType.KINDLE_HTML));
         this.htmlCodeTag = new HtmlAndKindleCodeTag(syntaxHighlighter);
     }
 

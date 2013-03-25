@@ -9,7 +9,7 @@ import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
-import br.com.caelum.tubaina.util.CommandExecutor;
+import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
 public class GistTag implements Tag<GistChunk> {
 
@@ -17,7 +17,7 @@ public class GistTag implements Tag<GistChunk> {
     private GistResultRetriever retriever;
 
     public GistTag(Indentator i, GistResultRetriever retriever) {
-        this.code = new CodeTag(i, new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, new CodeCache(CodeOutputType.LATEX)));
+        this.code = new CodeTag(i, new SyntaxHighlighter(new SimpleCommandExecutor(), CodeOutputType.LATEX, new CodeCache(CodeOutputType.LATEX)));
         this.retriever = retriever;
     }
 

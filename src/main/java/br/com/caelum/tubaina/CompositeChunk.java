@@ -19,4 +19,7 @@ public abstract class CompositeChunk<T extends CompositeChunk<T>> extends Abstra
 		return content;
 	}
 
+	public List<Chunk> getBody() {
+		return body;
+	}
 }
