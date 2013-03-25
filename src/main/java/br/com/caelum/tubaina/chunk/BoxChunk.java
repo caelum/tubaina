@@ -9,9 +9,9 @@ public class BoxChunk extends CompositeChunk<BoxChunk> {
 
 	private final String title;
 
-	public BoxChunk(final String title, final List<Chunk> body) {
+	public BoxChunk(String title, List<Chunk> body) {
 		super(body);
-		this.title = title.trim();
+		this.title = title != null ? title.trim() : "";
 	}
 
 	public String getTitle() {

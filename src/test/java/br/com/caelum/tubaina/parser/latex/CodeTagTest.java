@@ -10,7 +10,7 @@ import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
-import br.com.caelum.tubaina.util.CommandExecutor;
+import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
 public class CodeTagTest {
 
@@ -19,7 +19,7 @@ public class CodeTagTest {
     @Before
     public void setUp() {
         this.codeTag = new CodeTag(new SimpleIndentator(4), new SyntaxHighlighter(
-                new CommandExecutor(), CodeOutputType.LATEX, false, new CodeCache(CodeOutputType.LATEX)));
+                new SimpleCommandExecutor(), CodeOutputType.LATEX, new CodeCache(CodeOutputType.LATEX)));
     }
 
     @Test

@@ -12,7 +12,7 @@ import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
-import br.com.caelum.tubaina.util.CommandExecutor;
+import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
 public class LatexParser implements Parser {
 
@@ -28,7 +28,7 @@ public class LatexParser implements Parser {
 
     public LatexParser(List<Tag> tags, boolean showNotes, boolean noAnswer) {
         codeCache = new CodeCache(CodeOutputType.LATEX);
-        syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, codeCache);
+        syntaxHighlighter = new SyntaxHighlighter(new SimpleCommandExecutor(), CodeOutputType.LATEX, codeCache);
         this.tags = tags;
         this.showNotes = showNotes;
         this.noAnswer = noAnswer;
@@ -36,7 +36,7 @@ public class LatexParser implements Parser {
 
     public LatexParser(List<Tag> tags) {
         codeCache = new CodeCache(CodeOutputType.LATEX);
-        syntaxHighlighter = new SyntaxHighlighter(new CommandExecutor(), CodeOutputType.LATEX, false, codeCache);
+        syntaxHighlighter = new SyntaxHighlighter(new SimpleCommandExecutor(), CodeOutputType.LATEX, codeCache);
         this.tags = tags;
         this.showNotes = false;
         this.noAnswer = false;
@@ -142,7 +142,7 @@ public class LatexParser implements Parser {
 
     public String parseTable(String text, String title, boolean noborder,
             int columns) {
-        return new TableTag(noborder, columns).parse(chunk);
+        return new TableTag(noborder).parse(chunk);
     }
 
     public String parseCenteredParagraph(String content) {

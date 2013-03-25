@@ -44,6 +44,7 @@ dependencies {
 	compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.2'
 	compile group: 'org.apache.commons', name: 'commons-exec', version: '1.1'
 	compile group: 'com.google.inject', name: 'guice', version: '3.0' 
+	compile group: 'net.vidageek', name: 'mirror', version: '1.6.1'
 	
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.0'

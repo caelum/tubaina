@@ -10,6 +10,8 @@ import java.util.Scanner;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 
 public class CodeCache {
@@ -18,6 +20,7 @@ public class CodeCache {
     private String tempDir;
     public static final Logger LOG = Logger.getLogger(CodeCache.class);
 
+    @Inject
     public CodeCache(CodeOutputType output) {
         this.output = output;
         this.tempDir = System.getProperty("java.io.tmpdir");
