@@ -2,16 +2,15 @@ package br.com.caelum.tubaina.parser.latex;
 
 import org.junit.Test;
 
-import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.SimpleIndentator;
-import br.com.caelum.tubaina.parser.html.desktop.XmlTag;
+import br.com.caelum.tubaina.chunk.XmlChunk;
 
-@SuppressWarnings("deprecation")
-public class XmlTagTest {
+@Deprecated
+public class XmlTagTest extends AbstractTagTest {
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=Exception.class)
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
-		new XmlTag(new SimpleIndentator(4)).parse(chunk);
+		XmlChunk chunk = new XmlChunk("", "<tag>And content</tag>");
+		getContent(chunk);
 	}
 	
 }

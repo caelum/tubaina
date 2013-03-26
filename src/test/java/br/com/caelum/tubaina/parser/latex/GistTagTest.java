@@ -18,17 +18,16 @@ public class GistTagTest {
 
 	@Test
 	public void gistedCodeIsRetrievedAndUsed() throws Exception {
-		GistResultRetriever retriever = new GistResultRetriever(
-				new GistConnector(new JsonToGistResultConverter(),
-						new GistRequest()));
+		GistResultRetriever retriever = new GistResultRetriever(new GistConnector(new JsonToGistResultConverter(),
+				new GistRequest()));
 
 		String options = "417835";
-		@SuppressWarnings("unused") //code to be retrieved, we can only assert parts of it
-        String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
+		@SuppressWarnings("unused")
+		// code to be retrieved, we can only assert parts of it
+		String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
 
-		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
-				chunk);
-		
+		String output = new GistTag(new SimpleIndentator(4), retriever).parse(chunk);
+
 		assertPygmentsRan(output);
 		assertTrue(output.contains("javascript"));
 		assertTrue(output.contains("function"));
@@ -39,10 +38,8 @@ public class GistTagTest {
 		String options = "417835 #";
 		long gistId = 417835;
 
-		String json = new Scanner(
-				JsonToGistResultConverter.class
-						.getResourceAsStream("/gist.json")).useDelimiter("\\Z")
-				.next();
+		String json = new Scanner(JsonToGistResultConverter.class.getResourceAsStream("/gist.json"))
+				.useDelimiter("\\Z").next();
 
 		GistRequest mockedGistRequest = mock(GistRequest.class);
 		when(mockedGistRequest.get(gistId)).thenReturn(json);
@@ -51,16 +48,15 @@ public class GistTagTest {
 
 		GistResultRetriever retriever = new GistResultRetriever(connector);
 
-		String output = new GistTag(new SimpleIndentator(4), retriever).parse(
-				chunk);
-		
+		String output = new GistTag(new SimpleIndentator(4), retriever).parse(chunk);
+
 		assertPygmentsRan(output);
 		assertTrue(output.contains("GivenCode"));
 	}
-	
+
 	private void assertPygmentsRan(String output) {
-        assertTrue(output.contains("\\begin{Verbatim}[commandchars="));
-        assertTrue(output.contains("\\end{Verbatim}"));
-    }
+		assertTrue(output.contains("\\begin{Verbatim}[commandchars="));
+		assertTrue(output.contains("\\end{Verbatim}"));
+	}
 
 }

@@ -7,11 +7,13 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
+import br.com.caelum.tubaina.chunk.ItemChunk;
 
-public class ItemTagTest {
+public class ItemTagTest extends AbstractTagTest {
 	@Test
 	public void testItem() {
-		String result = new ItemTag().parse(chunk);
+		ItemChunk chunk = new ItemChunk(text("texto do item"));
+		String result = getContent(chunk);
 		Assert.assertEquals("\n\\item{texto do item}\n", result);
 	}
 

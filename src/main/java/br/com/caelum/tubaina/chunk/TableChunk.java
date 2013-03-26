@@ -45,6 +45,7 @@ public class TableChunk extends CompositeChunk<TableChunk> {
 		return maxColumns;
 	}
 
+	//TODO: change with the opposite
 	public boolean hasNoborder() {
 		return noborder;
 	}
