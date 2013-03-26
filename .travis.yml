@@ -10,5 +10,6 @@ notifications:
     email:
         recipients:
             - chico.sokol@gmail.com
+            - luna.bd@gmail.com
         on_success: change
         on_failure: always
