@@ -1,22 +1,23 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class TableRowTagTest {
+import br.com.caelum.tubaina.chunk.TableRowChunk;
+
+public class TableRowTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testTableRowTag() {
-		TableRowTag tag = new TableRowTag();
-		String result = tag.parse(chunk);
+		TableRowChunk chunk = new TableRowChunk(text("linha da tabela"));
+		String result = getContent(chunk);
 		Assert.assertEquals("linha da tabela\\\\", result);
 	}
 	
 	@Test
 	public void testRemoveLastColumnBreak() {
-		TableRowTag tag = new TableRowTag();
-		String result = tag.parse(chunk);
+		TableRowChunk chunk = new TableRowChunk(text("coluna1& coluna2& coluna3&"));
+		String result = getContent(chunk);
 		Assert.assertEquals("coluna1& coluna2& coluna3\\\\", result);
 	}
 }

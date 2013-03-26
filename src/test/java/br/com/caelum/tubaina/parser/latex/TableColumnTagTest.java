@@ -1,15 +1,16 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-public class TableColumnTagTest {
+import br.com.caelum.tubaina.chunk.TableColumnChunk;
+
+public class TableColumnTagTest extends AbstractTagTest {
 
 	@Test
 	public void testTableColumnTag() {
-		TableColumnTag tag = new TableColumnTag();
-		String result = tag.parse(chunk);
+		TableColumnChunk chunk = new TableColumnChunk(text("texto da coluna"));
+		String result = getContent(chunk);
 		Assert.assertEquals("texto da coluna& ", result);
 	}
 

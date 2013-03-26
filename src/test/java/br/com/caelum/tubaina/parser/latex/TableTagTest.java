@@ -1,79 +1,95 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import junit.framework.Assert;
+import java.util.Arrays;
+import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.chunk.TableChunk;
+import br.com.caelum.tubaina.chunk.TableColumnChunk;
+import br.com.caelum.tubaina.chunk.TableRowChunk;
 
-public class TableTagTest {
+public class TableTagTest extends AbstractTagTest {
 
-	@Test
-	public void testTable() {
-		TableTag tag = new TableTag(false);
-		String result = tag.parse(chunk);
-		Assert.assertEquals(
-				"\\begin{table}[!h]\n" +
-				"\\caption{}\n" +
-				"\\begin{center}\n" +
-				"\\rowcolors[]{1}{gray!30}{gray!15}\n" +
-				"\\begin{tabularx}{XX}\n" +
-				"\\hline\n" +
-				"texto da tabela\n" +
-				"\\hline\n" +
-				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
+	private List<Chunk> rows;
+
+	@Before
+	public void setUp() {
+		TableColumnChunk tableColumnChunk = new TableColumnChunk(text("texto da tabela"));
+		List<Chunk> colunas = Arrays.<Chunk>asList(tableColumnChunk);
+		rows = Arrays.<Chunk>asList(new TableRowChunk(colunas));
 	}
 
 	@Test
+	public void testTable() {
+		TableChunk chunk = new TableChunk("", rows);
+		String result = getContent(chunk);
+		Assert.assertEquals("\\begin{table}[!h]\n" + 
+								"\\caption{}\n" + 
+								"\\begin{center}\n" + 
+									"\\rowcolors[]{1}{gray!30}{gray!15}\n" + 
+									"\\begin{tabularx}{X}\n" + 
+										"\\hline\n" + 
+										"texto da tabela\\\\\n" + 
+										"\\hline\n" + 
+									"\\end{tabularx}\n" +
+								"\\end{center}\n" +
+							"\\end{table}", result);
+	}
+
+
+	@Test
 	public void testTableWithTitle() {
-		TableTag tag = new TableTag(false);
-		String result = tag.parse(chunk);
-		Assert.assertEquals(
-				"\\begin{table}[!h]\n" +
-				"\\caption{titulo}\n" +
-				"\\begin{center}\n" +
-				"\\rowcolors[]{1}{gray!30}{gray!15}\n" +
-				"\\begin{tabularx}{XX}\n" +
-				"\\hline\n" +
-				"texto da tabela\n" +
-				"\\hline\n" +
-				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
+		TableChunk chunk = new TableChunk("\"titulo\"", rows);
+		String result = getContent(chunk);
+		Assert.assertEquals("\\begin{table}[!h]\n" + 
+								"\\caption{titulo}\n" + 
+								"\\begin{center}\n" + 
+									"\\rowcolors[]{1}{gray!30}{gray!15}\n" + 
+									"\\begin{tabularx}{X}\n" + 
+										"\\hline\n" + 
+										"texto da tabela\\\\\n" + 
+										"\\hline\n" + 
+									"\\end{tabularx}\n" +
+								"\\end{center}\n" +
+							"\\end{table}", result);
 	}
 
 	@Test
 	public void testTableWithoutBorder() {
-		TableTag tag = new TableTag(true);
-		String result = tag.parse(chunk);
-		Assert.assertEquals(
-				"\\begin{table}[!h]\n" +
-				"\\caption{}\n" +
-				"\\begin{center}\n" +
-				"\\begin{tabularx}{XX}\n" +
-				"texto da tabela\n" +
-				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
+		TableChunk chunk = new TableChunk("noborder", rows);
+		String result = getContent(chunk);
+		Assert.assertEquals("\\begin{table}[!h]\n" + 
+								"\\caption{}\n" + 
+								"\\begin{center}\n" + 
+									"\\begin{tabularx}{X}\n" + 
+										"texto da tabela\\\\\n" + 
+									"\\end{tabularx}\n" +
+								"\\end{center}\n" +
+							"\\end{table}", result);
 	}
 
 	@Test
 	public void testTableWithTitleAndWithoutBorder() {
-		TableTag tag = new TableTag(true);
-		String result = tag.parse(chunk);
-		Assert.assertEquals(
-				"\\begin{table}[!h]\n" +
-				"\\caption{titulo}\n" +
-				"\\begin{center}\n" +
-				"\\begin{tabularx}{XX}\n" +
-				"texto da tabela\n" +
-				"\\end{tabularx}\n\\end{center}\n\\end{table}", result);
+		TableChunk chunk = new TableChunk("noborder \"titulo\"", rows);
+		String result = getContent(chunk);
+		Assert.assertEquals("\\begin{table}[!h]\n" + 
+								"\\caption{titulo}\n" + 
+								"\\begin{center}\n" + 
+									"\\begin{tabularx}{X}\n" + 
+										"texto da tabela\\\\\n" + 
+									"\\end{tabularx}\n" +
+								"\\end{center}\n" +
+							"\\end{table}", result);
 	}
 
-	@Test
+	@Test(expected = TubainaException.class)
 	public void testTableWithInvalidNumberOfColums() {
-		TableTag tag = new TableTag(true);
-		try {
-			tag.parse(chunk);
-			Assert.fail("Should raise an exception");
-		} catch (TubainaException e) {
-			// ok
-		}
+		TableChunk chunk = new TableChunk("", text("texto da tabela"));
+		getContent(chunk);
 	}
 }

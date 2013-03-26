@@ -6,6 +6,7 @@ import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.chunk.ExerciseChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
+import br.com.caelum.tubaina.chunk.IndexChunk;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
@@ -47,6 +48,7 @@ public class LatexModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<CodeChunk>>() {}).to(CodeTag.class);
 		bind(new TypeLiteral<Tag<ExerciseChunk>>() {}).to(ExerciseTag.class);
 		bind(new TypeLiteral<Tag<ImageChunk>>() {}).to(ImageTag.class);
+		bind(new TypeLiteral<Tag<IndexChunk>>() {}).to(IndexTag.class);
 		bind(new TypeLiteral<Tag<IntroductionChunk>>() {}).to(IntroductionTag.class);
 		bind(new TypeLiteral<Tag<ItemChunk>>() {}).to(ItemTag.class);
 		bind(new TypeLiteral<Tag<ListChunk>>() {}).to(ListTag.class);
@@ -56,7 +58,7 @@ public class LatexModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableColumnChunk>>() {}).to(TableColumnTag.class);
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
-		
+
 		bind(Indentator.class).to(SimpleIndentator.class);
 		bind(CommandExecutor.class).to(SimpleCommandExecutor.class);
 		bind(CodeOutputType.class).toInstance(CodeOutputType.LATEX);

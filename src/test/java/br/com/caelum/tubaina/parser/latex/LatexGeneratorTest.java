@@ -84,7 +84,8 @@ public class LatexGeneratorTest {
 
         Assert.assertTrue(FileUtilities.contentEquals(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR,
                 "latex"), temp, new FilenameFilter() {
-            public boolean accept(File dir, String name) {
+            @Override
+			public boolean accept(File dir, String name) {
                 return name.contains(".png");
             }
         }));
@@ -100,7 +101,8 @@ public class LatexGeneratorTest {
         generator.generate(b, temp);
 
         File[] images = temp.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
+            @Override
+			public boolean accept(File dir, String name) {
                 return name.contains(".png") || name.contains(".jpg");
             }
         });
