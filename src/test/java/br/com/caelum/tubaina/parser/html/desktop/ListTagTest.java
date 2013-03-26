@@ -3,35 +3,35 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.desktop.ListTag;
+import br.com.caelum.tubaina.chunk.ListChunk;
 
-public class ListTagTest {
+public class ListTagTest extends AbstractTagTest {
 
 	@Test
 	public void testList() {
-		ListTag tag = new ListTag();
-		String result = tag.parse(chunk);
+		ListChunk chunk = new ListChunk("", text("conteudo da lista"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<ul>conteudo da lista</ul>", result);
 	}
 	
 	@Test
 	public void testListNumber() {
-		ListTag tag = new ListTag();
-		String result = tag.parse(chunk);
+		ListChunk chunk = new ListChunk("number", text("conteudo da lista"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<ol>conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListLetter() {
-		ListTag tag = new ListTag();
-		String result = tag.parse(chunk);
+		ListChunk chunk = new ListChunk("letter", text("conteudo da lista"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
 	}
 	
 	@Test
 	public void testListRoman() {
-		ListTag tag = new ListTag();
-		String result = tag.parse(chunk);
+		ListChunk chunk = new ListChunk("roman", text("conteudo da lista"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
 	}
 	

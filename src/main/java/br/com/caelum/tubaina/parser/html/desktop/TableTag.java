@@ -8,8 +8,8 @@ public class TableTag implements Tag<TableChunk> {
 
 	private TableTagTemplate template;
 	
-	public TableTag(boolean noborder) {
-		 template = new TableTagTemplate(noborder);
+	public TableTag() {
+		 template = new TableTagTemplate();
 	}
 
 	@Override

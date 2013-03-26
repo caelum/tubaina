@@ -9,12 +9,12 @@ import br.com.caelum.tubaina.CompositeChunk;
 
 public class TableChunk extends CompositeChunk<TableChunk> {
 
-	private boolean noborder;
+	private boolean noBorder;
 	private String title;
 
 	public TableChunk(String options, List<Chunk> rows) {
 		super(rows);
-		this.noborder = false;
+		this.noBorder = false;
 		this.title = "";
 		parseOptions(options);
 	}
@@ -23,7 +23,7 @@ public class TableChunk extends CompositeChunk<TableChunk> {
 		Pattern noborderPattern = Pattern.compile("(\".+\")*noborder(\".+\")*");
 		Matcher noborderMatcher = noborderPattern.matcher(options);
 		if (noborderMatcher.find())
-			this.noborder = true;
+			this.noBorder = true;
 		
 		Pattern titlePattern = Pattern.compile("\"(.+)\"");
 		Matcher titleMatcher = titlePattern.matcher(options);
@@ -45,9 +45,8 @@ public class TableChunk extends CompositeChunk<TableChunk> {
 		return maxColumns;
 	}
 
-	//TODO: change with the opposite
-	public boolean hasNoborder() {
-		return noborder;
+	public boolean hasBorder() {
+		return !noBorder;
 	}
 	
 	public String getTitle() {

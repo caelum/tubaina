@@ -2,16 +2,15 @@ package br.com.caelum.tubaina.parser.html.desktop;
 
 import org.junit.Test;
 
-import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.SimpleIndentator;
+import br.com.caelum.tubaina.chunk.JavaChunk;
 
-@SuppressWarnings("deprecation")
-public class JavaTagTest {
+@Deprecated
+public class JavaTagTest extends AbstractTagTest {
 
-	@Test(expected=TubainaException.class)
+	@Test(expected=Exception.class)
 	public void tagIsDeprecatedAndParsingAgainstItWillAlwaysThrowAnException() {
-		JavaTag tag = new JavaTag(new SimpleIndentator(4));
-		tag.parse(chunk);
+		JavaChunk chunk = new JavaChunk("#", "System.out.println()");
+		getContent(chunk);
 	}
 
 }
