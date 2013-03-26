@@ -1,17 +1,16 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.desktop.TableRowTag;
+import br.com.caelum.tubaina.chunk.TableRowChunk;
 
-public class TableRowTagTest {
-	
+public class TableRowTagTest extends AbstractTagTest {
+
 	@Test
 	public void testTableRow() {
-		TableRowTag tag = new TableRowTag();
-		String result = tag.parse(chunk);
+		TableRowChunk chunk = new TableRowChunk(text("texto"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<tr>texto</tr>", result);
 	}
 }

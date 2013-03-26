@@ -9,21 +9,21 @@ public class TableTag implements Tag<TableChunk> {
 	@Override
 	public String parse(TableChunk chunk) {
 		String title = chunk.getTitle();
-		boolean hasNoborder = chunk.hasNoborder();
+		boolean hasBorder = chunk.hasBorder();
 		int numberOfColumns = chunk.getMaxNumberOfColumns();
 		if (numberOfColumns <= 0)
 			throw new TubainaException("There are no columns inside table " + title);
 		String tag = "\\begin{table}[!h]\n\\caption{" + title + "}\n\\begin{center}\n";
-		if (!hasNoborder)
+		if (hasBorder)
 			tag += "\\rowcolors[]{1}{gray!30}{gray!15}\n";
 		tag += "\\begin{tabularx}{";
 		for (int i = 0; i < numberOfColumns; i++)
 			tag += "X";
 		tag += "}\n";
-		if (!hasNoborder)
+		if (hasBorder)
 			tag += "\\hline\n";
 		tag += chunk.getContent();
-		if (!hasNoborder)
+		if (hasBorder)
 			tag += "\n\\hline";
 		tag += "\n\\end{tabularx}\n\\end{center}\n\\end{table}";
 		return tag;

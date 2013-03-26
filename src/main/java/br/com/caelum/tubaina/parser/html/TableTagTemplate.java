@@ -5,12 +5,6 @@ import br.com.caelum.tubaina.parser.Tag;
 
 public class TableTagTemplate implements Tag<TableChunk> {
 
-	private boolean noborder;
-	
-	public TableTagTemplate(boolean noborder) {
-		this.noborder = noborder;
-	}
-
 	@Override
 	public String parse(TableChunk chunk) {
 		String result = "";
@@ -18,7 +12,7 @@ public class TableTagTemplate implements Tag<TableChunk> {
 		if (title != null && !title.trim().isEmpty())
 			result += "<h3>" + title + "</h3>";
 		result += "<table";
-		if (!this.noborder)
+		if (chunk.hasBorder())
 			result += " border=1";
 		result += ">" + chunk.getContent() + "</table>";
 		return result;

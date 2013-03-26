@@ -1,21 +1,16 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 
 import br.com.caelum.tubaina.TubainaException;
+import br.com.caelum.tubaina.chunk.ImageChunk;
 
-public class ImageTagTest {
+public class ImageTagTest extends AbstractTagTest {
 
-    @Test
-    public void shouldThrowExpectionWhenTagContainsLabel() {
-        ImageTag tag = new ImageTag();
-        try {
-            tag.parse(chunk);
-            Assert.fail("should throw excpetion");
-        } catch (TubainaException e) {
-        }
-    }
+	@Test(expected=TubainaException.class)
+	public void shouldThrowExceptionWhenTagContainsLabel() {
+		ImageChunk chunk = new ImageChunk("image.png", "label=someLabel", 100, 1);
+		getContent(chunk);
+	}
 
 }
