@@ -7,12 +7,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.RegexTag;
-import br.com.caelum.tubaina.parser.Tag;
 
+//TODO: make paragraph with bold, boxes with inner chunks, for example, somewhere else.
 public class LatexParserTest {
 
     private LatexParser parser;
@@ -84,12 +82,6 @@ public class LatexParserTest {
     }
 
     @Test
-    public void testParseParagraph() {
-        Assert.assertEquals("\n\nola mundo", parser.parseParagraph("ola mundo"));
-        Assert.assertEquals("\n\n\\definition{test}", parser.parseParagraph("**test**"));
-    }
-
-    @Test
     public void testQuotationTagInline() {
         String result = parser.parse("[quote ola mundo --Anonimo]");
         Assert.assertEquals("\\chapterquote{ola mundo}{Anonimo}", result);
@@ -137,20 +129,6 @@ public class LatexParserTest {
         Assert.assertEquals("\\sectiontitle{ola \\definition{mu\\underlined{n}do}}", result);
     }
 
-    // /////////////// missing BOX TAG tests ////////////////////
-
-    @Test
-    public void testTagSoloTag() {
-        String result = parser.parseIndex("ola mundo");
-        Assert.assertEquals("\n\\index{ola mundo}\n", result);
-    }
-
-    @Test
-    public void testTagMultiTag() {
-        String result = parser.parseIndex("ola mundo, olamundo");
-        Assert.assertEquals("\n\\index{ola mundo, olamundo}\n", result);
-    }
-
     @Test
     public void testQuotationTag() {
         String result = parser.parse("\"\"");
@@ -175,18 +153,6 @@ public class LatexParserTest {
     public void testEscapeSpecialChars() {
         String result = parser.parse("$ \\ _ ~ % # ^ & { }");
         Assert.assertEquals("\\$ \\char92 \\_ \\char126 \\% \\# \\char94 \\& \\{ \\}", result);
-    }
-
-    @Test
-    public void testItemSplittBug() {
-        String input = "* Refactoring, Martin Fowler\n\n"
-                + "* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
-        List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
-        Assert.assertEquals(3, chunks.size());
-        Assert.assertEquals("\n\\item{Refactoring, Martin Fowler}\n", chunks.get(0).asString());
-        Assert.assertEquals("\n\\item{Effective Java, Joshua Bloch}\n", chunks.get(1).asString());
-        Assert.assertEquals("\n\\item{Design Patterns, Erich Gamma et al}\n", chunks.get(2)
-                .asString());
     }
 
     @Test

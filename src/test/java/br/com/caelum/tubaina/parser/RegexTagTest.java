@@ -2,7 +2,7 @@ package br.com.caelum.tubaina.parser;
 
 import java.util.List;
 
-public class RegexTagTest {
+public abstract class RegexTagTest {
     protected List<RegexTag> regexTags;
     
     protected String parseWithRegexps(String text) {

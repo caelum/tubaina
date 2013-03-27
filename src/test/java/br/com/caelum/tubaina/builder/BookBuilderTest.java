@@ -164,7 +164,8 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chunks.size());
 
         Assert.assertEquals(ParagraphChunk.class, chunks.get(0).getClass());
-        Assert.assertEquals("Algum texto de parágrafo", chunks.get(0).asString());
+        ParagraphChunk paragraphChunk = (ParagraphChunk) chunks.get(0);
+        Assert.assertEquals("Algum texto de parágrafo", paragraphChunk.getContent());
     }
 
     @Test
