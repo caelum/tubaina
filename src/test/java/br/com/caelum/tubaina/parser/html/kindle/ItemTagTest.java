@@ -7,21 +7,20 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
-import br.com.caelum.tubaina.parser.html.kindle.ItemTag;
+import br.com.caelum.tubaina.chunk.ItemChunk;
 
-public class ItemTagTest {
+public class ItemTagTest extends AbstractTagTest {
 	@Test
 	public void testItem() {
-		String result = new ItemTag().parse(chunk);
+		ItemChunk chunk = new ItemChunk(text("texto do item"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<li>texto do item</li>", result);
 	}
 
 	@Test
 	public void testItemSplitt() {
-		List<Chunk> chunks = new ChunkSplitter(null, "list")
-				.splitChunks("* blah\n\n*bleh\n \n *  blih  ");
-		Assert.assertEquals(3, chunks.size() );
+		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks("* blah\n\n*bleh\n \n *  blih  ");
+		Assert.assertEquals(3, chunks.size());
 	}
-	
-	
+
 }
