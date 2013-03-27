@@ -3,14 +3,15 @@ package br.com.caelum.tubaina.parser.html.kindle;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.kindle.AnswerTag;
+import br.com.caelum.tubaina.chunk.AnswerChunk;
 
 
-public class AnswerTagTest {
+public class AnswerTagTest extends AbstractTagTest {
+	
 	@Test
 	public void testAnswerTag(){
-		AnswerTag tag = new AnswerTag();
-		String result = tag.parse(chunk);
+		AnswerChunk chunk = new AnswerChunk(text("texto da resposta"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<div class=\"answer\" " +
 				"id=\"answer0\">texto da resposta</div><br/>", result);
 	}

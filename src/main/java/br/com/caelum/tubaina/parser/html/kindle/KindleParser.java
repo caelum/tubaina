@@ -143,7 +143,7 @@ public class KindleParser implements Parser {
 	public String parseTable(String text, String title, boolean noborder,
             int columns) {
         title = this.sanitizer.sanitize(title);
-        return new TableTag(noborder).parse(chunk);
+        return new TableTag().parse(chunk);
     }
 
     @Override

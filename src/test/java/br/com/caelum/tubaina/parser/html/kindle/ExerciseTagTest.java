@@ -3,14 +3,14 @@ package br.com.caelum.tubaina.parser.html.kindle;
 import org.junit.Assert;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.kindle.ExerciseTag;
+import br.com.caelum.tubaina.chunk.ExerciseChunk;
 
+public class ExerciseTagTest extends AbstractTagTest {
 
-public class ExerciseTagTest {
-	
 	@Test
-	public void testExerciseTag(){
-		String result = new ExerciseTag().parse(chunk);
+	public void testExerciseTag() {
+		ExerciseChunk chunk = new ExerciseChunk(text("texto do exercicio"));
+		String result = getContent(chunk);
 		Assert.assertEquals("<ol class=\"exercise\">texto do exercicio</ol>", result);
 	}
 
