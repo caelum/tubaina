@@ -38,7 +38,7 @@ public enum ParseType {
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
 		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
 		    tags.add(new LinkTag("<a href=\"$1"+linkParameter+"\">$1</a>$2"));
-            return new HtmlParser(tags, noAnswer, showNotes);
+            return new HtmlParser(tags);
 		}
 
 		@Override
@@ -51,7 +51,7 @@ public enum ParseType {
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
 		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
 		    tags.add(new LinkTag("<a href=\"$1"+linkParameter+"\">$1</a>$2"));
-            return new HtmlParser(tags, noAnswer, showNotes);
+            return new HtmlParser(tags);
 		}
 
 		@Override

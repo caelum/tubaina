@@ -34,7 +34,7 @@ public class IntroductionChaptersToKindleTest {
         cfg.setObjectWrapper(new BeansWrapper());
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
-                "/html.properties"), false, true);
+                "/html.properties"));
         
         ResourceManipulatorFactory kindleResourceManipulatorFactory = new KindleResourceManipulatorFactory();
         File temp = new File("tmp");

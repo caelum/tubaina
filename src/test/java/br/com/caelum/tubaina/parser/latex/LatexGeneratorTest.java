@@ -25,6 +25,7 @@ import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 
+//TODO: Add tests concerning books separated into parts
 public class LatexGeneratorTest {
     private LatexGenerator generator;
     private Book book;

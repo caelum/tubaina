@@ -8,7 +8,7 @@
         <h1 class="referenceableTitle">${sanitizer.sanitize(chapter.title)}</h1>
 		<a id="${chapter.label}" class='label'></a>
 		
-        ${chapter.getIntroduction(parser)}
+        ${chapter.getIntroduction()}
         
         <#assign sectionCount = 1>
         <#list chapter.sections as section>
@@ -16,7 +16,7 @@
                 <h2 class="referenceableTitle">${chapter.chapterNumber}.${sectionCount} - ${sanitizer.sanitize(section.title)}</h2>
                 
                 <#list section.chunks as chunk>
-                    ${chunk.getContent(parser)!""}
+                    ${chunk.asString()!""}
                 </#list>
                     
                 <br/>

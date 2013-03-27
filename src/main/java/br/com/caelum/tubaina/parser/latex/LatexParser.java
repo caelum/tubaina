@@ -15,7 +15,6 @@ public class LatexParser implements Parser {
 
 	@Override
 	public String parse(String string) {
-		// TODO: remove eventual $1, $2 from the string so as not to be interpreted
 		string = new EscapeTag().parse(string);
 		for (RegexTag tag : tags) {
 			string = tag.parse(string);

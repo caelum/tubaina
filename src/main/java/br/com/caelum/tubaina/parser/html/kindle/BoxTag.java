@@ -1,7 +1,10 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.util.HtmlSanitizer;
 
 public class BoxTag implements Tag<BoxChunk> {
 
@@ -10,10 +13,17 @@ public class BoxTag implements Tag<BoxChunk> {
     static final String END = BEGIN;
     static final String TITLE_BEGIN = "<b>";
     static final String TITLE_END = "</b>\n";
+	private final HtmlSanitizer sanitizer;
+
+	@Inject
+    public BoxTag(HtmlSanitizer sanitizer) {
+		this.sanitizer = sanitizer;
+	}
     
     @Override
 	public String parse(BoxChunk chunk) {
-        return BEGIN + TITLE_BEGIN + chunk.getTitle().trim() + TITLE_END + chunk.getContent().trim() + END;
+        String title = sanitizer.sanitize(chunk.getTitle().trim());
+		return BEGIN + TITLE_BEGIN + title + TITLE_END + chunk.getContent().trim() + END;
     }
 
 }

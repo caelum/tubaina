@@ -20,16 +20,14 @@ import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 
 public class FlatHtmlGeneratorTest {
 
     private FlatHtmlGenerator generator;
-
     private Book book;
-
     private File temp;
 
     private TubainaBuilderData data;
@@ -37,8 +35,8 @@ public class FlatHtmlGeneratorTest {
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-        HtmlParser parser = new HtmlParser(tags, false, true);
+        List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
+        HtmlParser parser = new HtmlParser(tags);
 
         File path = new File("src/test/resources");
         ResourceLocator.initialize(path);
@@ -67,6 +65,7 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void shouldCreateDirectoriesAndCopyFiles() throws Exception {
+    	new HtmlModule().inject(book);
         generator.generate(book, temp);
 
         File livro = new File(temp, "livro/");
@@ -85,6 +84,7 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void shouldCreateDirectoriesForChapters() throws Exception {
+    	new HtmlModule().inject(book);
         generator.generate(book, temp);
         File livro = new File(temp, "livro/");
         File index = new File(livro, "index.html");
@@ -102,6 +102,7 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void shouldNotCreateDirectoriesForSections() throws IOException {
+    	new HtmlModule().inject(book);
         generator.generate(book, temp);
 
         File livro = new File(temp, "livro/");
@@ -125,6 +126,7 @@ public class FlatHtmlGeneratorTest {
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
+        new HtmlModule().inject(b);
 
         generator.generate(b, temp);
         // testar se a imagem foi copiada pro diretorio images
@@ -144,6 +146,7 @@ public class FlatHtmlGeneratorTest {
         builder.addReaderFromString(content);
 
         Book b = builder.build();
+        new HtmlModule().inject(b);
         try {
             generator.generate(b, temp);
         } catch (TubainaException t) {
@@ -160,6 +163,7 @@ public class FlatHtmlGeneratorTest {
         builder.addReaderFromString(chapterContent);
         try {
             Book b = builder.build();
+            new HtmlModule().inject(b);
             generator.generate(b, temp);
             Assert.fail("Should raise an exception");
         } catch (TubainaException t) {
@@ -175,6 +179,7 @@ public class FlatHtmlGeneratorTest {
         builder.addReaderFromString(fileContent);
         try {
             Book b = builder.build();
+            new HtmlModule().inject(b);
             generator.generate(b, temp);
             Assert.fail("Should raise an exception");
         } catch (TubainaException t) {

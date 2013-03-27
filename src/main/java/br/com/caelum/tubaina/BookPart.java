@@ -7,7 +7,6 @@ import java.util.List;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
-import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.ImageResource;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -53,7 +52,7 @@ public class BookPart {
         return printable;
     }
 
-    public String getIntroduction(Parser p) {
+    public String getIntroduction() {
         return introductionChunk == null ? "" : introductionChunk.asString();
     }
 

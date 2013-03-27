@@ -36,7 +36,7 @@ public class KindleGeneratorTest {
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
         List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-        HtmlParser parser = new HtmlParser(tags, false, true);
+        HtmlParser parser = new HtmlParser(tags);
 
         File path = new File("src/test/resources");
         ResourceLocator.initialize(path);

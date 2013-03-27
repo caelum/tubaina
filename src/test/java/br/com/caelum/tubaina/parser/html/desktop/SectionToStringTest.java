@@ -28,7 +28,7 @@ public class SectionToStringTest {
 		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
 		cfg.setObjectWrapper(new BeansWrapper());
 
-		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"), false, true);
+		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/html.properties"));
 		ArrayList<String> dirTree = new ArrayList<String>();
 		dirTree.add("livro");
 		dirTree.add("livro/01-capitulo");
