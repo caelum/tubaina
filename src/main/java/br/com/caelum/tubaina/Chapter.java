@@ -2,7 +2,6 @@ package br.com.caelum.tubaina;
 
 import java.util.List;
 
-import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.util.TitleShortener;
 import br.com.caelum.tubaina.util.TitleSlug;
@@ -48,7 +47,7 @@ public class Chapter {
 		return resources;
 	}
 	
-	public String getIntroduction(Parser p){
+	public String getIntroduction(){
 		return this.introduction.asString();
 	}
 	

@@ -21,7 +21,7 @@ import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 import br.com.caelum.tubaina.util.FileUtilities;
 
@@ -35,7 +35,7 @@ public class LatexGeneratorTest {
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+        List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
         parser = new LatexParser(tags);
 
         File path = new File("src/test/resources");
@@ -65,6 +65,7 @@ public class LatexGeneratorTest {
 
     @Test
     public void testGenerator() throws IOException {
+    	new LatexModule().inject(book);
         generator.generate(book, temp);
 
         // Book LaTeX
@@ -97,6 +98,7 @@ public class LatexGeneratorTest {
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
+        new LatexModule().inject(b);
 
         generator.generate(b, temp);
 
@@ -119,6 +121,7 @@ public class LatexGeneratorTest {
                 + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]");
 
         Book b = builder.build();
+        new LatexModule().inject(b);
         try {
             generator.generate(b, temp);
         } catch (TubainaException t) {
@@ -134,6 +137,7 @@ public class LatexGeneratorTest {
                 + "[img src/test/resources/someImage.gif]");
         try {
             Book b = builder.build();
+            new LatexModule().inject(b);
             generator.generate(b, temp);
             Assert.fail("Should raise an exception");
         } catch (TubainaException t) {
@@ -144,8 +148,8 @@ public class LatexGeneratorTest {
     @Test
     public void testGeneratorForInstructorTextbook() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-        LatexParser parser = new LatexParser(tags, true, false);
+        List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
+        LatexParser parser = new LatexParser(tags);
 
         File path = new File("src/test/resources");
         ResourceLocator.initialize(path);
@@ -153,13 +157,11 @@ public class LatexGeneratorTest {
         BookBuilder builder = new BookBuilder("Do Instrutor");
         builder.addReaderFromString("[chapter com notas]\n"
                 + "[note]uma nota para o instrutor[/note]");
-        Book b = builder.build(true);
-        Assert.assertTrue(b.isInstructorBook());
+        Book b = builder.build();
+        new LatexModule(true, true).inject(b);
         customGenerator.generate(b, temp);
         File texFile = new File(temp, "teste.tex");
         Assert.assertTrue("Book file should exist", texFile.exists());
-        Assert.assertTrue("Should have INSTRUCTOR TEXTBOOK on the first page",
-                containsText(texFile, "INSTRUCTOR TEXTBOOK"));
         Assert.assertTrue("Should display the note",
                 containsText(texFile, "uma nota para o instrutor"));
     }
@@ -169,8 +171,8 @@ public class LatexGeneratorTest {
         BookBuilder builder = new BookBuilder("Do Aluno");
         builder.addReaderFromString("[chapter com notas]\n"
                 + "[note]uma nota para o instrutor[/note]");
-        Book b = builder.build(false);
-        Assert.assertFalse(b.isInstructorBook());
+        Book b = builder.build();
+        new LatexModule(false, true).inject(b);
         generator.generate(b, temp);
         File texFile = new File(temp, "teste.tex");
         Assert.assertTrue("Book file should exist", texFile.exists());
@@ -188,6 +190,7 @@ public class LatexGeneratorTest {
         List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img " + imagePath + "]"), "file from string"));
         builder.addAllReaders(chapterReaders, introductionReaders);
         Book b = builder.build();
+        new LatexModule().inject(b);
 
         generator.generate(b, temp);
         File copied = new File(temp, imagePath);

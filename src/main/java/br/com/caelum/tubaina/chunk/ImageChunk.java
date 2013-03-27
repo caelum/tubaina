@@ -12,7 +12,7 @@ public class ImageChunk extends AbstractChunk<ImageChunk> {
 
 	public ImageChunk(String path, String options, double width, int dpi) {
 		this.path = path;
-		this.options = options;
+		this.options = options == null ? "" : options;
 		this.width = width;
 		this.dpi = dpi;
 	}		

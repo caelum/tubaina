@@ -15,7 +15,6 @@ import br.com.caelum.tubaina.parser.html.kindle.KindleGenerator;
 import br.com.caelum.tubaina.parser.html.kindle.KindleParser;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
-import br.com.caelum.tubaina.parser.latex.LinkTag;
 
 public enum ParseType {
 
@@ -24,7 +23,7 @@ public enum ParseType {
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
 			List<RegexTag> tags = conf.read("/regex.properties", "/latex.properties");
 			tags.add(new LinkTag("\\\\url{$1}$2"));
-            return new LatexParser(tags, showNotes, noAnswer);
+            return new LatexParser(tags);
 		}
 
 		@Override

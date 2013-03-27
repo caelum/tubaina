@@ -18,7 +18,7 @@ import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.IntroductionTag;
-import br.com.caelum.tubaina.parser.NullTag;
+import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
@@ -31,18 +31,20 @@ import com.google.inject.TypeLiteral;
 public class LatexModule extends TubainaModule {
 
 	private final boolean showNotes;
+	private final boolean noAnswer;
 
-	public LatexModule(boolean showNotes) {
+	public LatexModule(boolean showNotes, boolean noAnswer) {
 		this.showNotes = showNotes;
+		this.noAnswer = noAnswer;
 	}
 
 	public LatexModule() {
-		this(true);
+		this(true, false);
 	}
 	
 	@Override
 	protected void configure() {
-		bind(new TypeLiteral<Tag<AnswerChunk>>() {}).to(AnswerTag.class);
+		bind(new TypeLiteral<Tag<AnswerChunk>>() {}).to(noAnswer ? NullAnswerTag.class : AnswerTag.class);
 		bind(new TypeLiteral<Tag<BoxChunk>>() {}).to(BoxTag.class);
 		bind(new TypeLiteral<Tag<CenteredParagraphChunk>>() {}).to(CenteredParagraphTag.class);
 		bind(new TypeLiteral<Tag<CodeChunk>>() {}).to(CodeTag.class);
@@ -52,7 +54,7 @@ public class LatexModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<IntroductionChunk>>() {}).to(IntroductionTag.class);
 		bind(new TypeLiteral<Tag<ItemChunk>>() {}).to(ItemTag.class);
 		bind(new TypeLiteral<Tag<ListChunk>>() {}).to(ListTag.class);
-		bind(new TypeLiteral<Tag<NoteChunk>>() {}).to(showNotes ? NoteTag.class : NullTag.class);
+		bind(new TypeLiteral<Tag<NoteChunk>>() {}).to(showNotes ? NoteTag.class : NullNoteTag.class);
 		bind(new TypeLiteral<Tag<ParagraphChunk>>() {}).to(ParagraphTag.class);
 		bind(new TypeLiteral<Tag<QuestionChunk>>() {}).to(QuestionTag.class);
 		bind(new TypeLiteral<Tag<TableColumnChunk>>() {}).to(TableColumnTag.class);

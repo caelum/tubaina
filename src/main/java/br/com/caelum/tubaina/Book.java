@@ -11,14 +11,11 @@ public class Book {
 
 	private String name;
 
-	private final boolean showNotes;
-
     private final List<Chapter> introductionChapters;
 	
-	public Book(String name, List<BookPart> bookParts, boolean showNotes, List<Chapter> introductionChapters) {
+	public Book(String name, List<BookPart> bookParts, List<Chapter> introductionChapters) {
 	    this.parts = bookParts;
 		this.name = name;
-		this.showNotes = showNotes;
         this.introductionChapters = introductionChapters;
 	}
 
@@ -38,10 +35,6 @@ public class Book {
 		return name;
 	}
 
-	public boolean isInstructorBook() {
-		return showNotes;
-	}
-	
 	public List<Chapter> getIntroductionChapters() {
         return introductionChapters;
     }

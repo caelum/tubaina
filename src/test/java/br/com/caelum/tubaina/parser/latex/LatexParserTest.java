@@ -12,6 +12,8 @@ import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.RegexTag;
+import br.com.caelum.tubaina.parser.Tag;
 
 public class LatexParserTest {
 

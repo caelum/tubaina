@@ -37,7 +37,7 @@ public class BookBuilder {
     }
     
     public void addReaderFromString(String fileContent) {
-        addAllReaders(Arrays.asList((AfcFile) new AfcFile(new StringReader(fileContent), "file from string")), 
+        addAllReaders(Arrays.asList(new AfcFile(new StringReader(fileContent), "file from string")), 
                 new ArrayList<AfcFile>());
     }
     
@@ -54,13 +54,9 @@ public class BookBuilder {
     }
 
     public Book build() {
-        return this.build(false);
-    }
-
-    public Book build(boolean showNotes) {
         List<Chapter> introductionChapters = parseIntroductionChapters();
         parseBookChapters();
-        return new Book(name, bookPartsBuilder.build(), showNotes, introductionChapters);
+        return new Book(name, bookPartsBuilder.build(), introductionChapters);
     }
 
     private void parseBookChapters() {
