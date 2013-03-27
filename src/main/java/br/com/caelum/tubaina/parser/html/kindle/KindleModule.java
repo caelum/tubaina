@@ -16,7 +16,7 @@ import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.parser.IntroductionTag;
-import br.com.caelum.tubaina.parser.NullTag;
+import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
 
@@ -43,7 +43,7 @@ public class KindleModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<IntroductionChunk>>() {}).to(IntroductionTag.class);
 		bind(new TypeLiteral<Tag<ItemChunk>>() {}).to(ItemTag.class);
 		bind(new TypeLiteral<Tag<ListChunk>>() {}).to(ListTag.class);
-		bind(new TypeLiteral<Tag<NoteChunk>>() {}).to(showNotes ? NoteTag.class : NullTag.class);
+		bind(new TypeLiteral<Tag<NoteChunk>>() {}).to(showNotes ? NoteTag.class : NullNoteTag.class);
 		bind(new TypeLiteral<Tag<ParagraphChunk>>() {}).to(ParagraphTag.class);
 		bind(new TypeLiteral<Tag<QuestionChunk>>() {}).to(QuestionTag.class);
 		bind(new TypeLiteral<Tag<TableColumnChunk>>() {}).to(TableColumnTag.class);

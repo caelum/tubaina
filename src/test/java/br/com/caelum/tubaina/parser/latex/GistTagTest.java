@@ -8,13 +8,14 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+import br.com.caelum.tubaina.chunk.GistChunk;
 import br.com.caelum.tubaina.gists.GistConnector;
 import br.com.caelum.tubaina.gists.GistRequest;
 import br.com.caelum.tubaina.gists.GistResultRetriever;
 import br.com.caelum.tubaina.gists.JsonToGistResultConverter;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 
-public class GistTagTest {
+public class GistTagTest extends AbstractTagTest {
 
 	@Test
 	public void gistedCodeIsRetrievedAndUsed() throws Exception {
@@ -26,6 +27,7 @@ public class GistTagTest {
 		// code to be retrieved, we can only assert parts of it
 		String gistedCode = "javascript:(function() {window.frames[3][0].document.getElementById('frameplugin').style.display='none'})()";
 
+		GistChunk chunk = new GistChunk(options);
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(chunk);
 
 		assertPygmentsRan(output);
@@ -48,6 +50,7 @@ public class GistTagTest {
 
 		GistResultRetriever retriever = new GistResultRetriever(connector);
 
+		GistChunk chunk = new GistChunk(options);
 		String output = new GistTag(new SimpleIndentator(4), retriever).parse(chunk);
 
 		assertPygmentsRan(output);

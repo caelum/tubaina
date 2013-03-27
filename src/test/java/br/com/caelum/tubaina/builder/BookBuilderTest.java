@@ -71,7 +71,7 @@ public class BookBuilderTest {
         Assert.assertEquals("texto da segunda seção", sections1.get(1).getChunks().get(0)
                 .asString());
 
-        Assert.assertEquals("Algum texto de introdução", chapters.get(1).getIntroduction(parser));
+        Assert.assertEquals("Algum texto de introdução", chapters.get(1).getIntroduction());
 
     }
 
@@ -94,7 +94,7 @@ public class BookBuilderTest {
         Assert.assertEquals(1, chapters.size());
         Assert.assertEquals("O que é java?", chapters.get(0).getTitle());
         Assert.assertEquals(0, sections.size());
-        Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction(parser));
+        Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class BookBuilderTest {
         Assert.assertEquals("O que é java?", chapters.get(0).getTitle());
         Assert.assertEquals(2, sections.size());
 
-        Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction(parser));
+        Assert.assertEquals("texto da introdução", chapters.get(0).getIntroduction());
 
         Assert.assertEquals("Primeira seção", sections.get(0).getTitle());
         Assert.assertEquals("texto da prim seção", sections.get(0).getChunks().get(0).asString());

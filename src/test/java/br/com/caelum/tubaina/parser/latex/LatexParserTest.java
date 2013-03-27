@@ -10,6 +10,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
+import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class LatexParserTest {
@@ -19,7 +20,7 @@ public class LatexParserTest {
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/latex.properties");
+        List<RegexTag> tags = configurator.read("/regex.properties", "/latex.properties");
 
         this.parser = new LatexParser(tags);
     }

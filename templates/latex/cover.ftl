@@ -1,8 +1,4 @@
 \thispagestyle{empty}
-<#if book.isInstructorBook()>
-\centerline{\Huge INSTRUCTOR TEXTBOOK}
-\newpage
-</#if>
 
 \vspace*{2.5cm}
 \large \centerline{\bf ${book.name}}

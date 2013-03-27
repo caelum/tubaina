@@ -24,7 +24,7 @@ public enum ParseType {
 		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
 			List<RegexTag> tags = conf.read("/regex.properties", "/latex.properties");
 			tags.add(new LinkTag("\\\\link{$1}$2"));
-            return new LatexParser(tags, showNotes, noAnswer);
+            return new LatexParser(tags);
 		}
 
 		@Override
