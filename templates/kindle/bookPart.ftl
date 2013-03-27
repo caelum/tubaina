@@ -3,9 +3,9 @@
 	<#if !part.getIllustrationPath().isEmpty()>	
     	<img src="$$RELATIVE$$/${part.illustrationPath}" />
 	</#if>
-	${part.getIntroduction(parser)}
+	${part.getIntroduction()}
 </#if>
 
 ${chaptersContent}
-						
+
 		

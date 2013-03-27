@@ -26,6 +26,7 @@ public class BookPartsBuilder {
         extractor = new BookPartParametersExtractor();
     }
 
+    //TODO: why do we send introductionTex and introductionChunk?
     public BookPartsBuilder addPartFrom(String text) {
         if (containsPartTag(text)) {
             String bookPartTitle = extractPartBookTitle(text);

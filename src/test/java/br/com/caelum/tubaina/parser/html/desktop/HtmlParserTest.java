@@ -7,11 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.caelum.tubaina.Chunk;
-import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.latex.LinkTag;
+import br.com.caelum.tubaina.parser.RegexTag;
 
 public class HtmlParserTest {
 
@@ -20,9 +17,8 @@ public class HtmlParserTest {
 	@Before
 	public void setUp() throws IOException {
 		RegexConfigurator configurator = new RegexConfigurator();
-		List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
-		tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
-		this.parser = new HtmlParser(tags, false, true);
+		List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
+		this.parser = new HtmlParser(tags);
 	}
 
 	@Test
@@ -79,12 +75,6 @@ public class HtmlParserTest {
 		String result = parser.parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
 		Assert.assertEquals("ola <code>mundo &#58;&#58; superclasse</code> texto <code>mais codigo &#58;&#58; superclasse</code>", result);
 	}
-	
-	@Test
-	public void testParagraphTagWithInnerTagsInline() {
-		String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");
-		Assert.assertEquals("<p><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</p>", result);
-	}
 
 	@Test
 	public void testQuotationTagInline() {
@@ -111,19 +101,19 @@ public class HtmlParserTest {
 	}
 	
 	@Test
-	public void testLinkComHttpTagInline() {
+	public void testLinkWithHttpTagInline() {
 		String result = parser.parse("http://www.caelum.com.br");
 		Assert.assertEquals("<a href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>", result);
 	}
 	
 	@Test
-	public void testLinkComHttpsTagInline() {
+	public void testLinkWithHttpsTagInline() {
 		String result = parser.parse("https://www.caelum.com.br");
 		Assert.assertEquals("<a href=\"https://www.caelum.com.br\">https://www.caelum.com.br</a>", result);
 	}
 	
 	@Test
-	public void testLinkComParentesis() {
+	public void testLinkWithParenthesis() {
 		String result = parser.parse("(http://www.caelum.com.br)");
 		Assert.assertEquals("(<a href=\"http://www.caelum.com.br\">http://www.caelum.com.br</a>)", result);
 	}
@@ -153,61 +143,6 @@ public class HtmlParserTest {
 	}
 	
 	@Test
-	public void testBoxTagWithoutInnerTags() {
-		String result = parser.parseBox("ola mundo", "Titulo do Box");
-		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\nola mundo</div>", result);
-	}
-	
-	@Test
-	public void testBoxTagWithInnerTags() {
-		//Should not parse. BoxTag just create the box structure
-		String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-		Assert.assertEquals("<div class=\"box\"><h4>Titulo do Box</h4>\n__ola__ **mundo**</div>", result);
-	}
-	
-	@Test
-	public void testBoxTagWithInnerTagsOnTitle() {
-		String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-		Assert.assertEquals("<div class=\"box\"><h4>Titulo <strong>do Box</strong></h4>\nola mundo</div>", result);
-	}
-	
-	@Test
-	public void testBulletedList() {
-		String result = parser.parseList("conteudo da lista", "algo que nao importa");
-		Assert.assertEquals("<ul>conteudo da lista</ul>", result);
-	}
-
-	@Test
-	public void testNumberList() {
-		String result = parser.parseList("conteudo da lista", "number");
-		Assert.assertEquals("<ol>conteudo da lista</ol>", result);
-	}
-	
-	@Test
-	public void testLetterList() {
-		String result = parser.parseList("conteudo da lista", "letter");
-		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
-	}
-	
-	@Test
-	public void testRomanList() {
-		String result = parser.parseList("conteudo da lista", "roman");
-		Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
-	}
-	
-	@Test
-	public void testTagSoloTag() {
-		String result = parser.parseIndex("ola mundo");
-		Assert.assertEquals("\n<a id=\"ola mundo\"></a>\n", result);
-	}
-	
-	@Test
-	public void testTagMultiTag() {
-		String result = parser.parseIndex("ola mundo, olamundo");
-		Assert.assertEquals("\n<a id=\"ola mundo, olamundo\"></a>\n", result);
-	}
-	
-	@Test
 	public void testQuotationTag(){
 		String result = parser.parse("\"\"");
 		Assert.assertEquals("\"\"", result);
@@ -217,17 +152,6 @@ public class HtmlParserTest {
 	public void testQuotationTagWithText(){
 		String result = parser.parse("\"qualquer coisa escrito aqui\"");
 		Assert.assertEquals("\"qualquer coisa escrito aqui\"", result);
-	}
-	
-	@Test
-	public void testParagraphInsiideItem(){
-		String input = "* Refactoring, Martin Fowler\n\n" +
-				"* Effective Java, Joshua Bloch\n\n* Design Patterns, Erich Gamma et al";
-		List<Chunk> chunks = new ChunkSplitter(null, "list").splitChunks(input);
-		Assert.assertEquals(3, chunks.size());
-		Assert.assertEquals("<li>Refactoring, Martin Fowler</li>", chunks.get(0).asString());
-		Assert.assertEquals("<li>Effective Java, Joshua Bloch</li>", chunks.get(1).asString());
-		Assert.assertEquals("<li>Design Patterns, Erich Gamma et al</li>", chunks.get(2).asString());
 	}
 	
 }

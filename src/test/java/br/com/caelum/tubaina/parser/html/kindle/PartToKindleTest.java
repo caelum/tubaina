@@ -35,7 +35,7 @@ public class PartToKindleTest {
         cfg.setObjectWrapper(new BeansWrapper());
 
         Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
-                "/kindle.properties"), false, true);
+                "/kindle.properties"));
 
         partToKindle = new PartToKindle(parser, cfg, new ArrayList<String>());
     }

@@ -1,15 +1,19 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.TableTagTemplate;
+import br.com.caelum.tubaina.util.HtmlSanitizer;
 
 public class TableTag implements Tag<TableChunk> {
 
 	private TableTagTemplate template;
 	
-	public TableTag() {
-		 template = new TableTagTemplate();
+	@Inject
+	public TableTag(HtmlSanitizer sanitizer) {
+		 template = new TableTagTemplate(sanitizer);
 	}
 
 	@Override
