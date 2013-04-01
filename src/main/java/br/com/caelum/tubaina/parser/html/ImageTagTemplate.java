@@ -30,9 +30,9 @@ public class ImageTagTemplate {
 		Matcher descriptionMatcher = description.matcher(options);
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
-			output.append(" alt=\"" + descriptionMatcher.group(1) + "\" />");
+			output.append("alt=\"" + descriptionMatcher.group(1) + "\" />");
 		} else {
-			output.append(" alt=\"" + imgsrc + "\" />");
+			output.append("alt=\"" + imgsrc + "\" />");
 		}
 		
 		return output.toString();

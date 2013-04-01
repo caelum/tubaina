@@ -3,7 +3,7 @@ package br.com.caelum.tubaina.util;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HtmlSanitizer {
+public class HtmlSanitizer implements Sanitizer {
 
 	private Map<Character, String> map;
 
@@ -80,6 +80,7 @@ public class HtmlSanitizer {
 		map.put('&', "&amp;");
 	}
 
+	@Override
 	public String sanitize(String text) {
 		if (text == null) 
 		    return "";

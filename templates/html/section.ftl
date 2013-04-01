@@ -8,7 +8,7 @@
 		<h2 class="section">${curchap}.${cursec} - ${section.title}</h2>
 	   	
 	   	<#list section.chunks as chunk>
-	    	${chunk.getContent(parser)!""}
+	    	${chunk.asString()!""}
 	   	</#list>
 		
 		<br/>

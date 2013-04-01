@@ -2,6 +2,7 @@ package br.com.caelum.tubaina;
 
 import java.util.List;
 
+import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.util.TitleShortener;
 import br.com.caelum.tubaina.util.TitleSlug;
@@ -14,7 +15,7 @@ public class Chapter {
 
 	private List<Resource> resources;
 
-	private Chunk introduction;
+	private IntroductionChunk introduction;
 	
 	private int chapterNumber;
 
@@ -24,7 +25,7 @@ public class Chapter {
 
     private final String label;
 
-	public Chapter(String title, String label, Chunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
+	public Chapter(String title, String label, IntroductionChunk introduction, List<Section> sections, List<Resource> resources, int chapterNumber, boolean introductionChapter) {
 		this.title = title;
         this.label = label;
 		this.sections = sections;

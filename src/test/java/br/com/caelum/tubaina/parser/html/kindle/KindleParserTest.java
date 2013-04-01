@@ -10,8 +10,7 @@ import org.junit.Test;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.latex.LinkTag;
+import br.com.caelum.tubaina.parser.RegexTag;
 
 public class KindleParserTest {
 
@@ -20,9 +19,8 @@ public class KindleParserTest {
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
-        tags.add(new LinkTag("<a href=\"$1\">$1</a>$2"));
-        this.parser = new KindleParser(tags, false, true);
+        List<RegexTag> tags = configurator.read("/regex.properties", "/kindle.properties");
+        this.parser = new KindleParser(tags);
     }
 
     @Test
@@ -80,14 +78,6 @@ public class KindleParserTest {
                 .parse("ola %%mundo <:: superclasse%% texto %%mais codigo <:: superclasse%%");
         Assert.assertEquals(
                 "ola <code>mundo &#58;&#58; superclasse</code> texto <code>mais codigo &#58;&#58; superclasse</code>",
-                result);
-    }
-
-    @Test
-    public void testParagraphTagWithInnerTagsInline() {
-        String result = parser.parseParagraph("**Ola** ::mundo::. %%Tchau%% **::__mundo__::**.");
-        Assert.assertEquals(
-                "<p><strong>Ola</strong> <em>mundo</em>. <code>Tchau</code> <strong><em><u>mundo</u></em></strong>.</p>",
                 result);
     }
 
@@ -162,64 +152,6 @@ public class KindleParserTest {
     }
 
     @Test
-    public void testBoxTagWithoutInnerTags() {
-        String result = parser.parseBox("ola mundo", "Titulo do Box");
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
-                + "ola mundo" + BoxTag.END, result);
-    }
-
-    @Test
-    public void testBoxTagWithInnerTags() {
-        // Should not parse. BoxTag just create the box structure
-        String result = parser.parseBox("__ola__ **mundo**", "Titulo do Box");
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
-                + "__ola__ **mundo**" + BoxTag.END, result);
-    }
-
-    @Test
-    public void testBoxTagWithInnerTagsOnTitle() {
-        String result = parser.parseBox("ola mundo", "Titulo **do Box**");
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo <strong>do Box</strong>"
-                + BoxTag.TITLE_END + "ola mundo" + BoxTag.END, result);
-    }
-
-    @Test
-    public void testBulletedList() {
-        String result = parser.parseList("conteudo da lista", "algo que nao importa");
-        Assert.assertEquals("<ul>conteudo da lista</ul>", result);
-    }
-
-    @Test
-    public void testNumberList() {
-        String result = parser.parseList("conteudo da lista", "number");
-        Assert.assertEquals("<ol>conteudo da lista</ol>", result);
-    }
-
-    @Test
-    public void testLetterList() {
-        String result = parser.parseList("conteudo da lista", "letter");
-        Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
-    }
-
-    @Test
-    public void testRomanList() {
-        String result = parser.parseList("conteudo da lista", "roman");
-        Assert.assertEquals("<ol class=\"roman\">conteudo da lista</ol>", result);
-    }
-
-    @Test
-    public void testTagSoloTag() {
-        String result = parser.parseIndex("ola mundo");
-        Assert.assertEquals("\n<a id=\"ola mundo\"></a>\n", result);
-    }
-
-    @Test
-    public void testTagMultiTag() {
-        String result = parser.parseIndex("ola mundo, olamundo");
-        Assert.assertEquals("\n<a id=\"ola mundo, olamundo\"></a>\n", result);
-    }
-
-    @Test
     public void testQuotationTag() {
         String result = parser.parse("\"\"");
         Assert.assertEquals("\"\"", result);
@@ -243,20 +175,4 @@ public class KindleParserTest {
                 .asString());
     }
 
-    @Test
-    public void testNoteTagShouldntBeParsed() throws IOException {
-        RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/kindle.properties");
-        this.parser = new KindleParser(tags, false, false);
-        String input = "Should not appear";
-        Assert.assertEquals("", parser.parseNote(input, ""));
-    }
-
-    @Test
-    public void testNoteTagShouldBeParsed() throws IOException {
-        String input = "Should appear";
-        String begin = "---------------------------<br />";
-        String end = "<br />---------------------------";
-        Assert.assertEquals(begin + "Should appear" + end, parser.parseNote(input, ""));
-    }
 }

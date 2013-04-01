@@ -19,6 +19,8 @@ import br.com.caelum.tubaina.parser.IntroductionTag;
 import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
+import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Sanitizer;
 
 import com.google.inject.TypeLiteral;
 
@@ -51,6 +53,8 @@ public class HtmlModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableColumnChunk>>() {}).to(TableColumnTag.class);
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
+		
+		bind(Sanitizer.class).to(HtmlSanitizer.class);
 	}
 
 

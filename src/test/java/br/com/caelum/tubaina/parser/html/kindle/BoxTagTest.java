@@ -11,7 +11,7 @@ public class BoxTagTest extends AbstractTagTest {
     public void testBox() {
         BoxChunk chunk = new BoxChunk("Título do Box", text("Texto do Box"));
 		String result = getContent(chunk);
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box" + BoxTag.TITLE_END
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "T&iacute;tulo do Box" + BoxTag.TITLE_END
                 + "Texto do Box" + BoxTag.END, result);
     }
 
@@ -19,7 +19,7 @@ public class BoxTagTest extends AbstractTagTest {
     public void testBoxWithMultilineContent() {
     	BoxChunk chunk = new BoxChunk("Título do Box", text("Texto do Box\n blablabla"));
         String result = getContent(chunk);
-        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "Titulo do Box"
+        Assert.assertEquals(BoxTag.BEGIN + BoxTag.TITLE_BEGIN + "T&iacute;tulo do Box"
                 + BoxTag.TITLE_END + "Texto do Box\n blablabla" + BoxTag.END, result);
     }
 
