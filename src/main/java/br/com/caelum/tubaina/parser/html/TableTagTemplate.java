@@ -2,13 +2,13 @@ package br.com.caelum.tubaina.parser.html;
 
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Sanitizer;
 
 public class TableTagTemplate implements Tag<TableChunk> {
 
-	private final HtmlSanitizer sanitizer;
+	private final Sanitizer sanitizer;
 
-	public TableTagTemplate(HtmlSanitizer sanitizer) {
+	public TableTagTemplate(Sanitizer sanitizer) {
 		this.sanitizer = sanitizer;
 	}
 

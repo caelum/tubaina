@@ -5,11 +5,11 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
+import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.html.HtmlAndKindleCodeTag;
-import br.com.caelum.tubaina.parser.html.kindle.CodeTag;
 
 
-public class CodeTagTest {
+public class CodeTagTest extends AbstractTagTest {
 	
 	@Test
     public void shouldCallHtmlCodeTag() {
@@ -18,8 +18,8 @@ public class CodeTagTest {
                 "    System.out.println(\"Hello, \" + name);\n" +
                 "}";
         HtmlAndKindleCodeTag htmlCodeTag = mock(HtmlAndKindleCodeTag.class);
-        CodeTag codeTag = new CodeTag(htmlCodeTag);
-        codeTag.parse(chunk);
+        CodeChunk chunk = new CodeChunk(code, "");
+        getContent(chunk);
         verify(htmlCodeTag).parse(chunk);
     }
 }

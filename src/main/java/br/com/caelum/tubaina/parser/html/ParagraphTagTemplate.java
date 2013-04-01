@@ -2,13 +2,13 @@ package br.com.caelum.tubaina.parser.html;
 
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Sanitizer;
 
 public class ParagraphTagTemplate implements Tag<ParagraphChunk> {
 
-	private final HtmlSanitizer sanitizer;
+	private final Sanitizer sanitizer;
 
-	public ParagraphTagTemplate(HtmlSanitizer sanitizer) {
+	public ParagraphTagTemplate(Sanitizer sanitizer) {
 		this.sanitizer = sanitizer;
 	}
 

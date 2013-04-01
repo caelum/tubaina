@@ -43,7 +43,7 @@ public class ImageTagTemplate {
 			subtitle = parser.parse(subtitle);
 			output.append("<div><i>"+ subtitle +"</i></div><br><br>");
 		} else {
-			output.append(" alt=\"" + imgsrc + "\" />");
+			output.append("alt=\"" + imgsrc + "\" />");
 		}
 		
 		return output.toString();

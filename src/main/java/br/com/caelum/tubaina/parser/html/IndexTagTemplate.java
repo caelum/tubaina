@@ -2,13 +2,13 @@ package br.com.caelum.tubaina.parser.html;
 
 import br.com.caelum.tubaina.chunk.IndexChunk;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Sanitizer;
 
 public class IndexTagTemplate implements Tag<IndexChunk> {
 
-	private final HtmlSanitizer sanitizer;
+	private final Sanitizer sanitizer;
 
-	public IndexTagTemplate(HtmlSanitizer sanitizer) {
+	public IndexTagTemplate(Sanitizer sanitizer) {
 		this.sanitizer = sanitizer;
 	}
 

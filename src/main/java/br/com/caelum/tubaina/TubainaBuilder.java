@@ -60,7 +60,7 @@ public class TubainaBuilder {
 
         Book b = null;
         try {
-            b = builder.build(data.isShowNotes());
+            b = builder.build();
         } catch (TubainaException e) {
             if (dontCare) {
                 LOG.warn(e);

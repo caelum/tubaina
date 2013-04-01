@@ -4,14 +4,14 @@ import com.google.inject.Inject;
 
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.util.HtmlSanitizer;
+import br.com.caelum.tubaina.util.Sanitizer;
 
 public class BoxTag implements Tag<BoxChunk> {
 
-	private final HtmlSanitizer sanitizer;
+	private final Sanitizer sanitizer;
 
 	@Inject
-	public BoxTag(HtmlSanitizer sanitizer) {
+	public BoxTag(Sanitizer sanitizer) {
 		this.sanitizer = sanitizer;
 	}
 	

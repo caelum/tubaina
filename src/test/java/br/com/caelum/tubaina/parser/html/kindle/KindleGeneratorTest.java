@@ -24,7 +24,7 @@ import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
+import br.com.caelum.tubaina.parser.RegexTag;
 import br.com.caelum.tubaina.parser.html.desktop.HtmlParser;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
@@ -35,7 +35,7 @@ public class KindleGeneratorTest {
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/html.properties");
+        List<RegexTag> tags = configurator.read("/regex.properties", "/html.properties");
         HtmlParser parser = new HtmlParser(tags);
 
         File path = new File("src/test/resources");
