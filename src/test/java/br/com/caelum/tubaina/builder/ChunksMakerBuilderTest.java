@@ -21,7 +21,6 @@ import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.NoteChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
-import br.com.caelum.tubaina.chunk.ParagraphInsideItemChunk;
 import br.com.caelum.tubaina.chunk.QuestionChunk;
 import br.com.caelum.tubaina.chunk.RubyChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
@@ -149,7 +148,7 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(RubyChunk.class, chunks.get(10).getClass());
 		Assert.assertEquals(CenteredParagraphChunk.class, chunks.get(11)
 				.getClass());
-		Assert.assertEquals(ParagraphInsideItemChunk.class, chunks.get(12).getClass());
+		Assert.assertEquals(ParagraphChunk.class, chunks.get(12).getClass());
 	}
 
 	@Test

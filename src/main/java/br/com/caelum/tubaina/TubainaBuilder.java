@@ -16,6 +16,7 @@ import org.apache.commons.io.input.BOMInputStream;
 import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.builder.BookBuilder;
+import br.com.caelum.tubaina.parser.TubainaModule;
 import br.com.caelum.tubaina.parser.html.desktop.Generator;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
@@ -68,6 +69,8 @@ public class TubainaBuilder {
                 throw e;
             }
         }
+        TubainaModule module = parseType.getModule(data);
+        module.inject(b);
 
         GeneratorFactory generatorFactory = new GeneratorFactory();
         Generator generator = generatorFactory.generatorFor(parseType, data);

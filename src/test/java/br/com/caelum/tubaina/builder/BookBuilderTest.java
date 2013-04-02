@@ -295,7 +295,7 @@ public class BookBuilderTest {
 						.get(0).asString());
 
 		// Segundo chunk
-		Assert.assertEquals(JavaChunk.class, chunks.get(1).getClass());
+		Assert.assertEquals(CodeChunk.class, chunks.get(1).getClass());
 		Assert.assertEquals("Agora um chunk com código java\n" + "Também multiline", chunks.get(1).asString().trim());
 
 		// Terceiro Chunk

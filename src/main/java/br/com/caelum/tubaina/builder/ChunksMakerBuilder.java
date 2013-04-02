@@ -18,7 +18,6 @@ import br.com.caelum.tubaina.builder.replacer.ItemReplacer;
 import br.com.caelum.tubaina.builder.replacer.JavaReplacer;
 import br.com.caelum.tubaina.builder.replacer.ListReplacer;
 import br.com.caelum.tubaina.builder.replacer.NoteReplacer;
-import br.com.caelum.tubaina.builder.replacer.ParagraphInsideItemReplacer;
 import br.com.caelum.tubaina.builder.replacer.ParagraphReplacer;
 import br.com.caelum.tubaina.builder.replacer.QuestionReplacer;
 import br.com.caelum.tubaina.builder.replacer.Replacer;
@@ -108,7 +107,7 @@ public class ChunksMakerBuilder {
 
 		replacers.add(new RubyReplacer());
 		replacers.add(new CenteredParagraphReplacer());
-		replacers.add(new ParagraphInsideItemReplacer(paragraphTerminator));
+		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("item", replacers);
 
 		// List tag

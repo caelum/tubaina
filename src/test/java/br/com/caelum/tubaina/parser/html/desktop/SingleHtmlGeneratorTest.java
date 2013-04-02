@@ -44,7 +44,6 @@ public class SingleHtmlGeneratorTest {
 
         directory = new File("tmp");
         directory.mkdir();
-
     }
 
     @After
