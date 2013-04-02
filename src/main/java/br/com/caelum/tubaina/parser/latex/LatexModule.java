@@ -18,6 +18,7 @@ import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.IntroductionTag;
+import br.com.caelum.tubaina.parser.NullAnswerTag;
 import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -32,7 +33,7 @@ public class LatexModule extends TubainaModule {
 
 	private final boolean showNotes;
 	private final boolean noAnswer;
-
+	
 	public LatexModule(boolean showNotes, boolean noAnswer) {
 		this.showNotes = showNotes;
 		this.noAnswer = noAnswer;

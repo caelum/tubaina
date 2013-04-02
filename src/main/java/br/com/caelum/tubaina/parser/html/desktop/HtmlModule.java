@@ -16,6 +16,7 @@ import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
 import br.com.caelum.tubaina.parser.IntroductionTag;
+import br.com.caelum.tubaina.parser.NullAnswerTag;
 import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
@@ -27,18 +28,20 @@ import com.google.inject.TypeLiteral;
 public class HtmlModule extends TubainaModule {
 
 	private boolean showNotes;
+	private boolean noAnswer;
 
-	public HtmlModule(boolean showNotes) {
+	public HtmlModule(boolean showNotes, boolean noAnswer) {
 		this.showNotes = showNotes;
+		this.noAnswer = noAnswer;
 	}
 	
 	public HtmlModule() {
-		this(true);
+		this(true, false);
 	}
 	
 	@Override
 	protected void configure() {
-		bind(new TypeLiteral<Tag<AnswerChunk>>() {}).to(AnswerTag.class);
+		bind(new TypeLiteral<Tag<AnswerChunk>>() {}).to(noAnswer ? NullAnswerTag.class : AnswerTag.class);
 		bind(new TypeLiteral<Tag<BoxChunk>>() {}).to(BoxTag.class);
 		bind(new TypeLiteral<Tag<CenteredParagraphChunk>>() {}).to(CenteredParagraphTag.class);
 		bind(new TypeLiteral<Tag<CodeChunk>>() {}).to(CodeTag.class);

@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Section;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
@@ -48,7 +49,9 @@ public class SectionToStringTest {
 	@Test
 	public void testSection() {
 		Section section = createSection("este é o texto da seção");
-		String string = sectionToString.generateSection(new BookBuilder("livro").build(), "capitulo", 7, section, 4, 2)
+		Book book = new BookBuilder("livro").build();
+		new HtmlModule().inject(book);
+		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2)
 				.toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
@@ -58,7 +61,9 @@ public class SectionToStringTest {
 	@Test
 	public void testFlatSection() {
 		Section section = createSection("este é o texto da seção");
-		String string = sectionToString.generateSection(new BookBuilder("livro").build(), "capitulo", 7, section, 4, 2)
+		Book book = new BookBuilder("livro").build();
+		new HtmlModule().inject(book);
+		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2)
 				.toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));

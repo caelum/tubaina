@@ -1,7 +1,6 @@
-package br.com.caelum.tubaina.parser.latex;
+package br.com.caelum.tubaina.parser;
 
 import br.com.caelum.tubaina.chunk.AnswerChunk;
-import br.com.caelum.tubaina.parser.Tag;
 
 //TODO: unify with NullNoteTag
 public class NullAnswerTag implements Tag<AnswerChunk>{
