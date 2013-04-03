@@ -11,46 +11,47 @@ public class Book {
 
 	private String name;
 
-    private final List<Chapter> introductionChapters;
-	
+	private final List<Chapter> introductionChapters;
+
 	public Book(String name, List<BookPart> bookParts, List<Chapter> introductionChapters) {
-	    this.parts = bookParts;
+		this.parts = bookParts;
 		this.name = name;
-        this.introductionChapters = introductionChapters;
+		this.introductionChapters = introductionChapters;
 	}
 
+	//TODO: remove this. Book has parts, parts have chapters
 	public List<Chapter> getChapters() {
-	    ArrayList<Chapter> allChapters = new ArrayList<Chapter>();
+		ArrayList<Chapter> allChapters = new ArrayList<Chapter>();
 		for (BookPart part : parts) {
-		    allChapters.addAll(part.getChapters());
-        }
+			allChapters.addAll(part.getChapters());
+		}
 		return allChapters;
 	}
-	
+
 	public List<BookPart> getParts() {
-        return parts;
-    }
+		return parts;
+	}
 
 	public String getName() {
 		return name;
 	}
 
 	public List<Chapter> getIntroductionChapters() {
-        return introductionChapters;
-    }
+		return introductionChapters;
+	}
 
-    public List<Resource> getResources() {
-        List<Resource> resources = new ArrayList<Resource>();
-        for (Chapter c : this.getChapters()) {
-            resources.addAll(c.getResources());
-        }
-        for (Chapter c : this.getIntroductionChapters()) {
-            resources.addAll(c.getResources());
-        }
-        for (BookPart bp : this.getParts()) {
-            resources.addAll(bp.getResources());
-        }
-        return resources;
-    }
-	
+	public List<Resource> getResources() {
+		List<Resource> resources = new ArrayList<Resource>();
+		for (Chapter c : this.getChapters()) {
+			resources.addAll(c.getResources());
+		}
+		for (Chapter c : this.getIntroductionChapters()) {
+			resources.addAll(c.getResources());
+		}
+		for (BookPart bp : this.getParts()) {
+			resources.addAll(bp.getResources());
+		}
+		return resources;
+	}
+
 }

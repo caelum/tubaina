@@ -51,8 +51,8 @@ public class SectionToStringTest {
 		Section section = createSection("este é o texto da seção");
 		Book book = new BookBuilder("livro").build();
 		new HtmlModule().inject(book);
-		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2)
-				.toString();
+		new HtmlModule().inject(section);
+		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2).toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
 		Assert.assertEquals(1, countOccurrences(string, "este &eacute; o texto da se&ccedil;&atilde;o"));
@@ -63,8 +63,9 @@ public class SectionToStringTest {
 		Section section = createSection("este é o texto da seção");
 		Book book = new BookBuilder("livro").build();
 		new HtmlModule().inject(book);
-		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2)
-				.toString();
+		new HtmlModule().inject(section);
+		
+		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2).toString();
 		Assert.assertEquals(1, countOccurrences(string, "class=\"sectionChapter\">(\\s)*capitulo(\\s)*<"));
 		Assert.assertEquals(1, countOccurrences(string, "7.4 - Title"));
 		Assert.assertEquals(1, countOccurrences(string, "este &eacute; o texto da se&ccedil;&atilde;o"));

@@ -23,8 +23,8 @@ public enum ParseType {
 
 	LATEX {
 		@Override
-		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-			List<RegexTag> tags = conf.read("/regex.properties", "/latex.properties");
+		public Parser getParser() throws IOException {
+			List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/latex.properties");
             return new LatexParser(tags);
 		}
 
@@ -42,8 +42,8 @@ public enum ParseType {
 
 	HTMLFLAT {
 		@Override
-		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
+		public Parser getParser() throws IOException {
+		    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
             return new HtmlParser(tags);
 		}
 
@@ -59,8 +59,8 @@ public enum ParseType {
 	},
 	HTML {
 		@Override
-		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-		    List<RegexTag> tags = conf.read("/regex.properties", "/html.properties");
+		public Parser getParser() throws IOException {
+		    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
             return new HtmlParser(tags);
 		}
 
@@ -77,8 +77,8 @@ public enum ParseType {
 
 	KINDLE {
 		@Override
-		public Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException {
-			List<RegexTag> tags = conf.read("/regex.properties", "/kindle.properties");
+		public Parser getParser() throws IOException {
+			List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/kindle.properties");
             return new KindleParser(tags);
 		}
 
@@ -99,7 +99,7 @@ public enum ParseType {
 
 	protected abstract Generator getGenerator(Parser parser, TubainaBuilderData data);
 
-	protected abstract Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException;
+	protected abstract Parser getParser() throws IOException;
 
 	public abstract TubainaModule getModule(TubainaBuilderData data);
 	

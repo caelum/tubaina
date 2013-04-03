@@ -19,36 +19,35 @@ import freemarker.template.Configuration;
 
 public class ChapterToKindleTest {
 
-    private ChapterToKindle chapterToString;
+	private ChapterToKindle chapterToString;
 
-    @Before
-    public void setUp() throws IOException {
-        Configuration cfg = new Configuration();
-        cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "kindle"));
-        cfg.setObjectWrapper(new BeansWrapper());
+	@Before
+	public void setUp() throws IOException {
+		Configuration cfg = new Configuration();
+		cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "kindle"));
+		cfg.setObjectWrapper(new BeansWrapper());
 
-        Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties",
-                "/kindle.properties"));
-        chapterToString = new ChapterToKindle(parser, cfg);
-    }
+		Parser parser = new HtmlParser(new RegexConfigurator().read("/regex.properties", "/kindle.properties"));
+		chapterToString = new ChapterToKindle(parser, cfg);
+	}
 
-    private Chapter createChapter(String title, String introduction, String content) {
-        return new ChapterBuilder(title, introduction, content, 1).build();
-    }
+	private Chapter createChapter(String title, String introduction, String content) {
+		return new ChapterBuilder(title, introduction, content, 1).build();
+	}
 
-    private int countOccurrences(String text, String substring) {
-        String[] tokens = text.split(substring);
-        return tokens.length - 1;
-    }
+	private int countOccurrences(String text, String substring) {
+		String[] tokens = text.split(substring);
+		return tokens.length - 1;
+	}
 
-    @Test
-    public void testGenerateChapterWithSections() {
-        Chapter chapter = createChapter("chapter title", "introduction",
-                "[section section one] section content");
-
-        String generatedContent = chapterToString.generateKindleHtmlChapter(chapter).toString();
-        assertEquals(2, countOccurrences(generatedContent, "<div class='referenceable'>"));
-        assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
-        assertEquals(1, countOccurrences(generatedContent, "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
-    }
+	@Test
+	public void testGenerateChapterWithSections() {
+		Chapter chapter = createChapter("chapter title", "introduction", "[section section one] section content");
+		new KindleModule().inject(chapter);
+		
+		String generatedContent = chapterToString.generateKindleHtmlChapter(chapter).toString();
+		assertEquals(2, countOccurrences(generatedContent, "<div class='referenceable'>"));
+		assertEquals(1, countOccurrences(generatedContent, "<h2.*>\\d+ - chapter title</h2>"));
+		assertEquals(1, countOccurrences(generatedContent, "<h3.*>\\W*\\d+\\.1 - section one\\W*</h3>"));
+	}
 }

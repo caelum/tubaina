@@ -59,6 +59,7 @@ public class KindleGeneratorTest {
     @Test
     public void shouldCreateAppropriateDirectoryStructure() throws Exception {
         Book book = createsSimpleBookWithTitle("livro");
+        new KindleModule().inject(book);
 
         generator.generate(book, tempDir);
 
@@ -84,6 +85,7 @@ public class KindleGeneratorTest {
     @Test
     public void shouldCreateTheBookFile() throws Exception {
         Book book = createsSimpleBookWithTitle("livro");
+        new KindleModule().inject(book);
 
         generator.generate(book, tempDir);
 
@@ -100,6 +102,7 @@ public class KindleGeneratorTest {
         builder.addReaderFromString("[chapter Outro capítulo]\n"
                 + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]");
         Book imageBook = builder.build();
+        new KindleModule().inject(imageBook);
 
         generator.generate(imageBook, tempDir);
 
@@ -122,6 +125,7 @@ public class KindleGeneratorTest {
         builder.addReaderFromString("[chapter Outro capítulo]\n"
                 + "Uma introdução com imagem: \n\n" + "[img basePngImage.png]");
         Book imageBook = builder.build();
+        new KindleModule().inject(imageBook);
 
         generator.generate(imageBook, tempDir);
 
@@ -136,6 +140,7 @@ public class KindleGeneratorTest {
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
+        new KindleModule().inject(b);
 
         generator.generate(b, tempDir);
         // testar se a imagem foi copiada pro diretorio images
@@ -154,6 +159,7 @@ public class KindleGeneratorTest {
                 + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]");
 
         Book b = builder.build();
+        new KindleModule().inject(b);
         try {
             generator.generate(b, tempDir);
         } catch (TubainaException e) {
@@ -168,9 +174,9 @@ public class KindleGeneratorTest {
         String imageName = "introImage.jpg";
         List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img " + imageName + "]"), "file from string"));
         builder.addAllReaders(chapterReaders, introductionReaders);
-        Book b = builder.build();
-
-        generator.generate(b, tempDir);
+        Book book = builder.build();
+        new KindleModule().inject(book);
+        generator.generate(book, tempDir);
         File introDir = new File(tempDir, IntroductionChaptersToKindle.RESOURCES_PATH);
         File copied = new File(introDir, imageName);
 
