@@ -75,6 +75,12 @@ public class HtmlSanitizer {
 		map.put('\u00FC', "&uuml;");
 		map.put('\u00FD', "&yacute;");
 		map.put('\u00FF', "&yuml;");
+		map.put('—', "&mdash;");
+		map.put('”', "&rdquo;");
+		map.put('“', "&ldquo;");
+		map.put('‘', "&lsquo;");
+		map.put('’', "&rsquo;");
+		map.put('×', "&times;");
 		map.put('<', "&lt;");
 		map.put('>', "&gt;");
 		map.put('&', "&amp;");
