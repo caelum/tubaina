@@ -3,10 +3,10 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import java.io.File;
 import java.util.ArrayList;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
@@ -41,7 +41,11 @@ public class SingleHtmlChapterGeneratorTest {
         Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
                 + "\n[section segunda] conteudo da segunda");
         
-        String string = singleHtmlChapterGenerator.generateSingleHtmlChapter(new BookBuilder("some name").build(), c).toString();
+        Book book = new BookBuilder("some name").build();
+        new HtmlModule().inject(book);
+        new HtmlModule().inject(c);
+        
+		String string = singleHtmlChapterGenerator.generateSingleHtmlChapter(book, c).toString();
         
         Assert.assertEquals(1, countOccurrences(string, "<div class=\"chapter referenceable\">"));
     }
