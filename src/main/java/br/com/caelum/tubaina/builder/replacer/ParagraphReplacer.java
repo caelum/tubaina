@@ -12,13 +12,20 @@ public class ParagraphReplacer implements Replacer {
 	private final Pattern pattern;
 	
 	private final Pattern tagPattern = Pattern.compile("(?s)(?i)\\A\\[(.+)\\].*\\[/\\1\\]");
+
+	private final boolean isInsideItem;
 	
-	public ParagraphReplacer(String specialTerms) {
+	public ParagraphReplacer(String specialTerms, boolean isInsideItem) {
+		this.isInsideItem = isInsideItem;
 		this.pattern = Pattern.compile("(?s)(?i)\\A\\s*(.+?)(\\n(\\s)*?\\n|\\s*\\[(" +
 				specialTerms +
 				")|\\s*\\z)");
 	}
+	public ParagraphReplacer(String specialTerms) {
+		this(specialTerms, false);
+	}
 
+	@Override
 	public String execute(String text, List<Chunk> chunks) {
 		Matcher matcher = pattern.matcher(text);
 		matcher.find();
@@ -26,6 +33,7 @@ public class ParagraphReplacer implements Replacer {
 		return text.substring(matcher.end(1));
 	}
 
+	@Override
 	public boolean accepts(String text) {
 		Matcher tagMatcher = tagPattern.matcher(text);
 		if (tagMatcher.find())
@@ -40,7 +48,7 @@ public class ParagraphReplacer implements Replacer {
 	}
 
 	public Chunk createChunk(Matcher matcher) {
-		return new ParagraphChunk(matcher.group(1));
+		return new ParagraphChunk(matcher.group(1), isInsideItem);
 	}
 
 }

@@ -4,13 +4,19 @@ import br.com.caelum.tubaina.AbstractChunk;
 
 public class ParagraphChunk extends AbstractChunk<ParagraphChunk>{
 
-	private String content;
+	private final String content;
+	private final boolean isInsideItem;
 	
-	public ParagraphChunk(String content) {
+	public ParagraphChunk(String content, boolean isInsideItem) {
 		this.content = content;
+		this.isInsideItem = isInsideItem;
 	}
 
 	public String getContent() {
 		return content;
+	}
+	
+	public boolean isInsideItem() {
+		return isInsideItem;
 	}
 }

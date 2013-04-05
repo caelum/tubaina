@@ -9,7 +9,7 @@ public class ParagraphTagTest extends AbstractTagTest {
 
 	@Test
 	public void testParagraphTag(){
-		ParagraphChunk chunk = new ParagraphChunk("qualquer texto");
+		ParagraphChunk chunk = new ParagraphChunk("qualquer texto", false);
 		String result = getContent(chunk);
 		Assert.assertEquals(result, "\n\nqualquer texto");
 	}

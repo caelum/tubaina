@@ -16,21 +16,30 @@ import com.google.inject.Injector;
 
 public abstract class TubainaModule extends AbstractModule {
 
-	private Injector injector;
-
 	public TubainaModule() {
 		super();
-		injector = Guice.createInjector(this);
 	}
 
+	// TODO: remove this if/else, i.e., chapters always belong to a part
 	public void inject(Book book) {
+		Injector injector = Guice.createInjector(this);
+		List<Chapter> chapters = book.getIntroductionChapters();
 		List<BookPart> parts = book.getParts();
-		for (BookPart part : parts) {
-			inject(part);
+		if (parts.size() != 0) {
+			for (BookPart part : parts) {
+				inject(part, injector);
+			}
+		} else {
+			for (Chapter chapter : book.getChapters()) {
+				inject(chapter);
+			}
+		}
+		for (Chapter introductionChapter : chapters) {
+			inject(introductionChapter);
 		}
 	}
-
-	public void inject(BookPart part) {
+	
+	private void inject(BookPart part, Injector injector) {
 		Chunk introductionChunk = (Chunk) new Mirror().on(part).get().field("introductionChunk");
 		if (introductionChunk != null)
 			inject(injector, introductionChunk);
@@ -40,20 +49,20 @@ public abstract class TubainaModule extends AbstractModule {
 		}
 	}
 
-	public void inject(Chapter chapter) {
+	private void inject(Chapter chapter, Injector injector) {
 		inject(injector, (Chunk) new Mirror().on(chapter).get().field("introduction"));
 		for (Section section : chapter.getSections()) {
 			inject(section);
 		}
 	}
 
-	public void inject(Section section) {
+	private void inject(Section section, Injector injector) {
 		for (Chunk chunk : section.getChunks()) {
 			inject(injector, chunk);
 		}
 	}
 
-	public void inject(Chunk chunk) {
+	private void inject(Chunk chunk, Injector injector) {
 		injector.injectMembers(chunk);
 		if (chunk instanceof CompositeChunk<?>) {
 			CompositeChunk<?> composite = (CompositeChunk<?>) chunk;
@@ -71,5 +80,26 @@ public abstract class TubainaModule extends AbstractModule {
 				inject(injector, other);
 			}
 		}
+	}
+
+	// I'm not proud of this. This is tests infrastructure, though.
+	public void inject(BookPart part) {
+		Injector injector = Guice.createInjector(this);
+		inject(part, injector);
+	}
+	
+	public void inject(Chapter chapter) {
+		Injector injector = Guice.createInjector(this);
+		inject(chapter, injector);
+	}
+	
+	public void inject(Section section) {
+		Injector injector = Guice.createInjector(this);
+		inject(section, injector);
+	}
+	
+	public void inject(Chunk chunk) {
+		Injector injector = Guice.createInjector(this);
+		inject(chunk, injector);
 	}
 }

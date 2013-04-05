@@ -51,20 +51,20 @@ public class LatexGenerator implements Generator {
 		this.ifdefs = data.getIfdefs();
 	}
 
+	@Override
 	public void generate(Book book, File directory) throws IOException {
 		Configuration cfg = new Configuration();
 		cfg.setDirectoryForTemplateLoading(templateDir);
 		cfg.setObjectWrapper(new BeansWrapper());
 		cfg.setDefaultEncoding("UTF-8");
 
-		PrintStream stream;
 		writeBibTex(directory);
 
 		StringBuffer latex = new BookToLatex(parser).generateLatex(book, cfg, ifdefs);
 
 		// print the latex document to an archive
 		File fileBook = new File(directory, latexOutputFileName);
-		stream = new PrintStream(fileBook, "UTF-8");
+		PrintStream stream = new PrintStream(fileBook, "UTF-8");
 		stream.append(latex);
 		stream.close();
 
@@ -104,7 +104,8 @@ public class LatexGenerator implements Generator {
     private void copyFileWithExtenstion(File directory, List<String> extenstions) throws IOException {
         for (final String extension : extenstions) {
             File[] files = new File(templateDir, "latex").listFiles(new FilenameFilter() {
-                public boolean accept(File dir, String name) {
+                @Override
+				public boolean accept(File dir, String name) {
                     return name.endsWith(extension);
                 }
             });

@@ -159,7 +159,6 @@ public class KindleParserTest {
 		Assert.assertEquals("\"qualquer coisa escrito aqui\"", result);
 	}
 
-	//This is actually a bug... It was due to the removal of the ParagraphInsideItem___
 	@Test
 	public void testItemSplittBug() {
 		String input = "* Refactoring, Martin Fowler\n\n"

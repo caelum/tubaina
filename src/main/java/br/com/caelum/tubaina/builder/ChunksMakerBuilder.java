@@ -107,7 +107,7 @@ public class ChunksMakerBuilder {
 
 		replacers.add(new RubyReplacer());
 		replacers.add(new CenteredParagraphReplacer());
-		replacers.add(new ParagraphReplacer(paragraphTerminator));
+		replacers.add(new ParagraphReplacer(paragraphTerminator, true));
 		replacerMap.put("item", replacers);
 
 		// List tag

@@ -2,6 +2,8 @@ package br.com.caelum.tubaina.parser.html;
 
 import java.util.List;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
@@ -15,6 +17,7 @@ public class HtmlAndKindleCodeTag implements Tag<CodeChunk> {
 	private SyntaxHighlighter htmlCodeHighlighter;
 	private CodeTagOptionsParser codeTagOptionsParser;
 
+	@Inject
 	public HtmlAndKindleCodeTag(SyntaxHighlighter htmlCodeHighlighter) {
 		codeTagOptionsParser = new CodeTagOptionsParser();
 		this.htmlCodeHighlighter = htmlCodeHighlighter;
