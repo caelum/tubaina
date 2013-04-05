@@ -16,6 +16,7 @@ import br.com.caelum.tubaina.chunk.QuestionChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
+import br.com.caelum.tubaina.chunk.TodoChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.IntroductionTag;
 import br.com.caelum.tubaina.parser.NullAnswerTag;
@@ -61,6 +62,7 @@ public class LatexModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableColumnChunk>>() {}).to(TableColumnTag.class);
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
+		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
 
 		bind(Indentator.class).to(SimpleIndentator.class);
 		bind(CommandExecutor.class).to(SimpleCommandExecutor.class);
