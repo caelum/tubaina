@@ -8,10 +8,16 @@ import br.com.caelum.tubaina.chunk.ParagraphChunk;
 public class ParagraphTagTest extends AbstractTagTest {
 
 	@Test
-	public void testParagraphTag(){
-		ParagraphChunk chunk = new ParagraphChunk("qualquer texto");
+	public void generalParagraphTag(){
+		ParagraphChunk chunk = new ParagraphChunk("qualquer texto", false);
 		String result = getContent(chunk);
 		Assert.assertEquals(result, "<p>qualquer texto</p>");
 	}
-	
+
+	@Test
+	public void insideItemParagraphTag() {
+		ParagraphChunk chunk = new ParagraphChunk("qualquer texto", true);
+		String result = getContent(chunk);
+		Assert.assertEquals(result, "qualquer texto");
+	}
 }

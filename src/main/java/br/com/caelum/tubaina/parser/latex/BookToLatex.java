@@ -18,7 +18,7 @@ public class BookToLatex {
 		this.parser = parser;
 	}
 
-	public StringBuffer generateLatex(final Book book, final Configuration cfg, List<String> ifdefs) {
+	public StringBuffer generateLatex(Book book, Configuration cfg, List<String> ifdefs) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (String string : ifdefs) {
             map.put(string, true);

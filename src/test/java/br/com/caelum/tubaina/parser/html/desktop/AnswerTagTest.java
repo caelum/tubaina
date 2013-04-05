@@ -14,7 +14,7 @@ public class AnswerTagTest extends AbstractTagTest {
 		String result = getContent(chunk);
 		Assert.assertEquals("<a class=\"answer\" onclick=\"toogleAnswer('answer" + id + "');\">" +
 				"Click here for the answer</a><br /><div class=\"answer\" " +
-				"id=\"answer0\">texto da resposta</div><br/>", result);
+				"id=\"answer" + id + "\">texto da resposta</div><br/>", result);
 	}
 }
 

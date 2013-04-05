@@ -60,7 +60,7 @@ public class ListReplacerTest {
 		Assert.assertEquals(ItemChunk.class, chunks1.get(1).getClass());
 		Assert.assertEquals(ItemChunk.class, chunks1.get(2).getClass());
 
-		Field itemBody = ItemChunk.class.getDeclaredField("body");
+		Field itemBody = ItemChunk.class.getSuperclass().getDeclaredField("body");
 		itemBody.setAccessible(true);
 
 		List<Chunk> chunks2 = (List<Chunk>) itemBody.get(chunks1.get(0));

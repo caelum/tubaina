@@ -20,8 +20,12 @@ import br.com.caelum.tubaina.parser.NullAnswerTag;
 import br.com.caelum.tubaina.parser.NullNoteTag;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
+import br.com.caelum.tubaina.parser.pygments.CodeCache;
+import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
+import br.com.caelum.tubaina.util.CommandExecutor;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
 import br.com.caelum.tubaina.util.Sanitizer;
+import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
 import com.google.inject.TypeLiteral;
 
@@ -56,5 +60,8 @@ public class KindleModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		
 		bind(Sanitizer.class).to(HtmlSanitizer.class);
+		bind(CommandExecutor.class).to(SimpleCommandExecutor.class);
+		bind(CodeOutputType.class).toInstance(CodeOutputType.KINDLE_HTML);
+		bind(CodeCache.class);
 	}
 }

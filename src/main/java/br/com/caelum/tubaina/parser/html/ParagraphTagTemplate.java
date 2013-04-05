@@ -15,6 +15,8 @@ public class ParagraphTagTemplate implements Tag<ParagraphChunk> {
 	@Override
 	public String parse(ParagraphChunk chunk) {
 		String content = sanitizer.sanitize(chunk.getContent());
+		if (chunk.isInsideItem())
+			return content;
 		return "<p>" + content + "</p>";
 	}
 
