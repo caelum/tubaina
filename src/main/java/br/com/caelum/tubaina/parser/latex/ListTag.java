@@ -5,7 +5,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class ListTag implements Tag {
 
 	public String parse(String content, String options) {
-		String listHeader = "\\begin{enumerate}[";
+		String listHeader = "\n\n\\begin{enumerate}[";
 		if (options.contains("number"))
 			listHeader += "1)";
 		else if (options.contains("letter"))
