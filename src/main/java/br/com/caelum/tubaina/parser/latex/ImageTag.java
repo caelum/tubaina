@@ -11,7 +11,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class ImageTag implements Tag {
 
 	public String parse(final String path, final String options) {
-		String output = "\\begin{figure}[H]\n\\begin{center}\n";
+		String output = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
 
 		output = output + "\\includegraphics";
 
