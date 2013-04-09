@@ -156,7 +156,7 @@ public class ImageTagTest {
 	@Test
     public void shouldParseTagsInsideSubtitle() {
     	String output = tag.parse("blabla.png", "\"lala **bold text** http://caelum.com.br/ \"");
-    	output.contains("\\link");
+    	output.contains("\\url");
     	output.contains("\\definition");
     }
 }
