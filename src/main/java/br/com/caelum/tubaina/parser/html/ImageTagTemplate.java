@@ -13,7 +13,6 @@ public class ImageTagTemplate {
 	public String parse(final String path, final String options, boolean shouldUseHTMLWidth) {
 		String imgsrc = FilenameUtils.getName(path);
 		String output = "<img src=\"" + RELATIVEPATH + imgsrc + "\" ";
-		String width = "";
 
 		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)%?");
 		Matcher labelMatcher = label.matcher(options);
@@ -28,14 +27,15 @@ public class ImageTagTemplate {
 		Matcher descriptionMatcher = description.matcher(options);
 		
 		if (shouldUseHTMLWidth && getScale(options) != null) {
-		    width = "width='" + getScale(options) + "%' "; 
+		    output += "width='" + getScale(options) + "%' "; 
 		}
 		
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
-			output = output + width + "alt=\"" + descriptionMatcher.group(1) + "\" />";
+			output += "alt=\"" + descriptionMatcher.group(1) + "\" />\n";
+			output += "<div>"+ descriptionMatcher.group(1) +"</div><br><br>";
 		} else {
-			output = output + width + "alt=\"" + imgsrc + "\" />";
+			output += "alt=\"" + imgsrc + "\" />";
 		}
 		
 		return output;
