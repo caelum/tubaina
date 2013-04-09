@@ -8,20 +8,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.builder.ChunkSplitter;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.RegexConfigurator;
-import br.com.caelum.tubaina.parser.Tag;
 
 public class LatexParserTest {
 
-    private LatexParser parser;
+    private Parser parser;
 
     @Before
     public void setUp() throws IOException {
         RegexConfigurator configurator = new RegexConfigurator();
-        List<Tag> tags = configurator.read("/regex.properties", "/latex.properties");
-
-        this.parser = new LatexParser(tags);
+        this.parser = ParseType.LATEX.getParser(configurator, false, false, "");
     }
 
     @Test
@@ -196,7 +195,7 @@ public class LatexParserTest {
         String output = parser.parse(input);
         Assert.assertEquals("\\codechunk{String s = \\textquotedbl string\\textquotedbl }", output);
     }
-
+    
     @Test
     public void testQuoteInsideJavaCodeInline() {
         String input = "%%object.do(\"some string\", 'c');%%";

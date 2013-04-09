@@ -6,10 +6,17 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.caelum.tubaina.TubainaBuilder;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag {
+	
+	private final Parser parser;
 
+	public ImageTag(Parser parser) {
+		this.parser = parser;
+	}
+	
 	public String parse(final String path, final String options) {
 		String output = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
 
@@ -48,12 +55,13 @@ public class ImageTag implements Tag {
 		output = output + "{" + imgsrc + "}\n";
 		
 		if (descriptionMatcher.find()) {
-			output = output + "\n\n\\caption{" + descriptionMatcher.group(1) + "}\n\n";
+			String caption = descriptionMatcher.group(1);
+			caption = parser.parse(caption);
+			output = output + "\n\n\\caption{" + caption + "}\n\n";
 		}
 		
 		if (labelMatcher.find()) {
 			String givenLabel = labelMatcher.group(1);
-			
 			output += "\\label{" + (givenLabel != null? givenLabel : imgsrc) + "}\n";
 		}
 

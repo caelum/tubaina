@@ -40,7 +40,7 @@ public class LatexResourceManipulator implements ResourceManipulator {
 	}
 
 	public void copyAndScaleImage(File srcImage, String scale) {
-		Integer width = new ImageTag().getScale(scale);
+		Integer width = new ImageTag(null).getScale(scale);
 		if (srcImage.exists()) {
 			File destinationPath = new File(this.imagePath, FilenameUtils.getName(srcImage.getPath()));
 			if (!destinationPath.exists()) {

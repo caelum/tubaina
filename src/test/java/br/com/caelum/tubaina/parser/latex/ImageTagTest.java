@@ -2,9 +2,14 @@ package br.com.caelum.tubaina.parser.latex;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.caelum.tubaina.ParseType;
+import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.RegexConfigurator;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTagTest {
@@ -14,8 +19,10 @@ public class ImageTagTest {
     private Tag tag;
 
 	@Before
-	public void setUp() {
-		tag = new ImageTag();
+	public void setUp() throws IOException {
+		RegexConfigurator configurator = new RegexConfigurator();
+        Parser parser = ParseType.LATEX.getParser(configurator, false, false, "");
+		tag = new ImageTag(parser);
 	}
 	
 	@Test
@@ -144,5 +151,12 @@ public class ImageTagTest {
                 "\\label{name-with-strange_chars}\n" +
                 END, result);
         
+    }
+	
+	@Test
+    public void shouldParseTagsInsideSubtitle() {
+    	String output = tag.parse("blabla.png", "\"lala **bold text** http://caelum.com.br/ \"");
+    	output.contains("\\link");
+    	output.contains("\\definition");
     }
 }

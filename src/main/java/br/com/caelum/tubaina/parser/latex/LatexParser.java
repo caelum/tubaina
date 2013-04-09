@@ -58,7 +58,8 @@ public class LatexParser implements Parser {
     }
 
     public String parseImage(String text, String options) {
-        return new ImageTag().parse(text, options);
+    	text = parse(text);
+        return new ImageTag(this).parse(text, options);
     }
 
     @Deprecated
