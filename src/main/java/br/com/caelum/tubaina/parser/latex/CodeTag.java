@@ -9,7 +9,7 @@ public class CodeTag implements Tag {
 
     private final Indentator indentator;
 
-    public static final String BEGIN = "\n\\begin{small}\n";
+    public static final String BEGIN = "\n\n\\begin{small}\n";
     public static final String END = "\n\\end{small}";
     public static final String CODE_LABEL = "\\tubainaCodeLabel{";
     private static final String FILE_NAME = "\\tubainaCodeFileName";
