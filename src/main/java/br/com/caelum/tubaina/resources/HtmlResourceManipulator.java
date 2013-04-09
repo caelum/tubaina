@@ -40,8 +40,8 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 	}
 
 	public void copyAndScaleImage(File srcImage, String attribs) {
-		Double scale = new Double(new ImageTag().getScale(attribs));
-		boolean shouldResize = new ImageTag().shouldResize(attribs);
+		Double scale = new Double(new ImageTag(null).getScale(attribs));
+		boolean shouldResize = new ImageTag(null).shouldResize(attribs);
 		boolean tooBig = false;
 		
 		if (srcImage.exists()) {

@@ -5,7 +5,15 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.com.caelum.tubaina.parser.Parser;
+
 public class ImageTagTemplate {
+	
+	private final Parser parser;
+
+	public ImageTagTemplate(Parser parser) {
+		this.parser = parser;
+	}
 
 	// TODO: make it work more gracefully... i.e., eliminate this workaround
 	private static final String RELATIVEPATH = "$$RELATIVE$$/";
@@ -32,8 +40,10 @@ public class ImageTagTemplate {
 		
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
-			output += "alt=\"" + descriptionMatcher.group(1) + "\" />\n";
-			output += "<div>"+ descriptionMatcher.group(1) +"</div><br><br>";
+			String subtitle = descriptionMatcher.group(1);
+			output += "alt=\"" + subtitle + "\" />\n";
+			subtitle = parser.parse(subtitle);
+			output += "<div>"+ subtitle +"</div><br><br>";
 		} else {
 			output += "alt=\"" + imgsrc + "\" />";
 		}

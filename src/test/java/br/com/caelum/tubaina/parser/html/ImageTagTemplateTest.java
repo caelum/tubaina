@@ -2,9 +2,16 @@ package br.com.caelum.tubaina.parser.html;
 
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import br.com.caelum.tubaina.ParseType;
+import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.parser.RegexConfigurator;
 
 public class ImageTagTemplateTest {
 
@@ -14,8 +21,9 @@ public class ImageTagTemplateTest {
 	private String imageWithWidth;
 
 	@Before
-	public void setUp() {
-		tag = new ImageTagTemplate();
+	public void setUp() throws IOException {
+		Parser parser = ParseType.HTML.getParser(new RegexConfigurator(), false, false, "");
+		tag = new ImageTagTemplate(parser);
 		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div>Imagem de alguma coisa</div><br><br>";
 		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />";
 		imageWithWidth = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />";
@@ -74,5 +82,12 @@ public class ImageTagTemplateTest {
 	public void shouldUsePathAsIdWhenLabelTheresNoLabel() throws Exception {
 	    String result = tag.parse("imagem.png", "w=50", true);
 	    assertEquals(imageWithWidth, result);
+	}
+	
+	@Test
+	public void shouldParseTagsInsideCaption() throws Exception {
+		String result = tag.parse("imagem.png", "\"Configurações de zoom do Android 4 e do **Chrome** http://google.com.br/ Mobile\"", true);
+		result.contains("<strong>");
+		result.contains("href=\"http://google.com/\"");
 	}
 }

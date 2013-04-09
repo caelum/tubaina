@@ -42,7 +42,7 @@ public class HtmlParser implements Parser {
     }
 
     public String parseImage(String text, String options) {
-        return new ImageTag().parse(text, options);
+        return new ImageTag(this).parse(text, options);
     }
 
     @Deprecated
