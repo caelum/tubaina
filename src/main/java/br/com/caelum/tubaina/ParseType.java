@@ -42,7 +42,7 @@ public enum ParseType {
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new FlatHtmlGenerator(parser, data);
 		}
 	},
@@ -55,7 +55,7 @@ public enum ParseType {
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new SingleHtmlGenerator(parser, data);
 		}
 	},
@@ -69,7 +69,7 @@ public enum ParseType {
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new KindleGenerator(parser, data);
 		}
 	};
@@ -78,7 +78,7 @@ public enum ParseType {
 		return this.toString().toLowerCase();
 	}
 
-	protected abstract Generator getGenerator(Parser parser, TubainaBuilderData data);
+	public abstract Generator getGenerator(Parser parser, TubainaBuilderData data);
 
-	protected abstract Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException;
+	public abstract Parser getParser(RegexConfigurator conf, boolean noAnswer, boolean showNotes, String linkParameter) throws IOException;
 }
