@@ -43,7 +43,7 @@ public class ImageTagTemplate {
 			String subtitle = descriptionMatcher.group(1);
 			output += "alt=\"" + subtitle + "\" />\n";
 			subtitle = parser.parse(subtitle);
-			output += "<div>"+ subtitle +"</div><br><br>";
+			output += "<div><i>"+ subtitle +"</i></div><br><br>";
 		} else {
 			output += "alt=\"" + imgsrc + "\" />";
 		}

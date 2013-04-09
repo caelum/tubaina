@@ -24,7 +24,7 @@ public class ImageTagTemplateTest {
 	public void setUp() throws IOException {
 		Parser parser = ParseType.HTML.getParser(new RegexConfigurator(), false, false, "");
 		tag = new ImageTagTemplate(parser);
-		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div>Imagem de alguma coisa</div><br><br>";
+		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div><i>Imagem de alguma coisa</i></div><br><br>";
 		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />";
 		imageWithWidth = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />";
 	}
