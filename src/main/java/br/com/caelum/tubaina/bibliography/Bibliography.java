@@ -3,7 +3,6 @@ package br.com.caelum.tubaina.bibliography;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("bibliography")
@@ -26,5 +25,9 @@ public class Bibliography {
     public List<BibliographyEntry> getEntries() {
         return entries;
     }
+
+	public boolean isEmpty() {
+		return entries.isEmpty();
+	}
 
 }

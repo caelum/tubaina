@@ -16,6 +16,9 @@ public class HtmlBibliographyGenerator implements BibliographyGenerator {
     }
 
     public String generateTextOf(Bibliography bibliography) {
+    	if (bibliography.isEmpty()) {
+    		return "";
+    	}
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("bibliography", bibliography);
         map.put("sanitizer", new HtmlSanitizer());
