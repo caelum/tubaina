@@ -14,7 +14,7 @@ public class ListTag implements Tag {
 			listHeader += "I)";
 		else {
 			//If type is invalid, we use itemize environment
-			return "\\begin{itemize}" + content + "\\end{itemize}";
+			return "\n\n\\begin{itemize}" + content + "\\end{itemize}";
 		}
 		
 		return listHeader + "]\n" + content + "\n\\end{enumerate}";
