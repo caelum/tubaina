@@ -15,7 +15,7 @@ import br.com.caelum.tubaina.parser.Tag;
 public class ImageTagTest {
 
 	private static final String END = "\\end{center}\\end{figure}\n\n";
-    private static final String BEGIN = "\\begin{figure}[H]\n\\begin{center}\n";
+    private static final String BEGIN = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
     private Tag tag;
 
 	@Before
