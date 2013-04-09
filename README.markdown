@@ -30,6 +30,7 @@ project you'll need to have Gradle installed (instructions to be found at: http:
     > gradle eclipse
 
 You need pygments to run the tests, you can install it through easy_install (you should be able to install easy_install with your SO package manager):
+
     > easy_install Pygments==1.5
 
 In order to build the distribution version do:
