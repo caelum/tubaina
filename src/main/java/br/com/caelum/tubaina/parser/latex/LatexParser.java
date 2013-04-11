@@ -57,9 +57,8 @@ public class LatexParser implements Parser {
         return VSPACE + string + VSPACE;
     }
 
-    public String parseImage(String text, String options) {
-    	text = parse(text);
-        return new ImageTag(this).parse(text, options);
+    public String parseImage(String imagePath, String options) {
+        return new ImageTag(this).parse(imagePath, options);
     }
 
     @Deprecated
