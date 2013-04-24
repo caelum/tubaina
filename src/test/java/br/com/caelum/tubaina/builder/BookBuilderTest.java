@@ -21,7 +21,6 @@ import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.chunk.GistChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
-import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
