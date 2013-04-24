@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
@@ -19,6 +20,7 @@ import br.com.caelum.tubaina.chunk.TodoChunk;
 import br.com.caelum.tubaina.parser.IntroductionTag;
 import br.com.caelum.tubaina.parser.NullAnswerTag;
 import br.com.caelum.tubaina.parser.NullNoteTag;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
@@ -61,6 +63,7 @@ public class KindleModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
 		
+		bind(Parser.class).toInstance(ParseType.KINDLE.getParser());
 		bind(Sanitizer.class).to(HtmlSanitizer.class);
 		bind(CommandExecutor.class).to(SimpleCommandExecutor.class);
 		bind(CodeOutputType.class).toInstance(CodeOutputType.KINDLE_HTML);

@@ -1,10 +1,11 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.chunk.BoxChunk;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.util.Sanitizer;
+
+import com.google.inject.Inject;
 
 public class BoxTag implements Tag<BoxChunk> {
 
@@ -14,15 +15,17 @@ public class BoxTag implements Tag<BoxChunk> {
     static final String TITLE_BEGIN = "<b>";
     static final String TITLE_END = "</b>\n";
 	private final Sanitizer sanitizer;
+	private final Parser parser;
 
 	@Inject
-    public BoxTag(Sanitizer sanitizer) {
+    public BoxTag(Sanitizer sanitizer, Parser parser) {
 		this.sanitizer = sanitizer;
+		this.parser = parser;
 	}
     
     @Override
 	public String parse(BoxChunk chunk) {
-        String title = sanitizer.sanitize(chunk.getTitle().trim());
+        String title = parser.parse(sanitizer.sanitize(chunk.getTitle().trim()));
 		return BEGIN + TITLE_BEGIN + title + TITLE_END + chunk.getContent().trim() + END;
     }
 

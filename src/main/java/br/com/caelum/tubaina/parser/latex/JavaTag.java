@@ -1,11 +1,11 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.JavaChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
+
+import com.google.inject.Inject;
 
 @Deprecated
 public class JavaTag implements Tag<JavaChunk> {

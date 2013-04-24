@@ -12,8 +12,6 @@ import org.apache.log4j.Logger;
 
 import com.google.inject.Inject;
 
-import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
-
 public class CodeCache {
 
     private CodeOutputType output;

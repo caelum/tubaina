@@ -23,9 +23,13 @@ public enum ParseType {
 
 	LATEX {
 		@Override
-		public Parser getParser() throws IOException {
-			List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/latex.properties");
-            return new LatexParser(tags);
+		public Parser getParser() {
+			try {
+				List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/latex.properties");
+				return new LatexParser(tags);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't find either regex or latex.properties", e);
+			}
 		}
 
 		@Override
@@ -42,13 +46,17 @@ public enum ParseType {
 
 	HTMLFLAT {
 		@Override
-		public Parser getParser() throws IOException {
-		    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
-            return new HtmlParser(tags);
+		public Parser getParser() {
+			try {
+			    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
+	            return new HtmlParser(tags);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't find either regex or html.properties", e);
+			}
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new FlatHtmlGenerator(parser, data);
 		}
 
@@ -59,13 +67,17 @@ public enum ParseType {
 	},
 	HTML {
 		@Override
-		public Parser getParser() throws IOException {
-		    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
-            return new HtmlParser(tags);
+		public Parser getParser() {
+			try {
+			    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/html.properties");
+	            return new HtmlParser(tags);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't find either regex or html.properties", e);
+			}
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new SingleHtmlGenerator(parser, data);
 		}
 
@@ -74,16 +86,19 @@ public enum ParseType {
 			return new HtmlModule(data.isShowNotes(), data.isNoAnswer());
 		}
 	},
-
 	KINDLE {
 		@Override
-		public Parser getParser() throws IOException {
-			List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/kindle.properties");
-            return new KindleParser(tags);
+		public Parser getParser() {
+			try {
+				List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/kindle.properties");
+	            return new KindleParser(tags);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't find either regex or kindle.properties", e);
+			}
 		}
 
 		@Override
-		protected Generator getGenerator(Parser parser, TubainaBuilderData data) {
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
 			return new KindleGenerator(parser, data);
 		}
 
@@ -97,9 +112,9 @@ public enum ParseType {
 		return this.toString().toLowerCase();
 	}
 
-	protected abstract Generator getGenerator(Parser parser, TubainaBuilderData data);
+	public abstract Generator getGenerator(Parser parser, TubainaBuilderData data);
 
-	protected abstract Parser getParser() throws IOException;
+	public abstract Parser getParser();
 
 	public abstract TubainaModule getModule(TubainaBuilderData data);
 	

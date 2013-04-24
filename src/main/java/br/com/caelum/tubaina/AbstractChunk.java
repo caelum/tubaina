@@ -1,8 +1,8 @@
 package br.com.caelum.tubaina;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.parser.Tag;
+
+import com.google.inject.Inject;
 
 public abstract class AbstractChunk <T extends AbstractChunk<T>> implements Chunk{
 

@@ -1,12 +1,12 @@
 package br.com.caelum.tubaina.parser.latex;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.CodeTagOptionsParser;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+
+import com.google.inject.Inject;
 
 public class CodeTag implements Tag<CodeChunk> {
 
