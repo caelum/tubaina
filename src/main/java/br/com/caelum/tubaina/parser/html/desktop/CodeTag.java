@@ -13,7 +13,7 @@ public class CodeTag implements Tag<CodeChunk> {
 
     public CodeTag() {
         SyntaxHighlighter syntaxHighlighter = new SyntaxHighlighter(new SimpleCommandExecutor(),
-                CodeOutputType.KINDLE_HTML, new CodeCache(CodeOutputType.HTML));
+                CodeOutputType.HTML, new CodeCache(CodeOutputType.HTML));
         htmlCodeTag = new HtmlAndKindleCodeTag(syntaxHighlighter);
     }
     

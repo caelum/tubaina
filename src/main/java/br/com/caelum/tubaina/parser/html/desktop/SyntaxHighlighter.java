@@ -28,13 +28,14 @@ public class SyntaxHighlighter {
     }
 
     public String highlight(String code, String language, boolean numbered, List<Integer> lines) {
-        if (codeCache.exists(code)) {
-            return codeCache.find(code);
+        String codeAndOptions = code + numbered;
+		if (codeCache.exists(codeAndOptions)) {
+            return codeCache.find(codeAndOptions);
         }
         ArrayList<String> commandWithArgs = buildCommand(language, numbered, lines);
         String codeHighlighted = commandExecutor.execute(commandWithArgs, code);
         
-        codeCache.write(code, codeHighlighted);
+        codeCache.write(codeAndOptions, codeHighlighted);
         return codeHighlighted;
     }
 
