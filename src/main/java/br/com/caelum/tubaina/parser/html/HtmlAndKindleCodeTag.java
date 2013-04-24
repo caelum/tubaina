@@ -2,12 +2,12 @@ package br.com.caelum.tubaina.parser.html;
 
 import java.util.List;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+
+import com.google.inject.Inject;
 
 public class HtmlAndKindleCodeTag implements Tag<CodeChunk> {
 

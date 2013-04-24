@@ -1,11 +1,11 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.TableTagTemplate;
 import br.com.caelum.tubaina.util.Sanitizer;
+
+import com.google.inject.Inject;
 
 public class TableTag implements Tag<TableChunk> {
 

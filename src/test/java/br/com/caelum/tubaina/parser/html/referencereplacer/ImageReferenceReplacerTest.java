@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
-import br.com.caelum.tubaina.parser.html.referencereplacer.ImageReferenceReplacer;
-
 public class ImageReferenceReplacerTest {
 
     @Test

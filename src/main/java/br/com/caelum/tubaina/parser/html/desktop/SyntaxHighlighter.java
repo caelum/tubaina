@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.parser.pygments.CodeCache;
 import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
+
+import com.google.inject.Inject;
 
 public class SyntaxHighlighter {
 

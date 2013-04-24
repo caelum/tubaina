@@ -23,7 +23,7 @@ public class BoxTagTest extends AbstractTagTest {
 	@Test
 	public void testChangeTitleToEmptyStringIfItsNull(){
 		String result = getContent(new BoxChunk(null, text("Text")));
-		Assert.assertEquals("\\begin{tubainabox}{\\ }\nText\n\\end{tubainabox}", result);
+		Assert.assertEquals("\\begin{tubainabox}\nText\n\\end{tubainabox}", result);
 	}
 
 }

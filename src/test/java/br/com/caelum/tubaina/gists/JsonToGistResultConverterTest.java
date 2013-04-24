@@ -1,6 +1,6 @@
 package br.com.caelum.tubaina.gists;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Scanner;
 
