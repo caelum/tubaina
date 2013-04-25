@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.parser.Parser;
-import br.com.caelum.tubaina.parser.RegexConfigurator;
 
 //TODO: make paragraph with bold, boxes with inner chunks, for example, somewhere else.
 public class LatexParserTest {
@@ -17,8 +16,7 @@ public class LatexParserTest {
 
     @Before
     public void setUp() throws IOException {
-        RegexConfigurator configurator = new RegexConfigurator();
-        this.parser = ParseType.LATEX.getParser(configurator, false, false, "");
+        this.parser = ParseType.LATEX.getParser();
     }
 
     @Test

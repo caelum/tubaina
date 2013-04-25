@@ -5,18 +5,28 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.chunk.ImageChunk;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 
 public class ImageTag implements Tag<ImageChunk> {
+
+	private final Parser parser;
+
+	@Inject
+	public ImageTag(Parser parser) {
+		this.parser = parser;
+	}
 
 	@Override
 	public String parse(ImageChunk chunk) {
 		String options = chunk.getOptions();
 		double imageWidthInMilimeters = chunk.getWidth() * 25.4 / chunk.getDpi();
 		
-		StringBuilder output = new StringBuilder("\\begin{figure}[H]\n\\begin{center}\n");
+		StringBuilder output = new StringBuilder("\n\n\\begin{figure}[H]\n\\begin{center}\n");
 		output.append("\\includegraphics");
 		
 		Pattern horizontalScale = Pattern.compile("(?s)(?i)w=(\\d+)%?");

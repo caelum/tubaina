@@ -39,9 +39,9 @@ public class ImageTagTemplate {
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
 			String subtitle = descriptionMatcher.group(1);
-			output.append(" alt=\"" + subtitle + "\" />");
+			output.append("alt=\"" + subtitle + "\" />");
 			subtitle = parser.parse(subtitle);
-			output.append("<div><i>"+ subtitle +"</i></div><br><br>");
+			output.append("\n<div><i>"+ subtitle +"</i></div><br><br>");
 		} else {
 			output.append("alt=\"" + imgsrc + "\" />");
 		}

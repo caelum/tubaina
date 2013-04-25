@@ -9,7 +9,6 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.ParseType;
 import br.com.caelum.tubaina.parser.Parser;
-import br.com.caelum.tubaina.parser.RegexConfigurator;
 
 public class ImageTagTemplateTest {
 
@@ -20,7 +19,7 @@ public class ImageTagTemplateTest {
 
 	@Before
 	public void setUp() throws IOException {
-		Parser parser = ParseType.HTML.getParser(new RegexConfigurator(), false, false, "");
+		Parser parser = ParseType.HTML.getParser();
 		tag = new ImageTagTemplate(parser);
 		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div><i>Imagem de alguma coisa</i></div><br><br>";
 		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />";

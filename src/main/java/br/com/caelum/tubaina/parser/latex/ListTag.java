@@ -17,7 +17,7 @@ public class ListTag implements Tag<ListChunk> {
 			listHeader += "I)";
 		else {
 			//If type is invalid, we use itemize environment
-			return "\n\n\\begin{itemize}" + chunk.getContent() + "\\end{itemize}";
+			return "\n\n\\begin{itemize}\n" + chunk.getContent() + "\\end{itemize}";
 		}
 		
 		return listHeader + "]\n" + chunk.getContent() + "\n\\end{enumerate}";

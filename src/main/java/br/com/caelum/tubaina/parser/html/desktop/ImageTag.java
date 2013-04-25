@@ -3,6 +3,8 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.inject.Inject;
+
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.chunk.ImageChunk;
@@ -13,6 +15,7 @@ public class ImageTag implements Tag<ImageChunk> {
 
 	private ImageTagTemplate template;
 	
+	@Inject
 	public ImageTag(Parser parser) {
 		template = new ImageTagTemplate(parser);
 	}
