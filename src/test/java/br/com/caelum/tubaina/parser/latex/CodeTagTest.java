@@ -73,8 +73,7 @@ public class CodeTagTest extends AbstractTagTest {
 	@Test
 	public void codeTagWithReferenceWithoutLanguage() throws Exception {
 		String options = "label=javacode1";
-		String code = "class Main {\n" + "public static void main(String[] args) {\n"
-				+ "System.out.println(\"Hello world\");\n" + "}\n}";
+		String code = publicStaticVoidMain();
 		CodeChunk chunk = new CodeChunk(code, options);
 		String output = getContent(chunk);
 
@@ -85,8 +84,7 @@ public class CodeTagTest extends AbstractTagTest {
 	@Test
 	public void codeTagWithReferenceWithLanguage() throws Exception {
 		String options = "java label=javacode1";
-		String code = "class Main {\n" + "public static void main(String[] args) {\n"
-				+ "System.out.println(\"Hello world\");\n" + "}\n}";
+		String code = publicStaticVoidMain();
 		CodeChunk chunk = new CodeChunk(code, options);
 		String output = getContent(chunk);
 
@@ -98,8 +96,7 @@ public class CodeTagTest extends AbstractTagTest {
 	@Test
 	public void codeTagWithFileNameWithoutLanguage() throws Exception {
 		String options = "filename=src/Main.java";
-		String code = "class Main {\n" + "public static void main(String[] args) {\n"
-				+ "System.out.println(\"Hello world\");\n" + "}\n}";
+		String code = publicStaticVoidMain();
 		CodeChunk chunk = new CodeChunk(code, options);
 		String output = getContent(chunk);
 
@@ -110,8 +107,7 @@ public class CodeTagTest extends AbstractTagTest {
 	@Test
 	public void codeTagWithFileNameWithLanguage() throws Exception {
 		String options = "java filename=src/Main.java";
-		String code = "class Main {\n" + "public static void main(String[] args) {\n"
-				+ "System.out.println(\"Hello world\");\n" + "}\n}";
+		String code = publicStaticVoidMain();
 		CodeChunk chunk = new CodeChunk(code, options);
 		String output = getContent(chunk);
 
@@ -122,13 +118,17 @@ public class CodeTagTest extends AbstractTagTest {
 	@Test
 	public void codeTagWithFileNameWithLanguageAndLabel() throws Exception {
 		String options = "java filename=src/Main2.java label=javacode1";
-		String code = "class Main {\n" + "public static void main(String[] args) {\n"
-				+ "System.out.println(\"Hello world\");\n" + "}\n}";
+		String code = publicStaticVoidMain();
 		CodeChunk chunk = new CodeChunk(code, options);
 		String output = getContent(chunk);
 
 		assertTrue(output.startsWith("\\tubainaCodeLabel{javacode1}\n"));
 		assertPygmentsRan(output);
+	}
+
+	private String publicStaticVoidMain() {
+		return "class Main {\n" + "public static void main(String[] args) {\n"
+				+ "System.out.println(\"Hello world\");\n" + "}\n}";
 	}
 
 	@Test
@@ -140,6 +140,15 @@ public class CodeTagTest extends AbstractTagTest {
 
 		assertFalse(output.contains("javascript"));
 		assertPygmentsRan(output);
+	}
+	
+	@Test
+	public void shouldUseDescription() throws Exception {
+		String options = "java label=javacode1 \"description here\"";
+		String code = publicStaticVoidMain();
+		CodeChunk chunk = new CodeChunk(code, options);
+		String output = getContent(chunk);
+		assertTrue(output.contains("\\tubainaCodeLabel{javacode1}{description here}"));
 	}
 
 	private void assertPygmentsRan(String output) {

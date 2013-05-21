@@ -58,5 +58,13 @@ public class CodeTagOptionsParserTest {
         String lang = codeTagOptionsParser.parseLanguage(options);
         assertEquals("javascript", lang);
     }
+    
+    @Test
+    public void shouldParseDescription() {
+    	CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+    	String options = "java label=javacode \"description here\"";
+    	String description = codeTagOptionsParser.parseDescription(options);
+    	assertEquals("description here", description);
+    }
 
 }

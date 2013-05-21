@@ -100,8 +100,8 @@
 }
 
 %Code listing label to be referenced
-\newcommand{\tubainaCodeLabel}[1]{
-  \refstepcounter{codecounter}Listagem {\thecodecounter}\label{#1}:
+\newcommand{\tubainaCodeLabel}[2]{
+  \refstepcounter{codecounter}Listagem {\thecodecounter}\label{#1} - #2:
 }
 
 %Filename for a piece of code
@@ -507,4 +507,4 @@
 \newcommand{\rubyconstant}{\color[rgb]{.000,.000,.000}} %Constants
 \newcommand{\rubyvariable}{\color[rgb]{.000,.251,.502}} %Variables
 \newcommand{\rubyglobal}{\color[rgb]{1.00,.000,.000}} % Global variables
-\newcommand{\rubyexecution}{\color[rgb]{.000,.502,.502}} %System commands
+\newcommand{\rubyexecution}{\color[rgb]{.000,.502,.502}} %System commandsw

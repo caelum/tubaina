@@ -32,20 +32,23 @@ public class CodeTagOptionsParser {
     }
 
     public String parseLabel(String options) {
-        Matcher labelMatcher = Pattern.compile("label=(\\S+)").matcher(options);
+        return findPattern(options, "label=(\\S+)");
+    }
+
+	private String findPattern(String options, String pattern) {
+		Matcher labelMatcher = Pattern.compile(pattern).matcher(options);
         if (labelMatcher.find()) {
             return labelMatcher.group(1);
         }
         return "";
-    }
+	}
 
     public String parseFileName(String options) {
-        String filename = "";
-        Matcher filenameMatcher = Pattern.compile("filename=(\\S+)").matcher(options);
-        if (filenameMatcher.find()) {
-            filename = filenameMatcher.group(1);
-        }
-        return filename;
+        return findPattern(options, "filename=(\\S+)");
     }
+
+	public String parseDescription(String options) {
+		return findPattern(options, "(?s)(?i)\"(.+?)\"");
+	}
 
 }

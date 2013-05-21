@@ -5,6 +5,7 @@ import br.com.caelum.tubaina.parser.Indentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.CodeTagOptionsParser;
 import br.com.caelum.tubaina.parser.html.desktop.SyntaxHighlighter;
+import br.com.caelum.tubaina.util.Utilities;
 
 import com.google.inject.Inject;
 
@@ -30,11 +31,10 @@ public class CodeTag implements Tag<CodeChunk> {
 
     @Override
 	public String parse(CodeChunk chunk) {
-
         String options = chunk.getOptions();
 		String chosenLanguage = codeTagOptionsParser.parseLanguage(options);
         String latexFilename = latexFilenameFor(codeTagOptionsParser.parseFileName(options));
-        String latexReference = latexLabelFor(codeTagOptionsParser.parseLabel(options));
+        String latexReference = latexLabelFor(options);
         boolean numbered = options.contains(" #");
         
         String indentedCode = this.indentator.indent(chunk.getContent());
@@ -48,10 +48,15 @@ public class CodeTag implements Tag<CodeChunk> {
         return filename.isEmpty() ? "" : FILE_NAME + "{" + filename + "}\n";
     }
 
-    private String latexLabelFor(String label) {
-        if (label.isEmpty())
+    private String latexLabelFor(String options) {
+    	String label = codeTagOptionsParser.parseLabel(options);
+    	String description = codeTagOptionsParser.parseDescription(options);
+        if (label.isEmpty() && description.isEmpty())
             return "";
-        return CodeTag.CODE_LABEL + label + "}\n";
+    	label = label.isEmpty() ? Utilities.titleSlug(description) : label;
+        String command = CodeTag.CODE_LABEL + label + "}";
+        command = description.isEmpty() ? command : command + "{" + description + "}";
+		return command + "\n";
     }
 
 }
