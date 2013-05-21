@@ -15,6 +15,7 @@
 \renewcommand*\familydefault{\sfdefault}
 %\usepackage[bitstream-charter]{mathdesign}
 \usepackage{indentfirst}
+\usepackage[lighttt]{lmodern}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Packages
