@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 
 import org.junit.Assert;
@@ -167,4 +169,10 @@ public class LatexParserTest {
                 output);
     }
 
+    @Test
+    public void shouldReplaceBoldAndItalic() {
+    	String text = "blablabla **%%bold and italic%%**";
+    	text = parser.parse(text);
+    	assertEquals("blablabla \\definition{\\codechunk{bold and italic}}", text);
+    }
 }

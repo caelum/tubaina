@@ -29,4 +29,11 @@ public class LatexRegexTagTest extends RegexTagTest{
         assertEquals("`e agora'!", text);
     }
     
+    @Test
+    public void shouldReplaceBoldAndItalic() throws Exception {
+    	String text = "blablabla **%%bold and italic%%**";
+    	text = parseWithRegexps(text);
+    	assertEquals("blablabla \\definition{\\codechunk{bold and italic}}", text);
+    }
+    
 }
