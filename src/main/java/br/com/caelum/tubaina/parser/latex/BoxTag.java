@@ -18,7 +18,7 @@ public class BoxTag implements Tag<BoxChunk> {
 	@Override
 	public String parse(BoxChunk chunk) {
 		String title = chunk.getTitle();
-		String sanitizedTitle = title.isEmpty() ? "" : "{" + parser.parse(title) + "}";
+		String sanitizedTitle = title.isEmpty() ? "{}" : "{" + parser.parse(title) + "}";
 		return "\\begin{tubainabox}" + sanitizedTitle + "\n" + chunk.getContent() + "\n\\end{tubainabox}";
 	}
 }
