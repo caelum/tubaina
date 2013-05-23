@@ -13,7 +13,7 @@ public class SubsectionTagTest {
 		SubsectionTag subsectionTag = new SubsectionTag();
 		SubsectionChunk chunk = new SubsectionChunk("title", 1, 1, 1);
 		String parsed = subsectionTag.parse(chunk);
-		assertEquals("<"+SubsectionTag.HTML_TAG+">1.1.1 - title</"+SubsectionTag.HTML_TAG+">", parsed);
+		assertEquals("<"+SubsectionTag.HTML_TAG+" class='subsection'>1.1.1 - title</"+SubsectionTag.HTML_TAG+">", parsed);
 	}
 
 }

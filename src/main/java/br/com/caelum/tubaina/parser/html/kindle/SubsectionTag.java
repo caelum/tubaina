@@ -14,7 +14,7 @@ public class SubsectionTag implements Tag<SubsectionChunk> {
 		int currentChapter = chunk.getCurrentChapter();
 		int currentSection = chunk.getCurrentSection();
 		ChapterBuilder.getChaptersCount();
-		return String.format("<" + HTML_TAG + ">%d.%d.%d - %s</" + HTML_TAG + ">", currentChapter, currentSection, nextSubsection, chunk.getTitle());
+		return String.format("<" + HTML_TAG + " class='subsection'>%d.%d.%d - %s</" + HTML_TAG + ">", currentChapter, currentSection, nextSubsection, chunk.getTitle());
 	}
 
 }
