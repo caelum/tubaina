@@ -36,11 +36,4 @@ public class LatexRegexTagTest extends RegexTagTest{
     	assertEquals("blablabla \\definition{\\codechunk{bold and italic}}", text);
     }
     
-    @Test
-    public void shouldReplaceSubsection() throws Exception {
-    	String text = "[subsection subsection title]";
-    	text = parseWithRegexps(text);
-    	assertEquals("\\subsection{subsection title}", text);
-    }
-    
 }
