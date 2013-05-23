@@ -33,7 +33,6 @@ public class FlatHtmlGeneratorTest {
     private File temp;
 
     private TubainaBuilderData data;
-	private BookBuilder builder;
 
     @Before
     public void setUp() throws IOException {
@@ -46,13 +45,13 @@ public class FlatHtmlGeneratorTest {
         data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false,
                 "teste.tex");
 
-        builder = new BookBuilder("livro", new SectionsManager());
         generator = new FlatHtmlGenerator(parser, data);
 
         String content = "[chapter     O que é java?   ]\n" + "texto da seção\n"
                 + "[section Primeira seção]\n" + "texto da prim seção\n"
                 + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
-        builder.addReaderFromString(content);
+        BookBuilder builder = builder("livro");
+		builder.addReaderFromString(content);
         builder.addReaderFromString("[chapter Introdução]\n"
                 + "Algum texto de introdução\n");
         book = builder.build();
@@ -125,6 +124,7 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void testGeneratorWithCorrectImages() throws IOException {
+    	BookBuilder builder = builder("com-imagens");
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
@@ -143,6 +143,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
         String content = "[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]";
+        BookBuilder builder = builder("com-erro");
         builder.addReaderFromString(content);
 
         Book b = builder.build();
@@ -159,6 +160,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
         String chapterContent = "[chapter qualquer um]\n"
                 + "[img src/test/resources/someImage.gif]";
+        BookBuilder builder = builder("com-erro");
         builder.addReaderFromString(chapterContent);
         try {
             Book b = builder.build();
@@ -174,6 +176,7 @@ public class FlatHtmlGeneratorTest {
     public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
         String fileContent = "[chapter qualquer um]\n"
                 + "alguma coisa\n[chapter qualquer um]outra coisa";
+        BookBuilder builder = builder("com-erro");
         builder.addReaderFromString(fileContent);
         try {
             Book b = builder.build();
@@ -184,5 +187,10 @@ public class FlatHtmlGeneratorTest {
             System.out.println(t.getMessage());
             // OK
         }
+    }
+    
+    
+    public BookBuilder builder(String title) {
+    	return new BookBuilder(title, new SectionsManager());
     }
 }
