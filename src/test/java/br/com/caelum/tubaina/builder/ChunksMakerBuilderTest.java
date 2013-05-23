@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.chunk.BoxChunk;
@@ -69,7 +70,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForAnswer() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("answer");
+		ChunksMaker maker = chunksMakerBuilder().build("answer");
 		String text = exampleBox + exampleCode + exampleImage + exampleJava
 				+ exampleList + exampleNote + exampleXml + exampleIndex
 				+ exampleTodo + exampleRuby + exampleTable
@@ -94,7 +95,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForBox() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("box");
+		ChunksMaker maker = chunksMakerBuilder().build("box");
 		String text = exampleCode + exampleImage + exampleJava + exampleList
 				+ exampleNote + exampleXml + exampleIndex + exampleTodo
 				+ exampleRuby + exampleTable + exampleCenteredText
@@ -118,7 +119,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForExercise() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("exercise");
+		ChunksMaker maker = chunksMakerBuilder().build("exercise");
 		String text = exampleTodo + exampleQuestion;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(2, chunks.size());
@@ -128,7 +129,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForItem() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("item");
+		ChunksMaker maker = chunksMakerBuilder().build("item");
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby
@@ -153,7 +154,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForList() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("list");
+		ChunksMaker maker = chunksMakerBuilder().build("list");
 		String text = exampleListItem;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(1, chunks.size());
@@ -162,7 +163,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForNote() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("note");
+		ChunksMaker maker = chunksMakerBuilder().build("note");
 		String text = exampleCode + exampleImage + exampleJava + exampleList
 				+ exampleXml + exampleIndex + exampleTodo + exampleRuby
 				+ exampleTable + exampleCenteredText + exampleParagraph;
@@ -182,9 +183,13 @@ public class ChunksMakerBuilderTest {
 		Assert.assertEquals(ParagraphChunk.class, chunks.get(10).getClass());
 	}
 
+	private ChunksMakerBuilder chunksMakerBuilder() {
+		return new ChunksMakerBuilder(resources, new SectionsManager());
+	}
+
 	@Test
 	public void testChunksMakerBuilderForQuestion() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("question");
+		ChunksMaker maker = chunksMakerBuilder().build("question");
 		String text = exampleAnswer + exampleBox + exampleCode + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby + exampleTable
@@ -210,7 +215,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForTable() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("table");
+		ChunksMaker maker = chunksMakerBuilder().build("table");
 		String text = exampleTableRow + exampleTodo;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(2, chunks.size());
@@ -220,7 +225,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForTableRow() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("row");
+		ChunksMaker maker = chunksMakerBuilder().build("row");
 		String text = exampleTableColumn + exampleTodo;
 		List<Chunk> chunks = maker.make(text);
 		Assert.assertEquals(2, chunks.size());
@@ -230,7 +235,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForTableColumn() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("col");
+		ChunksMaker maker = chunksMakerBuilder().build("col");
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleTodo + exampleRuby + exampleParagraph;
@@ -251,7 +256,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test
 	public void testChunksMakerBuilderForAll() {
-		ChunksMaker maker = new ChunksMakerBuilder(resources).build("all");
+		ChunksMaker maker = chunksMakerBuilder().build("all");
 		String text = exampleBox + exampleCode + exampleExercise + exampleImage
 				+ exampleJava + exampleList + exampleNote + exampleXml
 				+ exampleIndex + exampleTodo + exampleRuby + exampleTable
@@ -277,7 +282,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test(expected=TubainaException.class)
 	public void testChunksMakerBuilderForAllDoesntAcceptQuestionTagOutsideExercise() {
-		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
+		ChunksMaker chunksMaker = chunksMakerBuilder()
 				.build("all");
 		String exercise = exampleQuestion;
 		List<Chunk> list = chunksMaker.make(exercise);
@@ -289,7 +294,7 @@ public class ChunksMakerBuilderTest {
 
 	@Test(expected=TubainaException.class)
 	public void testChunksMakerBuilderDoesntAcceptNoteInsideExerciseOutsideQuestion() {
-		ChunksMaker chunksMaker = new ChunksMakerBuilder(resources)
+		ChunksMaker chunksMaker = chunksMakerBuilder()
 				.build("exercise");
 		String exercise = exampleNote + exampleQuestion;
 		chunksMaker.make(exercise);

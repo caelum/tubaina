@@ -39,7 +39,8 @@ public class SectionToStringTest {
 	}
 
 	private Section createSection(final String sectionText) {
-		return new SectionBuilder("Title", sectionText, new ArrayList<Resource>()).build();
+		SectionsManager sectionsManager = new SectionsManager();
+		return new SectionBuilder("Title", sectionText, new ArrayList<Resource>(), sectionsManager).build();
 	}
 
 	private int countOccurrences(final String text, final String substring) {

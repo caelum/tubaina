@@ -51,7 +51,6 @@ public class ChapterBuilder {
     }
 
     public Chapter build() {
-    	sectionsManager.nextChapter();
         List<Section> sections = new ArrayList<Section>();
         List<Resource> resources = new ArrayList<Resource>();
         if (content != null && content.trim().length() > 0) {
@@ -65,19 +64,24 @@ public class ChapterBuilder {
                 }
                 String sectionContent = matcher.group(2);
                 if (sectionTitle != null || sectionContent.trim().length() > 0) {
-                	sectionsManager.nextSection();
-                    Section section = new SectionBuilder(sectionTitle, sectionContent, resources)
+                    Section section = new SectionBuilder(sectionTitle, sectionContent, resources, sectionsManager)
                             .build();
                     sections.add(section);
+                    increaseSectionCount();
                 }
                 offset = matcher.end(2);
             }
         }
 
-        IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all")
-                .splitChunks(introduction));
+        IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all", sectionsManager).splitChunks(introduction));
         return new Chapter(title, label, intro, sections, resources, chapterNumber, introductionChapter);
     }
+
+	private void increaseSectionCount() {
+		if (!introductionChapter) {
+			sectionsManager.nextSection();
+		}
+	}
 
     public static int getChaptersCount() {
         return LAST_CHAPTER;

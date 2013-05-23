@@ -32,7 +32,7 @@ public class BookPartsBuilderTest {
                 "[section test]\nchpater 2 text", 2, sectionsManager).build();
         Chapter third = new ChapterBuilder("third", "introduction",
                 "[section test]\nchpater 3 text", 3, sectionsManager).build();
-        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
+        List<BookPart> bookParts = new BookPartsBuilder(sectionsManager).addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
 
@@ -57,7 +57,7 @@ public class BookPartsBuilderTest {
                 "[section test]\nchpater 2 text", 2, sectionsManager).build();
         Chapter third = new ChapterBuilder("third", "introduction",
                 "[section test]\nchpater 3 text", 3, sectionsManager).build();
-        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
+        List<BookPart> bookParts = new BookPartsBuilder(sectionsManager).addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
         
@@ -81,7 +81,7 @@ public class BookPartsBuilderTest {
         Chapter second = new ChapterBuilder("second", "introduction",
                 "[section \"test\"]\nchpater 2 text", 2, sectionsManager).build();
 
-        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
+        List<BookPart> bookParts = new BookPartsBuilder(sectionsManager).addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first, second)).build();
         assertEquals("introduction text", bookParts.get(0).getIntroductionText());
         assertEquals("first", bookParts.get(0).getChapters().get(0).getTitle());

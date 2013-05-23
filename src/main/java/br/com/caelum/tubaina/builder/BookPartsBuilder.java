@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -20,8 +21,11 @@ public class BookPartsBuilder {
 
     private BookPartParametersExtractor extractor;
 
-    public BookPartsBuilder() {
-        bookParts = new ArrayList<BookPart>();
+	private final SectionsManager sectionsManager;
+
+    public BookPartsBuilder(SectionsManager sectionsManager) {
+        this.sectionsManager = sectionsManager;
+		bookParts = new ArrayList<BookPart>();
         Pattern.compile("(?i)(?s)(?m)^\\[part\\s+\"(.*?)\"(.*?)\\].*?");
         extractor = new BookPartParametersExtractor();
     }
@@ -35,7 +39,7 @@ public class BookPartsBuilder {
             String introductionText = extractIntroduction(text);
             String illustrationPath = extractIllustrationPath(text);
             IntroductionChunk introChunk = new IntroductionChunk(new ChunkSplitter(partResources,
-                    "all").splitChunks(introductionText));
+                    "all", sectionsManager).splitChunks(introductionText));
 
             bookParts.add(new BookPart(bookPartTitle, true, introductionText, introChunk,
                     illustrationPath, partResources));

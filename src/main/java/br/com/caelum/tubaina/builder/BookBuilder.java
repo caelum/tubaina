@@ -30,7 +30,7 @@ public class BookBuilder {
     public BookBuilder(String name, SectionsManager sectionsManager) {
         this.name = name;
 		this.sectionsManager = sectionsManager;
-        this.bookPartsBuilder = new BookPartsBuilder();
+        this.bookPartsBuilder = new BookPartsBuilder(sectionsManager);
         this.chapterNumber = 1;
     }
 
@@ -106,6 +106,7 @@ public class BookBuilder {
 
             Chapter chapter = new ChapterBuilder(title, label, introduction, content, chapterNumber, introductionChapter, sectionsManager).build();
             chapters.add(chapter);
+            sectionsManager.nextChapter();
             if (!introductionChapter)
                 chapterNumber++;
         }

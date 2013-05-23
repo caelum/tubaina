@@ -1,18 +1,21 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
 import br.com.caelum.tubaina.ParseType;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.chunk.ExerciseChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
+import br.com.caelum.tubaina.chunk.IndexChunk;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.NoteChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.chunk.QuestionChunk;
+import br.com.caelum.tubaina.chunk.SubsectionChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
@@ -62,6 +65,9 @@ public class KindleModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
+		bind(SectionsManager.class).toInstance(getSectionsManager());
+		bind(new TypeLiteral<Tag<SubsectionChunk>>() {}).to(SubsectionTag.class);
+		bind(new TypeLiteral<Tag<IndexChunk>>() {}).to(IndexTag.class);
 		
 		bind(Parser.class).toInstance(ParseType.KINDLE.getParser());
 		bind(Sanitizer.class).to(HtmlSanitizer.class);

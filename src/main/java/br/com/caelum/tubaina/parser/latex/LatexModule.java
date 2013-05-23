@@ -1,6 +1,7 @@
 package br.com.caelum.tubaina.parser.latex;
 
 import br.com.caelum.tubaina.ParseType;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.AnswerChunk;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
@@ -66,6 +67,7 @@ public class LatexModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
+		bind(SectionsManager.class).toInstance(getSectionsManager());
 		bind(new TypeLiteral<Tag<SubsectionChunk>>() {}).to(SubsectionTag.class);
 
 		bind(Parser.class).toInstance(ParseType.LATEX.getParser());

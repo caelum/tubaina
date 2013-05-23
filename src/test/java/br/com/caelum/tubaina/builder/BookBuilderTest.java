@@ -43,7 +43,6 @@ public class BookBuilderTest {
 	@Test
 	public void testBuildSimpleBook() {
 
-
 		String content = "[chapter     O que é java?   ]\n" + "texto da seção\n" + "[section Primeira seção]\n"
 				+ "texto da prim seção\n" + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
 
@@ -409,5 +408,5 @@ public class BookBuilderTest {
 		assertEquals("capitulo um", chapter.getTitle());
 		assertEquals("label of this chapter", chapter.getLabel());
 	}
-
+	
 }

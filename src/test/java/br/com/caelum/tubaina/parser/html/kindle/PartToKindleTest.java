@@ -54,7 +54,7 @@ public class PartToKindleTest {
     public void testGeneratePartWithChapters() {
         Chapter chapter = createChapter("chapter title", "introduction",
                 "[section section one] section content");
-        List<BookPart> bookParts = new BookPartsBuilder().addPartFrom("[part \"parte 1\"]")
+        List<BookPart> bookParts = new BookPartsBuilder(new SectionsManager()).addPartFrom("[part \"parte 1\"]")
                 .addChaptersToLastAddedPart(Arrays.asList(chapter)).build();
         BookPart part = bookParts.get(0);
         new KindleModule().inject(part);
@@ -72,7 +72,7 @@ public class PartToKindleTest {
     public void testGenerateANotPrintablePartWithChapters() {
         Chapter chapter = createChapter("chapter title", "introduction",
                 "[section section one] section content");
-        List<BookPart> bookParts = new BookPartsBuilder().addChaptersToLastAddedPart(
+        List<BookPart> bookParts = new BookPartsBuilder(new SectionsManager()).addChaptersToLastAddedPart(
                 Arrays.asList(chapter)).build();
         BookPart part = bookParts.get(0);
         new KindleModule().inject(part);

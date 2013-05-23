@@ -1,26 +1,18 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.chunk.SubsectionChunk;
 import br.com.caelum.tubaina.parser.Tag;
 
-import com.google.inject.Inject;
-
 public class SubsectionTag implements Tag<SubsectionChunk> {
 	
-	private final SectionsManager sectionsManager;
-
-	@Inject
-	public SubsectionTag(SectionsManager sectionsManager) {
-		this.sectionsManager = sectionsManager;
-	}
-
 	@Override
 	public String parse(SubsectionChunk chunk) {
-		sectionsManager.nextSubsection();
+		int nextSubsection = chunk.getSubsectionNumber();
+		int currentChapter = chunk.getCurrentChapter();
+		int currentSection = chunk.getCurrentSection();
 		ChapterBuilder.getChaptersCount();
-		return "\\subsection{" + chunk.getTitle() + "}\n";
+		return String.format("<h3>%d.%d.%d - %s</h3>", currentChapter, currentSection, nextSubsection, chunk.getTitle());
 	}
 
 }

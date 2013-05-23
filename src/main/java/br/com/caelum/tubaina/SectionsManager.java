@@ -1,5 +1,7 @@
 package br.com.caelum.tubaina;
 
+import br.com.caelum.tubaina.builder.ChapterBuilder;
+
 public class SectionsManager {
 	
 	int currentSubsection = 1;
@@ -18,5 +20,17 @@ public class SectionsManager {
 		currentSubsection = 1;
 		currentSection = 1;
 	}
-
+	
+	public int getCurrentSection() {
+		return currentSection;
+	}
+	
+	public int getCurrentSubsection() {
+		return currentSubsection;
+	}
+	
+	public int getCurrentChapter() {
+		return ChapterBuilder.getChaptersCount();
+	}
+	
 }

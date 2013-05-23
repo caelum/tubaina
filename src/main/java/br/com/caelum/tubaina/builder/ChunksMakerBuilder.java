@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.builder.replacer.AnswerReplacer;
 import br.com.caelum.tubaina.builder.replacer.BoxReplacer;
 import br.com.caelum.tubaina.builder.replacer.CenteredParagraphReplacer;
@@ -47,7 +48,7 @@ public class ChunksMakerBuilder {
 		return CLOSABLE_TAGS.contains(tag.toLowerCase());
 	}
 
-	public ChunksMakerBuilder(List<Resource> resources) {
+	public ChunksMakerBuilder(List<Resource> resources, SectionsManager sectionsManager) {
 		List<Replacer> replacers;
 
 		// Answer tag
@@ -200,7 +201,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new RubyReplacer());
 		replacers.add(new TableReplacer(resources));
 		replacers.add(new CenteredParagraphReplacer());
-		replacers.add(new SubsectionReplacer());
+		replacers.add(new SubsectionReplacer(sectionsManager));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		
 		replacerMap.put("all", replacers);
