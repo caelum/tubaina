@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import freemarker.ext.beans.BeansWrapper;
@@ -40,7 +41,7 @@ public class SingleHtmlTOCGeneratorTest {
 
 
     private Book createBook() {
-        BookBuilder builder = new BookBuilder("title");
+        BookBuilder builder = new BookBuilder("title", new SectionsManager());
         builder.addReaderFromString(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
                         + "[section Primeira seção]\n" + "texto da prim seção\n"

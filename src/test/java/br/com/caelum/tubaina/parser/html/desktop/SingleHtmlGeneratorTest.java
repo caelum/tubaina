@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -66,7 +67,7 @@ public class SingleHtmlGeneratorTest {
 	}
 
 	private Book createsSimpleBookWithTitle(String title) {
-		BookBuilder builder = new BookBuilder(title);
+		BookBuilder builder = new BookBuilder(title, new SectionsManager());
 
 		String fileContent = "[chapter     O que é java?   ]\n" + "texto da seção\n" + "[section Primeira seção]\n"
 				+ "texto da prim seção\n" + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
@@ -92,7 +93,7 @@ public class SingleHtmlGeneratorTest {
 
 	@Test
 	public void shouldCreateADirectoryForEachChapterThatContainsImages() throws Exception {
-		BookBuilder builder = new BookBuilder("Com Imagens");
+		BookBuilder builder = builder("Com Imagens");
 		builder.addReaderFromString("[chapter Um capítulo]\n" + "Uma introdução com imagem: \n\n"
 				+ "[img baseJpgImage.jpg]");
 		builder.addReaderFromString("[chapter Outro capítulo]\n" + "Uma introdução com imagem: \n\n"
@@ -115,9 +116,13 @@ public class SingleHtmlGeneratorTest {
 		assertTrue(secondChaptersImage.exists());
 	}
 
+	private BookBuilder builder(String title) {
+		return new BookBuilder(title, new SectionsManager());
+	}
+
 	@Test
 	public void shouldNotCreateADirectoryChapterThatDoesntContainAnyImages() throws Exception {
-		BookBuilder builder = new BookBuilder("Com Imagens");
+		BookBuilder builder = builder("Com Imagens");
 		builder.addReaderFromString("[chapter Um capítulo]\n" + "Uma introdução com imagem:\n");
 		builder.addReaderFromString("[chapter Outro capítulo]\n" + "Uma introdução com imagem: \n\n"
 				+ "[img basePngImage.png]");
@@ -135,7 +140,7 @@ public class SingleHtmlGeneratorTest {
 
 	@Test
 	public void testGeneratorWithCorrectImages() throws IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		builder.addReaderFromString("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]");
 		Book b = builder.build();
 		new HtmlModule().inject(b);
@@ -152,7 +157,7 @@ public class SingleHtmlGeneratorTest {
 
 	@Test
 	public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		String fileContent = "[chapter qualquer um]\n" + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]";
 		builder.addReaderFromString(fileContent);
 
@@ -168,7 +173,7 @@ public class SingleHtmlGeneratorTest {
 
 	@Test(expected = TubainaException.class)
 	public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		String fileContent = "[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]";
 		builder.addReaderFromString(fileContent);
 		Book b = builder.build();

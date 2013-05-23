@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
@@ -19,7 +20,7 @@ import freemarker.template.Configuration;
 public class SingleHtmlChapterGeneratorTest {
     
     private Chapter createChapter(final String introduction, final String chapterText) {
-        return new ChapterBuilder("Title", introduction, chapterText, 0).build();
+        return new ChapterBuilder("Title", introduction, chapterText, 0, new SectionsManager()).build();
     }
     
     @Test
@@ -41,7 +42,7 @@ public class SingleHtmlChapterGeneratorTest {
         Chapter c = createChapter("introducao", "[section primeira] conteudo da primeira "
                 + "\n[section segunda] conteudo da segunda");
         
-        Book book = new BookBuilder("some name").build();
+        Book book = new BookBuilder("some name", new SectionsManager()).build();
         new HtmlModule().inject(book);
         new HtmlModule().inject(c);
         

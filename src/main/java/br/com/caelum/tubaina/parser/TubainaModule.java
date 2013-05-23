@@ -9,12 +9,15 @@ import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.CompositeChunk;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.SectionsManager;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public abstract class TubainaModule extends AbstractModule {
+
+	private SectionsManager sectionsManager = new SectionsManager();
 
 	public TubainaModule() {
 		super();
@@ -101,5 +104,9 @@ public abstract class TubainaModule extends AbstractModule {
 	public void inject(Chunk chunk) {
 		Injector injector = Guice.createInjector(this);
 		inject(chunk, injector);
+	}
+
+	public SectionsManager getSectionsManager() {
+		return this.sectionsManager;
 	}
 }

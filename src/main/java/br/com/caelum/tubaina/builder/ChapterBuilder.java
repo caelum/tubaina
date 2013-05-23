@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.resources.Resource;
 
@@ -28,26 +29,29 @@ public class ChapterBuilder {
 
     private final String label;
 
+	private final SectionsManager sectionsManager;
+
     public ChapterBuilder(String title, String label, String introduction, String content, int chapterNumber,
-            boolean introductionChapter) {
+            boolean introductionChapter, SectionsManager sectionsManager) {
         this.title = title;
         this.label = label;
         this.content = content;
         this.introduction = introduction;
         this.chapterNumber = chapterNumber;
         this.introductionChapter = introductionChapter;
+		this.sectionsManager = sectionsManager;
         Pattern pattern = Pattern.compile("(?i)(?s)(?m)^\\[section(.*?)\\](.*?)(\n\\[section|\\z)");
         this.matcher = pattern.matcher(content);
         if (!introductionChapter)
             LAST_CHAPTER = chapterNumber;
     }
 
-    public ChapterBuilder(String title, String introduction, String content, int chapterNumber) {
-        this(title, "", introduction, content, chapterNumber, false);
+    public ChapterBuilder(String title, String introduction, String content, int chapterNumber, SectionsManager sectionsManager) {
+        this(title, "", introduction, content, chapterNumber, false, sectionsManager);
     }
 
     public Chapter build() {
-
+    	sectionsManager.nextChapter();
         List<Section> sections = new ArrayList<Section>();
         List<Resource> resources = new ArrayList<Resource>();
         if (content != null && content.trim().length() > 0) {
@@ -61,6 +65,7 @@ public class ChapterBuilder {
                 }
                 String sectionContent = matcher.group(2);
                 if (sectionTitle != null || sectionContent.trim().length() > 0) {
+                	sectionsManager.nextSection();
                     Section section = new SectionBuilder(sectionTitle, sectionContent, resources)
                             .build();
                     sections.add(section);
@@ -71,7 +76,6 @@ public class ChapterBuilder {
 
         IntroductionChunk intro = new IntroductionChunk(new ChunkSplitter(resources, "all")
                 .splitChunks(introduction));
-
         return new Chapter(title, label, intro, sections, resources, chapterNumber, introductionChapter);
     }
 

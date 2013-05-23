@@ -15,6 +15,7 @@ import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.chunk.BoxChunk;
 import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
@@ -30,17 +31,18 @@ import br.com.caelum.tubaina.resources.ResourceLocator;
 public class BookBuilderTest {
 
 	private MockedModule module;
+	private BookBuilder builder;
 
 	@Before
 	public void setUp() {
 		ResourceLocator.initialize(".");
 		module = new MockedModule();
+		builder = new BookBuilder("livro", new SectionsManager());
 	}
 
 	@Test
 	public void testBuildSimpleBook() {
 
-		BookBuilder builder = new BookBuilder("livro");
 
 		String content = "[chapter     O que é java?   ]\n" + "texto da seção\n" + "[section Primeira seção]\n"
 				+ "texto da prim seção\n" + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
@@ -137,7 +139,6 @@ public class BookBuilderTest {
 	}
 
 	private List<Chapter> getChapters(final String content) {
-		BookBuilder builder = new BookBuilder("livro");
 		builder.addReaderFromString(content);
 		Book b = builder.build();
 		module.inject(b);
@@ -330,7 +331,6 @@ public class BookBuilderTest {
 
 	@Test
 	public void testBookWithMultipleParts() throws Exception {
-		BookBuilder builder = new BookBuilder("livro");
 		String content = "[part \"parte um\"]\n" + "[chapter capitulo um]\n" + "introducao do capitulo um\n"
 				+ "[section secao um]\n" + "conteudo da secao um";
 		builder.addReaderFromString(content);
@@ -347,7 +347,6 @@ public class BookBuilderTest {
 
 	@Test
 	public void testBookWithChapterOutsideParts() throws Exception {
-		BookBuilder builder = new BookBuilder("livro");
 		String chapter0 = "[chapter capitulo zero]";
 		String chapter1 = "[part \"parte um\"]\n" + "[chapter capitulo um]\n" + "introducao do capitulo um\n"
 				+ "[section secao um]\n" + "conteudo da secao um";
@@ -367,7 +366,6 @@ public class BookBuilderTest {
 
 	@Test
 	public void testBookWithIntroductionChapters() throws Exception {
-		BookBuilder builder = new BookBuilder("livro");
 		String chapter = "[chapter chatper zero]\n" + "Some text";
 		String preface = "[chapter preface]\n" + "Some preface text";
 		String about = "[chapter about]\n" + "About the authors";
@@ -385,7 +383,6 @@ public class BookBuilderTest {
 
 	@Test
 	public void testBookWithPartsWithIllustrations() throws Exception {
-		BookBuilder builder = new BookBuilder("livro");
 		String content = "[part \"parte um\" illustration=resources/image.png]\n" + "[chapter capitulo um]\n"
 				+ "introducao do capitulo um\n" + "[section secao um]\n" + "conteudo da secao um";
 		builder.addReaderFromString(content);
@@ -402,7 +399,6 @@ public class BookBuilderTest {
 
 	@Test
 	public void testBookWithChapterWithLabel() throws Exception {
-		BookBuilder builder = new BookBuilder("livro");
 		String content = "[chapter capitulo um label=\"label of this chapter\"]\n" + "introducao do capitulo um\n"
 				+ "[section secao um]\n" + "conteudo da secao um";
 		builder.addReaderFromString(content);

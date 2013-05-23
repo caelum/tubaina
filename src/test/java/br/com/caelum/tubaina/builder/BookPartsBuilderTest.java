@@ -10,9 +10,12 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.resources.ResourceLocator;
 
 public class BookPartsBuilderTest {
+	
+	SectionsManager sectionsManager = new SectionsManager();
     
     @Before
     public void setUp() {
@@ -24,11 +27,11 @@ public class BookPartsBuilderTest {
         String partOneText = "[part \"part one\"]";
         String partTwoText = "[part \"part two\"]";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section test]\nchpater 1 text", 1).build();
+                "[section test]\nchpater 1 text", 1, sectionsManager).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section test]\nchpater 2 text", 2).build();
+                "[section test]\nchpater 2 text", 2, sectionsManager).build();
         Chapter third = new ChapterBuilder("third", "introduction",
-                "[section test]\nchpater 3 text", 3).build();
+                "[section test]\nchpater 3 text", 3, sectionsManager).build();
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
@@ -49,11 +52,11 @@ public class BookPartsBuilderTest {
         String partOneText = "[part \"part one\" illustration=resources/image.png]";
         String partTwoText = "[part \"part two\"]";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section test]\nchpater 1 text", 1).build();
+                "[section test]\nchpater 1 text", 1, sectionsManager).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section test]\nchpater 2 text", 2).build();
+                "[section test]\nchpater 2 text", 2, sectionsManager).build();
         Chapter third = new ChapterBuilder("third", "introduction",
-                "[section test]\nchpater 3 text", 3).build();
+                "[section test]\nchpater 3 text", 3, sectionsManager).build();
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first)).addPartFrom(partTwoText)
                 .addChaptersToLastAddedPart(Arrays.asList(second, third)).build();
@@ -74,9 +77,9 @@ public class BookPartsBuilderTest {
     public void shouldBuildBookPartsWithIntro() throws Exception {
         String partOneText = "[part \"part one\"]\n introduction text";
         Chapter first = new ChapterBuilder("first", "introduction",
-                "[section \"test\"]\nchpater 1 text", 1).build();
+                "[section \"test\"]\nchpater 1 text", 1, sectionsManager).build();
         Chapter second = new ChapterBuilder("second", "introduction",
-                "[section \"test\"]\nchpater 2 text", 2).build();
+                "[section \"test\"]\nchpater 2 text", 2, sectionsManager).build();
 
         List<BookPart> bookParts = new BookPartsBuilder().addPartFrom(partOneText)
                 .addChaptersToLastAddedPart(Arrays.asList(first, second)).build();

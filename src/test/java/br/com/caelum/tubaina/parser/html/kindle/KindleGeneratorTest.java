@@ -19,6 +19,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -69,7 +70,7 @@ public class KindleGeneratorTest {
     }
 
     private Book createsSimpleBookWithTitle(String title) {
-        BookBuilder builder = new BookBuilder(title);
+        BookBuilder builder = builder(title);
 
         builder.addReaderFromString(
                 "[chapter     O que é java?   ]\n" + "texto da seção\n"
@@ -96,7 +97,7 @@ public class KindleGeneratorTest {
 
     @Test
     public void shouldCreateADirectoryForEachChapterThatContainsImages() throws Exception {
-        BookBuilder builder = new BookBuilder("Com Imagens");
+        BookBuilder builder = builder("Com Imagens");
         builder.addReaderFromString("[chapter Um capítulo]\n"
                 + "Uma introdução com imagem: \n\n" + "[img baseJpgImage.jpg]");
         builder.addReaderFromString("[chapter Outro capítulo]\n"
@@ -119,7 +120,7 @@ public class KindleGeneratorTest {
 
     @Test
     public void shouldNotCreateADirectoryChapterThatDoesntContainAnyImages() throws Exception {
-        BookBuilder builder = new BookBuilder("Com Imagens");
+        BookBuilder builder = builder("Com Imagens");
         builder.addReaderFromString("[chapter Um capítulo]\n"
                 + "Uma introdução com imagem:\n");
         builder.addReaderFromString("[chapter Outro capítulo]\n"
@@ -136,7 +137,7 @@ public class KindleGeneratorTest {
 
     @Test
     public void testGeneratorWithCorrectImages() throws IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
+        BookBuilder builder = builder("Com imagens");
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
@@ -154,7 +155,7 @@ public class KindleGeneratorTest {
 
     @Test
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
+        BookBuilder builder = builder("Com imagens");
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]");
 
@@ -169,7 +170,7 @@ public class KindleGeneratorTest {
     
     @Test
     public void shouldCopyImagesFromIntroduction() throws IOException {
-        BookBuilder builder = new BookBuilder("With images in intro");
+        BookBuilder builder = builder("With images in intro");
         List<AfcFile> chapterReaders = new ArrayList<AfcFile>();
         String imageName = "introImage.jpg";
         List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img " + imageName + "]"), "file from string"));
@@ -185,10 +186,14 @@ public class KindleGeneratorTest {
 
     @Test(expected = TubainaException.class)
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
+        BookBuilder builder = builder("Com imagens");
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img src/test/resources/someImage.gif]");
         Book b = builder.build();
         generator.generate(b, tempDir);
+    }
+    
+    private BookBuilder builder(String title) {
+    	return new BookBuilder(title, new SectionsManager());
     }
 }

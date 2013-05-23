@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
 import br.com.caelum.tubaina.io.KindleResourceManipulatorFactory;
@@ -45,7 +46,7 @@ public class IntroductionChaptersToKindleTest {
 
     @Test
     public void shouldGenerateIntroductionChapters() throws Exception {
-        Chapter preface = new ChapterBuilder("preface", "label",  "preface text", "", 0, true).build();
+        Chapter preface = new ChapterBuilder("preface", "label",  "preface text", "", 0, true, new SectionsManager()).build();
         new KindleModule().inject(preface);
         String introductionChapters = introductionChaptersToKindle.generateIntroductionChapters(
                 Arrays.asList(preface)).toString();

@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -45,7 +46,7 @@ public class LatexGeneratorTest {
 
 		generator = new LatexGenerator(parser, data);
 
-		BookBuilder builder = new BookBuilder("livro");
+		BookBuilder builder = builder("livro");
 		builder.addReaderFromString("[chapter     O que é java?   ]\n" + "texto da seção\n"
 				+ "[section Primeira seção]\n" + "texto da prim seção\n" + "[section Segunda seção]\n"
 				+ "texto da segunda seção\n\n");
@@ -92,7 +93,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void testGeneratorWithCorrectImages() throws IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		builder.addReaderFromString("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]");
 		Book b = builder.build();
 		new LatexModule().inject(b);
@@ -113,7 +114,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		builder.addReaderFromString("[chapter qualquer um]\n" + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]");
 
 		Book b = builder.build();
@@ -128,7 +129,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void testGeneratorWithNonExistantImage() throws TubainaException, IOException {
-		BookBuilder builder = new BookBuilder("Com imagens");
+		BookBuilder builder = builder("Com imagens");
 		builder.addReaderFromString("[chapter qualquer um]\n" + "[img src/test/resources/someImage.gif]");
 		try {
 			Book b = builder.build();
@@ -148,7 +149,7 @@ public class LatexGeneratorTest {
 
 		File path = new File("src/test/resources");
 		ResourceLocator.initialize(path);
-		BookBuilder builder = new BookBuilder("Do Instrutor");
+		BookBuilder builder = builder("Do Instrutor");
 		builder.addReaderFromString("[chapter com notas]\n" + "Algo mais no capitulo.\n\n[note]uma nota para o instrutor[/note]");
 		Book b = builder.build();
 		new LatexModule(true, true).inject(b);
@@ -161,7 +162,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void testGeneratorForStudentTextbook() throws IOException {
-		BookBuilder builder = new BookBuilder("Do Aluno");
+		BookBuilder builder = builder("Do Aluno");
 		builder.addReaderFromString("[chapter com notas]\n" + "[note]uma nota para o instrutor[/note]");
 		Book b = builder.build();
 		new LatexModule(false, true).inject(b);
@@ -175,7 +176,7 @@ public class LatexGeneratorTest {
 
 	@Test
 	public void shouldCopyImagesFromIntroduction() throws IOException {
-		BookBuilder builder = new BookBuilder("With images in intro");
+		BookBuilder builder = builder("With images in intro");
 		List<AfcFile> chapterReaders = new ArrayList<AfcFile>();
 		String imagePath = "introImage.jpg";
 		List<AfcFile> introductionReaders = Arrays.asList(new AfcFile(new StringReader("[chapter intro]\n[img "
@@ -199,4 +200,8 @@ public class LatexGeneratorTest {
 		}
 		return containsText;
 	}
+	
+    private BookBuilder builder(String title) {
+    	return new BookBuilder(title, new SectionsManager());
+    }
 }

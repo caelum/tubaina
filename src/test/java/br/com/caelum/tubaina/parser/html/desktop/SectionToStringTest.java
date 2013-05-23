@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Section;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import br.com.caelum.tubaina.builder.SectionBuilder;
@@ -49,7 +50,7 @@ public class SectionToStringTest {
 	@Test
 	public void testSection() {
 		Section section = createSection("este é o texto da seção");
-		Book book = new BookBuilder("livro").build();
+		Book book = new BookBuilder("livro", new SectionsManager()).build();
 		new HtmlModule().inject(book);
 		new HtmlModule().inject(section);
 		String string = sectionToString.generateSection(book, "capitulo", 7, section, 4, 2).toString();
@@ -61,7 +62,7 @@ public class SectionToStringTest {
 	@Test
 	public void testFlatSection() {
 		Section section = createSection("este é o texto da seção");
-		Book book = new BookBuilder("livro").build();
+		Book book = new BookBuilder("livro", new SectionsManager()).build();
 		new HtmlModule().inject(book);
 		new HtmlModule().inject(section);
 		

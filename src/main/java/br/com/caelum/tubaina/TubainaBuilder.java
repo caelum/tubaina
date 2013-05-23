@@ -48,6 +48,8 @@ public class TubainaBuilder {
 	}
 
 	public void build() throws IOException {
+		TubainaModule module = parseType.getModule(data);
+		SectionsManager sectionsManager = module.getSectionsManager();
 		List<AfcFile> introductionAfcFiles = new ArrayList<AfcFile>();
 		ResourceLocator.initialize(inputDir);
 		List<AfcFile> afcFiles = getAfcsFrom(inputDir);
@@ -55,7 +57,7 @@ public class TubainaBuilder {
 		if (introductionChapterDirs.exists()) {
 			introductionAfcFiles = getAfcsFrom(introductionChapterDirs);
 		}
-		BookBuilder builder = new BookBuilder(bookName);
+		BookBuilder builder = new BookBuilder(bookName, sectionsManager);
 		builder.addAllReaders(afcFiles, introductionAfcFiles);
 
 		Book b = null;
@@ -68,7 +70,6 @@ public class TubainaBuilder {
 				throw e;
 			}
 		}
-		TubainaModule module = parseType.getModule(data);
 		module.inject(b);
 
 		File file = new File(outputDir, parseType.getType());

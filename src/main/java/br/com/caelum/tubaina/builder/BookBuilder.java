@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import br.com.caelum.tubaina.AfcFile;
 import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaException;
 import br.com.caelum.tubaina.util.TitleSlug;
 
@@ -24,9 +25,11 @@ public class BookBuilder {
     private final List<AfcFile> introductionReaders = new ArrayList<AfcFile>();
     private BookPartsBuilder bookPartsBuilder;
     private int chapterNumber;
+	private final SectionsManager sectionsManager;
 
-    public BookBuilder(String name) {
+    public BookBuilder(String name, SectionsManager sectionsManager) {
         this.name = name;
+		this.sectionsManager = sectionsManager;
         this.bookPartsBuilder = new BookPartsBuilder();
         this.chapterNumber = 1;
     }
@@ -101,7 +104,7 @@ public class BookBuilder {
 
             content = content.substring(introduction.length());
 
-            Chapter chapter = new ChapterBuilder(title, label, introduction, content, chapterNumber, introductionChapter).build();
+            Chapter chapter = new ChapterBuilder(title, label, introduction, content, chapterNumber, introductionChapter, sectionsManager).build();
             chapters.add(chapter);
             if (!introductionChapter)
                 chapterNumber++;

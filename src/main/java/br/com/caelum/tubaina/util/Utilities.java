@@ -61,7 +61,7 @@ public class Utilities {
 		}
 	}
 
-	public static void resizeImage(final File srcImg, final ImageOutputStream destImg, final String format,
+	public static boolean resizeImage(final File srcImg, final ImageOutputStream destImg, final String format,
 			final int pageWidth, final double ratio) {
 		if (ratio <= 0 || ratio > 1) {
 			throw new IllegalArgumentException("Ratio must be between 0 and 1");
@@ -79,8 +79,10 @@ public class Utilities {
 			AffineTransform transform = AffineTransform.getScaleInstance(newRatio, newRatio);
 			graphics.drawRenderedImage(src, transform);
 			ImageIO.write(dest, format, destImg);
+			return true;
 		} catch (IOException e) {
 			LOG.warn("Unable to resize image: '" + destImg.toString());
+			return false;
 		}
 	}
 

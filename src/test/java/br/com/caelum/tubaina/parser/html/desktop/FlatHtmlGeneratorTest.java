@@ -1,8 +1,9 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import static java.util.Arrays.asList;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaBuilderData;
 import br.com.caelum.tubaina.TubainaException;
@@ -31,6 +33,7 @@ public class FlatHtmlGeneratorTest {
     private File temp;
 
     private TubainaBuilderData data;
+	private BookBuilder builder;
 
     @Before
     public void setUp() throws IOException {
@@ -43,9 +46,9 @@ public class FlatHtmlGeneratorTest {
         data = new TubainaBuilderData(false, TubainaBuilder.DEFAULT_TEMPLATE_DIR, false, false,
                 "teste.tex");
 
+        builder = new BookBuilder("livro", new SectionsManager());
         generator = new FlatHtmlGenerator(parser, data);
 
-        BookBuilder builder = new BookBuilder("livro");
         String content = "[chapter     O que é java?   ]\n" + "texto da seção\n"
                 + "[section Primeira seção]\n" + "texto da prim seção\n"
                 + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
@@ -122,25 +125,22 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void testGeneratorWithCorrectImages() throws IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
         builder.addReaderFromString("[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]");
         Book b = builder.build();
         new HtmlModule().inject(b);
 
         generator.generate(b, temp);
-        // testar se a imagem foi copiada pro diretorio images
         File images = new File(temp, "com-imagens/qualquer-um/");
         Assert.assertTrue(images.exists());
 
-        Assert.assertEquals(1, images.list(new SuffixFileFilter(Arrays.asList("jpg"))).length);
+        Assert.assertEquals(1, images.list(new SuffixFileFilter(asList("jpg"))).length);
         File copied = new File(images, "baseJpgImage.jpg");
         Assert.assertTrue(copied.exists());
     }
 
     @Test
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
         String content = "[chapter qualquer um]\n"
                 + "[img baseJpgImage.jpg]\n[img baseJpgImage.jpg]";
         builder.addReaderFromString(content);
@@ -157,7 +157,6 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void testGeneratorWithUnexistantImage() throws TubainaException, IOException {
-        BookBuilder builder = new BookBuilder("Com imagens");
         String chapterContent = "[chapter qualquer um]\n"
                 + "[img src/test/resources/someImage.gif]";
         builder.addReaderFromString(chapterContent);
@@ -173,7 +172,6 @@ public class FlatHtmlGeneratorTest {
 
     @Test
     public void testGeneratorWithDuppedChapterName() throws TubainaException, IOException {
-        BookBuilder builder = new BookBuilder("teste");
         String fileContent = "[chapter qualquer um]\n"
                 + "alguma coisa\n[chapter qualquer um]outra coisa";
         builder.addReaderFromString(fileContent);

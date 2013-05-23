@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.BookPart;
 import br.com.caelum.tubaina.Chapter;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookPartsBuilder;
 import br.com.caelum.tubaina.builder.ChapterBuilder;
@@ -41,7 +42,7 @@ public class PartToKindleTest {
     }
 
     private Chapter createChapter(String title, String introduction, String content) {
-        return new ChapterBuilder(title, introduction, content, 1).build();
+        return new ChapterBuilder(title, introduction, content, 1, new SectionsManager()).build();
     }
 
     private int countOccurrences(String text, String substring) {

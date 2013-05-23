@@ -1,17 +1,18 @@
 package br.com.caelum.tubaina.parser.html.desktop;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Book;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
 import freemarker.ext.beans.BeansWrapper;
@@ -25,6 +26,8 @@ public class BookToTOCTest {
 
     private String chapterIdentifier;
 
+	private BookBuilder builder;
+
     @Before
     public void setUp() throws IOException {
         cfg = new Configuration();
@@ -33,11 +36,11 @@ public class BookToTOCTest {
 
         chapterIdentifier = "class=\"indexChapter\"";
         sectionIdentifier = "class=\"indexSection\"";
+        builder = new BookBuilder("Title", new SectionsManager());
     }
 
     @Test
     public void testGenerateBookWithoutSections() {
-        BookBuilder builder = new BookBuilder("Title");
         List<String> chapters = Arrays.asList("[chapter primeiro] um conteúdo", "[chapter segundo] um conteúdo");
         builder.addReaderFromStrings(chapters);
         Book b = builder.build();
@@ -49,13 +52,12 @@ public class BookToTOCTest {
 
         String toc = generator.generateTOC(b, cfg, dirTree).toString();
 
-        Assert.assertEquals(0, countOccurrences(toc, sectionIdentifier));
-        Assert.assertEquals(2, countOccurrences(toc, chapterIdentifier));
+        assertEquals(0, countOccurrences(toc, sectionIdentifier));
+        assertEquals(2, countOccurrences(toc, chapterIdentifier));
     }
 
     @Test
     public void testGenerateBookWithSections() {
-        BookBuilder builder = new BookBuilder("Title");
         builder.addReaderFromString("[chapter unico] um conteúdo \n" +
                 "[section uma] lalala \n" +
                 "[section duas] lalala \n");
@@ -70,12 +72,11 @@ public class BookToTOCTest {
         dirTree.add("livro/01-unico/02-duas");
 
         String toc = generator.generateTOC(b, cfg, dirTree).toString();
-        System.out.println(toc);
         
-        Assert.assertEquals(2, countOccurrences(toc, sectionIdentifier));
-        Assert.assertEquals(1, countOccurrences(toc, chapterIdentifier));
-        Assert.assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-1-uma\""));
-        Assert.assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-2-duas\""));
+        assertEquals(2, countOccurrences(toc, sectionIdentifier));
+        assertEquals(1, countOccurrences(toc, chapterIdentifier));
+        assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-1-uma\""));
+        assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-2-duas\""));
     }
 
     private int countOccurrences(final String text, final String substring) {

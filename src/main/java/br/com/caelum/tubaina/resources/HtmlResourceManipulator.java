@@ -59,7 +59,11 @@ public class HtmlResourceManipulator implements ResourceManipulator {
 						tooBig = true;
 					}
 					if (shouldResize || tooBig) {
-					    Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (scale)/100.0);
+					    boolean resized = Utilities.resizeImage(srcImage, stream, Utilities.getFormatName(srcImage), PAGE_WIDTH, (scale)/100.0);
+					    if (!resized) {
+					    	LOG.warn("could not resize image " + srcImage + ", copying it entirely");
+					    	FileUtils.copyFile(srcImage, destinationFile);
+					    }
 					}
 					srcImage = destinationFile;
 		
