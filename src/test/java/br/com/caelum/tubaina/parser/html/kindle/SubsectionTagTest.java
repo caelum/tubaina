@@ -11,9 +11,9 @@ public class SubsectionTagTest extends AbstractTagTest {
 	@Test
 	public void shouldParseSubsectionChunk() {
 		SubsectionTag subsectionTag = new SubsectionTag();
-		SubsectionChunk chunk = new SubsectionChunk("title", "content", 1, 1, 1);
+		SubsectionChunk chunk = new SubsectionChunk("title", text("content"), 1, 1, 1);
 		String parsed = subsectionTag.parse(chunk);
-		assertEquals("<"+SubsectionTag.HTML_TAG+" class='subsection'>1.1.1 - title</"+SubsectionTag.HTML_TAG+">", parsed);
+		assertEquals("<"+SubsectionTag.HTML_TAG+" class='subsection'>1.1.1 - title</"+SubsectionTag.HTML_TAG+">\ncontent", parsed);
 	}
 
 }
