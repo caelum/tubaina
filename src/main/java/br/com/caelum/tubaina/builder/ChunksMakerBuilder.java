@@ -69,6 +69,25 @@ public class ChunksMakerBuilder {
 		replacers.add(new CenteredParagraphReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("answer", replacers);
+		
+		// subsection tag
+		replacers = new ArrayList<Replacer>();
+		replacers.add(new BoxReplacer(resources));
+		replacers.add(new CodeReplacer());
+		replacers.add(new GistReplacer());
+		replacers.add(new ExerciseReplacer(resources));
+		replacers.add(new ImageReplacer(resources));
+		replacers.add(new JavaReplacer());
+		replacers.add(new ListReplacer(resources));
+		replacers.add(new NoteReplacer(resources));
+		replacers.add(new XmlReplacer());
+		replacers.add(new IndexReplacer(resources));
+		replacers.add(new TodoReplacer());
+		replacers.add(new RubyReplacer());
+		replacers.add(new TableReplacer(resources));
+		replacers.add(new CenteredParagraphReplacer());
+		replacers.add(new ParagraphReplacer(paragraphTerminator));
+		replacerMap.put("subsection", replacers);
 
 		// Box tag
 		replacers = new ArrayList<Replacer>();
@@ -86,7 +105,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new CenteredParagraphReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("box", replacers);
-
+		
 		// Exercise tag
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new QuestionReplacer(resources));
@@ -187,6 +206,7 @@ public class ChunksMakerBuilder {
 
 		// All tags not restricted to others, like ItemTag
 		replacers = new ArrayList<Replacer>();
+		replacers.add(new SubsectionReplacer(sectionsManager, resources));
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
@@ -201,7 +221,6 @@ public class ChunksMakerBuilder {
 		replacers.add(new RubyReplacer());
 		replacers.add(new TableReplacer(resources));
 		replacers.add(new CenteredParagraphReplacer());
-		replacers.add(new SubsectionReplacer(sectionsManager));
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		
 		replacerMap.put("all", replacers);

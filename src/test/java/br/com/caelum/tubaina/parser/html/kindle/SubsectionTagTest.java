@@ -6,12 +6,12 @@ import org.junit.Test;
 
 import br.com.caelum.tubaina.chunk.SubsectionChunk;
 
-public class SubsectionTagTest {
+public class SubsectionTagTest extends AbstractTagTest {
 
 	@Test
 	public void shouldParseSubsectionChunk() {
 		SubsectionTag subsectionTag = new SubsectionTag();
-		SubsectionChunk chunk = new SubsectionChunk("title", 1, 1, 1);
+		SubsectionChunk chunk = new SubsectionChunk("title", "content", 1, 1, 1);
 		String parsed = subsectionTag.parse(chunk);
 		assertEquals("<"+SubsectionTag.HTML_TAG+" class='subsection'>1.1.1 - title</"+SubsectionTag.HTML_TAG+">", parsed);
 	}

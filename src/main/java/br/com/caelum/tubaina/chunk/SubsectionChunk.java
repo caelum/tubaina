@@ -1,16 +1,20 @@
 package br.com.caelum.tubaina.chunk;
 
-import br.com.caelum.tubaina.AbstractChunk;
+import java.util.List;
 
-public class SubsectionChunk extends AbstractChunk<SubsectionChunk> {
+import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.CompositeChunk;
+
+public class SubsectionChunk extends CompositeChunk<SubsectionChunk> {
 
 	private final String title;
 	private final int subsectionNumber;
 	private final int currentChapter;
 	private final int currentSection;
 
-	public SubsectionChunk(String title, int subsectionNumber,
+	public SubsectionChunk(String title, List<Chunk> body, int subsectionNumber,
 			int currentChapter, int currentSection) {
+		super(body);
 		this.title = title;
 		this.subsectionNumber = subsectionNumber;
 		this.currentChapter = currentChapter;
@@ -32,5 +36,5 @@ public class SubsectionChunk extends AbstractChunk<SubsectionChunk> {
 	public int getSubsectionNumber() {
 		return subsectionNumber;
 	}
-
+	
 }

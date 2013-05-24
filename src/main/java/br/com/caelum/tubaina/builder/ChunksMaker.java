@@ -16,7 +16,7 @@ public class ChunksMaker {
 		while (text.trim().length() != 0) {
 			boolean accepted = false;
 			for (Replacer replacer : replacers) {
-				if(replacer.accepts(text)) {
+				if (replacer.accepts(text)) {
 					text = replacer.execute(text, chunks);
 					accepted = true;
 					break;
