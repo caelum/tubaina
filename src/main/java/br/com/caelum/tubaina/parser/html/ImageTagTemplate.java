@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 
 import br.com.caelum.tubaina.parser.Parser;
+import br.com.caelum.tubaina.util.HtmlSanitizer;
 
 public class ImageTagTemplate {
 	
@@ -38,7 +39,7 @@ public class ImageTagTemplate {
 		Matcher descriptionMatcher = description.matcher(options);
 		// The image is resized when copied
 		if (descriptionMatcher.find()) {
-			String subtitle = descriptionMatcher.group(1);
+			String subtitle = new HtmlSanitizer().sanitize(descriptionMatcher.group(1));
 			output.append("alt=\"" + subtitle + "\" />");
 			subtitle = parser.parse(subtitle);
 			output.append("\n<div><i>"+ subtitle +"</i></div><br><br>");
