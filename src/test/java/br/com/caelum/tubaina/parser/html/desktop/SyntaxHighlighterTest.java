@@ -32,7 +32,7 @@ public class SyntaxHighlighterTest {
     @Test
     public void shouldCallPygmentsWithJavaLexer() throws Exception {
         String code = "public class Foo {\n" + "public int Bar(){\n" + "return 0;\n" + "}\n" + "}";
-        highlighter.highlight(code, "java", false);
+        highlighter.highlight(code, "java", false, "");
         String encoding = System.getProperty("file.encoding");
         List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
                 + ",outencoding=UTF-8", "-f", "html", "-l", "java");
@@ -41,7 +41,7 @@ public class SyntaxHighlighterTest {
 
     @Test
     public void shouldCallPygmentsWithNumberedLinesOption() throws Exception {
-        highlighter.highlight(sampleCode, "java", true);
+        highlighter.highlight(sampleCode, "java", true, "");
         String encoding = System.getProperty("file.encoding");
         List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
                 + ",outencoding=UTF-8,linenos=inline", "-f", "html", "-l", "java");
@@ -53,7 +53,7 @@ public class SyntaxHighlighterTest {
 
         List<Integer> lines = Arrays.asList(1, 2, 5);
 
-        highlighter.highlight(sampleCode, "java", false, lines);
+        highlighter.highlight(sampleCode, "java", false, lines, "");
 
         String encoding = System.getProperty("file.encoding");
 
@@ -66,7 +66,7 @@ public class SyntaxHighlighterTest {
     @Test
     public void shouldCallPygmentsWithLatexOutput() throws Exception {
         this.highlighter = new SyntaxHighlighter(executor, CodeOutputType.LATEX, codeCache);
-        highlighter.highlight(sampleCode, "java", false);
+        highlighter.highlight(sampleCode, "java", false, "");
         String encoding = System.getProperty("file.encoding");
         List<String> arguments = Arrays.asList("pygmentize", "-O", "encoding=" + encoding
                 + ",outencoding=UTF-8", "-P", "verboptions=numbersep=5pt", "-f", "latex", "-l", "java");

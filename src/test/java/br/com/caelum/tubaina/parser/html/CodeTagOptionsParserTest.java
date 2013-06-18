@@ -66,5 +66,25 @@ public class CodeTagOptionsParserTest {
     	String description = codeTagOptionsParser.parseDescription(options);
     	assertEquals("description here", description);
     }
+    
+    @Test
+    public void shouldParsePygmentsOptionsWithLabelAndDescription() {
+    	CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+    	String options = "java label=javacode \"description here\" options='startinline=true'";
+    	String pygmentsOptions = codeTagOptionsParser.parsePygmentsOptions(options);
+    	String description = codeTagOptionsParser.parseDescription(options);
+    	assertEquals("description here", description);
+    	assertEquals("startinline=true", pygmentsOptions);
+    }
+    
+    @Test
+    public void shouldParsePygmentsOptionsWithoutLabel() {
+    	CodeTagOptionsParser codeTagOptionsParser = new CodeTagOptionsParser();
+    	String options = "java options='startinline=true'";
+    	String label = codeTagOptionsParser.parseLabel(options);
+    	String pygmentsOptions = codeTagOptionsParser.parsePygmentsOptions(options);
+    	assertEquals("startinline=true", pygmentsOptions);
+    	assertEquals("", label);
+    }
 
 }

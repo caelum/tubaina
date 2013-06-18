@@ -25,7 +25,8 @@ public class CodeTagOptionsParser {
             String languageCandidate = options.trim().split(" ")[0];
             if (!languageCandidate.equals("#") && !languageCandidate.startsWith("h=")
                     && !languageCandidate.startsWith("label=") && !languageCandidate.isEmpty()
-                    && !languageCandidate.contains("filename="))
+                    && !languageCandidate.contains("filename=")
+                    && !languageCandidate.contains("options="))
                 return languageCandidate;
         }
         return "text";
@@ -49,6 +50,10 @@ public class CodeTagOptionsParser {
 
 	public String parseDescription(String options) {
 		return findPattern(options, "(?s)(?i)\"(.+?)\"");
+	}
+
+	public String parsePygmentsOptions(String options) {
+		return findPattern(options, "options='(\\S+)'");
 	}
 
 }

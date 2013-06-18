@@ -156,4 +156,13 @@ public class CodeTagTest extends AbstractTagTest {
 		assertTrue(output.contains("\\end{Verbatim}"));
 	}
 	// TODO: file name as an option to code
+	
+	@Test
+	public void testName() throws Exception {
+		String options = "php options='startinline=true'";
+		String code = publicStaticVoidMain();
+		CodeChunk chunk = new CodeChunk(code, options);
+		String output = getContent(chunk);
+		System.out.println(output);
+	}
 }

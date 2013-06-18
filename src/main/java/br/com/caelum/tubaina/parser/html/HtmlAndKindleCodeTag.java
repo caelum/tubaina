@@ -32,8 +32,9 @@ public class HtmlAndKindleCodeTag implements Tag<CodeChunk> {
 		SimpleIndentator simpleIndentator = new SimpleIndentator(2);
 		String indentedCode = simpleIndentator.indent(chunk.getContent());
 		String label = matchLabel(options);
+		String pygmentsOptions = codeTagOptionsParser.parsePygmentsOptions(options);
 
-		String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered, highlights);
+		String code = htmlCodeHighlighter.highlight(indentedCode, language, numbered, highlights, pygmentsOptions);
 
 		String result = "";
 		if (!label.isEmpty()) {

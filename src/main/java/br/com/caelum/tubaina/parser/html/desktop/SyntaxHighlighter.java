@@ -27,20 +27,27 @@ public class SyntaxHighlighter {
         this.codeCache = codeCache;
     }
 
-    public String highlight(String code, String language, boolean numbered, List<Integer> lines) {
+    public String highlight(String code, String language, boolean numbered, List<Integer> lines, String pygmentsOptions) {
         String codeAndOptions = code + numbered;
 		if (codeCache.exists(codeAndOptions)) {
             return codeCache.find(codeAndOptions);
         }
-        ArrayList<String> commandWithArgs = buildCommand(language, numbered, lines);
+        ArrayList<String> commandWithArgs = buildCommand(language, numbered, lines, pygmentsOptions);
         String codeHighlighted = commandExecutor.execute(commandWithArgs, code);
         
         codeCache.write(codeAndOptions, codeHighlighted);
         return codeHighlighted;
     }
 
-    private ArrayList<String> buildCommand(String language, boolean numbered, List<Integer> lines) {
+    public String highlight(String code, String language, boolean numbered, String pygmentsOptions) {
+    	List<Integer> list = Collections.emptyList();
+    	return highlight(code, language, numbered, list, pygmentsOptions);
+    }
+    
+    private ArrayList<String> buildCommand(String language, boolean numbered, List<Integer> lines, String pygmentsOptions) {
         StringBuilder options = new StringBuilder();
+        pygmentsOptions = pygmentsOptions.isEmpty() ? "" : "," + pygmentsOptions;
+        options.append(pygmentsOptions);
         if (numbered || output.equals(CodeOutputType.KINDLE_HTML)) { // for kindle output all lines are numbered
             appendLineNumberingOption(options);
         }
@@ -83,11 +90,6 @@ public class SyntaxHighlighter {
             options.deleteCharAt(options.length() - 1);
             options.append("");
         }
-    }
-
-    public String highlight(String code, String language, boolean numbered) {
-        List<Integer> list = Collections.emptyList();
-        return highlight(code, language, numbered, list);
     }
 
 }

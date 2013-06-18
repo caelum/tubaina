@@ -35,11 +35,12 @@ public class CodeTag implements Tag<CodeChunk> {
 		String chosenLanguage = codeTagOptionsParser.parseLanguage(options);
         String latexFilename = latexFilenameFor(codeTagOptionsParser.parseFileName(options));
         String latexReference = latexLabelFor(options);
+        String pygmentsOptions = codeTagOptionsParser.parsePygmentsOptions(options);
         boolean numbered = options.contains(" #");
         
         String indentedCode = this.indentator.indent(chunk.getContent());
         
-        String highlightedCode = syntaxHighlighter.highlight(indentedCode, chosenLanguage, numbered);
+        String highlightedCode = syntaxHighlighter.highlight(indentedCode, chosenLanguage, numbered, pygmentsOptions);
 
         return latexReference + latexFilename + CodeTag.BEGIN + highlightedCode + CodeTag.END;
     }
