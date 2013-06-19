@@ -104,6 +104,9 @@ public class KindleGenerator implements Generator {
     private StringBuffer generateHeader(Book book) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("booktitle", book.getName());
+        for (String ifdef : ifdefs) {
+			map.put(ifdef, true);
+		}
         return new FreemarkerProcessor(freeMarkerConfig).process(map, "book-header.ftl");
     }
 
