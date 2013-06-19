@@ -59,6 +59,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \makeatletter
+<#include "pygments.ftl">
 \makeatother
 \setcounter{tocdepth}{2}
 
