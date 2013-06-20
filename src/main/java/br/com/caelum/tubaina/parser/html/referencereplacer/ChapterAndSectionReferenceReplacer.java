@@ -8,9 +8,10 @@ public class ChapterAndSectionReferenceReplacer extends AbstractReferenceReplace
     protected String extractTextToReplaceReference(Element div, Element label) {
         String text = "*";
         if (label.getName().equals("a")) {
-            Element title = div.getFirstElementByClass("referenceableTitle");
-            String number = title.getTextExtractor().toString().split("-")[0].trim();
-            text = number;
+            Element titleHeader = div.getFirstElementByClass("referenceableTitle");
+            Element number = titleHeader.getFirstElementByClass("number");
+            String[] split = number.getTextExtractor().toString().split(" ");
+			text = split[split.length-1].trim();
         }
         return text;
     }

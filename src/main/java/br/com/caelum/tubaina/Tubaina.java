@@ -32,6 +32,7 @@ public class Tubaina {
 			System.exit(-1);
 		}
 		tubainaBuilder.build();
+		
 	}
 
 	private static TubainaBuilder parseOptions(CommandLine cmd, Options options) {
