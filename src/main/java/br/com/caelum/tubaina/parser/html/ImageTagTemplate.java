@@ -5,21 +5,23 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.util.HtmlSanitizer;
 
 public class ImageTagTemplate {
 	
+	// TODO: make it work more gracefully... i.e., eliminate this workaround
+	private static final String RELATIVEPATH = "$$RELATIVE$$/";
 	private final Parser parser;
 
 	public ImageTagTemplate(Parser parser) {
 		this.parser = parser;
 	}
 
-	// TODO: make it work more gracefully... i.e., eliminate this workaround
-	private static final String RELATIVEPATH = "$$RELATIVE$$/";
-
-	public String parse(final String path, final String options, boolean shouldUseHTMLWidth) {
+	public String parse(ImageChunk chunk, boolean shouldUseHTMLWidth) {
+		String path = chunk.getPath();
+		String options = chunk.getOptions();  
 		String imgsrc = FilenameUtils.getName(path);
 		StringBuilder output = new StringBuilder("<img src=\"" + RELATIVEPATH + imgsrc + "\" ");
 
@@ -42,7 +44,8 @@ public class ImageTagTemplate {
 			String subtitle = new HtmlSanitizer().sanitize(descriptionMatcher.group(1));
 			output.append("alt=\"" + subtitle + "\" />");
 			subtitle = parser.parse(subtitle);
-			output.append("\n<div><i>"+ subtitle +"</i></div><br><br>");
+			output.append("\n<div><i>Figura " + chunk.getChapterNumber() 
+					+ "." + chunk.getImageNumber() + ": " +  subtitle +"</i></div><br><br>");
 		} else {
 			output.append("alt=\"" + imgsrc + "\" />");
 		}
@@ -50,10 +53,6 @@ public class ImageTagTemplate {
 		return output.toString();
 	}
 	
-	public String parse(final String path, final String options) {
-	    return parse(path, options, false);
-	}
-
 	public Integer getScale(final String options) {
 		if (options == null) {
 			return 100;

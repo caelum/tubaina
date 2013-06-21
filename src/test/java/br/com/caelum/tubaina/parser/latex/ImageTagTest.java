@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.ImageChunk;
 
 public class ImageTagTest extends AbstractTagTest {
@@ -14,7 +15,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testFullImageTag() {
-		ImageChunk chunk = new ImageChunk("image.png", "\"Imagem de alguma coisa\" w=30", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "\"Imagem de alguma coisa\" w=30");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -25,7 +26,7 @@ public class ImageTagTest extends AbstractTagTest {
 
 	@Test
 	public void labelAndNoCaption() throws Exception {
-		ImageChunk chunk = new ImageChunk("image.png", "label=important", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "label=important");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -36,7 +37,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void labelNotInformed() throws Exception {
-		ImageChunk chunk = new ImageChunk("image.png", "label=", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "label=");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -44,10 +45,10 @@ public class ImageTagTest extends AbstractTagTest {
 				"\\label{image.png}\n" +
 				END, result);
 	}
-	
+
 	@Test
 	public void labelNotInformedFollowedByACaption() throws Exception {
-		ImageChunk chunk = new ImageChunk("image.png", "label= \"a caption to the image\"", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "label= \"a caption to the image\"");
 		String result = getContent(chunk);
 		assertEquals(
 		        BEGIN +
@@ -59,7 +60,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void labelAndCaption() throws Exception {
-		ImageChunk chunk = new ImageChunk("image.png", "label=important \"a caption to the image\"", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "label=important \"a caption to the image\"");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -71,7 +72,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testImageTagWithoutBounds() {
-		ImageChunk chunk = new ImageChunk("image.png", "\"Imagem de alguma coisa\"", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "\"Imagem de alguma coisa\"");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -82,7 +83,7 @@ public class ImageTagTest extends AbstractTagTest {
 
 	@Test
 	public void testImageTagWithoutDesc() {
-		ImageChunk chunk = new ImageChunk("image.png", "w=42", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "w=42");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -92,7 +93,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testImageTagWithPercentageSymbol() {
-		ImageChunk chunk = new ImageChunk("image.png", "w=40%", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "w=40%");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -102,7 +103,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testImageTagWithoutPercentageSymbol() {
-		ImageChunk chunk = new ImageChunk("image.png", "w=40", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "w=40");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -112,7 +113,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testImageTagWithInvalidBounds() {
-		ImageChunk chunk = new ImageChunk("image.png", "w=42", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "w=42");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -122,18 +123,19 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
 	public void testImageTagWithPath() {
-		ImageChunk chunk = new ImageChunk("some/path/image.png", "w=42", 100, 1);
+		ImageChunk chunk = makeChunk("some/path/image.png", "w=42");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{image.png}\n" +
 				END, result);
 	}
+
 	
 	@Test
 	public void imageTagWithoutDefinedImageProportionShouldConstrainToPageWidthWhenImageIsTooBig() {
 		int tooLargeImageWidthInPixels = 2250;
-		ImageChunk chunk = new ImageChunk("image.png", "[" + tooLargeImageWidthInPixels + "]", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "[" + tooLargeImageWidthInPixels + "]");
 		String result = getContent(chunk);
 		assertEquals(
 				BEGIN +
@@ -143,7 +145,7 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
     public void shouldParseLabelEvenWithStrangeChars() throws Exception {
-		ImageChunk chunk = new ImageChunk("image.png", "label=name-with-strange_chars", 100, 1);
+		ImageChunk chunk = makeChunk("image.png", "label=name-with-strange_chars");
 		String result = getContent(chunk);
 	    assertEquals(
                 BEGIN +
@@ -155,9 +157,14 @@ public class ImageTagTest extends AbstractTagTest {
 	
 	@Test
     public void shouldParseTagsInsideSubtitle() {
-		ImageChunk chunk = new ImageChunk("blabla.png", "\"lala **bold text** http://caelum.com.br/ \"", 100, 1);
+		ImageChunk chunk = makeChunk("blabla.png", "\"lala **bold text** http://caelum.com.br/ \""); 
 		String output = getContent(chunk);
     	assertTrue(output.contains("\\url"));
     	assertTrue(output.contains("\\definition"));
     }
+	
+	private ImageChunk makeChunk(String path, String options) {
+		ImageChunk chunk = new ImageChunk(path, options, 100, 1, new SectionsManager());
+		return chunk;
+	}
 }

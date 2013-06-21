@@ -56,7 +56,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
@@ -76,7 +76,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
@@ -93,7 +93,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new XmlReplacer());
@@ -119,7 +119,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
 		replacers.add(new ListReplacer(resources));
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new NoteReplacer(resources));
 		replacers.add(new XmlReplacer());
@@ -142,7 +142,7 @@ public class ChunksMakerBuilder {
 		replacers = new ArrayList<Replacer>();
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new XmlReplacer());
@@ -161,7 +161,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new BoxReplacer(resources));
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
@@ -193,7 +193,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));
@@ -211,7 +211,7 @@ public class ChunksMakerBuilder {
 		replacers.add(new CodeReplacer());
 		replacers.add(new GistReplacer());
 		replacers.add(new ExerciseReplacer(resources));
-		replacers.add(new ImageReplacer(resources));
+		replacers.add(new ImageReplacer(sectionsManager, resources));
 		replacers.add(new JavaReplacer());
 		replacers.add(new ListReplacer(resources));
 		replacers.add(new NoteReplacer(resources));

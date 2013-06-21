@@ -6,6 +6,7 @@ public class SectionsManager {
 	
 	int currentSubsection = 1;
 	int currentSection = 1;
+	int currentImageCount = 1;
 
 	public int nextSubsection() {
 		return currentSubsection++;
@@ -16,9 +17,15 @@ public class SectionsManager {
 		currentSection++;
 	}
 	
+	public int nextImage() {
+		currentImageCount++;
+		return currentImageCount - 1;
+	}
+	
 	public void nextChapter() {
 		currentSubsection = 1;
 		currentSection = 1;
+		currentImageCount = 1;
 	}
 	
 	public int getCurrentSection() {

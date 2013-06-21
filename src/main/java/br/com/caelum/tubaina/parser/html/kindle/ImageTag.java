@@ -1,11 +1,11 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.ImageTagTemplate;
+
+import com.google.inject.Inject;
 
 public class ImageTag implements Tag<ImageChunk> {
 	
@@ -18,7 +18,7 @@ public class ImageTag implements Tag<ImageChunk> {
 	
 	@Override
 	public String parse(ImageChunk chunk) {
-		return template.parse(chunk.getPath(), chunk.getOptions(), true);
+		return template.parse(chunk, true);
 	}
 	
 }	

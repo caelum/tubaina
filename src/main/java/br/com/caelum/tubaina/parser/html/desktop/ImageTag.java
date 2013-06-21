@@ -3,13 +3,13 @@ package br.com.caelum.tubaina.parser.html.desktop;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.inject.Inject;
-
 import br.com.caelum.tubaina.TubainaException;
-import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.chunk.ImageChunk;
+import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.html.ImageTagTemplate;
+
+import com.google.inject.Inject;
 
 public class ImageTag implements Tag<ImageChunk> {
 
@@ -28,7 +28,7 @@ public class ImageTag implements Tag<ImageChunk> {
             throw new TubainaException("Image labels are not yet supported for html output");
         }
 	    
-		return template.parse(chunk.getPath(), chunk.getOptions(), false);
+		return template.parse(chunk, false);
 	}
 
 	public Integer getScale(final String string) {

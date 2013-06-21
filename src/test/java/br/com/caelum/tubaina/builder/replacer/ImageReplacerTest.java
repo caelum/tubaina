@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.caelum.tubaina.Chunk;
+import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.chunk.ImageChunk;
 import br.com.caelum.tubaina.resources.Resource;
 import br.com.caelum.tubaina.resources.ResourceLocator;
@@ -24,7 +25,7 @@ public class ImageReplacerTest {
 	@Before
 	public void setUp() {
 		resources = new ArrayList<Resource>();
-		replacer = new ImageReplacer(resources);
+		replacer = new ImageReplacer(new SectionsManager(), resources);
 		chunks = new ArrayList<Chunk>();
 		ResourceLocator.initialize(new File("."));
 	}

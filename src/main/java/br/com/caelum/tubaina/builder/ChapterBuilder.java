@@ -87,4 +87,10 @@ public class ChapterBuilder {
         return LAST_CHAPTER;
     }
 
+    /**
+     * @deprecated exists only for testing purposes
+     */
+    public static void restartChapterCounter() {
+    	LAST_CHAPTER = 0;
+    }
 }
