@@ -14,7 +14,6 @@ public class ImageReferenceReplacer extends AbstractReferenceReplacer {
     protected String extractTextToReplaceReference(Element containerDiv, Element label) {
         String text = "*";
         if (label.getName().equals("img")) {
-
             Element title = containerDiv.getFirstElementByClass("referenceableTitle");
             while (title != null && title.getStartTag().getName() != "h2") {
                 containerDiv = containerDiv.getParentElement();
@@ -27,9 +26,9 @@ public class ImageReferenceReplacer extends AbstractReferenceReplacer {
             
             List<Element> imgs = containerDiv.getAllElements("img");
             int imagePosition = imgs.indexOf(label) + 1;
-            String chapterAndSectionNumber = title.getTextExtractor().toString().split("-")[0]
-                    .trim();
-            String chapterNumber = chapterAndSectionNumber.split("\\.")[0];
+            
+            String chapterNumber = title.getFirstElementByClass("number")
+            		.getTextExtractor().toString().split(" ")[1];
             text = chapterNumber + "." + imagePosition;
         }
         return text;
