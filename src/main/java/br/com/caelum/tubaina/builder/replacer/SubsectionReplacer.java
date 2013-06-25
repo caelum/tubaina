@@ -24,7 +24,7 @@ public class SubsectionReplacer extends AbstractReplacer {
 		int subsectionNumber = sectionsManager.nextSubsection();
 		int currentChapter = sectionsManager.getCurrentChapter();
 		int currentSection = sectionsManager.getCurrentSection();
-		List<Chunk> body = new ChunkSplitter(resources, "subsection").splitChunks(content);
+		List<Chunk> body = new ChunkSplitter(resources, "subsection", sectionsManager).splitChunks(content);
 		return new SubsectionChunk(options, body, subsectionNumber, currentChapter, currentSection);
 	}
 
