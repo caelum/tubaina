@@ -9,11 +9,11 @@ import com.google.inject.Inject;
 
 public class BoxTag implements Tag<BoxChunk> {
 
-    static final String BEGIN = "<table cellspacing=\"5\" width=\"100%\" border=\"1\" class=\"box-table\"><colgroup>" +
-            "<col width=\"550\"/></colgroup><tbody><tr><td/></tr></table>";
-    static final String END = BEGIN;
-    static final String TITLE_BEGIN = "<b>";
-    static final String TITLE_END = "</b>\n";
+    private static final String TABLE = "<table cellspacing=\"5\" width=\"100%\" border=\"1\" class=\"box-table\"><colgroup><col width=\"550\"/></colgroup><tbody><tr><td/></tr></table>";
+	static final String BEGIN = TABLE + "<div class='tubainabox'>";
+    static final String END = TABLE + "</div>";
+    static final String TITLE_BEGIN = "<div class='tubainabox-title'><b>";
+    static final String TITLE_END = "</b></div>\n";
 	private final Sanitizer sanitizer;
 	private final Parser parser;
 
