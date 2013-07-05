@@ -61,15 +61,15 @@ Here, you'll have some simple examples of *.afc text that intend to show the eas
 	[list]
 		* **in Java**
 
-		[java]
+		[code java]
 			public static void main(String[] args){
 				System.out.println("Hello world!");
 			}
-		[/java]
+		[/code]
 
 		* **in C**
 
-		[code]
+		[code c]
 			int main(){
 				printf("Hello world!\n");
 				return 0;
@@ -78,8 +78,38 @@ Here, you'll have some simple examples of *.afc text that intend to show the eas
 		
 		* **in Ruby**
 		
-		[ruby]
+		[code ruby]
 			puts "Hello, world!"
-		[/ruby]
+		[/code]
 	[/list]
 [/code]
+
+Result:
+
+How do you write a HelloWorld...
+
+	[list]
+		* **in Java**
+
+		[code java]
+			public static void main(String[] args){
+				System.out.println("Hello world!");
+			}
+		[/code]
+
+		* **in C**
+
+		[code c]
+			int main(){
+				printf("Hello world!\n");
+				return 0;
+			}
+		[/code]
+		
+		* **in Ruby**
+		
+		[code ruby]
+			puts "Hello, world!"
+		[/code]
+	[/list]
+
