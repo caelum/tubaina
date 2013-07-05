@@ -27,7 +27,6 @@
 \usepackage{fancyhdr}
 \usepackage{pstcol}
 \usepackage{colortbl}
-\usepackage{mintedx}
 \usepackage{url}
 \usepackage{tubaina}
 \usepackage{rotating}
@@ -66,7 +65,6 @@
 \makeindex
 
 \begin{document}
-\usemintedstyle{eclipse}
 
 \normalfont
 
