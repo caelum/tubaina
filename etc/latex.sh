@@ -8,8 +8,8 @@ fi
 
 #cp -R ~/.tubaina/pythonenv . #needed only if you don't have pygments installed globally
 
-echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
+pdflatex -interaction nonstopmode -shell-escape book.tex > /dev/null
 bibtex book
 makeindex book.idx
-echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
-echo "s\n" | pdflatex -shell-escape book.tex > /dev/null
+pdflatex -interaction nonstopmode -shell-escape book.tex > /dev/null
+pdflatex -interaction nonstopmode -shell-escape book.tex > /dev/null
