@@ -7,6 +7,7 @@ import br.com.caelum.tubaina.chunk.CenteredParagraphChunk;
 import br.com.caelum.tubaina.chunk.CodeChunk;
 import br.com.caelum.tubaina.chunk.ExerciseChunk;
 import br.com.caelum.tubaina.chunk.ImageChunk;
+import br.com.caelum.tubaina.chunk.IndexChunk;
 import br.com.caelum.tubaina.chunk.IntroductionChunk;
 import br.com.caelum.tubaina.chunk.ItemChunk;
 import br.com.caelum.tubaina.chunk.ListChunk;
@@ -60,6 +61,7 @@ public class HtmlModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableRowChunk>>() {}).to(TableRowTag.class);
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
+		bind(new TypeLiteral<Tag<IndexChunk>>() {}).to(IndexTag.class);
 		
 		bind(Parser.class).toInstance(ParseType.HTML.getParser());
 		bind(Sanitizer.class).to(HtmlSanitizer.class);
