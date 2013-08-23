@@ -51,7 +51,7 @@
 
 %%%%%%%PAGE SETUP%%%%%%%%%%%%%
 \oddsidemargin     -6mm
-\evensidemargin   -19mm
+\evensidemargin    -6mm
 \textwidth        180mm
 \topmargin        -10mm
 \textheight       250mm
