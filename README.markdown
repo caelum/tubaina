@@ -25,18 +25,21 @@ Developers' info
 
 This project is built using *Gradle (0.9rc1+)*. In order for it to behave like an Eclipse 
 project you'll need to have Gradle installed (instructions to be found at: http://www.gradle.org/installation.html) and then run:
-
-    > cd path/to/tubaina
-    > gradle eclipse
+```SH
+$ cd path/to/tubaina
+$ gradle eclipse
+```
 
 You need pygments to run the tests, you can install it through easy_install (you should be able to install easy_install with your SO package manager):
-
-    > easy_install Pygments==1.5
+```SH
+$ easy_install Pygments==1.5
+```
 
 In order to build the distribution version do:
-
-    > cd path/to/tubaina
-    > gradle clean build zip
+```SH
+$ cd path/to/tubaina
+$ gradle clean build zip
+```
 
 This will run the tests and, among other stuff, build a *.zip file with Tubaina's jar and all necessary libraries under `build/distributions`
 
