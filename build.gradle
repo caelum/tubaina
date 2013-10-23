@@ -55,7 +55,9 @@ task zip(type: Zip) {
 
 repositories {
 	mavenCentral()
-	mavenRepo urls: 'https://repository.jboss.org/nexus/content/groups/public/'
+	maven {
+		url 'https://repository.jboss.org/nexus/content/groups/public/'
+	}
 }
 
 dependencies {
