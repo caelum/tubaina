@@ -118,14 +118,6 @@ but have not enough time or material to work on. It builds a log of all the open
 	* item
 [/list][/code]
 
-[section Tables]
-**Tables:** the structure of tags used to create a table is similar to that of the HTML language. First,
-to start a table, you use the tag %%table%%. This tag may specify two parameters: a title and the
-keyword %%noborder%%, which specifies that the generated table will not have borders. The title must
-be inside double quotation marks ("). Inside the %%table%% tag, use a %%row%% tag to start a line and, inside
-a row, use a %%col%% tag to add a cell to the table. Inside a %%col%% tag, you can type text, code and/or
-put images.
-
 [section Images]
 
 **Images:** in order to add images to your textbook, you must use the tag %%img%%. This tag has two
@@ -133,3 +125,35 @@ specialties: you may choose the percentage of the width of the page your image m
 tag %%w%% and you can add a comment about the image on a floating tab.
 
 [code][img path/image.png w=scale% "tab comment"][/code]
+
+[section Tables]
+
+**Tables:** the structure of tags used to create a table is similar to that of the HTML language. First,
+to start a table, you use the tag %%table%%. This tag may specify two parameters: a title and the
+keyword %%noborder%%, which specifies that the generated table will not have borders. The title must
+be inside double quotation marks ("). Inside the %%table%% tag, use a %%row%% tag to start a line and, inside
+a row, use a %%col%% tag to add a cell to the table. Inside a %%col%% tag, you can type text, code and/or
+put images.
+
+Example:
+[code]
+[table "An example"]
+    [row]
+        [col]
+            First cell of first line
+        [/col]
+        [col]
+            Second cell of first line
+        [/col]
+    [/row]
+    [row]
+        [col]
+            First cell of second line
+        [/col]
+        [col]
+            An image:
+            [img images/example.png]
+         [/col]
+    [/row]
+[/table]
+[/code]
