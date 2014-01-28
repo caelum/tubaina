@@ -65,23 +65,23 @@ use the %%note%% tag. It adds Instructor Notes to the textbook when compiling wi
 
 [section Code chunk tags]
 
-**Java:** [code][java]Java code[/java][/code]
+**Java:** [code][code java]Java code[/code][/code]
 
-**Java from file:** [code][java src]path/File.java[/java][/code]
+**Java from file:** [code][code java filename=path/File.java][/code][/code]
 
-**XML:** [code][xml]XML code[/xml][/code]
+**XML:** [code][code xml]XML code[/code][/code]
 
-**Ruby:** [code][ruby]Ruby code[/ruby][/code]
+**Ruby:** [code][code ruby]Ruby code[/code][/code]
 
 **.properties:** [code][code properties]Properties code[/code][/code]
 
-**Outras linguagens:** [code][code]Any other code[/code][/code]
+**Other languages:** [code][code]Any other code[/code][/code]
 
 In order to emphasize code lines, use the option: %%h=line1,line2,...%% like this:
-[code][java h=1,2,3]....[/java][/code]
+[code][code java h=1,2,3]....[/code][/code]
 
 If you want to number the lines of the output code, use the parameter %%#%%, like this:
-[code][java #]...[/java][/code]
+[code][code java #]...[/code][/code]
 
 [section Special tags]
 
