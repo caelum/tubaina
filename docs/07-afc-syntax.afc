@@ -69,13 +69,8 @@ use the %%note%% tag. It adds Instructor Notes to the textbook when compiling wi
 
 **Java from file:** [code][code java filename=path/File.java][/code][/code]
 
-**XML:** [code][code xml]XML code[/code][/code]
-
-**Ruby:** [code][code ruby]Ruby code[/code][/code]
-
-**.properties:** [code][code properties]Properties code[/code][/code]
-
-**Other languages:** [code][code]Any other code[/code][/code]
+You can replace %%java%% with any other language supported by Pygments in order to highlight properly your code.
+Check the available languages at http://pygments.org/languages/
 
 In order to emphasize code lines, use the option: %%h=line1,line2,...%% like this:
 [code][code java h=1,2,3]....[/code][/code]
