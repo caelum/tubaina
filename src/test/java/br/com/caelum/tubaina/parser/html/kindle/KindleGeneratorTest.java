@@ -1,5 +1,6 @@
 package br.com.caelum.tubaina.parser.html.kindle;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -9,6 +10,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
@@ -83,6 +85,37 @@ public class KindleGeneratorTest {
         return builder.build();
     }
 
+    private Book createsSimpleEscapedColonBook(String title) {
+    	BookBuilder builder = builder(title);
+    	
+    	builder.addReaderFromString(
+    			"[chapter     O que é java?   ]\n" + "texto da seção\n Perceba que renomeamos a classe %%mysql-server%% para "
+    					+ "%%mysql<::server%%. Esta é a nomenclatura padrão que o Puppet entende para importar classes e tipos "
+    					+ "dentro do mesmo módulo. Da mesma forma, devemos também renomear o tipo definido %%mysql-db%% para"
+    					+ " %%mysql<::db%% dentro :");
+    	
+    	builder.addReaderFromString("[chapter Introdução]\n"
+    			+ "Algum texto de introdução\n");
+    	
+    	return builder.build();
+    }
+
+    @Test
+    public void shouldCreateTheBookFileWithEscapedSemicolon() throws Exception {
+    	Book book = createsSimpleEscapedColonBook("livro");
+    	new KindleModule().inject(book);
+    	
+    	generator.generate(book, tempDir);
+    	
+    	File theBookItself = new File(tempDir, "index.html");
+    	String fileContent = new Scanner(theBookItself).useDelimiter("$$").next();
+    	
+    	File expectedHtml = new File("src/test/resources/kindle/htmlWithEscapedRubyHackCodeExpected.html");
+    	String expectedContent = new Scanner(expectedHtml).useDelimiter("$$").next();
+    	
+    	assertEquals(expectedContent, fileContent);
+    }
+    
     @Test
     public void shouldCreateTheBookFile() throws Exception {
         Book book = createsSimpleBookWithTitle("livro");

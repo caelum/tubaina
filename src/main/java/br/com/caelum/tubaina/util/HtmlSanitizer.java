@@ -98,6 +98,7 @@ public class HtmlSanitizer implements Sanitizer {
 			if (current == '<' && i < text.length() - 2) {
 				String next = text.substring(i + 1, i + 3);
 				if (next.equals("::")) {
+					sane.append(current);
 					continue;
 				}
 			}
