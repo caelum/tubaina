@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.TreeSet;
 
 public class RegexConfigurator {
 
@@ -14,9 +15,9 @@ public class RegexConfigurator {
 		replaceP.load(RegexConfigurator.class.getResourceAsStream(replaceFile));
 		
 		List<RegexTag> tags = new ArrayList<RegexTag>();
-		for (Object o : regexP.keySet()) {
+		TreeSet keys = new TreeSet(regexP.keySet());
+		for (Object o : keys) {
 			String key = (String) o;
-			
 			String regex = regexP.getProperty(key);
 			String replacement = replaceP.getProperty(key, "$0");
 			tags.add(new RegexTag(regex, replacement));

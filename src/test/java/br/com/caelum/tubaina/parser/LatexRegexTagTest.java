@@ -36,4 +36,11 @@ public class LatexRegexTagTest extends RegexTagTest{
     	assertEquals("blablabla \\definition{\\codechunk{bold and italic}}", text);
     }
     
+    @Test
+    public void shouldNotReplaceBoldItalicAndUnderscoreInsideCodeTag() throws Exception {
+    	String text = "blablabla %%**bold**, ::italic:: and __underscore__%%";
+    	text = parseWithRegexps(text);
+    	assertEquals("blablabla \\codechunk{**bold**, ::italic:: and \\PYZus{}\\PYZus{}underscore\\PYZus{}\\PYZus{}}", text);
+    }
+    
 }
