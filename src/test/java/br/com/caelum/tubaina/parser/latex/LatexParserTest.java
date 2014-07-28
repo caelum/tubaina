@@ -157,7 +157,7 @@ public class LatexParserTest {
     public void testQuoteInsideCodeInline() {
         String input = "%%String s = \"string\"%%";
         String output = parser.parse(input);
-        Assert.assertEquals("\\codechunk{String s = \\textquotedbl string\\textquotedbl }", output);
+        Assert.assertEquals("\\codechunk{String s = \\textquotedbl{}string\\textquotedbl{}}", output);
     }
     
     @Test
@@ -165,7 +165,7 @@ public class LatexParserTest {
         String input = "%%object.do(\"some string\", 'c');%%";
         String output = parser.parse(input);
         Assert.assertEquals(
-                "\\codechunk{object.do(\\textquotedbl some string\\textquotedbl , \\textquotesingle c\\textquotesingle );}",
+                "\\codechunk{object.do(\\textquotedbl{}some string\\textquotedbl{}, `c');}",
                 output);
     }
 

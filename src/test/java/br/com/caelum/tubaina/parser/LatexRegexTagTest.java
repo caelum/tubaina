@@ -30,10 +30,10 @@ public class LatexRegexTagTest extends RegexTagTest{
     }
     
     @Test
-    public void shouldReplaceBoldAndItalic() throws Exception {
-    	String text = "blablabla **%%bold and italic%%**";
+    public void shouldReplaceBoldAndCode() throws Exception {
+    	String text = "blablabla **%%bold code%%**";
     	text = parseWithRegexps(text);
-    	assertEquals("blablabla \\definition{\\codechunk{bold and italic}}", text);
+    	assertEquals("blablabla \\definition{\\codechunk{bold code}}", text);
     }
     
     @Test
@@ -42,5 +42,4 @@ public class LatexRegexTagTest extends RegexTagTest{
     	text = parseWithRegexps(text);
     	assertEquals("blablabla \\codechunk{**bold**, ::italic:: and \\PYZus{}\\PYZus{}underscore\\PYZus{}\\PYZus{}}", text);
     }
-    
 }
