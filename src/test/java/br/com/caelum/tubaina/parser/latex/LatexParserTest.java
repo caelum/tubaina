@@ -165,7 +165,7 @@ public class LatexParserTest {
         String input = "%%object.do(\"some string\", 'c');%%";
         String output = parser.parse(input);
         Assert.assertEquals(
-                "\\codechunk{object.do(``some string'', 'c');}",
+                "\\codechunk{object.do(\\textquotedbl some string\\textquotedbl , \\textquotesingle c\\textquotesingle );}",
                 output);
     }
 
