@@ -4,6 +4,7 @@ import static java.util.Arrays.asList;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -51,6 +52,7 @@ public class FlatHtmlGeneratorTest {
                 + "[section Primeira seção]\n" + "texto da prim seção\n"
                 + "[section Segunda seção]\n" + "texto da segunda seção\n\n";
         BookBuilder builder = builder("livro");
+        builder.addAllReadersOfNonNumberedFromStrings(Arrays.asList("[chapter introduction]\n" + "texto do prefácio\n"));
 		builder.addReaderFromString(content);
         builder.addReaderFromString("[chapter Introdução]\n"
                 + "Algum texto de introdução\n");
@@ -189,6 +191,21 @@ public class FlatHtmlGeneratorTest {
         }
     }
     
+    @Test
+    public void shouldNotCreateDirectoryForIntroduction() throws Exception {
+    	new HtmlModule().inject(book);
+        generator.generate(book, temp);
+        File livro = new File(temp, "livro/");
+        File index = new File(livro, "index.html");
+
+        File introduction = new File(livro, "introduction");
+        Assert.assertFalse(introduction.exists());
+    }
+    
+    @Test
+    public void indexShouldContainIntroductionChapters() throws Exception{
+    	
+    }
     
     public BookBuilder builder(String title) {
     	return new BookBuilder(title, new SectionsManager());

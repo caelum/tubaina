@@ -1,3 +1,4 @@
+
 package br.com.caelum.tubaina.builder;
 
 import java.io.StringReader;
@@ -51,7 +52,7 @@ public class BookBuilder {
     }
     
     public void addAllReadersOfNonNumberedFromStrings(List<String> introductionChapters) {
-        for (String content : introductionChapters) {
+        for (String content : introductionChapters) {     
             this.introductionReaders.add(new AfcFile(new StringReader(content), "intro chapter from string"));
         }
     }
@@ -78,6 +79,7 @@ public class BookBuilder {
     private List<Chapter> parseIntroductionChapters() {
         List<Chapter> introductionChapters = new ArrayList<Chapter>();
         for (AfcFile afcFile: introductionReaders) {
+        	LOG.info("Parsing introduction chapter - " + afcFile.getFileName());
             Scanner scanner = new Scanner(afcFile.getReader());
             scanner.useDelimiter("$$");
             introductionChapters.addAll(parseChapters(scanner.next(), true));

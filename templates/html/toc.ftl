@@ -2,7 +2,13 @@
 <#include "header.ftl">
 
 <div id="tubaina">
+
+	<#list book.introductionChapters as introductionChapter>
+		<#include "introduction.ftl">
+	</#list>
+
     <div class="toc">
+    	<h1>Sumário</h1>
         <#assign chapterCount = 1>
         <ul>
         <#assign curdir = 1>

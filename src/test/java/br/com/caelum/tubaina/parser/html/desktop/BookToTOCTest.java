@@ -15,6 +15,7 @@ import br.com.caelum.tubaina.Book;
 import br.com.caelum.tubaina.SectionsManager;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.builder.BookBuilder;
+import br.com.caelum.tubaina.parser.MockedModule;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 
@@ -23,19 +24,28 @@ public class BookToTOCTest {
     private Configuration cfg;
 
     private String sectionIdentifier;
-
+    
     private String chapterIdentifier;
+    
+    private String introChapterIdentifier;
+    
+    private String introSectionIdentifier;
 
 	private BookBuilder builder;
 
+	private MockedModule module;
+
     @Before
     public void setUp() throws IOException {
+    	module = new MockedModule();
         cfg = new Configuration();
         cfg.setDirectoryForTemplateLoading(new File(TubainaBuilder.DEFAULT_TEMPLATE_DIR, "html/"));
         cfg.setObjectWrapper(new BeansWrapper());
 
         chapterIdentifier = "class=\"indexChapter\"";
         sectionIdentifier = "class=\"indexSection\"";
+        introChapterIdentifier = "class=\"chapter";
+        introSectionIdentifier = "class=\"section";
         builder = new BookBuilder("Title", new SectionsManager());
     }
 
@@ -77,6 +87,23 @@ public class BookToTOCTest {
         assertEquals(1, countOccurrences(toc, chapterIdentifier));
         assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-1-uma\""));
         assertEquals(1, countOccurrences(toc, "href=\"unico/index.html#1-2-duas\""));
+    }
+    
+    @Test
+    public void shouldGenerateBookWithIntroduction() {
+        List<String> agradecimentos = Arrays.asList("[chapter agradecimentos]\n" +  "um agradecimento\n");
+        List<String> prefacio = Arrays.asList("[chapter prefacio]\n" +  "um prefacio\n");
+        builder.addAllReadersOfNonNumberedFromStrings(agradecimentos);
+        builder.addAllReadersOfNonNumberedFromStrings(prefacio);
+        Book b = builder.build();
+        module.inject(b);
+        BookToTOC generator = new BookToTOC();
+        List<String> dirTree = new ArrayList<String>();
+        dirTree.add("livro");
+        String toc = generator.generateTOC(b, cfg, dirTree).toString();
+        System.out.println(toc);
+        assertEquals(2, countOccurrences(toc, introChapterIdentifier));
+        assertEquals(0, countOccurrences(toc, introSectionIdentifier));
     }
 
     private int countOccurrences(final String text, final String substring) {

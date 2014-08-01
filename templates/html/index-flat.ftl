@@ -1,6 +1,6 @@
 <#assign relative = '..'>
 <#include "header.ftl">
-
+	
 	<h1 class=index> Index </h1>
 	
 		<#assign keys = indexes.keySet()>
