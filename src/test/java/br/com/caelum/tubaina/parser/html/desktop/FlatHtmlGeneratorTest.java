@@ -140,6 +140,23 @@ public class FlatHtmlGeneratorTest {
         File copied = new File(images, "baseJpgImage.jpg");
         Assert.assertTrue(copied.exists());
     }
+    
+    @Test
+    public void testGeneratorWithImagesInIndex() throws IOException {
+    	BookBuilder builder = builder("com-imagens");
+        builder.addAllReadersOfNonNumberedFromStrings(Arrays.asList("[chapter qualquer um]\n"
+                + "[img baseJpgImage.jpg]"));
+        Book b = builder.build();
+        new HtmlModule().inject(b);
+
+        generator.generate(b, temp);
+        File images = new File(temp, "com-imagens/");
+        Assert.assertTrue(images.exists());
+
+        Assert.assertEquals(1, images.list(new SuffixFileFilter(asList("jpg"))).length);
+        File copied = new File(images, "baseJpgImage.jpg");
+        Assert.assertTrue(copied.exists());
+    }
 
     @Test
     public void testGeneratorWithDoubledImage() throws TubainaException, IOException {
@@ -200,11 +217,6 @@ public class FlatHtmlGeneratorTest {
 
         File introduction = new File(livro, "introduction");
         Assert.assertFalse(introduction.exists());
-    }
-    
-    @Test
-    public void indexShouldContainIntroductionChapters() throws Exception{
-    	
     }
     
     public BookBuilder builder(String title) {

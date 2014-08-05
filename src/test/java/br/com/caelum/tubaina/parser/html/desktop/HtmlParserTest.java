@@ -87,6 +87,12 @@ public class HtmlParserTest {
 		String result = parser.parse("[quote ola mu\nndo-- Anonimo]");
 		Assert.assertEquals("<q cite=\"Anonimo\">ola mu\nndo</q>", result);
 	}
+	
+	@Test
+	public void testQuotationWithLinkInside(){
+		String result = parser.parse("[quote Hello World. -- Some Person - someperson@email.com - http://quote.com]");
+		Assert.assertEquals("<q cite=\"Some Person - someperson@email.com - quote.com\">Hello World.</q>", result);
+	}
 
 	@Test
 	public void testLabelTagInline() {

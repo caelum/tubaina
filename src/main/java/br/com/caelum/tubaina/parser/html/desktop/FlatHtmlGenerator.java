@@ -54,7 +54,7 @@ public class FlatHtmlGenerator implements Generator {
 
         List<String> dirTree = createDirTree(book, directory);
         StringBuffer toc = new BookToTOC().generateTOC(book, cfg, dirTree);
-        bookRoot.writeIndex(toc);
+        bookRoot.writeIndex(fixPaths(toc));
 
         int chapterIndex = 1;
         int currentDir = 1;
@@ -76,7 +76,10 @@ public class FlatHtmlGenerator implements Generator {
         // TODO: this won't work
         Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
         StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes, book);
-        bookRoot.cd("index").writeIndex(index);
+        List<Chapter> introductionChapters = book.getIntroductionChapters();
+        for (Chapter chapter : introductionChapters) {
+        	bookRoot.cd(".").writeResources(chapter.getResources());	
+		}
     }
 
     private StringBuffer fixPaths(StringBuffer chFullText) {

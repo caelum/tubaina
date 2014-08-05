@@ -1,5 +1,4 @@
 <#assign relative = "..">
-<#include "header.ftl">
 
 <div id="tubaina">
     <div class="chapter referenceable">
@@ -8,5 +7,3 @@
     	   		${introductionChapter.introduction}
     </div>
 </div>
-    
-<#include "footer.ftl">
