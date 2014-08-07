@@ -14,6 +14,7 @@ import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.chunk.NoteChunk;
 import br.com.caelum.tubaina.chunk.ParagraphChunk;
 import br.com.caelum.tubaina.chunk.QuestionChunk;
+import br.com.caelum.tubaina.chunk.SubsectionChunk;
 import br.com.caelum.tubaina.chunk.TableChunk;
 import br.com.caelum.tubaina.chunk.TableColumnChunk;
 import br.com.caelum.tubaina.chunk.TableRowChunk;
@@ -62,6 +63,7 @@ public class HtmlModule extends TubainaModule {
 		bind(new TypeLiteral<Tag<TableChunk>>() {}).to(TableTag.class);
 		bind(new TypeLiteral<Tag<TodoChunk>>() {}).to(TodoTag.class);
 		bind(new TypeLiteral<Tag<IndexChunk>>() {}).to(IndexTag.class);
+		bind(new TypeLiteral<Tag<SubsectionChunk>>() {}).to(SubsectionTag.class);
 		
 		bind(Parser.class).toInstance(ParseType.HTML.getParser());
 		bind(Sanitizer.class).to(HtmlSanitizer.class);

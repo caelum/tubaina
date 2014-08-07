@@ -51,7 +51,6 @@ public class FlatHtmlGenerator implements Generator {
         ResourceManipulatorFactory htmlResourceManipulatorFactory = new HtmlResourceManipulatorFactory();
         TubainaHtmlDir bookRoot = new TubainaHtmlIO(templateDir, htmlResourceManipulatorFactory)
                 .createTubainaDir(directory, book);
-
         List<String> dirTree = createDirTree(book, directory);
         StringBuffer toc = new BookToTOC().generateTOC(book, cfg, dirTree);
         bookRoot.writeIndex(fixPaths(toc));
