@@ -17,7 +17,7 @@
             <#assign curdir = curdir + 1>
             <li>
                 <a class="indexChapter" href="${chapter.titleSlug}/index.html">
-                    ${chapterCount} - ${sanitizer.sanitize(chapter.getTitle())}
+                    ${chapterCount} - ${parser.parse(sanitizer.sanitize(chapter.getTitle()))}
                 </a>
             </li>
             <#assign sectionCount = 1>
@@ -25,7 +25,7 @@
                 <#list chapter.sections as section>
                     <li>
                         <a class="indexSection" href="${chapter.titleSlug}/index.html#${chapter.chapterNumber}-${sectionCount}-${section.titleSlug}">
-                            ${chapterCount}.${sectionCount} - ${sanitizer.sanitize(section.getTitle())}
+                            ${chapterCount}.${sectionCount} - ${parser.parse(sanitizer.sanitize(section.getTitle()))}
                         </a>
                     </li>
                     <#assign sectionCount = sectionCount + 1>

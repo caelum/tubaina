@@ -52,7 +52,7 @@ public class FlatHtmlGenerator implements Generator {
         TubainaHtmlDir bookRoot = new TubainaHtmlIO(templateDir, htmlResourceManipulatorFactory)
                 .createTubainaDir(directory, book);
         List<String> dirTree = createDirTree(book, directory);
-        StringBuffer toc = new BookToTOC().generateTOC(book, cfg, dirTree);
+        StringBuffer toc = new BookToTOC().generateTOC(book, cfg, dirTree, parser);
         bookRoot.writeIndex(fixPaths(toc));
 
         int chapterIndex = 1;
@@ -72,7 +72,6 @@ public class FlatHtmlGenerator implements Generator {
             validateXHTML(directory, dirTree);
         }
 
-        // TODO: this won't work
         Map<String, Integer> indexes = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
         StringBuffer index = new IndexToString(dirTree, cfg).createFlatIndex(indexes, book);
         List<Chapter> introductionChapters = book.getIntroductionChapters();
