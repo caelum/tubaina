@@ -46,6 +46,7 @@ public class ImageTagTemplateTest {
 
 	@Test
 	public void testImageTagWithoutDesc() {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("imagem.png", "w=42", 42);
 		String result = tag.parse(chunk, false);
 		assertEquals(imageWithoutSubtitle, result);
@@ -53,6 +54,7 @@ public class ImageTagTemplateTest {
 	
 	@Test
 	public void testImageTagWithPath() {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("some/path/imagem.png", "w=42", 42);
 		String result = tag.parse(chunk, false);
 		assertEquals(imageWithoutSubtitle, result);
@@ -60,6 +62,7 @@ public class ImageTagTemplateTest {
 	
 	@Test
 	public void testImageTagWithPercentageSymbol() {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("some/path/imagem.png", "w=50%", 50);
 		String result = tag.parse(chunk, false);
 		assertEquals(imageWithoutSubtitle, result);
@@ -67,6 +70,7 @@ public class ImageTagTemplateTest {
 	
 	@Test
 	public void testImageTagWithoutPercentageSymbol() {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("some/path/imagem.png", "w=50", 50);
 		String result = tag.parse(chunk, true);
 		String imageWithWidthWithoutPercentageSymbol = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
@@ -75,6 +79,7 @@ public class ImageTagTemplateTest {
 	
 	@Test
 	public void shouldUseLabelAsId() throws Exception {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("imagem.png", "w=50 label=image-label", 50);
 		String result = tag.parse(chunk, true);
 	    String imageUsingLabelAsId = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"image-label\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
@@ -83,6 +88,7 @@ public class ImageTagTemplateTest {
 	
 	@Test
 	public void shouldParseTagsInsideCaption() throws Exception {
+		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("imagem.png", "\"Configurações de zoom do Android 4 e do **Chrome** http://google.com.br/ Mobile\"", 50);
 		String result = tag.parse(chunk, true);
 		result.contains("<strong>");

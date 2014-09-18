@@ -153,25 +153,24 @@ public class ImageTagTest extends AbstractTagTest {
 	}
 	
 	@Test
-    public void shouldParseLabelEvenWithStrangeChars() throws Exception {
+	public void shouldParseLabelEvenWithStrangeChars() throws Exception {
 		ImageChunk chunk = makeChunk("image.png", "label=name-with-strange_chars");
 		String result = getContent(chunk);
-	    assertEquals(
-                BEGIN +
-                "\\includegraphics[width=\\textwidth]{image.png}\n" +
+		assertEquals(
+				BEGIN +
+				"\\includegraphics[width=\\textwidth]{image.png}\n" +
 				NO_CAPTION +
-                "\\label{name-with-strange_chars}\n" +
-                END, result);
-        
-    }
+				"\\label{name-with-strange_chars}\n" +
+				END, result);
+	}
 	
 	@Test
-    public void shouldParseTagsInsideSubtitle() {
+	public void shouldParseTagsInsideSubtitle() {
 		ImageChunk chunk = makeChunk("blabla.png", "\"lala **bold text** http://caelum.com.br/ \""); 
 		String output = getContent(chunk);
-    	assertTrue(output.contains("\\url"));
-    	assertTrue(output.contains("\\definition"));
-    }
+		assertTrue(output.contains("\\url"));
+		assertTrue(output.contains("\\definition"));
+	}
 	
 	private ImageChunk makeChunk(String path, String options) {
 		ImageChunk chunk = new ImageChunk(path, options, 100, 1, new SectionsManager());
