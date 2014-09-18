@@ -10,6 +10,7 @@ import br.com.caelum.tubaina.chunk.ImageChunk;
 
 public class ImageTagTest extends AbstractTagTest {
 
+	private static final String NO_CAPTION = "\n\n\\captionsetup{labelsep=none}\\caption{}\n\n";
 	private static final String END = "\\end{center}\\end{figure}\n\n";
 	private static final String BEGIN = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
 	
@@ -31,6 +32,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
+				NO_CAPTION +
 				"\\label{important}\n" +
 				END, result);
 	}
@@ -42,6 +44,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
+				NO_CAPTION +
 				"\\label{image.png}\n" +
 				END, result);
 	}
@@ -88,6 +91,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 	
@@ -98,6 +102,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=70.0mm]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 	
@@ -108,6 +113,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=70.0mm]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 	
@@ -118,6 +124,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 	
@@ -128,6 +135,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=73.5mm]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 
@@ -140,6 +148,7 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
+				NO_CAPTION +
 				END, result);
 	}
 	
@@ -150,6 +159,7 @@ public class ImageTagTest extends AbstractTagTest {
 	    assertEquals(
                 BEGIN +
                 "\\includegraphics[width=\\textwidth]{image.png}\n" +
+				NO_CAPTION +
                 "\\label{name-with-strange_chars}\n" +
                 END, result);
         

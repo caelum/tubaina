@@ -49,6 +49,9 @@ public class ImageTag implements Tag<ImageChunk> {
 			caption = parser.parse(caption);
 			output.append("\n\n\\caption{" + caption + "}\n\n");
 		}
+		else {
+			output.append("\n\n\\captionsetup{labelsep=none}\\caption{}\n\n");
+		}
 		
 		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)?");
 		Matcher labelMatcher = label.matcher(options);

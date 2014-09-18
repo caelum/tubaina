@@ -48,6 +48,8 @@ public class ImageTagTemplate {
 					+ "." + chunk.getImageNumber() + ": " +  subtitle +"</i></div><br><br>");
 		} else {
 			output.append("alt=\"" + imgsrc + "\" />");
+			output.append("\n<div><i>Figura " + chunk.getChapterNumber()
+					+ "." + chunk.getImageNumber()+"</i></div><br><br>");
 		}
 		
 		return output.toString();

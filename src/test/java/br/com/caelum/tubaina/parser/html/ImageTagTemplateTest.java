@@ -19,15 +19,13 @@ public class ImageTagTemplateTest {
 	private ImageTagTemplate tag;
 	private String imageWithSubtitle;
 	private String imageWithoutSubtitle;
-	private String imageWithWidth;
 
 	@Before
 	public void setUp() throws IOException {
 		Parser parser = ParseType.HTML.getParser();
 		tag = new ImageTagTemplate(parser);
 		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div><i>Figura 0.1: Imagem de alguma coisa</i></div><br><br>";
-		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />";
-		imageWithWidth = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />";
+		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
 	}
 
 	@Test
@@ -71,14 +69,15 @@ public class ImageTagTemplateTest {
 	public void testImageTagWithoutPercentageSymbol() {
 		ImageChunk chunk = makeChunk("some/path/imagem.png", "w=50", 50);
 		String result = tag.parse(chunk, true);
-		assertEquals(imageWithWidth, result);
+		String imageWithWidthWithoutPercentageSymbol = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
+		assertEquals(imageWithWidthWithoutPercentageSymbol, result);
 	}
 	
 	@Test
 	public void shouldUseLabelAsId() throws Exception {
 		ImageChunk chunk = makeChunk("imagem.png", "w=50 label=image-label", 50);
 		String result = tag.parse(chunk, true);
-	    String imageUsingLabelAsId = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"image-label\" width='50%' alt=\"imagem.png\" />";
+	    String imageUsingLabelAsId = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"image-label\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
 		assertEquals(imageUsingLabelAsId, result);
 	}
 	
