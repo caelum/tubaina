@@ -44,11 +44,11 @@ public class ImageTagTemplate {
 			String subtitle = new HtmlSanitizer().sanitize(descriptionMatcher.group(1));
 			output.append("alt=\"" + subtitle + "\" />");
 			subtitle = parser.parse(subtitle);
-			output.append("\n<div><i>Figura " + chunk.getChapterNumber() 
+			output.append("\n<div><i>Fig. " + chunk.getChapterNumber() 
 					+ "." + chunk.getImageNumber() + ": " +  subtitle +"</i></div><br><br>");
 		} else {
 			output.append("alt=\"" + imgsrc + "\" />");
-			output.append("\n<div><i>Figura " + chunk.getChapterNumber()
+			output.append("\n<div><i>Fig. " + chunk.getChapterNumber()
 					+ "." + chunk.getImageNumber()+"</i></div><br><br>");
 		}
 		

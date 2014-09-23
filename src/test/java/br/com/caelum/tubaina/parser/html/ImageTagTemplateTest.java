@@ -24,8 +24,8 @@ public class ImageTagTemplateTest {
 	public void setUp() throws IOException {
 		Parser parser = ParseType.HTML.getParser();
 		tag = new ImageTagTemplate(parser);
-		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div><i>Figura 0.1: Imagem de alguma coisa</i></div><br><br>";
-		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
+		imageWithSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"Imagem de alguma coisa\" />\n<div><i>Fig. 0.1: Imagem de alguma coisa</i></div><br><br>";
+		imageWithoutSubtitle = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" alt=\"imagem.png\" />\n<div><i>Fig. 0.1</i></div><br><br>";
 	}
 
 	@Test
@@ -73,7 +73,7 @@ public class ImageTagTemplateTest {
 		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("some/path/imagem.png", "w=50", 50);
 		String result = tag.parse(chunk, true);
-		String imageWithWidthWithoutPercentageSymbol = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
+		String imageWithWidthWithoutPercentageSymbol = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"imagem.png\" width='50%' alt=\"imagem.png\" />\n<div><i>Fig. 0.1</i></div><br><br>";
 		assertEquals(imageWithWidthWithoutPercentageSymbol, result);
 	}
 	
@@ -82,7 +82,7 @@ public class ImageTagTemplateTest {
 		ChapterBuilder.restartChapterCounter();
 		ImageChunk chunk = makeChunk("imagem.png", "w=50 label=image-label", 50);
 		String result = tag.parse(chunk, true);
-	    String imageUsingLabelAsId = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"image-label\" width='50%' alt=\"imagem.png\" />\n<div><i>Figura 0.1</i></div><br><br>";
+	    String imageUsingLabelAsId = "<img src=\"$$RELATIVE$$/imagem.png\" id=\"image-label\" width='50%' alt=\"imagem.png\" />\n<div><i>Fig. 0.1</i></div><br><br>";
 		assertEquals(imageUsingLabelAsId, result);
 	}
 	
