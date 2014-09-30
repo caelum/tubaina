@@ -10,7 +10,8 @@ import br.com.caelum.tubaina.chunk.ImageChunk;
 
 public class ImageTagTest extends AbstractTagTest {
 
-	private static final String NO_CAPTION = "\n\n\\captionsetup{labelsep=none}\\caption{}\n\n";
+	private static final String NO_CAPTION = "\n\n\\captionsetup{labelsep=none, labelformat=empty}\\caption{}\n\n";
+	private static final String RENEW_COMMAND = "\n\n\\renewcommand{\\figurename}{Fig.}";
 	private static final String END = "\\end{center}\\end{figure}\n\n";
 	private static final String BEGIN = "\n\n\\begin{figure}[H]\n\\begin{center}\n";
 	
@@ -21,7 +22,8 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=52.5mm]{image.png}\n" +
-				"\n\n\\caption{Imagem de alguma coisa}\n\n" +
+				RENEW_COMMAND +
+				"\n\\caption{Imagem de alguma coisa}\n\n" +
 				END, result);
 	}
 
@@ -56,7 +58,8 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 		        BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
-				"\n\n\\caption{a caption to the image}\n\n" +
+				RENEW_COMMAND +
+				"\n\\caption{a caption to the image}\n\n" +
 				"\\label{image.png}\n" +
 				END, result);
 	}
@@ -68,7 +71,8 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
-				"\n\n\\caption{a caption to the image}\n\n" +
+				RENEW_COMMAND +
+				"\n\\caption{a caption to the image}\n\n" +
 				"\\label{important}\n" +
 				END, result);
 	}
@@ -80,7 +84,8 @@ public class ImageTagTest extends AbstractTagTest {
 		assertEquals(
 				BEGIN +
 				"\\includegraphics[width=\\textwidth]{image.png}\n" +
-				"\n\n\\caption{Imagem de alguma coisa}\n\n" +
+				RENEW_COMMAND +
+				"\n\\caption{Imagem de alguma coisa}\n\n" +
 				END, result);
 	}
 

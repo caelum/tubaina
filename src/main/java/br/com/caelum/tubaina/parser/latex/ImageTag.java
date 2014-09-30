@@ -47,10 +47,10 @@ public class ImageTag implements Tag<ImageChunk> {
 		if (descriptionMatcher.find()) {
 			String caption = descriptionMatcher.group(1);
 			caption = parser.parse(caption);
-			output.append("\n\n\\caption{" + caption + "}\n\n");
+			output.append("\n\n\\renewcommand{\\figurename}{Fig.}\n\\caption{" + caption + "}\n\n");
 		}
 		else {
-			output.append("\n\n\\captionsetup{labelsep=none}\\caption{}\n\n");
+			output.append("\n\n\\captionsetup{labelsep=none, labelformat=empty}\\caption{}\n\n");
 		}
 		
 		Pattern label = Pattern.compile("(?s)(?i)label=(\\S+)?");
