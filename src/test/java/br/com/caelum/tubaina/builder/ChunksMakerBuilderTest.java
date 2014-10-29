@@ -300,4 +300,12 @@ public class ChunksMakerBuilderTest {
 		chunksMaker.make(exercise);
 		Assert.fail("Should not accept notes inside exercise tag but outside question tag");
 	}
+	
+	@Test(expected=TubainaException.class)
+	public void testChunksMakerBuilderDoesntAcceptTagsInsideCode(){
+		ChunksMaker chunksMaker = chunksMakerBuilder().build("code");
+		String note = exampleNote;
+		chunksMaker.make(note);
+		Assert.fail("Should not accept notes inside code");
+	}
 }

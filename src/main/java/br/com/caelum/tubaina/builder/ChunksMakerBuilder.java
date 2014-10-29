@@ -203,6 +203,11 @@ public class ChunksMakerBuilder {
 		replacers.add(new RubyReplacer());
 		replacers.add(new ParagraphReplacer(paragraphTerminator));
 		replacerMap.put("col", replacers);
+		
+		// Code tag
+		replacers = new ArrayList<Replacer>();
+		replacers.add(new TodoReplacer());
+		replacerMap.put("code", replacers);
 
 		// All tags not restricted to others, like ItemTag
 		replacers = new ArrayList<Replacer>();
