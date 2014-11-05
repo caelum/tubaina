@@ -1,5 +1,9 @@
 package br.com.caelum.tubaina.builder.replacer;
 
+import java.util.List;
+import java.util.Stack;
+import java.util.regex.Matcher;
+
 import br.com.caelum.tubaina.Chunk;
 import br.com.caelum.tubaina.TubainaBuilder;
 import br.com.caelum.tubaina.TubainaException;
@@ -15,13 +19,28 @@ public class CodeReplacer extends AbstractReplacer {
 	}
 
 	@Override
+	protected void stackMatch(Matcher tagMatcher, Stack<String> stack, String tagName) {
+		if (!(tagMatcher.group(1) == null)) {
+			if (stack.peek().equalsIgnoreCase(tagName)) {
+				stack.pop();
+			} else {
+				throw new TubainaException("Tag " + tagName + " was closed unproperly");
+			}
+		}
+	}
+
+	@Override
 	public Chunk createChunk(String options, String content) {
-	    //TODO: use the real tab size, it may be different depending of which parseType is being used
-	    SimpleIndentator indentator = new SimpleIndentator(4);
-		int maxLineLength = Utilities.maxLineLength(indentator.indent(content)) - Utilities.getMinIndent(indentator.indent(content)); 
+		// TODO: use the real tab size, it may be different depending of which
+		// parseType is being used
+		SimpleIndentator indentator = new SimpleIndentator(4);
+		int maxLineLength = Utilities.maxLineLength(indentator.indent(content))
+				- Utilities.getMinIndent(indentator.indent(content));
 		if (maxLineLength > TubainaBuilder.getCodeLength())
-			throw new TubainaException ("Chapter " + ChapterBuilder.getChaptersCount() + 
-										"  -  Code has " + maxLineLength + " columns out of " + TubainaBuilder.getCodeLength() + ":\n\n" + content);
+			throw new TubainaException("Chapter "
+					+ ChapterBuilder.getChaptersCount() + "  -  Code has "
+					+ maxLineLength + " columns out of "
+					+ TubainaBuilder.getCodeLength() + ":\n\n" + content);
 		return new CodeChunk(content, options);
 	}
 

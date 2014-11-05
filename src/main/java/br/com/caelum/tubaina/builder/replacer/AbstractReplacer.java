@@ -34,17 +34,7 @@ public abstract class AbstractReplacer implements Replacer {
 		stack.push(tag);
 		while (!stack.isEmpty() && tagMatcher.find()) {
 			String tagName = tagMatcher.group(2);
-			if (tagMatcher.group(1) == null) { //is openTag ([tag])
-				if (ChunksMakerBuilder.isClosableTag(tagName)) {
-					stack.push(tagName);					
-				}
-			} else { //is closeTag ([/tag])
-				if (stack.peek().equalsIgnoreCase(tagName)) {
-					stack.pop();
-				} else {
-					throw new TubainaException("Tag " + tagName + " was closed unproperly");
-				}
-			}
+			stackMatch(tagMatcher, stack, tagName);
 		}
 		if (!stack.isEmpty()) { //tag was not closed properly
 			throw new TubainaException("There is(are) unclosed tag(s) : " + stack.toString());
@@ -53,6 +43,21 @@ public abstract class AbstractReplacer implements Replacer {
 		
 		chunks.add(createChunk(options, content));
 		return text.substring(contentStart + tagMatcher.end());
+	}
+
+	protected void stackMatch(Matcher tagMatcher, Stack<String> stack,
+			String tagName) {
+		if (tagMatcher.group(1) == null) { //is openTag ([tag])
+			if (ChunksMakerBuilder.isClosableTag(tagName)) {
+				stack.push(tagName);					
+			}
+		} else { //is closeTag ([/tag])
+			if (stack.peek().equalsIgnoreCase(tagName)) {
+				stack.pop();
+			} else {
+				throw new TubainaException("Tag " + tagName + " was closed unproperly");
+			}
+		}
 	}
 
 	protected abstract Chunk createChunk(String options, String content);
