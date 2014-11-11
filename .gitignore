@@ -12,3 +12,5 @@ temp/
 build/
 .gradle
 src/docker/apostilas-caelum
+.idea/
+*.iml

@@ -11,9 +11,9 @@ import com.google.inject.Inject;
 
 public class HtmlAndKindleCodeTag implements Tag<CodeChunk> {
 
-	public static final String BEGIN_START = "<pre ";
+	public static final String BEGIN_START = "<div ";
 	public static final String BEGIN_END = ">";
-	public static final String END = "</pre>";
+	public static final String END = "</div>";
 	private SyntaxHighlighter htmlCodeHighlighter;
 	private CodeTagOptionsParser codeTagOptionsParser;
 

@@ -11,14 +11,15 @@ RUN unzip /opt/gradle.zip -d /opt
 ENV PATH /opt/gradle-1.12/bin:$PATH
 
 RUN sudo apt-get install -y python-setuptools
-RUN sudo easy_install Pygments==1.5
+RUN apt-get install -yq python-pip
+RUN pip install Pygments
 
 RUN apt-get install -y git
 RUN mkdir ~/.ssh
 RUN git clone --depth=1 https://github.com/caelum/tubaina.git
 
 WORKDIR /data/tubaina
-RUN gradle clean build zip
+RUN gradle clean build zip -x test
 
 RUN mkdir /opt/tubaina
 RUN unzip build/distributions/tubaina-1.8-SNAPSHOT.zip -d /opt/tubaina

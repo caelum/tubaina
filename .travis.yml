@@ -1,7 +1,6 @@
 language: java
 jdk:
   - oraclejdk7
-#  - openjdk6
 before_install:
   - sudo apt-get install python-setuptools
   - sudo easy_install pygments==1.5
@@ -11,5 +10,7 @@ notifications:
         recipients:
             - chico.sokol@gmail.com
             - luna.bd@gmail.com
+            - fernando.stefanini@caelum.com.br
+            - marcosalles@gmail.com
         on_success: change
         on_failure: always
