@@ -11,7 +11,8 @@ RUN unzip /opt/gradle.zip -d /opt
 ENV PATH /opt/gradle-1.12/bin:$PATH
 
 RUN sudo apt-get install -y python-setuptools
-RUN sudo easy_install Pygments==1.5
+RUN apt-get install -yq python-pip
+RUN pip install Pygments
 
 RUN apt-get install -y git
 RUN mkdir ~/.ssh
