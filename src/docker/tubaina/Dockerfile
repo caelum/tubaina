@@ -19,7 +19,7 @@ RUN mkdir ~/.ssh
 RUN git clone --depth=1 https://github.com/caelum/tubaina.git
 
 WORKDIR /data/tubaina
-RUN gradle clean build zip
+RUN gradle clean build zip -x test
 
 RUN mkdir /opt/tubaina
 RUN unzip build/distributions/tubaina-1.8-SNAPSHOT.zip -d /opt/tubaina
