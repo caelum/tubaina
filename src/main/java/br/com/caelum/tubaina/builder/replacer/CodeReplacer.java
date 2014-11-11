@@ -23,8 +23,6 @@ public class CodeReplacer extends AbstractReplacer {
 		if (!(tagMatcher.group(1) == null)) {
 			if (stack.peek().equalsIgnoreCase(tagName)) {
 				stack.pop();
-			} else {
-				throw new TubainaException("Tag " + tagName + " was closed unproperly");
 			}
 		}
 	}
