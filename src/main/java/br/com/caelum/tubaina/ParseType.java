@@ -18,6 +18,9 @@ import br.com.caelum.tubaina.parser.html.kindle.KindleParser;
 import br.com.caelum.tubaina.parser.latex.LatexGenerator;
 import br.com.caelum.tubaina.parser.latex.LatexModule;
 import br.com.caelum.tubaina.parser.latex.LatexParser;
+import br.com.caelum.tubaina.parser.markdown.MarkdownGenerator;
+import br.com.caelum.tubaina.parser.markdown.MarkdownModule;
+import br.com.caelum.tubaina.parser.markdown.MarkdownParser;
 
 public enum ParseType {
 
@@ -44,6 +47,28 @@ public enum ParseType {
 
 	},
 
+	MARKDOWN {
+		@Override
+		public Parser getParser() {
+			try {
+			    List<RegexTag> tags = new RegexConfigurator().read("/regex.properties", "/markdown.properties");
+	            return new MarkdownParser(tags);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't find either regex or markdown.properties", e);
+			}
+		}
+
+		@Override
+		public Generator getGenerator(Parser parser, TubainaBuilderData data) {
+			return new MarkdownGenerator(parser, data);
+		}
+
+		@Override
+		public TubainaModule getModule(TubainaBuilderData data) {
+			return new MarkdownModule(data.getS3Path(), data.isShowNotes(), data.isNoAnswer());
+		}
+	},
+	
 	HTMLFLAT {
 		@Override
 		public Parser getParser() {

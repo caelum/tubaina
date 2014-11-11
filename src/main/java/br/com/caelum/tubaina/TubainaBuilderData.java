@@ -12,17 +12,24 @@ public class TubainaBuilderData {
 	private String outputFileName;
     private List<String> ifdefs;
     private String linkParameter;
+	private String s3Path;
 
 	public TubainaBuilderData(boolean strictXhtml, File templateDir, boolean showNotes, boolean noAnswer,
 			String outputFileName) {
-	    this.ifdefs = new ArrayList<String>();
+		this(strictXhtml, templateDir, showNotes, noAnswer, outputFileName, "");
+    }
+
+	public TubainaBuilderData(boolean strictXhtml, File templateDir, boolean showNotes, boolean noAnswer,
+			String outputFileName, String s3Path) {
+		this.s3Path = s3Path;
+		this.ifdefs = new ArrayList<String>();
 		this.strictXhtml = strictXhtml;
 		this.templateDir = templateDir;
 		this.showNotes = showNotes;
 		this.noAnswer = noAnswer;
 		this.outputFileName = outputFileName;
 		this.linkParameter = "";
-    }
+	}
 
     public boolean isStrictXhtml() {
         return strictXhtml;
@@ -59,6 +66,10 @@ public class TubainaBuilderData {
     public String getOutputFileName() {
         return outputFileName;
     }
+    
+    public String getS3Path() {
+		return s3Path;
+	}
 
     public void setOutputFileName(String outputFileName) {
         this.outputFileName = outputFileName;
@@ -80,6 +91,9 @@ public class TubainaBuilderData {
         this.linkParameter = linkParameter;
         
     }
-	
+
+    public void setS3Path(String s3Path) {
+		this.s3Path = s3Path;
+	}
 	
 }

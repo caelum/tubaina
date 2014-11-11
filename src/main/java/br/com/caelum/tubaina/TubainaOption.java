@@ -10,6 +10,17 @@ import org.apache.commons.cli.OptionBuilder;
 
 
 public enum TubainaOption {
+	
+	S3_PATH('3', "s3path", "Remote path to images in s3") {
+
+		@Override
+		public void configure(TubainaBuilder builder, CommandLine cmd) {
+			// TODO Auto-generated method stub
+			builder.s3Path(cmd.getOptionValue(getLongName()));
+		}
+		
+	},
+	
 	INPUT_DIR('i', "input-dir", "directory where you have your .afc files") {
 		@Override
 		public void configure(TubainaBuilder builder, CommandLine cmd) {

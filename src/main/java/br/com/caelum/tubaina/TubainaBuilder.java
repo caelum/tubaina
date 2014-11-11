@@ -150,6 +150,11 @@ public class TubainaBuilder {
 		return this;
 	}
 
+	public TubainaBuilder s3Path(String s3Path) {
+		this.data.setS3Path(s3Path);
+		return this;
+	}
+	
 	public TubainaBuilder maximumImageWidth(Integer width) {
 		maximumImageWidth = width;
 		return this;
@@ -159,7 +164,7 @@ public class TubainaBuilder {
 		this.data.setIfdefs(ifdefs);
 		return this;
 	}
-
+	
 	public static Integer getCodeLength() {
 		return codeLength;
 	}

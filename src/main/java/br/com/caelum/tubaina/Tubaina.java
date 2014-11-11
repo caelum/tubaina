@@ -16,6 +16,8 @@ public class Tubaina {
 	public static final Logger LOG = Logger.getLogger(Tubaina.class);
 
 	public static void main(String... args) throws IOException {
+		args = new String[] {"-markdown", "-i", "/Users/mauricioaniche/textos/certificacao-java/book", "-o", "/Users/mauricioaniche/textos/certificacao-java/book/teste", "-n", "chicao", "-s3path", "http://www.amazon.com/"};
+		
 		CommandLineParser commandLineParser = new PosixParser();
 
 		Options options = registerOptions();
@@ -56,12 +58,14 @@ public class Tubaina {
 				return type;
 			}
 		}
-		throw new TubainaException("Argumento --html, --htmlflat, --kindle ou --latex é obrigatório");
+		throw new TubainaException("Argumento --html, --htmlflat, --kindle, --markdown ou --latex é obrigatório");
 	}
 
 	private static Options registerOptions() {
 		Options options = new Options();
 
+		options.addOption("markdown", "markdown", false,
+				"generates an markdown output on given outputdir");
 		options.addOption("latex", "latex", false,
 				"generates an latex output on given outputdir");
 		options.addOption("html", "html", false,
