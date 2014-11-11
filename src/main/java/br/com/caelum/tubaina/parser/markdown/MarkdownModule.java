@@ -28,7 +28,6 @@ import br.com.caelum.tubaina.parser.Parser;
 import br.com.caelum.tubaina.parser.SimpleIndentator;
 import br.com.caelum.tubaina.parser.Tag;
 import br.com.caelum.tubaina.parser.TubainaModule;
-import br.com.caelum.tubaina.parser.pygments.CodeOutputType;
 import br.com.caelum.tubaina.util.CommandExecutor;
 import br.com.caelum.tubaina.util.SimpleCommandExecutor;
 
@@ -73,9 +72,8 @@ public class MarkdownModule extends TubainaModule {
 		bind(SectionsManager.class).toInstance(getSectionsManager());
 		bind(new TypeLiteral<Tag<SubsectionChunk>>() {}).to(SubsectionTag.class);
 
-		bind(Parser.class).toInstance(ParseType.LATEX.getParser());
+		bind(Parser.class).toInstance(ParseType.MARKDOWN.getParser());
 		bind(Indentator.class).to(SimpleIndentator.class);
 		bind(CommandExecutor.class).to(SimpleCommandExecutor.class);
-		bind(CodeOutputType.class).toInstance(CodeOutputType.LATEX);
 	}
 }
