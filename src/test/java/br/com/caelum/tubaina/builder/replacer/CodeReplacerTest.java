@@ -95,8 +95,9 @@ public class CodeReplacerTest {
 		replacer.execute(code, chunks);
 		code = "[code][box]ola mundo[box][/code]";
 		Assert.assertTrue(replacer.accepts(code));
+		replacer.execute(code, chunks);
 		code = "[code][/list]ola mundo[/list][/code]";
 		Assert.assertTrue(replacer.accepts(code));
-		
+		replacer.execute(code, chunks);
 	}
 }
