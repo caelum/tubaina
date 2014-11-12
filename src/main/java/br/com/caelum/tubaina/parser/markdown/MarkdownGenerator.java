@@ -28,13 +28,14 @@ public class MarkdownGenerator implements Generator {
     		PrintStream ps = new PrintStream(new File(directory, "cap" + number++ + ".md"));
     		
     		String chapterTitle = parser.parse(chapter.getTitle());
-			ps.println("---> " + chapterTitle);
+			ps.println("# " + chapterTitle);
 			ps.println();
 			
 			ps.println(chapter.getIntroduction());
 
 			for(Section section : chapter.getSections()) {
-				ps.println(parser.parse(section.getTitle()));
+				ps.println("## " + parser.parse(section.getTitle()));
+				ps.println();
 				
 				for(Chunk chunk : section.getChunks()) {
 					ps.println(chunk.asString());

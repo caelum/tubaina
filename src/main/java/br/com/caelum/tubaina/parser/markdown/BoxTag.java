@@ -8,6 +8,6 @@ public class BoxTag implements Tag<BoxChunk> {
 	@Override
 	public String parse(BoxChunk chunk) {
 		String title = chunk.getTitle();
-		return "\n\n### " + title + "\n\n";
+		return "\n\n### " + title + "\n\n" + chunk.getContent() + "\n\n";
 	}
 }

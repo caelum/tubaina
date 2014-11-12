@@ -16,7 +16,7 @@ public class Tubaina {
 	public static final Logger LOG = Logger.getLogger(Tubaina.class);
 
 	public static void main(String... args) throws IOException {
-		args = new String[] {"-markdown", "-i", "/Users/mauricioaniche/textos/certificacao-java/book", "-o", "/Users/mauricioaniche/textos/certificacao-java/book/teste", "-n", "chicao", "-s3path", "http://www.amazon.com/"};
+		args = new String[] {"-markdown", "-i", "/Users/mauricioaniche/textos/certificacao-java/book", "-o", "/Users/mauricioaniche/textos/certificacao-java/book/teste", "-n", "chicao", "-s3path", "http://s3.amazonaws.com/caelum-online-public/certificacao-java/"};
 		
 		CommandLineParser commandLineParser = new PosixParser();
 
