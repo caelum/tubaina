@@ -15,8 +15,7 @@ public enum TubainaOption {
 
 		@Override
 		public void configure(TubainaBuilder builder, CommandLine cmd) {
-			// TODO Auto-generated method stub
-			builder.s3Path(cmd.getOptionValue(getLongName()));
+			builder.s3Path(cmd.getArgList().get(0).toString());
 		}
 		
 	},

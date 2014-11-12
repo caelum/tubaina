@@ -8,7 +8,7 @@ public class ExerciseTag implements Tag<ExerciseChunk> {
 	@Override
 	public String parse(ExerciseChunk chunk) {
 
-		return  "\n\n**** EXERCICIO ****\n\n" + 
+		return  "\n\n### Exercício\n\n" + 
 				chunk.getContent() + 
 				"\n\n";
 	}
