@@ -17,8 +17,6 @@ public class Tubaina {
 
 	public static void main(String... args) throws IOException {
 		
-		args = new String[] {"-markdown", "-i", "/Users/mauricioaniche/textos/certificacao-java/book", "-o", "/Users/mauricioaniche/textos/certificacao-java/book/teste2", "-n", "chicao", "-3", "http://s3.amazonaws.com/caelum-online-public/certificacao-java/"};
-
 		CommandLineParser commandLineParser = new PosixParser();
 
 		Options options = registerOptions();
