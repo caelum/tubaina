@@ -43,3 +43,19 @@ $ gradle clean build zip
 
 This will run the tests and, among other stuff, build a *.zip file with Tubaina's jar and all necessary libraries under `build/distributions`
 
+Docker image
+------------
+
+There's a Docker image that you can use to easilly install all dependencies of Tubaina.
+
+If you want to build the latest version you can build your own image using [this Dockerfile] (https://github.com/caelum/tubaina/blob/master/src/docker/tubaina/Dockerfile) by running:
+
+```SH
+docker build -t csokol/tubaina src/docker/tubaina
+```
+
+If you don't want to build from latest sources, you can use the docker image available at [DockerHub] (https://registry.hub.docker.com/u/csokol/tubaina/) by running `docker pull csokol/tubaina`
+
+After installing the image, independently of building from sources of downloading from DockerHub, you can run `docker run -t -i csokol/tubaina java -jar /opt/tubaina/tubaina-1.8-SNAPSHOT.jar` to execute tubaina jar.
+
+
