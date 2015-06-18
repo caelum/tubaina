@@ -17,6 +17,17 @@ public class Tubaina {
 
 	public static void main(String... args) throws IOException {
 		
+		args = new String[] {
+				"-markdown", 
+				"-i", 
+				"/Users/mauricioaniche/Dropbox/textos/aniche-cdc/book-introducao-c", 
+				"-o", 
+				"/Users/mauricioaniche/Desktop/md", 
+				"-n", 
+				"aniche"};
+		
+		
+		
 		CommandLineParser commandLineParser = new PosixParser();
 
 		Options options = registerOptions();
