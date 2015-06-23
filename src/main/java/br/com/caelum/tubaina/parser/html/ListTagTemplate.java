@@ -11,12 +11,11 @@ public class ListTagTemplate implements Tag<ListChunk> {
 		String content = chunk.getContent();
 		if (options.contains("number"))
 			return "<ol>" + content + "</ol>";
-		if (options.contains("letter"))
+		if (options.contains("letter")) 
 			return "<ol class=\"letter\">" + content + "</ol>";
 		if (options.contains("roman"))
 			return "<ol class=\"roman\">" + content + "</ol>";
 		return "<ul>" + content.trim() + "</ul>";
 
 	}
-
 }

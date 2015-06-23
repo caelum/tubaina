@@ -2,11 +2,11 @@ package br.com.caelum.tubaina.parser.html.kindle;
 
 import br.com.caelum.tubaina.chunk.ListChunk;
 import br.com.caelum.tubaina.parser.Tag;
-import br.com.caelum.tubaina.parser.html.ListTagTemplate;
+import br.com.caelum.tubaina.parser.html.KindleListTagTemplate;
 
 public class ListTag implements Tag<ListChunk> {
 
-	private ListTagTemplate template = new ListTagTemplate();
+	private KindleListTagTemplate template = new KindleListTagTemplate();
 	
 	@Override
 	public String parse(ListChunk chunk) {

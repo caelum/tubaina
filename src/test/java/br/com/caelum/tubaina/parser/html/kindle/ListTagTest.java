@@ -25,9 +25,9 @@ public class ListTagTest extends AbstractTagTest {
 	public void testListLetter() {
 		ListChunk chunk = new ListChunk("letter", text("conteudo da lista"));
 		String result = getContent(chunk);
-		Assert.assertEquals("<ol class=\"letter\">conteudo da lista</ol>", result);
+		Assert.assertEquals("<div>conteudo da lista</div>", result);
 	}
-	
+
 	@Test
 	public void testListRoman() {
 		ListChunk chunk = new ListChunk("roman", text("conteudo da lista"));
