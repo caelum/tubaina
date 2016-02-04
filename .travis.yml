@@ -1,8 +1,12 @@
 language: java
 jdk:
   - oraclejdk7
+addons:
+  apt:
+    packages:
+      - python-setuptools
+      - gradle
 before_install:
-  - sudo apt-get install python-setuptools
   - sudo easy_install pygments==1.5
 script: "gradle --full-stacktrace test build"
 notifications:
