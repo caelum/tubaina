@@ -3,7 +3,11 @@
     <ol>
     <#assign entryCount = 1>
     <#list bibliography.entries as entry>
-        <li id="${entry.label}" position="${entryCount}">
+        <li position="${entryCount}"
+			<#if entry.label?? && !entry.label.empty>
+				id="${entry.label}"
+			</#if>
+		>
         	${sanitizer.sanitize(entry.author)}, ${sanitizer.sanitize(entry.title)}
         	<#if entry.journal??>
         		, ${sanitizer.sanitize(entry.journal)}
