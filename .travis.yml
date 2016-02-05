@@ -7,7 +7,6 @@ addons:
       - python-setuptools
       - gradle
 before_install:
-  - gradle -v
   - sudo easy_install pygments==1.5
 script: "gradle --full-stacktrace test build"
 notifications:
@@ -15,6 +14,8 @@ notifications:
         recipients:
             - luna.bd@gmail.com
             - fernando.stefanini@caelum.com.br
-            - marcosalles@gmail.com
+            - marco.salles@caelum.com.br
+            - carlos.muller@caelum.com.br
+            - ana.losnak@caelum.com.br
         on_success: change
         on_failure: always
