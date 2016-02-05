@@ -60,5 +60,16 @@ public class HtmlBibliographyGeneratorTest {
         assertFalse(html.contains("()"));
     }
 
-    
+    @Test
+    public void shouldGenerateHtmlBibContentWithoutIds() throws Exception {
+        Bibliography bibliography = new BibliographyFactory().build(new File(
+                "src/test/resources/bibliography/bibsimplenolabel.xml"));
+
+        String html = htmlBibGenerator.generateTextOf(bibliography);
+        System.out.println(html);
+        assertTrue(html.contains("Jose da silva"));
+        assertTrue(html.contains("Livro legal"));
+        assertTrue(html.contains("2012"));
+        assertFalse(html.contains("id=\"\""));
+    }
 }
